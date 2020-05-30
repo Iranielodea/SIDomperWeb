@@ -113,19 +113,19 @@ namespace SIDomper.Servicos.Regras
                 }
             }
 
-            var novoModel = ObterPorId(model.Id);
-            if (novoModel !=  null || novoModel.StatusId != model.StatusId)
-            {
-                var solicitacaoStatus = new SolicitacaoStatus();
-                solicitacaoStatus.Id = 0;
-                solicitacaoStatus.Data = DateTime.Now.Date;
-                solicitacaoStatus.Hora = TimeSpan.Parse(DateTime.Now.ToShortTimeString());
-                solicitacaoStatus.Solicitacao = model;
-                solicitacaoStatus.SolicitacaoId = model.StatusId;
-                solicitacaoStatus.UsuarioId = idUsuario;
+            //var novoModel = ObterPorId(model.Id);
+            //if (novoModel !=  null || novoModel.StatusId != model.StatusId)
+            //{
+            //    var solicitacaoStatus = new SolicitacaoStatus();
+            //    solicitacaoStatus.Id = 0;
+            //    solicitacaoStatus.Data = DateTime.Now.Date;
+            //    solicitacaoStatus.Hora = TimeSpan.Parse(DateTime.Now.ToShortTimeString());
+            //    solicitacaoStatus.Solicitacao = model;
+            //    solicitacaoStatus.SolicitacaoId = model.StatusId;
+            //    solicitacaoStatus.UsuarioId = idUsuario;
 
-                AdicionarSolicitacaoStatus(solicitacaoStatus);
-            }
+            //    AdicionarSolicitacaoStatus(solicitacaoStatus);
+            //}
 
             model.UsuarioAtendeAtualId = idUsuario;
             _rep.Salvar(model);
