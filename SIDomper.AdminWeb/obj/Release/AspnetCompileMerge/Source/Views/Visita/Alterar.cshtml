@@ -1,0 +1,162 @@
+﻿@model SIDomper.Dominio.Entidades.Visita
+
+@{
+    ViewBag.Title = "Editar Visita";
+    var acao = HttpContext.Current.Request.RequestContext.RouteData.Values["action"].ToString();
+
+    <input type="hidden" value="@acao" name="txtAcao" id="txtAcao" />
+}
+
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+@using (Html.BeginForm("Alterar", "Visita", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.ClienteId)
+    @Html.HiddenFor(model => model.UsuarioId)
+    @Html.HiddenFor(model => model.Latitude)
+    @Html.HiddenFor(model => model.Longitude)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Cliente.Nome, htmlAttributes: new { @class = "control-label" })*
+        <label class="form-control">@Model.Cliente.Nome</label>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-4 col-xs-12">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Data, htmlAttributes: new { @class = "control-label" })*
+                @Html.EditorFor(model => model.Data, new { htmlAttributes = new { @class = "form-control texto-grande", placeholder = "00/00/0000" } })
+                @Html.ValidationMessageFor(model => model.Data, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="col-sm-4 col-xs-12">
+            <div class="form-group">
+                @Html.LabelFor(model => model.HoraInicio)*
+                @Html.EditorFor(model => model.HoraInicio, new { htmlAttributes = new { @class = "form-control texto-grande", placeholder = "00:00" } })
+                @Html.ValidationMessageFor(model => model.HoraInicio, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="col-sm-4 col-xs-12">
+            <div class="form-group">
+                @Html.LabelFor(model => model.HoraFim)*
+                @Html.EditorFor(model => model.HoraFim, new { htmlAttributes = new { @class = "form-control texto-grande", placeholder = "00:00" } })
+            </div>
+        </div>
+    </div>  
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Contato, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(model => model.Contato, "Contato", new { htmlAttributes = new { @class = "form-control texto-grande" } })
+        @Html.ValidationMessageFor(model => model.Contato, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Tipo.Nome, htmlAttributes: new { @class = "control-label" })*
+        @Html.DropDownListFor(n => n.TipoId, new SelectList(Model.ListaTipos, "Id", "Nome"), new { @class = "form-control texto-grande" })
+        @Html.ValidationMessageFor(model => model.TipoId, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Status.Nome, htmlAttributes: new { @class = "control-label" })*
+        @Html.DropDownListFor(n => n.StatusId, new SelectList(Model.ListaStatus, "Id", "Nome"), new { @class = "form-control texto-grande" })
+        @Html.ValidationMessageFor(model => model.StatusId, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Descricao, htmlAttributes: new { @class = "control-label" })*
+        @Html.TextAreaFor(model => model.Descricao, new { @class = "form-control texto-grande", rows = 5 })
+        @Html.ValidationMessageFor(model => model.Descricao, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.FormaPagto, htmlAttributes: new { @class = "control-label" })
+        @Html.TextAreaFor(model => model.FormaPagto, new { @class = "form-control texto-grande" })
+        @Html.ValidationMessageFor(model => model.FormaPagto, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6 col-xs-12">
+            @Html.LabelFor(model => model.Valor, htmlAttributes: new { @class = "control-label" })
+            @*<input type="text" id="dinheiro" name="Valor" value="@Model.Valor" class="dinheiro form-control" style="display:inline-block" />*@
+            @Html.EditorFor(model => model.Valor, new { htmlAttributes = new { @class = "form-control texto-grande", placeholder = "0,00"} })
+            @*@Html.EditorFor(model => model.Valor, new { htmlAttributes = new { @class = "form-control texto-grande", placeholder = "0,00", data_tipo = "moeda" } })*@
+            @Html.ValidationMessageFor(model => model.Valor, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-6 col-xs-12">
+            @Html.LabelFor(model => model.Versao, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.Versao, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+            @*@Html.ValidationMessageFor(model => model.Versao, "", new { @class = "text-danger" })*@
+        </div>
+    </div>
+
+    <br />
+
+    <div class="form-group">
+        <input type="submit" value="Salvar" class="btn btn-primary" onclick="return getTexto()" />
+        @DomperBotoes.BotaoVoltar()
+    </div>
+}
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            //$("#telefone").inputmask("mask", { "mask": "(99) 9999-99999" });
+            //$("#cpf").inputmask("mask", { "mask": "999.999.999-99" }, { reverse: true });
+            //$("#cep").inputmask("mask", { "mask": "99999-999" });
+            $("#Data").inputmask("mask", { "mask": "99/99/9999" });
+            //$("#preco").inputmask("mask", { "mask": "999.999,99" }, { reverse: true });
+            //$("#Valor").inputmask("mask", { "mask": "#.##9,99" }, { reverse: true });
+            //$("#ip").inputmask("mask", { "mask": "999.999.999.999" });
+            $("#HoraInicio").inputmask("mask", { "mask": "99:99" });
+            $("#HoraFim").inputmask("mask", { "mask": "99:99" });
+            //$('.dinheiro').mask('###.##0,00', { reverse: true });
+        });
+
+        function getTexto() {
+            var tipoId = document.getElementById("TipoId");
+            var versao = document.getElementById("Versao");
+            var acao = document.getElementById("txtAcao");
+
+            if (tipoId.value == 21 && myTrim(versao.value) == "") {
+                alert("Informe a versão");
+                versao.focus();
+                return false;
+            }
+
+            if (txtAcao.value == 'Novo') {
+                document.getElementById("Id").value = 0;
+            }
+
+            //var x = document.getElementById("local2");
+            //var l = document.getElementById("Latitude");
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+                x.innerHTML = "Geolocalização não suportado por este browser.";
+            }
+
+            function showPosition(position) {
+                //x.innerHTML = "Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude;
+                document.getElementById("Latitude").value = position.coords.latitude;
+                document.getElementById("Longitude").value = position.coords.longitude;
+
+                //    var url = 'https://www.google.com.br/maps/@@' + position.coords.latitude + ',' + position.coords.longitude + 'z'
+                //    window.open(url, '_blank');
+            }
+
+            return true;
+        }
+
+        function myTrim(valor) {
+            return valor.replace(/^\s+|\s+$/gm, '');
+        }
+
+    </script>
+    @*<script src="https://igorescobar.github.io/jQuery-Mask-Plugin/js/jquery.mask.min.js"></script>*@
+    <script src="~/Scripts/jquery.mask.min.js"></script>
+    <script src="~/Scripts/mascaras.js"></script>
+    <script src="~/Content/js/plugins/mask/jquery.mask.min.js"></script>
+}

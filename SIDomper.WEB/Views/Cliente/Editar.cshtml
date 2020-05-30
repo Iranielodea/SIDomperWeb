@@ -1,0 +1,230 @@
+﻿@model SIDomper.Dominio.Entidades.Cliente
+@{
+    /**/
+
+    ViewBag.Title = "Editar Cliente";
+}
+
+
+
+@Html.AntiForgeryToken()
+
+@using (Html.BeginForm("Editar", "Cliente", FormMethod.Post, new { @class = "form-inline" }))
+{
+    @*<div class="panel panel-default">*@
+    <div class="container">
+        <div class="row">
+            <div class="form-group col-sm-6">
+                @Html.LabelFor(model => model.Codigo)
+                @Html.EditorFor(model => model.Codigo, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-sm-8">
+                @Html.LabelFor(model => model.Nome)
+                @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+            </div>
+            <div class="form-group col-sm-4">
+                @Html.LabelFor(model => model.Fantasia)
+                @Html.EditorFor(model => model.Fantasia, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-sm-4">
+                @Html.LabelFor(model => model.Dcto)
+                @Html.EditorFor(model => model.Dcto, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+            </div>
+            <div class="form-group col-sm-4">
+                @Html.LabelFor(model => model.IE)
+                @Html.EditorFor(model => model.IE, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+            </div>
+            <div class="form-group col-sm-4">
+                @Html.LabelFor(model => model.Versao)
+                @Html.EditorFor(model => model.Versao, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-sm-6">
+                @Html.LabelFor(model => model.Endereco)
+                @Html.EditorFor(model => model.Endereco, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+            </div>
+            <div class="form-group col-sm-6">
+                @Html.LabelFor(model => model.CEP)
+                @Html.EditorFor(model => model.CEP, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-sm-4">
+                @Html.LabelFor(model => model.Bairro)
+                @Html.EditorFor(model => model.Bairro, new { htmlAttributes = new { @class = "form-control  texto-grande" } })
+            </div>
+            <div class="form-group col-sm-4">
+                <label class="control-label">Cidade</label>
+                @Html.EditorFor(model => model.Cidade.Nome, new { htmlAttributes = new { @class = "form-control  texto-grande" } })
+            </div>
+            <div class="form-group col-sm-4">
+                @Html.LabelFor(model => model.Cidade.UF)
+                @Html.EditorFor(model => model.Cidade.UF, new { htmlAttributes = new { @class = "form-control  texto-grande" } })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-sm-3">
+                <b>Fone1</b>
+                @Html.EditorFor(model => model.Fone1, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+
+            </div>
+            <div class="form-group col-sm-3">
+                <b>Fone2</b>
+                @Html.EditorFor(model => model.Fone2, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+            </div>
+            <div class="form-group col-sm-3">
+                <b>Celular</b>
+                @Html.EditorFor(model => model.Celular, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+            </div>
+
+            <div class="form-group col-sm-3">
+                <b>Outro Telefone</b>
+                @Html.EditorFor(model => model.OutroFone, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-6">
+                <b>Contato Financeiro</b>
+                @Html.EditorFor(model => model.ContatoFinanceiro, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+            </div>
+            <div class="form-group col-sm-6">
+                <b>Telefone</b>
+                @Html.EditorFor(model => model.FoneContatoFinanceiro, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-6">
+                <b>Contato Compra/Venda</b>
+                @Html.EditorFor(model => model.ContatoCompraVenda, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+            </div>
+            <div class="form-group col-sm-6">
+                <b>Telefone</b>
+                @Html.EditorFor(model => model.FoneContatoCompraVenda, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-12">
+                <b>Consultor</b>
+                @Html.EditorFor(model => model.Usuario.Nome, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-12">
+                <b>Revenda</b>
+                @Html.EditorFor(model => model.Revenda.Nome, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-6">
+                <label class="control-label">Representante Legal </label>
+                @Html.EditorFor(model => model.RepresentanteLegal, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+            </div>
+            <div class="form-group col-sm-6">
+                <label class="control-label"> CPF Representante </label>
+                @Html.EditorFor(model => model.CPFRepresentanteLegal, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-xs-12">
+                    <b>Empresa Vinculada</b>
+                    @Html.EditorFor(model => model.EmpresaVinculada, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-xs-12">
+                    <b>Enquadramento:</b>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-xs-12">
+                    Simples
+                    @Html.RadioButton("Enquadramento", Model.Enquadramento, Model.Enquadramento == "01")
+                    Lucro Presumido
+                    @Html.RadioButton("Enquadramento", Model.Enquadramento, Model.Enquadramento == "02")
+                    Lucro Real
+                    @Html.RadioButton("Enquadramento", Model.Enquadramento, Model.Enquadramento == "03")
+                    Não Definido
+                    @Html.RadioButton("Enquadramento", Model.Enquadramento, Model.Enquadramento == "00")
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <hr />
+        @*<div class="panel panel-default">*@
+        <div class="row">
+            <div class="form-group">
+                <div class="col-sm-12">
+                    <table class="table table-striped">
+                        <tr>
+                            <th>
+                                <label class="control-label"> Email </label>
+                            </th>
+                            <th></th>
+                        </tr>
+                        @foreach (var item in Model.Emails)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Email, new { @class = "control-label col-md-6" })
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container ">
+        @*<div class="panel panel-default">*@
+        <hr />
+        <div class="row">
+            <div class="form-group">
+                <div class="col-sm-12">
+                    <table class="table table-striped">
+                        <tr>
+                            <th>
+                                <label class="control-label"> Módulos </label>
+                            </th>
+                            <th>
+                                <label class="control-label"> Produtos </label>
+                            </th>
+                            <th></th>
+                        </tr>
+                        @foreach (var item in Model.ClienteModulos)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Modulo.Nome, new { @class = "control-label col-md-6" })
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Produto.Nome, new { @class = "control-label col-md-6" })
+                        </td>
+                    </tr>
+        }
+                    </table>
+                </div>
+            </div>
+
+            <div class="form-group col-sm-12">
+                @DomperBotoes.BotaoVoltar()
+            </div>
+        </div>
+    </div>
+}

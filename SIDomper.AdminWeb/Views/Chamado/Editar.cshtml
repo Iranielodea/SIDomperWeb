@@ -1,0 +1,342 @@
+﻿@model SIDomper.Dominio.ViewModel.ChamadoEditarViewModel
+@{
+    /**/
+
+    /**/
+
+    /**/
+
+    ViewBag.Title = "Editar Chamado";
+}
+
+@Html.AntiForgeryToken()
+@using (Html.BeginForm("Editar", "Chamado", FormMethod.Post))
+{
+    @Html.HiddenFor(model => model.Chamado.Id)
+    @Html.HiddenFor(model => model.Chamado.UsuarioAberturaId)
+    @Html.HiddenFor(model => model.Chamado.ClienteId)
+    @Html.HiddenFor(model => model.Chamado.ModuloId)
+    @Html.HiddenFor(model => model.Chamado.ProdutoId)
+    @Html.HiddenFor(model => model.Chamado.StatusId)
+
+    <div class="box box-default">
+        <div class="box-body">
+            <div class="row">
+                <div class="col-sm-3 col-xs-12">
+                    <div class="form-group">
+                        <label class="control-label" id="Chamado_DataAbertura">Id</label>
+                        <input type="text" value="@Model.Chamado.Id" disabled="disabled" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="col-sm-3 col-xs-12">
+                    <div class="form-group">
+                        <label class="control-label">Data Abertura*</label>
+                        @Html.EditorFor(model => model.DataAbertura, new { htmlAttributes = new { @class = "form-control texto-grande", placeholder = "00/00/0000" } })
+                    </div>
+                </div>
+
+                <div class="col-sm-3 col-xs-12">
+                    <div class="form-group">
+                        <label class="control-label">Hora Abertura*</label>
+                        @Html.EditorFor(model => model.HoraAbertura, new { htmlAttributes = new { @class = "form-control texto-grande", placeholder = "00:00" } })
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-3 col-xs-12">
+                    <div class="form-group">
+                        <label class="control-label">Usuário Abertura</label>
+                        <input type="text" value="@Model.Chamado.UsuarioAbertura.Nome" disabled="disabled" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-sm-3 col-xs-12">
+                    <div class="form-group">
+                        <label class="control-label">Cliente*</label>
+                        <select id="idcliente" name="idcliente" class="form-control texto-grande" onchange=" return BuscarCliente()"></select>
+                        @*<select id="idcliente" name="idcliente" class="form-control texto-grande" onchange="return BuscarCliente()"></select>*@
+                    </div>
+                </div>
+                <div class="col-sm-3 col-xs-12">
+                    <div class="form-group">
+                        <label class="control-label">Contato</label>
+                        @Html.EditorFor(model => model.Chamado.Contato, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-sm-12 col-xs-12">
+                        <fieldset>
+                            <legend>Nível:</legend>
+                            <div class="col-sm-3 col-xs-12">
+                                <div class="form-group">
+                                    @Html.RadioButton("Orc_Enquadramento", Model.Chamado.Nivel, Model.Chamado.Nivel == 1)
+                                    Baixo
+                                </div>
+                            </div>
+                            <div class="col-sm-3 col-xs-12">
+                                <div class="form-group">
+                                    @Html.RadioButton("Orc_Enquadramento", Model.Chamado.Nivel, Model.Chamado.Nivel == 2)
+                                    Normal
+                                </div>
+                            </div>
+                            <div class="col-sm-3 col-xs-12">
+                                <div class="form-group">
+                                    @Html.RadioButton("Orc_Enquadramento", Model.Chamado.Nivel, Model.Chamado.Nivel == 3)
+                                    Alto
+                                </div>
+                            </div>
+                            <div class="col-sm-3 col-xs-12">
+                                <div class="form-group">
+                                    @Html.RadioButton("Orc_Enquadramento", Model.Chamado.Nivel, Model.Chamado.Nivel == 4)
+                                    Crítico
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                    <div class="form-group">
+                        <label class="control-label">Módulo</label>
+                        <select id="idmodulo" name="idmodulo" class="form-control texto-grande" onchange="return BuscarModulo()"></select>
+                        @*<input type="text" value="@Model.Chamado.Modulo.Nome" class="form-control" />*@
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xs-12">
+                    <div class="form-group">
+                        <label class="control-label">Produto</label>
+                        <input type="text" id="nomeproduto" name="nomeproduto" value="@Model.Chamado.Produto.Nome" disabled="disabled" class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                    <div class="form-group">
+                        <label class="control-label">Tipo*</label>
+                        <select id="idtipo" name="idtipo" class="form-control texto-grande"></select>
+                        @*<input type="text" value="@Model.Chamado.Tipo.Nome" class="form-control" />*@
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xs-12">
+                    <div class="form-group">
+                        <label class="control-label">Status*</label>
+                        <input type="text" value="@Model.Chamado.Status.Nome" class="form-control" disabled="disabled" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                    <div class="form-group">
+                        <label class="control-label">Dados dos Clientes</label>
+                        @Html.TextAreaFor(Model => Model.Chamado.Descricao, new { @class = "form-control texto-grande", @cols = 80, @rows = 10, @disabled = "disabled" })
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xs-12">
+                    <div class="form-group">
+                        <label class="control-label">Descrição*</label>
+                        @Html.TextAreaFor(Model => Model.Chamado.Descricao, new { @class = "form-control texto-grande", @cols = 80, @rows = 10 })
+                    </div>
+                </div>
+            </div>
+            @*<div class="row text-center">
+                <div class="form-group">
+                    <div class="col-sm-12 col-xs-12">
+                        <hr />
+                        <h2><b>Ocorrência</b></h2>
+                        <hr />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-3 col-xs-12">
+                    <div class="form-group">
+                        <label class="control-label" id="Chamado_DataAbertura">Documento</label>
+                        <input type="text" value="@Model.Chamado.Id" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="col-sm-3 col-xs-12">
+                    <div class="form-group">
+                        <label class="control-label">Data*</label>
+                        @Html.EditorFor(model => model.Chamado.Contato, new { htmlAttributes = new { @class = "form-control texto-grande", placeholder = "00/00/0000", @disabled = "disabled" } })
+                    </div>
+                </div>
+
+                <div class="col-sm-3 col-xs-12">
+                    <div class="form-group">
+                        <label class="control-label">Hora Inicial*</label>
+                        @Html.EditorFor(model => model.HoraAbertura, new { htmlAttributes = new { @class = "form-control texto-grande", placeholder = "00:00", @disabled = "disabled" } })
+                    </div>
+                </div>
+
+                <div class="col-sm-3 col-xs-12">
+                    <div class="form-group">
+                        <label class="control-label">Hora Final*</label>
+                        @Html.EditorFor(model => model.HoraAbertura, new { htmlAttributes = new { @class = "form-control texto-grande", placeholder = "00:00", @disabled = "disabled" } })
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                    <div class="form-group">
+                        <label class="control-label" id="Chamado_DataAbertura">Usuário</label>
+                        <input type="text" value="@Model.Chamado.Id" disabled="disabled" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-xs-12">
+                    <div class="form-group">
+                        <label class="control-label">Versão</label>
+                        @Html.EditorFor(model => model.Chamado.Contato, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                    <div class="form-group">
+                        <label class="control-label">Descrição do Problema</label>
+                        @Html.TextAreaFor(Model => Model.Chamado.Descricao, new { @class = "form-control texto-grande", @cols = 80, @rows = 10 })
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xs-12">
+                    <div class="form-group">
+                        <label class="control-label">Descrição da Solução</label>
+                        @Html.TextAreaFor(Model => Model.Chamado.Descricao, new { @class = "form-control texto-grande", @cols = 80, @rows = 10 })
+                    </div>
+                </div>
+            </div>*@
+        </div>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Salvar" class="btn btn-primary" />
+        @DomperBotoes.BotaoVoltar()
+    </div>
+}
+
+@section Scripts {
+    <script>
+        function BuscarCliente() {
+            $(function () {
+                $.ajax({
+                    dataType: "json",
+                    type: "GET",
+                    url: "/Chamado/BuscarDadosCliente/" + document.getElementById("idcliente").value,
+                    success: function (dados) {
+                        $(dados).each(function (i) {
+                            //document.getElementById("Orcamento_Bairro").value = dados[i].Bairro;
+                            //document.getElementById("Orcamento_Logradouro").value = dados[i].Endereco;
+                            //document.getElementById("Orcamento_Fantasia").value = dados[i].Fantasia;
+                            //document.getElementById("Orcamento_Dcto").value = dados[i].Dcto;
+                            //document.getElementById("Orcamento_IE").value = dados[i].IE;
+                            //document.getElementById("Orcamento_CEP").value = dados[i].Cep;
+                            //document.getElementById("UF").value = dados[i].UF;
+                            //document.getElementById("Orcamento_Fone1").value = dados[i].Fone1;
+                            //document.getElementById("Orcamento_Fone2").value = dados[i].Fone2;
+                            //document.getElementById("Orcamento_OutroFone").value = dados[i].OutroFone;
+                            //document.getElementById("Orcamento_ContatoCompraVenda").value = dados[i].ContatoCompraVenda;
+                            //document.getElementById("Orcamento_FoneContatoCompraVenda").value = dados[i].FoneContatoCompraVenda;
+                            //document.getElementById("Orcamento_ContatoFinanceiro").value = dados[i].ContatoFinanceiro;
+                            //document.getElementById("Orcamento_FoneContatoFinanceiro").value = dados[i].FoneContatoFinanceiro;
+                            //document.getElementById("Orcamento_RepresentanteLegal").value = dados[i].RepresentanteLegal;
+                            //document.getElementById("Orcamento_CPFRespresentanteLegal").value = dados[i].CPFRepresentanteLegal;
+                            alert(dados[i].Fantasia);
+                        });
+                    }
+                });
+            });
+        }
+
+        function BuscarModulo() {
+            $(function () {
+                $.ajax({
+                    dataType: "json",
+                    type: "GET",
+                    url: "/Chamado/BuscarDadosModulo/" + document.getElementById("idmodulo").value,
+                    success: function (dados) {
+                        $(dados).each(function (i) {
+                            //document.getElementById("nomeproduto").value = dados[i].IdProduto;
+                            //document.getElementById("nomeproduto").value = dados[i].NomeProduto;
+                            alert(dados[i].IdProduto);
+
+                        });
+                    }
+                });
+            });
+        }
+
+        $(function () {
+            $("#idcliente").select2({
+                placeholder: 'Procure um cliente...',
+                minimumInputLength: 3,
+                ajax: {
+                    url: '@Url.Content("~/Chamado/ListarClientes")',
+                    delay: 250,
+                    dataType: 'json',
+                }
+            });
+
+             $("#idmodulo").select2({
+                placeholder: 'Procure um módulo...',
+                minimumInputLength: 3,
+                ajax: {
+                    url: '@Url.Content("~/Chamado/ListarModulos")',
+                    delay: 250,
+                    dataType: 'json',
+                }
+            });
+
+            $("#idtipo").select2({
+                placeholder: 'Procure um tipo...',
+                minimumInputLength: 3,
+                ajax: {
+                    url: '@Url.Content("~/Chamado/ListarTipos")',
+                    delay: 250,
+                    dataType: 'json',
+                }
+            });
+
+            if (@Model.Chamado.Cliente != null) {
+                $("#idcliente").append("<option value=@Model.Chamado.ClienteId selected> @Model.Chamado.Cliente.Nome </option>");
+            }
+
+            if (@Model.Chamado.Modulo != null) {
+                $("#idmodulo").append("<option value=@Model.Chamado.ModuloId selected> @Model.Chamado.Modulo.Nome </option>");
+            }
+
+            if (@Model.Chamado.Tipo != null) {
+                $("#idtipo").append("<option value=@Model.Chamado.TipoId selected> @Model.Chamado.Tipo.Nome </option>");
+            }
+        });
+
+
+        
+
+        $(document).ready(function () {
+            //$("#telefone").inputmask("mask", { "mask": "(99) 9999-99999" });
+            //$("#cpf").inputmask("mask", { "mask": "999.999.999-99" }, { reverse: true });
+            //$("#cep").inputmask("mask", { "mask": "99999-999" });
+            $("#DataAbertura").inputmask("mask", { "mask": "99/99/9999" });
+            //$("#preco").inputmask("mask", { "mask": "999.999,99" }, { reverse: true });
+            //$("#Valor").inputmask("mask", { "mask": "#.##9,99" }, { reverse: true });
+            //$("#ip").inputmask("mask", { "mask": "999.999.999.999" });
+            //$("#HoraInicio").inputmask("mask", { "mask": "99:99" });
+            $("#HoraAbertura").inputmask("mask", { "mask": "99:99" });
+            //$('.dinheiro').mask('###.##0,00', { reverse: true });
+        });
+
+    </script>
+
+    @*<script src="~/Scripts/jquery.mask.min.js"></script>
+        <script src="~/Scripts/mascaras.js"></script>
+        <script src="~/Content/js/plugins/mask/jquery.mask.min.js"></script>*@
+
+    @*<script src="~/Content/js/mascaras.js"></script>*@
+}

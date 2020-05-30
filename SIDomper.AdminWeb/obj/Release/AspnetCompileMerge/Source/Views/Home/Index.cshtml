@@ -1,0 +1,375 @@
+﻿@{
+    ViewBag.Title = "Domper Soluções em Sistemas";
+    ViewBag.Description = "Página Inicial";
+}
+@*
+    <div class="row">
+        <div class="col-xs-12 col-md-5">
+            <div class="box box-default">
+                <div class="box-header">
+                    <h3 class="box-title">iCheck - Checkbox &amp; Radio Inputs</h3>
+                </div>
+                <div class="box-body">
+                    <div class="form-group">
+                        <div>
+                            <input type="checkbox" class="form-control" checked="checked"> Checkbox
+                        </div>
+                        <div>
+                            <input type="checkbox" class="form-control"> Checkbox
+                        </div>
+                        <div>
+                            <input type="checkbox" class="form-control" disabled="disabled"> Disabled Checkbox
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div>
+                            <input type="radio" class="form-control" checked="checked"> Radio Button
+                        </div>
+                        <div>
+                            <input type="radio" class="form-control"> Radio Button
+                        </div>
+                        <div>
+                            <input type="radio" class="form-control" disabled="disabled"> Disabled Radio Button
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-7">
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Bootstrap-Select</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Minimal</label>
+                                <select class="selectpicker">
+                                    <optgroup label="Picnic">
+                                        <option>Mustard</option>
+                                        <option>Ketchup</option>
+                                        <option>Relish</option>
+                                    </optgroup>
+                                    <optgroup label="Camping">
+                                        <option>Tent</option>
+                                        <option>Flashlight</option>
+                                        <option>Toilet Paper</option>
+                                    </optgroup>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Disabled</label>
+                                <select class="selectpicker" disabled>
+                                    <option>Mustard</option>
+                                    <option>Ketchup</option>
+                                    <option>Relish</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Multiple</label>
+                                <select class="selectpicker" multiple>
+                                    <option>Mustard</option>
+                                    <option>Ketchup</option>
+                                    <option>Relish</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Subtext</label>
+                                <select class="selectpicker" data-show-subtext="true">
+                                    <option data-subtext="French's">Mustard</option>
+                                    <option data-subtext="Heinz">Ketchup</option>
+                                    <option data-subtext="Sweet">Relish</option>
+                                    <option data-subtext="Miracle Whip">Mayonnaise</option>
+                                    <option data-divider="true"></option>
+                                    <option data-subtext="Honey">Barbecue Sauce</option>
+                                    <option data-subtext="Ranch">Salad Dressing</option>
+                                    <option data-subtext="Sweet &amp; Spicy">Tabasco</option>
+                                    <option data-subtext="Chunky">Salsa</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-md-6">
+            <div class="box box-default">
+                <div class="box-header">
+                    Date Picker
+                </div>
+                <div class="box-body">
+                    <div class="form-group">
+                        <label>Date:</label>
+                        <div class="input-group date">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <input type="text" class="form-control pull-right datepicker">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-6">
+            <div class="box box-danger">
+                <div class="box-header">
+                    <h3 class="box-title">Input masks</h3>
+                </div>
+                <div class="box-body">
+                    <div class="form-group">
+                        <label>Date masks:</label>
+
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <input type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <input type="text" class="form-control" data-inputmask="'alias': 'mm/dd/yyyy'" data-mask="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>US phone mask:</label>
+
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-phone"></i>
+                            </div>
+                            <input type="text" class="form-control" data-inputmask="&quot;mask&quot;: &quot;(999) 999-9999&quot;" data-mask="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Intl US phone mask:</label>
+
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-phone"></i>
+                            </div>
+                            <input type="text" class="form-control" data-inputmask="'mask': ['999-999-9999 [x99999]', '+099 99 99 9999[9]-9999']" data-mask="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>IP mask:</label>
+
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-laptop"></i>
+                            </div>
+                            <input type="text" class="form-control" data-inputmask="'alias': 'ip'" data-mask="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+*@
+
+
+
+
+
+
+@*<div id="app">
+
+        <ul>
+            <li v-for="item in items">
+                <span v-on:click="incluirModulo(item)">{{item.nome}}</span>
+                <table>
+                    <tbody>
+                        <tr v-for="modulo in item.modulos">
+                            <td>{{modulo}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </li>
+        </ul>
+
+
+
+        <div class="form-group">
+            <label>Nome</label>
+            <input type="text" id="nome" name="nome" v-model="nome" />
+        </div>
+        <div class="form-group">
+            <label>Cidade</label>
+            <input type="text" id="cidade" name="cidade" v-model="cidade" />
+        </div>
+        <div class="form-group">
+            <label>Tipo</label>
+            <input type="radio" name="tipo" v-model="tipo" value="F" />Fisico
+            <input type="radio" name="tipo" v-model="tipo" value="J" />Juridico
+        </div>
+        <div class="form-group" v-if="tipo=='F'">
+            <label>CPF</label>
+            <input type="text" id="cpf" name="cpf" v-model="cpf" />
+        </div>
+        <div class="form-group" v-if="tipo=='J'">
+            <label>CNPJ</label>
+            <input type="text" id="cnpj" name="cnpj" v-model="cnpj" />
+        </div>
+        <div class="form-group">
+            <label>Telefone</label>
+            <input type="text" id="telefone" name="telefone" v-model="telefone" />
+        </div>
+
+        <button type="button" v-on:click="alterar">TESTE</button>
+
+        <span>Quantidade de Clientes:{{clientes.length}}</span>
+
+        <table class="table" v-if="clientes.length > 0">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Cidade</th>
+                    <th>Telefone</th>
+                    <th>>Excluir</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(cliente,index) in clientes" v-on:click="mostrar(cliente)">
+                    <td>{{cliente.nome}}</td>
+                    <td>{{cliente.cidade}}</td>
+                    <td>{{cliente.telefone}}</td>
+                    <td><button type="button" v-on:click="excluir(index)">Excluir</button></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <hr />
+
+        {{nome}}
+        {{cidade}}
+        {{telefone}}
+
+    </div>*@
+
+
+
+
+
+
+
+
+
+@*@section scripts {
+    <script>
+
+        var v = new Vue({
+            el: '#app',
+            data: {
+                nome: '',
+                cidade: '',
+                telefone: '',
+                tipo: '',
+                cpf: '',
+                cnpj: '',
+                clientes: [],
+                items: [
+                    {
+                        nome: 'item 1',
+                        modulos: ['m1', 'm2', 'm3']
+                    },
+                    {
+                        nome: 'item 2',
+                        modulos: ['s1', 'm2', 'm3']
+                    },
+                    {
+                        nome: 'item 3',
+                        modulos: ['d1', 'd2', 'm3']
+                    },
+                    {
+                        nome: 'item 4',
+                        modulos: ['m1', 'p2', 'm3']
+                    },
+                ]
+            },
+            methods: {
+                alterar: function () {
+                    this.clientes.push({
+                        nome: this.nome,
+                        cidade: this.cidade,
+                        telefone: this.telefone
+                    })
+                },
+                mostrar: function (c) {
+                    alert(c);
+
+                },
+                excluir: function (i) {
+                    console.log(i);
+                    if (confirm("DESEJA MESMO????")) {
+                        this.clientes.splice(i, 1);
+                    }
+                },
+                incluirModulo: function (item) {
+                    item.modulos.push('novomodulo');
+                }
+            },
+            mounted() {
+                var self = this;
+                $.get('/home/lista', function (data) {
+                    $.map(data.results, function (m) {
+                        self.clientes.push({
+                            nome: m.text,
+                            cidade: '',
+                            telefone: ''
+                        });
+                    });
+                });
+            },
+        })*@
+
+
+
+@*$(function () {
+                $("#teste").select2({
+                    placeholder: 'Procure um cliente...',
+                    minimumInputLength: 3,
+                    ajax: {
+                        url: '@Url.Content("~/home/lista")',
+                        delay: 250,
+                        dataType: 'json'
+                    }
+                });
+            });
+
+
+        </script>
+    }*@
+
+@*@section scripts {
+    <script>
+        $(function () {
+                $("#teste").select2({
+                    placeholder: 'Procure um cliente...',
+                    minimumInputLength: 3,
+                    ajax: {
+                        url: '@Url.Content("~/home/lista")',
+                        delay: 250,
+                        dataType: 'json'
+                    }
+                });
+            });
+
+
+    </script>
+}
+
+<select id="teste" name="teste" class="form-control"></select>*@
+

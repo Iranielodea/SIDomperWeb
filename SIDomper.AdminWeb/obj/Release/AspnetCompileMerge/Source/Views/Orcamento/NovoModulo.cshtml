@@ -1,0 +1,36 @@
+﻿@model SIDomper.Dominio.ViewModel.OrcamentoNovoViewModel
+@{
+    ViewBag.Title = "Módulos";
+    var id = HttpContext.Current.Request.RequestContext.RouteData.Values["id"].ToString();
+
+        <input type="text" value="@id" name="txtId" id="txtId" />
+}
+
+@using (Html.BeginForm("NovoModulo", "Orcamento", FormMethod.Post))
+{
+    <div>
+        <div class="box box-default">
+            <div class="box-body">
+                <div class="form-group">
+                    <div class="col-sm-12 col-xs-12">
+                        <table class="table table-striped">
+                            @foreach (var item in Model.Modulos)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Nome, new { @class = "control-label" })
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Adicionar", "NovoModulo", "Orcamento", new { id = item.Id }, new { @class = "control-label col-md-6 btn btn-primary" })
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+

@@ -1,0 +1,120 @@
+﻿@model SIDomper.Dominio.ViewModel.VisitaViewModel
+@{
+    /**/
+
+    /**/
+
+    ViewBag.Title = "Visitas";
+}
+
+@Html.AntiForgeryToken()
+@using (Html.BeginForm("Index", "Visita", FormMethod.Post, new { @class = "form-inline" }))
+{
+    <div class="panel panel-default">
+        <div class="row">
+            <div class="form-group">
+                <div class="col-xs-12">
+                    <label>Data Inicial</label>
+                    @Html.EditorFor(model => model.Filtro.DataInicial, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-12">
+                    <label>Data Final</label>
+                    @Html.EditorFor(model => model.Filtro.DataFinal, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-12">
+                    <label>Razão Social</label>
+                    @Html.EditorFor(model => model.Filtro.RazaoSocial, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-12">
+                    <button type="submit" class="btn btn-primary" id="btn-Pesquisar">Pesquisar</button>
+                </div>
+            </div>
+            @*<div class="form-group">
+                <div class="col-xs-12">
+                    @Html.ActionLink("Cadastrar", "Novo")
+                </div>
+            </div>*@
+        </div>
+    </div>
+}
+
+<div class="panel panel-default">
+    <div class="row">
+        <div class="form-group">
+            <div class="col-xs-12">
+                <table class="table table-striped">
+                    <tr>
+                        <th>
+                            <label class="control-label"> @Html.DisplayNameFor(model => model.VisitaConsulta.Id) </label>
+                        </th>
+                        <th>
+                            <label class="control-label"> @Html.DisplayNameFor(model => model.VisitaConsulta.Data) </label>
+                        </th>
+                        <th>
+                            <label class="control-label"> @Html.DisplayNameFor(model => model.VisitaConsulta.Documento) </label>
+                        </th>
+                        <th>
+                            <label class="control-label"> @Html.DisplayNameFor(model => model.VisitaConsulta.NomeCliente) </label>
+                        </th>
+                        <th>
+                            <label class="control-label"> @Html.DisplayNameFor(model => model.VisitaConsulta.NomeFantasia) </label>
+                        </th>
+                        <th>
+                            <label class="control-label"> @Html.DisplayNameFor(model => model.VisitaConsulta.NomeConsultor) </label>
+                        </th>
+                        <th></th>
+                    </tr>
+                    @foreach (var item in Model.ListaConsulta)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Id, new { @class = "control-label col-md-6" })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Data, new { @class = "control-label col-md-6" })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Documento, new { @class = "control-label col-md-6" })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NomeCliente, new { @class = "control-label col-md-6" })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NomeFantasia, new { @class = "control-label col-md-6" })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NomeConsultor, new { @class = "control-label col-md-6" })
+                            </td>
+                            <td>
+                                @Html.ActionLink("Editar", "Alterar", new { id = item.Id }, new { @class = "control-label col-md-6" })
+                                @Html.ActionLink("Excluir", "Excluir", new { id = item.Id }, new { @class = "control-label col-md-6",  onclick = "return confirm('Confirmar Exclusão?')" })
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            //$("#telefone").inputmask("mask", { "mask": "(99) 9999-99999" });
+            //$("#cpf").inputmask("mask", { "mask": "999.999.999-99" }, { reverse: true });
+            //$("#cep").inputmask("mask", { "mask": "99999-999" });
+            $("#Data").inputmask("mask", { "mask": "99/99/9999" });
+            //$("#preco").inputmask("mask", { "mask": "999.999,99" }, { reverse: true });
+            //$("#Valor").inputmask("mask", { "mask": "#.##9,99" }, { reverse: true });
+            //$("#ip").inputmask("mask", { "mask": "999.999.999.999" });
+            //$("#HoraInicio").inputmask("mask", { "mask": "99:99" });
+            //$("#HoraFim").inputmask("mask", { "mask": "99:99" });
+        });
+    </script>
+}

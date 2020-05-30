@@ -1,0 +1,336 @@
+﻿@model SIDomper.Dominio.Entidades.Cliente
+@{
+    /**/
+
+    ViewBag.Title = "Detalhes do Cliente";
+}
+
+
+
+
+@using (Html.BeginForm("Editar", "Cliente", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Latitude)
+    @Html.HiddenFor(model => model.Longitude)
+    @Html.HiddenFor(model => model.UsuarioId)
+    @Html.HiddenFor(model => model.Ativo)
+    @Html.HiddenFor(model => model.Codigo)
+    @Html.HiddenFor(model => model.Logradouro)
+    @Html.HiddenFor(model => model.CidadeId)
+    @Html.HiddenFor(model => model.Restricao)
+    @Html.HiddenFor(model => model.RevendaId)
+    @Html.HiddenFor(model => model.Telefone)
+    @Html.HiddenFor(model => model.Contato)
+
+
+    @*@Html.EditorFor(model => model.Latitude, new { htmlAttributes = new { @class = "form-control texto-grande", placeholder = "Latitude" } })
+        @Html.EditorFor(model => model.Longitude, new { htmlAttributes = new { @class = "form-control texto-grande", placeholder = "Longitude" } })*@
+
+    <div class="row">
+        <div class="col-sm-6 col-xs-12">
+            @Html.LabelFor(model => model.Codigo)
+            <label class="form-control">@Model.Codigo</label>
+        </div>
+
+        @*<div class="col-sm-2 col-xs-12">
+            <label> </label>
+            <input type="button" value="Coordenadas" class="form-control btn-danger" onclick="return getTexto()" />
+        </div>
+        <div class="col-sm-2 col-xs-12">
+            <label> </label>
+            <input type="submit" value="Salvar" class="form-control btn-primary" onclick="return validarCoordenadas()" />
+        </div>*@
+
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6 col-xs-12">
+            @Html.LabelFor(model => model.Nome)
+            <label class="form-control">@Model.Nome</label>
+            @Html.HiddenFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+        </div>
+        <div class="col-sm-6 col-xs-12">
+            @Html.LabelFor(model => model.Fantasia)
+            <label class="form-control">@Model.Fantasia</label>
+            @Html.HiddenFor(model => model.Fantasia, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-4 col-xs-12">
+            @Html.LabelFor(model => model.Dcto)
+            <label class="form-control">@Model.Dcto</label>
+            @Html.HiddenFor(model => model.Dcto, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+        </div>
+        <div class="col-sm-4 col-xs-12">
+            @Html.LabelFor(model => model.IE)
+            <label class="form-control">@Model.IE</label>
+            @Html.HiddenFor(model => model.IE, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+        </div>
+        <div class="col-sm-4 col-xs-12">
+            @Html.LabelFor(model => model.Versao)
+            <label class="form-control">@Model.Versao</label>
+            @Html.HiddenFor(model => model.Versao, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6 col-xs-12">
+            @Html.LabelFor(model => model.Endereco)
+            <label class="form-control">@Model.Endereco</label>
+            @Html.HiddenFor(model => model.Endereco, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+        </div>
+        <div class="col-sm-6 col-xs-12">
+            @Html.LabelFor(model => model.CEP)
+            <label class="form-control">@Model.CEP</label>
+            @Html.HiddenFor(model => model.CEP, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-4 col-xs-12">
+            @Html.LabelFor(model => model.Bairro)
+            <label class="form-control">@Model.Bairro</label>
+            @Html.HiddenFor(model => model.Bairro, new { htmlAttributes = new { @class = "form-control  texto-grande" } })
+        </div>
+        <div class="col-sm-4 col-xs-12">
+            @if (Model.Cidade != null)
+            {
+                <label class="control-label">Cidade</label>
+                <label class="form-control">@Model.Cidade.Nome</label>
+                @Html.HiddenFor(model => model.Cidade.Nome, new { htmlAttributes = new { @class = "form-control  texto-grande" } })
+            }
+        </div>
+        <div class="col-sm-4 col-xs-12">
+            @if (Model.Cidade != null)
+            {
+                @Html.LabelFor(model => model.Cidade.UF)
+                <label class="form-control">@Model.Cidade.UF</label>
+                @Html.HiddenFor(model => model.Cidade.UF, new { htmlAttributes = new { @class = "form-control  texto-grande" } })
+            }
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-3 col-xs-12">
+            <b>Fone1</b>
+            <label class="form-control">@Model.Fone1</label>
+            @Html.HiddenFor(model => model.Fone1, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+
+        </div>
+        <div class="col-sm-3 col-xs-12">
+            <b>Fone2</b>
+            <label class="form-control">@Model.Fone2</label>
+            @Html.HiddenFor(model => model.Fone2, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+        </div>
+        <div class="col-sm-3 col-xs-12">
+            <b>Celular</b>
+            <label class="form-control">@Model.Celular</label>
+            @Html.HiddenFor(model => model.Celular, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+        </div>
+
+        <div class="col-sm-3 col-xs-12">
+            <b>Outro Telefone</b>
+            <label class="form-control">@Model.OutroFone</label>
+            @Html.HiddenFor(model => model.OutroFone, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6 col-xs-12">
+            <b>Contato Financeiro</b>
+            <label class="form-control">@Model.ContatoFinanceiro</label>
+            @Html.HiddenFor(model => model.ContatoFinanceiro, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+        </div>
+        <div class="col-sm-6 col-xs-12">
+            <b>Telefone</b>
+            <label class="form-control">@Model.FoneContatoFinanceiro</label>
+            @Html.HiddenFor(model => model.FoneContatoFinanceiro, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6 col-xs-12">
+            <b>Contato Compra/Venda</b>
+            <label class="form-control">@Model.ContatoCompraVenda</label>
+            @Html.HiddenFor(model => model.ContatoCompraVenda, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+        </div>
+        <div class="col-sm-6 col-xs-12">
+            <b>Telefone</b>
+            <label class="form-control">@Model.FoneContatoCompraVenda</label>
+            @Html.HiddenFor(model => model.FoneContatoCompraVenda, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 col-xs-12">
+            @if (Model.Usuario != null)
+            {
+                <b>Consultor</b>
+                <label class="form-control">@Model.Usuario.Nome</label>
+                @Html.HiddenFor(model => model.Usuario.Nome, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+            }
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 col-xs-12">
+            <b>Revenda</b>
+            <label class="form-control">@Model.Revenda.Nome</label>
+            @Html.HiddenFor(model => model.Revenda.Nome, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6 col-xs-12">
+            <label class="control-label">Representante Legal </label>
+            <label class="form-control">@Model.RepresentanteLegal</label>
+            @Html.HiddenFor(model => model.RepresentanteLegal, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+        </div>
+        <div class="col-sm-6 col-xs-12">
+            <label class="control-label"> CPF Representante </label>
+            <label class="form-control">@Model.CPFRepresentanteLegal</label>
+            @Html.HiddenFor(model => model.CPFRepresentanteLegal, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <div class="col-sm-12 col-xs-12">
+                <b>Empresa Vinculada</b>
+                <label class="form-control">@Model.EmpresaVinculada</label>
+                @Html.HiddenFor(model => model.EmpresaVinculada, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <div class="col-sm-12 col-xs-12">
+                <b>Enquadramento:</b>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <div class="col-sm-12 col-xs-12">
+                @Html.HiddenFor(model => model.Enquadramento, new { htmlAttributes = new { @class = "form-control" } })
+                @if (Model.Enquadramento == "01")
+                {
+                    <input type="text" class="form-control" value="Simples" />
+                }
+                @if (Model.Enquadramento == "02")
+                {
+                    <input type="text" class="form-control" value="Lucro Presumido" />
+                }
+                @if (Model.Enquadramento == "03")
+                {
+                    <Label>Lucro Real</Label>
+                }
+                @if (Model.Enquadramento == "00")
+                {
+                    <input type="text" class="form-control" value="Não Definido" />
+                }
+
+                @*Simples
+                    @Html.RadioButton("Enquadramento", Model.Enquadramento, Model.Enquadramento == "01")
+                    Lucro Presumido
+                    @Html.RadioButton("Enquadramento", Model.Enquadramento, Model.Enquadramento == "02")
+                    Lucro Real
+                    @Html.RadioButton("Enquadramento", Model.Enquadramento, Model.Enquadramento == "03")
+                    Não Definido
+                    @Html.RadioButton("Enquadramento", Model.Enquadramento, Model.Enquadramento == "00")*@
+            </div>
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        @if (Model.Emails.Count > 0)
+        {
+            <div class="form-group">
+                <div class="col-sm-12 col-xs-12">
+                    <table class="table table-striped">
+                        <tr class="bg-gray">
+                            <th>
+                                <label class="control-label"> Email(s) </label>
+                            </th>
+                            <th></th>
+                        </tr>
+                        @foreach (var item in Model.Emails)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Email, new { @class = "control-label" })
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+        }
+    </div>
+
+    <hr />
+    <div class="row">
+        <div class="form-group">
+            <div class="col-sm-12 col-xs-12">
+                <table class="table table-striped">
+                    <tr class="bg-gray">
+                        <th>
+                            <label class="control-label"> Módulos </label>
+                        </th>
+                        <th>
+                            <label class="control-label"> Produtos </label>
+                        </th>
+                        <th></th>
+                    </tr>
+                    @foreach (var item in Model.ClienteModulos)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Modulo.Nome, new { @class = "control-label" })
+                            </td>
+                            <td>
+                                @if (item.Produto != null)
+                                {
+                                    @Html.DisplayFor(modelItem => item.Produto.Nome, new { @class = "control-label" })
+                                }
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+
+        <div class="form-group col-sm-12 col-xs-12">
+            @DomperBotoes.BotaoVoltar()
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script>
+        function getTexto() {
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+                x.innerHTML = "Geolocalização não suportado pelo browser.";
+            }
+
+            function showPosition(position) {
+                document.getElementById("Latitude").value = position.coords.latitude;
+                document.getElementById("Longitude").value = position.coords.longitude;
+
+                //    var url = 'https://www.google.com.br/maps/@@' + position.coords.latitude + ',' + position.coords.longitude + 'z'
+                //    window.open(url, '_blank');
+            }
+
+        }
+
+        function validarCoordenadas() {
+            var la = document.getElementById("Latitude").value;
+            //if (la == "") {
+            //    alert("Clique no botão Coordenadas");
+            //    return false;
+            //}
+        }
+
+    </script>
+}

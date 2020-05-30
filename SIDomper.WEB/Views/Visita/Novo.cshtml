@@ -1,0 +1,148 @@
+﻿@model SIDomper.Dominio.Entidades.Visita
+
+@{
+    /**/
+    // pega id que vem do cliente
+    var idCliente = HttpContext.Current.Request.RequestContext.RouteData.Values["id"];
+
+    if (idCliente != null)
+    {
+        Model.ClienteId = Convert.ToInt32(idCliente);
+    }
+
+    /**/
+
+    ViewBag.Title = "Nova Visita";
+}
+
+@Html.AntiForgeryToken()
+
+@using (Html.BeginForm("Alterar", "Visita", FormMethod.Post, new { @class = "form-inline" }))
+{
+    <div class="form-horizontal">
+        @*<div class="panel panel-default">*@
+        <div class="container">
+            <br />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id)
+
+            <div class="row">
+                <div class="col-sm-6">
+                    @Html.LabelFor(model => model.Dcto)
+                    @Html.EditorFor(model => model.Dcto, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+                    @Html.ValidationMessageFor(model => model.Dcto, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    @Html.LabelFor(model => model.Data, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.Data, new { htmlAttributes = new { @class = "form-control texto-grande", placeholder = "00/00/0000" } })
+                    @Html.ValidationMessageFor(model => model.Data, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-4">
+                    @Html.LabelFor(model => model.HoraInicio)
+                    @Html.EditorFor(model => model.HoraInicio, new { htmlAttributes = new { @class = "form-control texto-grande", placeholder = "00:00" } })
+                    @Html.ValidationMessageFor(model => model.HoraInicio, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-4">
+                    @Html.LabelFor(model => model.HoraFim)
+                    @Html.EditorFor(model => model.HoraFim, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    @Html.LabelFor(model => model.Cliente.Nome, htmlAttributes: new { @class = "control-label" })
+                    @Html.DropDownListFor(n => n.ClienteId, new SelectList(Model.ListaClientes, "Id", "Nome"), new { @class = "form-control texto-grande" })
+                    @Html.ValidationMessageFor(model => model.ClienteId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-sm-12">
+                    @Html.LabelFor(model => model.Contato, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.Contato, "Contato", new { htmlAttributes = new { @class = "form-control texto-grande" } })
+                    @Html.ValidationMessageFor(model => model.Contato, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row">
+                @*<div class="col-sm-4">*@
+
+                @*@Html.LabelFor(model => model.Usuario.Nome, htmlAttributes: new { @class = "control-label" })*@
+                @*<label class="form-control texto-grande">@Model.Usuario.Nome</label>*@
+                @*@Html.EditorFor(model => model.Usuario.Nome, "Contato", new { htmlAttributes = new { @class = "form-control texto-grande" } })*@
+                @*@Html.DropDownListFor(n => n.UsuarioId, new SelectList(Model.ListaUsuarios, "Id", "Nome"), new { @class = "form-control", @disabled = "disabled" })*@
+                @*@Html.DropDownListFor(n => n.UsuarioId, new SelectList(Model.ListaUsuarios, "Id", "Nome"), new { @class = "form-control"})*@
+                @Html.HiddenFor(model => model.UsuarioId)
+                @Html.ValidationMessageFor(model => model.UsuarioId, "", new { @class = "text-danger" })
+                @*</div>*@
+                <div class="col-sm-4">
+
+                    @Html.LabelFor(model => model.Tipo.Nome, htmlAttributes: new { @class = "control-label" })
+                    @Html.DropDownListFor(n => n.TipoId, new SelectList(Model.ListaTipos, "Id", "Nome"), new { @class = "form-control texto-grande" })
+                    @Html.ValidationMessageFor(model => model.TipoId, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-4">
+                    @Html.LabelFor(model => model.Status.Nome, htmlAttributes: new { @class = "control-label" })
+                    @Html.DropDownListFor(n => n.StatusId, new SelectList(Model.ListaStatus, "Id", "Nome"), new { @class = "form-control texto-grande" })
+                    @Html.ValidationMessageFor(model => model.StatusId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    @Html.LabelFor(model => model.Descricao, htmlAttributes: new { @class = "control-label" })
+                    @Html.TextAreaFor(model => model.Descricao, new { @class = "form-control texto-grande" })
+                    @Html.ValidationMessageFor(model => model.Descricao, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    @Html.LabelFor(model => model.FormaPagto, htmlAttributes: new { @class = "control-label" })
+                    @Html.TextAreaFor(model => model.FormaPagto, new { @class = "form-control texto-grande" })
+                    @Html.ValidationMessageFor(model => model.FormaPagto, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    @Html.LabelFor(model => model.Valor, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.Valor, new { htmlAttributes = new { @class = "form-control texto-grande", placeholder = "0,00", data_tipo = "moeda" } })
+                    @Html.ValidationMessageFor(model => model.Valor, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-xs-6">
+                    @Html.LabelFor(model => model.Versao, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.Versao, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+                    @Html.ValidationMessageFor(model => model.Versao, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row">
+                <br />
+                <div class="form-group col-sm-12">
+                    <input type="submit" value="Salvar" class="btn btn-primary form-control" />
+                    @DomperBotoes.BotaoVoltar()
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            //$("#telefone").inputmask("mask", { "mask": "(99) 9999-99999" });
+            //$("#cpf").inputmask("mask", { "mask": "999.999.999-99" }, { reverse: true });
+            //$("#cep").inputmask("mask", { "mask": "99999-999" });
+            $("#Data").inputmask("mask", { "mask": "99/99/9999" });
+            //$("#preco").inputmask("mask", { "mask": "999.999,99" }, { reverse: true });
+            //$("#Valor").inputmask("mask", { "mask": "#.##9,99" }, { reverse: true });
+            //$("#ip").inputmask("mask", { "mask": "999.999.999.999" });
+            $("#HoraInicio").inputmask("mask", { "mask": "99:99" });
+            $("#HoraFim").inputmask("mask", { "mask": "99:99" });
+        });
+
+    </script>
+    <script src="~/Scripts/jquery.mask.min.js"></script>
+    <script src="~/Scripts/mascaras.js"></script>
+}
+

@@ -1,0 +1,70 @@
+﻿@using WebHelpers.Mvc5
+<aside class="main-sidebar">
+    <section class="sidebar">
+        @* BEGIN Search *@
+        @*
+                <form action="#" method="get" class="sidebar-form">
+                    <div class="input-group">
+                        <input type="text" name="q" class="form-control" placeholder="Search...">
+                        <span class="input-group-btn">
+                            <button type="submit" name="search" id="search-btn" class="btn btn-flat">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </span>
+                    </div>
+                </form>
+
+
+        <ul class="nav nav-sidebar">
+            @*    <li class="active"><a href="#">Opcao 1</a></li>*@
+        @* END Search *@
+        @* BEGIN Menu *@
+        <ul class="sidebar-menu" data-widget="tree">
+            <li class="header">Menu</li>
+
+
+            <li class="@Url.IsLinkActive("Index", "Cliente")">
+                <a href="@Url.Action("Index", "Cliente")"><i class="fa fa-users"></i> <span>Clientes</span></a>
+            </li>
+
+            @*<li class="@Url.IsLinkActive("Quadro", "Chamado")">
+                <a href="@Url.Action("Quadro", "Chamado")"><i class="fa fa-users"></i> <span>Chamados</span></a>
+            </li>*@
+
+            <li class="@Url.IsLinkActive("Index", "Visita")">
+                <a href="@Url.Action("Index", "Visita")"><i class="fa fa-address-book"></i> <span>Visitas</span></a>
+            </li>
+
+            @*<li class="@Url.IsLinkActive("Index", "Orcamento")">
+                <a href="@Url.Action("Index", "Orcamento")"><i class="fa fa-address-book"></i> <span>Orcamentos</span></a>
+            </li>*@
+
+            <li class="@Url.IsLinkActive("Contact", "Home")">
+                <a href="@Url.Action("Contact", "Home")"><i class="fa fa-envelope"></i> <span>Contato</span></a>
+            </li>
+
+            <li class="@Url.IsLinkActive("About", "Home")">
+                <a href="@Url.Action("About", "Home")"><i class="fa fa-info-circle"></i> <span>Sobre</span></a>
+            </li>
+            <li class="@Url.IsLinkActive("sair", "login")">
+                <a href="@Url.Action("sair", "login")"><i class="fa fa-address-card"></i> <span>Sair</span></a>
+            </li>
+
+            @*
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-link"></i> <span>Multilevel</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li><a href="#">Link in level 2</a></li>
+                <li><a href="#">Link in level 2</a></li>
+            </ul>
+        </li>
+            *@
+        </ul>
+        @* END Menu *@
+    </section>
+</aside>

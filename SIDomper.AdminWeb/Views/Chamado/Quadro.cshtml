@@ -1,0 +1,366 @@
+﻿@model SIDomper.Dominio.ViewModel.ChamadoQuadroViewModel
+@{
+    ViewBag.Title = "Chamados";
+}
+
+@Html.ActionLink("Abrir Chamado", "Editar", new { @class = "btn btn-primary" })
+
+<div class="row">
+    <div class="form-group">
+        <div class="col-xs-6">
+            <div class="box box-default">
+                <div class="text-center">
+                    <label class="control-label">@Model.Titulo1 ( @Model.Quadro1.Count() )</label>
+                </div>
+                <table class="table table-striped">
+                    <tr>
+                        <th class="hidden-xs">
+                            <label class="control-label">ID</label>
+                        </th>
+                        <th class="hidden-xs">
+                            <label class="control-label">Data</label>
+                        </th>
+                        <th class="hidden-xs">
+                            <label class="control-label">Cliente</label>
+                        </th>
+                        <th>
+                            <label class="control-label">Nivel</label>
+                        </th>
+                        <th class="hidden-xs">
+                            <label class="control-label">Usuário</label>
+                        </th>
+                        <th class="hidden-xs">
+                            <label class="control-label">Tempo</label>
+                        </th>
+                        <th></th>
+                    </tr>
+                    @foreach (var item in Model.Quadro1)
+                    {
+                        <tr>
+                            <td class="hidden-xs">
+                                @Html.DisplayFor(modelItem => item.Id, new { @class = "control-label col-md-6" })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DataAbertura, new { @class = "control-label col-md-6" })
+                            </td>
+                            <td class="hidden-xs">
+                                @Html.DisplayFor(modelItem => item.NomeCliente, new { @class = "control-label col-md-6" })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Nivel, new { @class = "control-label col-md-6" })
+                            </td>
+                            <td class="hidden-xs">
+                                @Html.DisplayFor(modelItem => item.NomeUsuario, new { @class = "control-label col-md-6" })
+                            </td>
+                            <td class="hidden-xs">
+                                @Html.DisplayFor(modelItem => item.Tempo, new { @class = "control-label col-md-6" })
+                            </td>
+                            <td>
+                                @Html.ActionLink("Detalhe", "Editar", new { id = item.Id }, new { @class = "control-label col-md-6  btn btn-primary" })
+                                @Html.ActionLink("Ocorr.", "Excluir", new { id = item.Id }, new { @class = "control-label col-md-6  btn btn-danger", onclick = "return confirm('Confirmar Exclusão?')" })
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+
+        <div class="col-xs-6">
+            <div class="box box-default">
+                <div class="text-center">
+                    <label class="control-label">@Model.Titulo2 ( @Model.Quadro2.Count() )</label>
+                </div>
+                <table class="table table-striped">
+                    <tr>
+                        <th class="hidden-xs">
+                            <label class="control-label">ID</label>
+                        </th>
+                        <th class="hidden-xs">
+                            <label class="control-label">Data</label>
+                        </th>
+                        <th class="hidden-xs">
+                            <label class="control-label">Cliente</label>
+                        </th>
+                        <th>
+                            <label class="control-label">Nivel</label>
+                        </th>
+                        <th class="hidden-xs">
+                            <label class="control-label">Usuário</label>
+                        </th>
+                        <th class="hidden-xs">
+                            <label class="control-label">Tempo</label>
+                        </th>
+                        <th></th>
+                    </tr>
+                    @foreach (var item in Model.Quadro2)
+                    {
+                        <tr>
+                            <td class="hidden-xs">
+                                @Html.DisplayFor(modelItem => item.Id, new { @class = "control-label col-md-6" })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DataAbertura, new { @class = "control-label col-md-6" })
+                            </td>
+                            <td class="hidden-xs">
+                                @Html.DisplayFor(modelItem => item.NomeCliente, new { @class = "control-label col-md-6" })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Nivel, new { @class = "control-label col-md-6" })
+                            </td>
+                            <td class="hidden-xs">
+                                @Html.DisplayFor(modelItem => item.NomeUsuario, new { @class = "control-label col-md-6" })
+                            </td>
+                            <td class="hidden-xs">
+                                @Html.DisplayFor(modelItem => item.Tempo, new { @class = "control-label col-md-6" })
+                            </td>
+                            <td>
+                                @Html.ActionLink("Detalhe", "Editar", new { id = item.Id }, new { @class = "control-label col-md-6  btn btn-primary" })
+                                @Html.ActionLink("Ocorr.", "Excluir", new { id = item.Id }, new { @class = "control-label col-md-6  btn btn-danger", onclick = "return confirm('Confirmar Exclusão?')" })
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="form-group">
+        <div class="col-xs-6">
+            <div class="box box-default">
+                <div class="text-center">
+                    <label class="control-label">@Model.Titulo3 ( @Model.Quadro3.Count() )</label>
+                </div>
+                <table class="table table-striped">
+                    <tr>
+                        <th class="hidden-xs">
+                            <label class="control-label">ID</label>
+                        </th>
+                        <th class="hidden-xs">
+                            <label class="control-label">Data</label>
+                        </th>
+                        <th class="hidden-xs">
+                            <label class="control-label">Cliente</label>
+                        </th>
+                        <th>
+                            <label class="control-label">Nivel</label>
+                        </th>
+                        <th class="hidden-xs">
+                            <label class="control-label">Usuário</label>
+                        </th>
+                        <th class="hidden-xs">
+                            <label class="control-label">Tempo</label>
+                        </th>
+                        <th></th>
+                    </tr>
+                    @foreach (var item in Model.Quadro3)
+                    {
+                        <tr>
+                            <td class="hidden-xs">
+                                @Html.DisplayFor(modelItem => item.Id, new { @class = "control-label col-md-6" })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DataAbertura, new { @class = "control-label col-md-6" })
+                            </td>
+                            <td class="hidden-xs">
+                                @Html.DisplayFor(modelItem => item.NomeCliente, new { @class = "control-label col-md-6" })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Nivel, new { @class = "control-label col-md-6" })
+                            </td>
+                            <td class="hidden-xs">
+                                @Html.DisplayFor(modelItem => item.NomeUsuario, new { @class = "control-label col-md-6" })
+                            </td>
+                            <td class="hidden-xs">
+                                @Html.DisplayFor(modelItem => item.Tempo, new { @class = "control-label col-md-6" })
+                            </td>
+                            <td>
+                                @Html.ActionLink("Detalhe", "Editar", new { id = item.Id }, new { @class = "control-label col-md-6  btn btn-primary" })
+                                @Html.ActionLink("Ocorr.", "Excluir", new { id = item.Id }, new { @class = "control-label col-md-6  btn btn-danger", onclick = "return confirm('Confirmar Exclusão?')" })
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+
+        <div class="col-xs-6">
+            <div class="box box-default">
+                <div class="text-center">
+                    <label class="control-label">@Model.Titulo4 ( @Model.Quadro4.Count() )</label>
+                </div>
+                <table class="table table-striped">
+                    <tr>
+                        <th class="hidden-xs">
+                            <label class="control-label">ID</label>
+                        </th>
+                        <th class="hidden-xs">
+                            <label class="control-label">Data</label>
+                        </th>
+                        <th class="hidden-xs">
+                            <label class="control-label">Cliente</label>
+                        </th>
+                        <th>
+                            <label class="control-label">Nivel</label>
+                        </th>
+                        <th class="hidden-xs">
+                            <label class="control-label">Usuário</label>
+                        </th>
+                        <th class="hidden-xs">
+                            <label class="control-label">Tempo</label>
+                        </th>
+                        <th></th>
+                    </tr>
+                    @foreach (var item in Model.Quadro4)
+                    {
+                        <tr>
+                            <td class="hidden-xs">
+                                @Html.DisplayFor(modelItem => item.Id, new { @class = "control-label col-md-6" })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DataAbertura, new { @class = "control-label col-md-6" })
+                            </td>
+                            <td class="hidden-xs">
+                                @Html.DisplayFor(modelItem => item.NomeCliente, new { @class = "control-label col-md-6" })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Nivel, new { @class = "control-label col-md-6" })
+                            </td>
+                            <td class="hidden-xs">
+                                @Html.DisplayFor(modelItem => item.NomeUsuario, new { @class = "control-label col-md-6" })
+                            </td>
+                            <td class="hidden-xs">
+                                @Html.DisplayFor(modelItem => item.Tempo, new { @class = "control-label col-md-6" })
+                            </td>
+                            <td>
+                                @Html.ActionLink("Detalhe", "Editar", new { id = item.Id }, new { @class = "control-label col-md-6  btn btn-primary" })
+                                @Html.ActionLink("Ocorr.", "Excluir", new { id = item.Id }, new { @class = "control-label col-md-6  btn btn-danger", onclick = "return confirm('Confirmar Exclusão?')" })
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="form-group">
+        <div class="col-xs-6">
+            <div class="box box-default">
+                <div class="text-center">
+                    <label class="control-label">@Model.Titulo5 ( @Model.Quadro5.Count() )</label>
+                </div>
+                <table class="table table-striped">
+                    <tr>
+                        <th class="hidden-xs">
+                            <label class="control-label">ID</label>
+                        </th>
+                        <th class="hidden-xs">
+                            <label class="control-label">Data</label>
+                        </th>
+                        <th class="hidden-xs">
+                            <label class="control-label">Cliente</label>
+                        </th>
+                        <th>
+                            <label class="control-label">Nivel</label>
+                        </th>
+                        <th class="hidden-xs">
+                            <label class="control-label">Usuário</label>
+                        </th>
+                        <th class="hidden-xs">
+                            <label class="control-label">Tempo</label>
+                        </th>
+                        <th></th>
+                    </tr>
+                    @foreach (var item in Model.Quadro5)
+                    {
+                        <tr>
+                            <td class="hidden-xs">
+                                @Html.DisplayFor(modelItem => item.Id, new { @class = "control-label col-md-6" })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DataAbertura, new { @class = "control-label col-md-6" })
+                            </td>
+                            <td class="hidden-xs">
+                                @Html.DisplayFor(modelItem => item.NomeCliente, new { @class = "control-label col-md-6" })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Nivel, new { @class = "control-label col-md-6" })
+                            </td>
+                            <td class="hidden-xs">
+                                @Html.DisplayFor(modelItem => item.NomeUsuario, new { @class = "control-label col-md-6" })
+                            </td>
+                            <td class="hidden-xs">
+                                @Html.DisplayFor(modelItem => item.Tempo, new { @class = "control-label col-md-6" })
+                            </td>
+                            <td>
+                                @Html.ActionLink("Detalhe", "Editar", new { id = item.Id }, new { @class = "control-label col-md-6  btn btn-primary" })
+                                @Html.ActionLink("Ocorr.", "Excluir", new { id = item.Id }, new { @class = "control-label col-md-6  btn btn-danger", onclick = "return confirm('Confirmar Exclusão?')" })
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+
+        <div class="col-xs-6">
+            <div class="box box-default">
+                <div class="text-center">
+                    <label class="control-label">@Model.Titulo6 ( @Model.Quadro6.Count() )</label>
+                </div>
+                <table class="table table-striped">
+                    <tr>
+                        <th class="hidden-xs">
+                            <label class="control-label">ID</label>
+                        </th>
+                        <th class="hidden-xs">
+                            <label class="control-label">Data</label>
+                        </th>
+                        <th class="hidden-xs">
+                            <label class="control-label">Cliente</label>
+                        </th>
+                        <th>
+                            <label class="control-label">Nivel</label>
+                        </th>
+                        <th class="hidden-xs">
+                            <label class="control-label">Usuário</label>
+                        </th>
+                        <th class="hidden-xs">
+                            <label class="control-label">Tempo</label>
+                        </th>
+                        <th></th>
+                    </tr>
+                    @foreach (var item in Model.Quadro6)
+                    {
+                        <tr>
+                            <td class="hidden-xs">
+                                @Html.DisplayFor(modelItem => item.Id, new { @class = "control-label col-md-6" })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DataAbertura, new { @class = "control-label col-md-6" })
+                            </td>
+                            <td class="hidden-xs">
+                                @Html.DisplayFor(modelItem => item.NomeCliente, new { @class = "control-label col-md-6" })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Nivel, new { @class = "control-label col-md-6" })
+                            </td>
+                            <td class="hidden-xs">
+                                @Html.DisplayFor(modelItem => item.NomeUsuario, new { @class = "control-label col-md-6" })
+                            </td>
+                            <td class="hidden-xs">
+                                @Html.DisplayFor(modelItem => item.Tempo, new { @class = "control-label col-md-6" })
+                            </td>
+                            <td>
+                                @Html.ActionLink("Detalhe", "Editar", new { id = item.Id }, new { @class = "control-label col-md-6  btn btn-primary" })
+                                @Html.ActionLink("Ocorr.", "Excluir", new { id = item.Id }, new { @class = "control-label col-md-6  btn btn-danger", onclick = "return confirm('Confirmar Exclusão?')" })
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

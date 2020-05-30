@@ -1,0 +1,35 @@
+﻿using SIDomper.Dominio.Entidades;
+using SIDomper.Infra.DataBase;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SIDomper.Infra.EF.Map
+{
+    public class ObservacaoEF
+    {
+        private readonly Repositorio<Observacao> _rep;
+
+        public ObservacaoEF()
+        {
+            _rep = new Repositorio<Observacao>();
+        }
+
+        public Observacao ObterPorId(int id)
+        {
+            return _rep.find(id);
+        }
+
+        public Observacao ObterPadrao(int programa)
+        {
+            return _rep.First(x => x.Padrao == true && x.Ativo == true && x.Programa == programa);
+        }
+
+        public Observacao ObterEmailPadrao(int programa)
+        {
+            return _rep.First(x => x.EmailPadrao == true && x.Ativo == true && x.Programa == programa);
+        }
+    }
+}

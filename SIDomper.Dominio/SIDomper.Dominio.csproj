@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6CF9B184-82A0-49DF-A02C-4497FF30E523}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SIDomper.Dominio</RootNamespace>
+    <AssemblyName>SIDomper.Dominio</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Constantes\Mensagem.cs" />
+    <Compile Include="Entidades\Agendamento.cs" />
+    <Compile Include="Entidades\BaseConhecimento.cs" />
+    <Compile Include="Entidades\Chamado.cs" />
+    <Compile Include="Entidades\ChamadoOcorrencia.cs" />
+    <Compile Include="Entidades\ChamadoOcorrenciaColaborador.cs" />
+    <Compile Include="Entidades\ChamadoStatus.cs" />
+    <Compile Include="Entidades\Cidade.cs" />
+    <Compile Include="Entidades\Cliente.cs" />
+    <Compile Include="Entidades\ClienteEmail.cs" />
+    <Compile Include="Entidades\ClienteEspecifiacao.cs" />
+    <Compile Include="Entidades\ClienteModulo.cs" />
+    <Compile Include="Entidades\ContaEmail.cs" />
+    <Compile Include="Entidades\Contato.cs" />
+    <Compile Include="Entidades\Departamento.cs" />
+    <Compile Include="Entidades\DepartamentoAcesso.cs" />
+    <Compile Include="Entidades\DepartamentoEmail.cs" />
+    <Compile Include="Entidades\Escala.cs" />
+    <Compile Include="Entidades\Feriado.cs" />
+    <Compile Include="Entidades\FormaPagto.cs" />
+    <Compile Include="Entidades\FormaPagtoItens.cs" />
+    <Compile Include="Entidades\Licenca.cs" />
+    <Compile Include="Entidades\LicencaItem.cs" />
+    <Compile Include="Entidades\ModeloRelatorio.cs" />
+    <Compile Include="Entidades\Categoria.cs" />
+    <Compile Include="Entidades\Modulo.cs" />
+    <Compile Include="Entidades\Observacao.cs" />
+    <Compile Include="Entidades\Orcamento.cs" />
+    <Compile Include="Entidades\OrcamentoEmail.cs" />
+    <Compile Include="Entidades\OrcamentoItem.cs" />
+    <Compile Include="Entidades\OrcamentoItemModulo.cs" />
+    <Compile Include="Entidades\OrcamentoNaoAprovado.cs" />
+    <Compile Include="Entidades\OrcamentoOcorrencia.cs" />
+    <Compile Include="Entidades\OrcamentoVencimento.cs" />
+    <Compile Include="Entidades\Parametro.cs" />
+    <Compile Include="Entidades\PlanoBackup.cs" />
+    <Compile Include="Entidades\PlanoBackupItem.cs" />
+    <Compile Include="Entidades\Produto.cs" />
+    <Compile Include="Entidades\Prospect.cs" />
+    <Compile Include="Entidades\Ramal.cs" />
+    <Compile Include="Entidades\RamalItem.cs" />
+    <Compile Include="Entidades\Recado.cs" />
+    <Compile Include="Entidades\Revenda.cs" />
+    <Compile Include="Entidades\RevendaEmail.cs" />
+    <Compile Include="Entidades\Solicitacao.cs" />
+    <Compile Include="Entidades\SolicitacaoCronograma.cs" />
+    <Compile Include="Entidades\SolicitacaoOcorrencia.cs" />
+    <Compile Include="Entidades\SolicitacaoStatus.cs" />
+    <Compile Include="Entidades\Status.cs" />
+    <Compile Include="Entidades\Tipo.cs" />
+    <Compile Include="Entidades\Usuario.cs" />
+    <Compile Include="Entidades\UsuarioPermissao.cs" />
+    <Compile Include="Entidades\Versao.cs" />
+    <Compile Include="Entidades\Visita.cs" />
+    <Compile Include="Enumeracao\EnumChamado.cs" />
+    <Compile Include="Enumeracao\EnumOrcamento.cs" />
+    <Compile Include="Enumeracao\EnumProgramas.cs" />
+    <Compile Include="Enumeracao\EnumTipoManutencao.cs" />
+    <Compile Include="Funcoes\Utils.cs" />
+    <Compile Include="Funcoes\Validacoes.cs" />
+    <Compile Include="Interfaces\IRepositorio.cs" />
+    <Compile Include="Interfaces\IRepositoryReadOnly.cs" />
+    <Compile Include="Interfaces\IUnitOfWork.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\AgendamentoViewModel.cs" />
+    <Compile Include="ViewModel\BaseConhViewModel.cs" />
+    <Compile Include="ViewModel\BaseViewModel.cs" />
+    <Compile Include="ViewModel\CategoriaViewModel.cs" />
+    <Compile Include="ViewModel\ChamadoEditarViewModel.cs" />
+    <Compile Include="ViewModel\ChamadoQuadroViewModel.cs" />
+    <Compile Include="ViewModel\ChamadoViewModel.cs" />
+    <Compile Include="ViewModel\CidadeViewModel.cs" />
+    <Compile Include="ViewModel\ClienteEspecificacaoViewModel.cs" />
+    <Compile Include="ViewModel\ClienteViewModel.cs" />
+    <Compile Include="ViewModel\ClienteViewModelApi.cs" />
+    <Compile Include="ViewModel\ContaEmailViewModel.cs" />
+    <Compile Include="ViewModel\DepartamentoViewModel.cs" />
+    <Compile Include="ViewModel\FeriadoViewModel.cs" />
+    <Compile Include="ViewModel\ModeloRelatorioViewModel.cs" />
+    <Compile Include="ViewModel\ModuloViewModel.cs" />
+    <Compile Include="ViewModel\ObservacaoViewModel.cs" />
+    <Compile Include="ViewModel\OrcamentoNovoViewModel.cs" />
+    <Compile Include="ViewModel\OrcamentoViewModel.cs" />
+    <Compile Include="ViewModel\ParametroViewModel.cs" />
+    <Compile Include="ViewModel\ProdutoViewModel.cs" />
+    <Compile Include="ViewModel\RamalViewModel.cs" />
+    <Compile Include="ViewModel\RecadoViewModel.cs" />
+    <Compile Include="ViewModel\SolicitacaoViewModel.cs" />
+    <Compile Include="ViewModel\StatusViewModel.cs" />
+    <Compile Include="ViewModel\TipoViewModel.cs" />
+    <Compile Include="ViewModel\UsuarioViewModel.cs" />
+    <Compile Include="ViewModel\VersaoViewModel.cs" />
+    <Compile Include="ViewModel\VisitaViewModel.cs" />
+    <Compile Include="ViewModel\VisitaViewModelApi.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ViewModel\RevendaViewModel.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

@@ -1,0 +1,686 @@
+﻿@model SIDomper.Dominio.ViewModel.OrcamentoEditarViewModel
+@{
+    /**/
+
+
+    ViewBag.Title = "Orçamento";
+}
+
+
+
+@using (Html.BeginForm("Novo", "Orcamento", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Orcamento.Id)
+    @Html.HiddenFor(model => model.Orcamento.Numero)
+    @Html.HiddenFor(model => model.Orcamento.UsuarioId)
+    @Html.HiddenFor(model => model.Orcamento.ClienteId)
+    @Html.HiddenFor(model => model.Orcamento.CidadeId)
+
+    <div class="row">
+        <div class="col-sm-3 col-xs-12">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Orcamento.Numero, htmlAttributes: new { @class = "control-label" })*
+                <label class="form-control">@Model.Orcamento.Numero</label>
+            </div>
+        </div>
+
+        <div class="col-sm-3 col-xs-12">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Orcamento.Data, htmlAttributes: new { @class = "control-label" })*
+                @Html.EditorFor(model => model.DataEmissao, new { htmlAttributes = new { @class = "form-control texto-grande", placeholder = "00/00/0000" } })
+                @*@Html.ValidationMessageFor(model => model.Orcamento.Data, "", new { @class = "text-danger" })*@
+            </div>
+        </div>
+
+        <div class="col-sm-3 col-xs-12">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Orcamento.DataSituacao, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.DataSituacao, new { htmlAttributes = new { @class = "form-control texto-grande", placeholder = "00/00/0000" } })
+                @*@Html.ValidationMessageFor(model => model.Orcamento.DataSituacao, "", new { @class = "text-danger" })*@
+            </div>
+        </div>
+
+        <div class="col-sm-3 col-xs-12">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Orcamento.Tipo.Nome)*
+                @Html.DropDownListFor(n => n.Orcamento.TipoId, new SelectList(Model.ListaTipos, "Id", "Nome"), new { @class = "form-control texto-grande" })
+            </div>
+        </div>
+        <div class="col-sm-12 col-xs-12">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Situacao)
+                <label class="form-control">@Model.Situacao</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12 col-xs-12">
+            <div class="form-group">
+                <label class="control-label">Usuário</label>
+                <label class="form-control">@Model.NomeUsuario</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12 col-xs-12">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Orcamento.RazaoSocial, htmlAttributes: new { @class = "control-label" })*
+                <select id="idcliente" name="idcliente" class="form-control texto-grande" onchange="return BuscarCliente()"></select>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-4 col-xs-12">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Orcamento.Fantasia, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.Orcamento.Fantasia, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+            </div>
+        </div>
+        <div class="col-sm-4 col-xs-12">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Orcamento.Dcto, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.Orcamento.Dcto, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+            </div>
+        </div>
+        <div class="col-sm-4 col-xs-12">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Orcamento.IE, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.Orcamento.IE, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6 col-xs-12">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Orcamento.Logradouro, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.Orcamento.Logradouro, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+            </div>
+        </div>
+        <div class="col-sm-6 col-xs-12">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Orcamento.Bairro, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.Orcamento.Bairro, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-4 col-xs-12">
+            <div class="form-group">
+                <label class="control-label">Cidade</label>
+                <select id="idcidade" name="idcidade" class="form-control" onchange="return BuscarCidade()"></select>
+            </div>
+        </div>
+        <div class="col-sm-4 col-xs-12">
+            <div class="form-group">
+                <label class="control-label">CEP</label>
+                @Html.EditorFor(model => model.Orcamento.CEP, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+            </div>
+        </div>
+        <div class="col-sm-4 col-xs-12">
+            <div class="form-group">
+                <label class="control-label">UF</label>
+                @*@Html.LabelFor(model => model.Orcamento.Cidade.UF, htmlAttributes: new { @class = "control-label" })*@
+                <input type="text" value="@Model.UF" id="UF" name="UF" class="form-control" disabled="disabled" />
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-3 col-xs-12">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Orcamento.Fone1, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.Orcamento.Fone1, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+            </div>
+        </div>
+        <div class="col-sm-3 col-xs-12">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Orcamento.Fone2, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.Orcamento.Fone2, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+            </div>
+        </div>
+        <div class="col-sm-3 col-xs-12">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Orcamento.Celular, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.Orcamento.Celular, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+            </div>
+        </div>
+        <div class="col-sm-3 col-xs-12">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Orcamento.OutroFone, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.Orcamento.OutroFone, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6 col-xs-12">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Orcamento.ContatoCompraVenda, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.Orcamento.ContatoCompraVenda, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+            </div>
+        </div>
+        <div class="col-sm-6 col-xs-12">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Orcamento.FoneContatoCompraVenda, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.Orcamento.FoneContatoCompraVenda, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6 col-xs-12">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Orcamento.ContatoFinanceiro, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.Orcamento.ContatoFinanceiro, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+            </div>
+        </div>
+        <div class="col-sm-6 col-xs-12">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Orcamento.FoneContatoFinanceiro, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.Orcamento.FoneContatoFinanceiro, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6 col-xs-12">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Orcamento.RepresentanteLegal, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.Orcamento.RepresentanteLegal, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+            </div>
+        </div>
+        <div class="col-sm-6 col-xs-12">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Orcamento.CPFRespresentanteLegal, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.Orcamento.CPFRespresentanteLegal, new { htmlAttributes = new { @class = "form-control texto-grande" } })
+            </div>
+        </div>
+    </div>
+    <div>
+        <label class="form-control bg-light-blue-gradient">Tipo</label>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12 col-xs-12">
+            <div class="form-group">
+                @Html.RadioButton("Orc_SubTipo", 1, Model.Orcamento.SubTipo == 1)
+                Telefone Ativo
+            </div>
+        </div>
+        <div class="col-sm-12 col-xs-12">
+            <div class="form-group">
+                @Html.RadioButton("Orc_SubTipo", 2, Model.Orcamento.SubTipo == 2)
+                Telefone Passivo
+            </div>
+        </div>
+        <div class="col-sm-12 col-xs-12">
+            <div class="form-group">
+                @Html.RadioButton("Orc_SubTipo", 3, Model.Orcamento.SubTipo == 3)
+                Visita Cliente
+            </div>
+        </div>
+        <div class="col-sm-12 col-xs-12">
+            <div class="form-group">
+                @Html.RadioButton("Orc_SubTipo", 4, Model.Orcamento.SubTipo == 4)
+                Email
+            </div>
+        </div>
+        <div class="col-sm-12 col-xs-12">
+            <div class="form-group">
+                @Html.RadioButton("Orc_SubTipo", 5, Model.Orcamento.SubTipo == 5)
+                Site/Contrato
+            </div>
+        </div>
+        <div class="col-sm-12 col-xs-12">
+            <div class="form-group">
+                @Html.RadioButton("Orc_SubTipo", 6, Model.Orcamento.SubTipo == 6)
+                Visita Domper
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <label class="form-control bg-light-blue-gradient">Enquadramento</label>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12 col-xs-12">
+            <div class="form-group">
+                @Html.RadioButton("Orc_Enquadramento", "01", Model.Orcamento.Enquadramento == "01")
+                Simples
+            </div>
+        </div>
+        <div class="col-sm-12 col-xs-12">
+            <div class="form-group">
+                @Html.RadioButton("Orc_Enquadramento", "02", Model.Orcamento.Enquadramento == "02")
+                Lucro Presumido
+            </div>
+        </div>
+        <div class="col-sm-12 col-xs-12">
+            <div class="form-group">
+                @Html.RadioButton("Orc_Enquadramento", "03", Model.Orcamento.Enquadramento == "03")
+                Lucro Real
+            </div>
+        </div>
+        <div class="col-sm-12 col-xs-12">
+            <div class="form-group">
+                @Html.RadioButton("Orc_Enquadramento", "00", Model.Orcamento.Enquadramento == "00")
+                Não Definido
+            </div>
+        </div>
+    </div>
+    @*<div>
+            <label class="form-control bg-light-blue-gradient">Email</label>
+        </div>*@
+    <div class="row">
+        <div class="form-group">
+            <div class="col-sm-12 col-xs-12">
+                <table class="table table-striped">
+                    <tr class="bg-light-blue-gradient">
+                        <th>
+                            <label class="control-label"> Email(s) </label>
+                        </th>
+                        <th></th>
+                    </tr>
+                    @foreach (var item in Model.Orcamento.OrcamentoEmails)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Email, new { @class = "control-label col-md-4" })
+                            </td>
+                            <td>
+                                @Html.ActionLink("Editar", "Editar", new { id = item.Id }, new { @class = "control-label col-md-4  btn btn-primary" })
+                                @Html.ActionLink("Excluir", "Excluir", new { id = item.Id }, new { @class = "control-label col-md-4  btn btn-danger", onclick = "return confirm('Confirmar Exclusão?')" })
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+    <div>
+        <label class="form-control bg-light-blue-gradient">Contatos</label>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <div class="col-sm-12 col-xs-12">
+                <table class="table table-striped">
+                    <tr class="bg-gray">
+                        <th>
+                            <label class="control-label"> Nome </label>
+                        </th>
+                        <th>
+                            <label class="control-label"> Fone1 </label>
+                        </th>
+                        <th>
+                            <label class="control-label"> Fone2 </label>
+                        </th>
+                        <th>
+                            <label class="control-label"> Departamento </label>
+                        </th>
+                        <th>
+                            <label class="control-label"> Email </label>
+                        </th>
+
+                        <th></th>
+                    </tr>
+
+                    @foreach (var item in Model.Orcamento.Contatos)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Nome, new { @class = "control-label" })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Fone1, new { @class = "control-label" })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Fone2, new { @class = "control-label" })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Departamento, new { @class = "control-label" })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Email, new { @class = "control-label" })
+                            </td>
+                            <td>
+                                @Html.ActionLink("Editar", "Editar", new { id = item.Id }, new { @class = "control-label col-md-6  btn btn-primary" })
+                                @Html.ActionLink("Excluir", "Excluir", new { id = item.Id }, new { @class = "control-label col-md-6  btn btn-danger", onclick = "return confirm('Confirmar Exclusão?')" })
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+    <div>
+        <label class="form-control bg-light-blue-gradient">Itens do Orçamento</label>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-sm-12 col-xs-12">
+                    <table class="table table-striped">
+                        <tr class="bg-gray">
+                            <th>
+                                <label class="control-label"> Código </label>
+                            </th>
+                            <th>
+                                <label class="control-label"> Descrição </label>
+                            </th>
+                            <td class="align" align="right">
+                                <label class="control-label"> Valor Inicial </label>
+                            </td>
+                            <td class="align" align="right">
+                                <label class="control-label"> Desconto Inicial </label>
+                            </td>
+                            <td class="align" align="right">
+                                <label class="control-label"> Valor Mensal </label>
+                            </td>
+                            <td class="align" align="right">
+                                <label class="control-label"> Desconto Mensal </label>
+                            </td>
+
+                            <th></th>
+                        </tr>
+
+                        @foreach (var item in Model.Orcamento.OrcamentoItens)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Produto.Codigo, new { @class = "control-label" })
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Produto.Nome, new { @class = "control-label" })
+                                </td>
+                                <td align="right">
+                                    @Html.DisplayFor(modelItem => item.ValorLicencaImpl, new { @class = "control-label" })
+                                </td>
+                                <td align="right">
+                                    @Html.DisplayFor(modelItem => item.ValorDescontoImpl, new { @class = "control-label" })
+                                </td>
+                                <td align="right">
+                                    @Html.DisplayFor(modelItem => item.ValorLicencaMensal, new { @class = "control-label" })
+                                </td>
+                                <td align="right">
+                                    @Html.DisplayFor(modelItem => item.ValorDescontoMensal, new { @class = "control-label" })
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Editar", "Editar", new { id = item.Id }, new { @class = "control-label col-md-6  btn btn-primary" })
+                                    @Html.ActionLink("Excluir", "Excluir", new { id = item.Id }, new { @class = "control-label col-md-6  btn btn-danger", onclick = "return confirm('Confirmar Exclusão?')" })
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <b>Total Orçamento:</b>
+        <label class="control-label"> @Model.Orcamento.TotalOrcamento.ToString("C")</label>
+    </div>
+    <div>
+        <label class="form-control bg-light-blue-gradient">Observações</label>
+    </div>
+    <div>
+        <label class="form-control bg-light-blue-gradient">Vencimentos</label>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <div class="col-sm-12 col-xs-12">
+                <table class="table table-striped">
+                    <tr class="bg-gray">
+                        <th>
+                            <label class="control-label"> Parcela </label>
+                        </th>
+                        <th>
+                            <label class="control-label"> Data </label>
+                        </th>
+                        <td class="align" align="right">
+                            <label class="control-label"> Valor </label>
+                        </td>
+                        <th>
+                            <label class="control-label"> Descrição </label>
+                        </th>
+                        <th></th>
+                    </tr>
+
+                    @foreach (var item in Model.Orcamento.OrcamentoVencimentos)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Parcela, new { @class = "control-label" })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Data, new { @class = "control-label" })
+                            </td>
+                            <td class="align" align="right">
+                                @Html.DisplayFor(modelItem => item.Valor, new { @class = "control-label" })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Descricao, new { @class = "control-label" })
+                            </td>
+                            <td>
+                                @Html.ActionLink("Editar", "Editar", new { id = item.Id }, new { @class = "control-label col-md-6  btn btn-primary" })
+                                @Html.ActionLink("Excluir", "Excluir", new { id = item.Id }, new { @class = "control-label col-md-6  btn btn-danger", onclick = "return confirm('Confirmar Exclusão?')" })
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+    <div>
+        <label class="form-control bg-light-blue-gradient">Ocorrências</label>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <div class="col-sm-12 col-xs-12">
+                <table class="table table-striped">
+                    <tr class="bg-gray">
+                        <th>
+                            <label class="control-label"> Data </label>
+                        </th>
+                        <th>
+                            <label class="control-label"> Código </label>
+                        </th>
+                        <th>
+                            <label class="control-label"> Usuário </label>
+                        </th>
+                        <th></th>
+                    </tr>
+
+                    @foreach (var item in Model.Orcamento.OrcamentoOcorrencias)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Data, new { @class = "control-label" })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Usuario.Codigo, new { @class = "control-label" })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Usuario.Nome, new { @class = "control-label" })
+                            </td>
+                            <td>
+                                @Html.ActionLink("Editar", "Editar", new { id = item.Id }, new { @class = "control-label col-md-6  btn btn-primary" })
+                                @Html.ActionLink("Excluir", "Excluir", new { id = item.Id }, new { @class = "control-label col-md-6  btn btn-danger", onclick = "return confirm('Confirmar Exclusão?')" })
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Salvar" class="btn btn-primary" onclick="return getOrcamento()" />
+        @Html.ActionLink("Produtos", "ListarProdutos", "Orcamento", new { @class = "control-label col-md-6 btn btn-primary" })
+        @DomperBotoes.BotaoVoltar()
+    </div>
+
+}
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            //$("#telefone").inputmask("mask", { "mask": "(99) 9999-99999" });
+            //$("#cpf").inputmask("mask", { "mask": "999.999.999-99" }, { reverse: true });
+            //$("#cep").inputmask("mask", { "mask": "99999-999" });
+            $("#DataEmissao").inputmask("mask", { "mask": "99/99/9999" });
+            $("#DataSituacao").inputmask("mask", { "mask": "99/99/9999" });
+            //$("#preco").inputmask("mask", { "mask": "999.999,99" }, { reverse: true });
+            //$("#Valor").inputmask("mask", { "mask": "#.##9,99" }, { reverse: true });
+            //$("#ip").inputmask("mask", { "mask": "999.999.999.999" });
+            //$("#HoraInicio").inputmask("mask", { "mask": "99:99" });
+            //$("#HoraFim").inputmask("mask", { "mask": "99:99" });
+            //$('.dinheiro').mask('###.##0,00', { reverse: true });
+        });
+
+        function BuscarCliente() {
+            $(function () {
+                $.ajax({
+                    dataType: "json",
+                    type: "GET",
+                    url: "/Orcamento/BuscarDadosCliente/" + document.getElementById("idcliente").value,
+                    success: function (dados) {
+                        $(dados).each(function (i) {
+                            document.getElementById("Orcamento_Bairro").value = dados[i].Bairro;
+                            document.getElementById("Orcamento_Logradouro").value = dados[i].Endereco;
+                            document.getElementById("Orcamento_Fantasia").value = dados[i].Fantasia;
+                            document.getElementById("Orcamento_Dcto").value = dados[i].Dcto;
+                            document.getElementById("Orcamento_IE").value = dados[i].IE;
+                            $("#idcidade").append("<option value='" + dados[i].IdCidade + "' selected>" + dados[i].DescCidade + "</option>");
+                            document.getElementById("Orcamento_CEP").value = dados[i].Cep;
+                            document.getElementById("UF").value = dados[i].UF;
+                            document.getElementById("Orcamento_Fone1").value = dados[i].Fone1;
+                            document.getElementById("Orcamento_Fone2").value = dados[i].Fone2;
+                            document.getElementById("Orcamento_OutroFone").value = dados[i].OutroFone;
+                            document.getElementById("Orcamento_ContatoCompraVenda").value = dados[i].ContatoCompraVenda;
+                            document.getElementById("Orcamento_FoneContatoCompraVenda").value = dados[i].FoneContatoCompraVenda;
+                            document.getElementById("Orcamento_ContatoFinanceiro").value = dados[i].ContatoFinanceiro;
+                            document.getElementById("Orcamento_FoneContatoFinanceiro").value = dados[i].FoneContatoFinanceiro;
+                            document.getElementById("Orcamento_RepresentanteLegal").value = dados[i].RepresentanteLegal;
+                            document.getElementById("Orcamento_CPFRespresentanteLegal").value = dados[i].CPFRepresentanteLegal;
+
+                            document.getElementById("Orcamento_CidadeId").value = dados[i].IdCidade;
+
+                            $("#Orc_Enquadramento[value='" + dados[i].Enquadramento + "']").iCheck('check');
+
+                            //var radios = document.getElementById("Orc_Enquadramento_01").value;
+                            //document.getElementById('Orc_Enquadramento_01').checked = true;
+
+                            //var radios = document.getElementsByName('Orc_Enquadramento');
+
+                            //for (var i = 0, len = radios.length; i < len; i++) {
+                            //    var r = radios[i];
+
+                            //    if (r.value == '00') {
+                            //        r.checked = true;
+                            //        document.getElementById("Orc_Enquadramento_00").checked = true;
+                            //    }
+                            //    else {
+                            //        r.checked = false;
+                            //    }
+                            //}
+
+                            //for (var i = 0, len = radios.length; i < len; i++) {
+                            //    var r = radios[i];
+                            //}
+
+                            //alert(dados[i].Enquadramento);
+
+                            //if (dados[i].Enquadramento == "00") {
+                            //    alert(dados[i].Enquadramento + " 666");
+                            //    radios[0].checked = true;
+                            //}
+
+                            //for (var j = 0; j < radios.length; i++) {
+                            //    alert(radios[j].value + " - " + dados[i].Enquadramento);
+
+                            //    if (radios[j].value === dados[i].Enquadramento) {
+                            //        radios[j].checked = true;
+                            //        break;
+                            //    }
+                            //}
+
+                            //if (dados[i].Enquadramento == "01") {
+                            //    document.getElementById("Orc_Enquadramento_01").checked = true;
+                            //}
+
+                            //if (dados[i].Enquadramento == "02") {
+                            //    document.getElementById("Orc_Enquadramento_02").checked = true;
+                            //}
+
+                            //if (dados[i].Enquadramento == "03") {
+                            //    document.getElementById("Orc_Enquadramento_03").checked = true;
+                            //}
+
+                            //if (dados[i].Enquadramento == "00") {
+                            //    document.getElementById("Orc_Enquadramento_00").checked = true;
+                            //}
+
+                        });
+                    }
+                });
+            });
+        }
+
+        function BuscarCidade() {
+            $(function () {
+                $.ajax({
+                    dataType: "json",
+                    type: "GET",
+                    url: "/Orcamento/BuscarDadosCidade/" + document.getElementById("idcidade").value,
+                    success: function (dados) {
+                        $(dados).each(function (i) {
+                            document.getElementById("UF").value = dados[i].UF;
+                        });
+                    }
+                });
+            });
+        }
+
+        function getOrcamento() {
+            var idCliente = document.getElementById("idcliente").value;
+            var idCidade = document.getElementById("idcidade").value;
+
+            idCidade = idCidade.substring(0, 1);
+
+            document.getElementById("Orcamento_ClienteId").value = idCliente;
+            document.getElementById("Orcamento_CidadeId").value = idCidade;
+        }
+
+    $(function () {
+        $("#idcliente").select2({
+            placeholder: 'Procure um cliente...',
+            minimumInputLength: 3,
+            ajax: {
+                url: '@Url.Content("~/orcamento/ListarClientes")',
+                delay: 250,
+                dataType: 'json',
+            }
+        });
+
+        $("#idcidade").select2({
+            placeholder: 'Procure uma cidade...',
+            minimumInputLength: 3,
+            ajax: {
+                url: '@Url.Content("~/orcamento/ListarCidades")',
+                delay: 250,
+                dataType: 'json',
+            }
+        });
+
+        $("#idcliente").append("<option value= @Model.Orcamento.ClienteId selected> @Model.NomeCliente</option>");
+
+
+        $("#idcidade").append("<option value= @Model.Orcamento.CidadeId selected> @Model.NomeCidade</option>");
+    });
+    </script>
+}
+

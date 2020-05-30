@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "Início";
+}
+
+<div class="jumbotron">
+    <div class="row">
+        <h1>DOMPER</h1>
+        <p>Soluções e Consultoria em Sistemas.</p>
+    </div>
+</div>
+
+<hr />
+
+@*
+
+    <button type="button" onclick="getLocation()" class="btn btn-default">Pegar Posicao</button>
+    <div id="demo">
+    </div>
+
+    @section scripts {
+        <script>
+
+            var x = document.getElementById("demo");
+            function getLocation() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(showPosition);
+                } else {
+                    x.innerHTML = "Geolocation is not supported by this browser.";
+                }
+            }
+
+            function showPosition(position) {
+                x.innerHTML = "Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude;
+                var url = 'https://www.google.com.br/maps/@@' + position.coords.latitude + ',' + position.coords.longitude  +'z'
+                window.open(url, '_blank');
+            }
+
+        </script>
+    }
+*@

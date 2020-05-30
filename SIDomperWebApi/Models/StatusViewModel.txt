@@ -1,0 +1,27 @@
+﻿using SIDomper.Apresentacao.ViewModel;
+
+namespace SIDomperWebApi.Models
+{
+    public class StatusViewModel : BaseViewModel
+    {
+        public int Id { get; set; }
+        public int Codigo { get; set; }
+        public string Nome { get; set; }
+        public bool Ativo { get; set; }
+        public int Programa { get; set; }
+        public bool NotificarCliente { get; set; }
+        public bool NotificarSupervisor { get; set; }
+        public bool NotificarConsultor { get; set; }
+        public bool NotificarRevenda { get; set; }
+        public string Conceito { get; set; }
+    }
+    public class StatusConsultaViewModel : BaseViewModel
+    {
+        public int Id { get; set; }
+        public int Codigo { get; set; }
+        public string Nome { get; set; }
+        public int IdPrograma { get; set; }
+        public string NomePrograma { get; set; }
+    }
+
+}

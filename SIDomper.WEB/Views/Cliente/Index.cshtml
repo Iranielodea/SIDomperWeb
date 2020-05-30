@@ -1,0 +1,113 @@
+﻿@model SIDomper.Dominio.ViewModel.ClienteViewModel
+
+@{
+    ViewBag.Title = "Listagem de Clientes";
+}
+
+@Html.AntiForgeryToken()
+
+@using (Html.BeginForm("Index", "Cliente", FormMethod.Post, new { @class = "form-inline" }))
+{
+    <div class="panel panel-default">
+        <div class="form-group">
+            <div class="col-xs-12">
+                Campos
+                @Html.DropDownListFor(n => n.Campo, new SelectList(Model.Campos, "Campo", "Descricao"), new { @class = "form-control texto-grande" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-12">
+                Pesquisar
+                @Html.TextBoxFor(model => model.Texto, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-12">
+                <button type="submit" class="btn btn-primary" id="btn-Pesquisar">Pesquisar</button>
+            </div>
+        </div>
+    </div>
+}
+<div class="panel panel-default">
+    @*<div class="row">
+            <div class="form-group">
+                <div class="col-xs-4">
+                    Usuários:
+                    @Html.DropDownList("UsuarioId", (SelectList)ViewBag.UsuarioId, "", new { @class = "form-control" })
+                </div>
+                <div class="col-xs-4">
+                    Revenda:
+                    @Html.DropDownList("RevendaId", (SelectList)ViewBag.RevendaId, "", new { @class = "form-control" })
+                </div>
+
+                <div class="col-xs-4">
+                    Cidades:
+                    @Html.DropDownList("CidadeId", (SelectList)ViewBag.CidadeId, "", new { @class = "form-control" })
+                </div>
+            </div>
+        </div>*@
+    @*<div class="row">
+            <div class="form-group">
+                <div class="col-xs-4">
+                    Modulos:
+                    @Html.DropDownList("ModuloId", (SelectList)ViewBag.ModuloId, "", new { @class = "form-control" })
+                </div>
+                <div class="col-xs-4">
+                    Produtos:
+                    @Html.DropDownList("ProdutoId", (SelectList)ViewBag.ProdutoId, "", new { @class = "form-control" })
+                </div>
+            </div>
+        </div>*@
+    <div class="row">
+        <div class="form-group">
+            <div class="col-xs-12">
+                <table class="table table-striped">
+                    <tr>
+                        <th>
+                            <label class="control-label"> @Html.DisplayNameFor(model => model.Id) </label>
+                        </th>
+                        <th>
+                            <label class="control-label"> @Html.DisplayNameFor(model => model.Razao) </label>
+                        </th>
+                        <th>
+                            <label class="control-label"> @Html.DisplayNameFor(model => model.Documento) </label>
+                        </th>
+                        <th>
+                            <label class="control-label"> @Html.DisplayNameFor(model => model.Telefone) </label>
+                        </th>
+                        <th>
+                            <label class="control-label"> @Html.DisplayNameFor(model => model.NomeConsultor) </label>
+                        </th>
+                        <th></th>
+                    </tr>
+                    @foreach (var item in Model.Clientes)
+                    {
+                        <tr>
+                            <td class="text-right">
+                                @Html.DisplayFor(modelItem => item.Id, new { @class = "control-label col-md-6" })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Razao, new { @class = "control-label col-md-6" })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Documento, new { @class = "control-label col-md-6" })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Telefone, new { @class = "control-label col-md-6" })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NomeConsultor, new { @class = "control-label col-md-6" })
+                            </td>
+                            <td>
+                                @Html.ActionLink("Detalhes", "Editar", new { id = item.Id }, new { @class = "control-label col-md-6" })
+                                @Html.ActionLink("Visita", "Novo","Visita", new { id = item.Id }, new { @class = "control-label col-md-6" })
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,65 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<form id="form1" method="post" action="~/teste/indexenviar">
+
+    @Html.Label("campo1")
+    @Html.TextBox("campo1")
+
+    <br />
+
+    @Html.Label("campo2")
+    @Html.TextBox("campo2")
+
+    <br />
+
+    @Html.Label("campo3")
+    @Html.TextBox("campo3")
+
+    <br />
+
+    <input type="submit" value="ENVIAR" />
+
+</form>
+
+@section scripts {
+
+    <script>
+
+        function salvar() {
+            // localStorage: eternamente (ou até o cidadao limpar o cache do browser)
+            // sessionStorage: até o browser ser fechado (ou a sessao do browser ser limpa - DETALHE: essa sessao nao tem a ver com a sessao do c#)
+
+            window.localStorage.setItem("campo1", $("#campo1").val());
+            window.localStorage.setItem("campo2", $("#campo2").val());
+            window.localStorage.setItem("campo3", $("#campo3").val());
+        }
+
+        function ler() {
+            $("#campo1").val(window.localStorage.getItem("campo1"));
+            $("#campo2").val(window.localStorage.getItem("campo2"));
+            $("#campo3").val(window.localStorage.getItem("campo3"));
+        }
+
+        $(function () {
+            ler();
+            // intercepta o submit do form1
+            $("#form1").submit(function (e) {
+                salvar();
+                if ($("#campo1").val() == "") {
+                    alert("DEU PROBLEMA!");
+                    return false; // nao vai executar o submit default
+                }
+                return true; // executa o submit default
+            });
+        });
+
+
+    </script>
+
+
+}

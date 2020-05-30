@@ -1,0 +1,42 @@
+Solicitacao
+ViewModel criar property
+boolean: 
+AutorizacaoParaAlterarOcorrenciaGeral
+AutorizacaoParaExcluirOcorrenciaGeral
+
+AutorizacaoParaAlterarOcorrenciaRegra
+AutorizacaoParaExcluirOcorrenciaRegra
+
+AutorizacaoParaAlterarOcorrenciaTecnica
+AutorizacaoParaExcluirOcorrenciaTecnica
+
+PermissaoMostrarAnexo
+string CaminhoAnexo;
+
+BOTAO NOVO
+BuscarStatusAbertura()
+BuscarUsuarioLogado()
+BuscarClienteDoUsuarioLogado()
+BuscarObservacaoPadrao()
+TemUmRegistro()
+
+ONSHOW
+PermissaoSolicitacao
+    tsAbertura.TabVisible := PermissaoSolicitacao.Abertura;
+    tsDescricaoAbertura.TabVisible := tsAbertura.TabVisible;
+    tsAnalista.TabVisible := PermissaoSolicitacao.Analise;
+    tsOcorrenciaGeral.TabVisible := PermissaoSolicitacao.OcorrenciaGeral;
+    tsOcorrenciaTecnica.TabVisible := PermissaoSolicitacao.OcorrenciaTecnica;
+    tsOcorrenciaRegra.TabVisible := PermissaoSolicitacao.OcorrenciaRegra;
+    tsStatus.TabVisible := PermissaoSolicitacao.StatusSolicitacao;
+    pmTempo.Visible := PermissaoSolicitacao.Tempo;
+    pmConferenciaTempo.Visible := pmTempo.Visible;
+EntrarSolicitacaoQuadro()
+
+OBSERVACAO PADRAO
+
+  ATipo = 1-Descrião Abertura
+          2-Analista
+          3-Ocorrência Geral
+          4-Ocorrência Técnica
+          5-Ocorrência Regras

@@ -1,0 +1,11 @@
+C:\Projetos\Domper\SIDomperWeb\SIDomper.Apresentacao\bin\Release\SIDomper.Apresentacao.dll
+C:\Projetos\Domper\SIDomperWeb\SIDomper.Apresentacao\bin\Release\SIDomper.Apresentacao.pdb
+C:\Projetos\Domper\SIDomperWeb\SIDomper.Apresentacao\bin\Release\Newtonsoft.Json.dll
+C:\Projetos\Domper\SIDomperWeb\SIDomper.Apresentacao\bin\Release\SIDomper.Dominio.dll
+C:\Projetos\Domper\SIDomperWeb\SIDomper.Apresentacao\bin\Release\SIDomper.Dominio.pdb
+C:\Projetos\Domper\SIDomperWeb\SIDomper.Apresentacao\bin\Release\Newtonsoft.Json.xml
+C:\Projetos\Domper\SIDomperWeb\SIDomper.Apresentacao\obj\Release\SIDomper.Apresentacao.csprojAssemblyReference.cache
+C:\Projetos\Domper\SIDomperWeb\SIDomper.Apresentacao\obj\Release\SIDomper.Apresentacao.csproj.CoreCompileInputs.cache
+C:\Projetos\Domper\SIDomperWeb\SIDomper.Apresentacao\obj\Release\SIDomper.Apresentacao.csproj.CopyComplete
+C:\Projetos\Domper\SIDomperWeb\SIDomper.Apresentacao\obj\Release\SIDomper.Apresentacao.dll
+C:\Projetos\Domper\SIDomperWeb\SIDomper.Apresentacao\obj\Release\SIDomper.Apresentacao.pdb
