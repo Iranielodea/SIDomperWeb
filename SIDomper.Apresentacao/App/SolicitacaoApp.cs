@@ -31,10 +31,12 @@ namespace SIDomper.Apresentacao.App
 
         public SolicitacaoViewModel Salvar(SolicitacaoViewModel model, int idUsuario, bool ocorrencia)
         {
-            string URI = Constantes.URL + "Solicitacao?idUsuario={0}&ocorrencia={1}";
-
+            string URI = Constantes.URL + "Solicitacao?idUsuario={0}";
             if (model.Id == 0)
-                return new Operacao<SolicitacaoViewModel>().Insert(string.Format(URI, idUsuario, ocorrencia), model);
+            {
+                URI = Constantes.URL + "Solicitacao/Incluir?usuarioId={0}";
+                return new Operacao<SolicitacaoViewModel>().Insert(string.Format(URI, idUsuario), model);
+            }
             else
                 return new Operacao<SolicitacaoViewModel>().Update(string.Format(URI, idUsuario, ocorrencia), model);
         }

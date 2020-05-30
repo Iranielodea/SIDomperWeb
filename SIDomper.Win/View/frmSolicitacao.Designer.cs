@@ -28,17 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgvDados = new System.Windows.Forms.DataGridView();
             this.Sol_Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Ver_Versao = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -368,9 +368,9 @@
             // Sol_Id
             // 
             this.Sol_Id.DataPropertyName = "Id";
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle12.Format = "000000";
-            this.Sol_Id.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.Format = "000000";
+            this.Sol_Id.DefaultCellStyle = dataGridViewCellStyle1;
             this.Sol_Id.HeaderText = "Id";
             this.Sol_Id.Name = "Sol_Id";
             this.Sol_Id.Width = 80;
@@ -378,9 +378,9 @@
             // Ver_Versao
             // 
             this.Ver_Versao.DataPropertyName = "Versao";
-            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
-            dataGridViewCellStyle13.Format = "0000";
-            this.Ver_Versao.DefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
+            dataGridViewCellStyle2.Format = "0000";
+            this.Ver_Versao.DefaultCellStyle = dataGridViewCellStyle2;
             this.Ver_Versao.HeaderText = "Versão";
             this.Ver_Versao.Name = "Ver_Versao";
             this.Ver_Versao.Width = 80;
@@ -901,7 +901,7 @@
             this.tpCronograma.Location = new System.Drawing.Point(4, 26);
             this.tpCronograma.Name = "tpCronograma";
             this.tpCronograma.Padding = new System.Windows.Forms.Padding(3);
-            this.tpCronograma.Size = new System.Drawing.Size(666, 447);
+            this.tpCronograma.Size = new System.Drawing.Size(1003, 492);
             this.tpCronograma.TabIndex = 1;
             this.tpCronograma.Text = "Cronograma";
             this.tpCronograma.UseVisualStyleBackColor = true;
@@ -1060,9 +1060,9 @@
             // Data
             // 
             this.Data.DataPropertyName = "Data";
-            dataGridViewCellStyle14.Format = "d";
-            dataGridViewCellStyle14.NullValue = null;
-            this.Data.DefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle3.Format = "d";
+            dataGridViewCellStyle3.NullValue = null;
+            this.Data.DefaultCellStyle = dataGridViewCellStyle3;
             this.Data.HeaderText = "Previsão Entrega";
             this.Data.Name = "Data";
             // 
@@ -1112,7 +1112,7 @@
             this.tpOcorrenciaGeral.Location = new System.Drawing.Point(4, 26);
             this.tpOcorrenciaGeral.Name = "tpOcorrenciaGeral";
             this.tpOcorrenciaGeral.Padding = new System.Windows.Forms.Padding(3);
-            this.tpOcorrenciaGeral.Size = new System.Drawing.Size(1017, 528);
+            this.tpOcorrenciaGeral.Size = new System.Drawing.Size(680, 483);
             this.tpOcorrenciaGeral.TabIndex = 3;
             this.tpOcorrenciaGeral.Text = "Ocorrência Geral";
             this.tpOcorrenciaGeral.UseVisualStyleBackColor = true;
@@ -1303,18 +1303,18 @@
             // OcorrenciaGeralData
             // 
             this.OcorrenciaGeralData.DataPropertyName = "Data";
-            dataGridViewCellStyle15.Format = "d";
-            dataGridViewCellStyle15.NullValue = null;
-            this.OcorrenciaGeralData.DefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle4.Format = "d";
+            dataGridViewCellStyle4.NullValue = null;
+            this.OcorrenciaGeralData.DefaultCellStyle = dataGridViewCellStyle4;
             this.OcorrenciaGeralData.HeaderText = "Data";
             this.OcorrenciaGeralData.Name = "OcorrenciaGeralData";
             // 
             // OcorrenciaGeralHora
             // 
             this.OcorrenciaGeralHora.DataPropertyName = "Hora";
-            dataGridViewCellStyle16.Format = "t";
-            dataGridViewCellStyle16.NullValue = null;
-            this.OcorrenciaGeralHora.DefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle5.Format = "t";
+            dataGridViewCellStyle5.NullValue = null;
+            this.OcorrenciaGeralHora.DefaultCellStyle = dataGridViewCellStyle5;
             this.OcorrenciaGeralHora.HeaderText = "Hora";
             this.OcorrenciaGeralHora.Name = "OcorrenciaGeralHora";
             // 
@@ -1645,17 +1645,17 @@
             // 
             // TecnicaData
             // 
-            dataGridViewCellStyle17.Format = "d";
-            dataGridViewCellStyle17.NullValue = null;
-            this.TecnicaData.DefaultCellStyle = dataGridViewCellStyle17;
+            dataGridViewCellStyle6.Format = "d";
+            dataGridViewCellStyle6.NullValue = null;
+            this.TecnicaData.DefaultCellStyle = dataGridViewCellStyle6;
             this.TecnicaData.HeaderText = "Data";
             this.TecnicaData.Name = "TecnicaData";
             // 
             // TecnicaHora
             // 
-            dataGridViewCellStyle18.Format = "t";
-            dataGridViewCellStyle18.NullValue = null;
-            this.TecnicaHora.DefaultCellStyle = dataGridViewCellStyle18;
+            dataGridViewCellStyle7.Format = "t";
+            dataGridViewCellStyle7.NullValue = null;
+            this.TecnicaHora.DefaultCellStyle = dataGridViewCellStyle7;
             this.TecnicaHora.HeaderText = "Hora";
             this.TecnicaHora.Name = "TecnicaHora";
             // 
@@ -1935,17 +1935,17 @@
             // 
             // RegraData
             // 
-            dataGridViewCellStyle19.Format = "d";
-            dataGridViewCellStyle19.NullValue = null;
-            this.RegraData.DefaultCellStyle = dataGridViewCellStyle19;
+            dataGridViewCellStyle8.Format = "d";
+            dataGridViewCellStyle8.NullValue = null;
+            this.RegraData.DefaultCellStyle = dataGridViewCellStyle8;
             this.RegraData.HeaderText = "Data";
             this.RegraData.Name = "RegraData";
             // 
             // RegraHora
             // 
-            dataGridViewCellStyle20.Format = "t";
-            dataGridViewCellStyle20.NullValue = null;
-            this.RegraHora.DefaultCellStyle = dataGridViewCellStyle20;
+            dataGridViewCellStyle9.Format = "t";
+            dataGridViewCellStyle9.NullValue = null;
+            this.RegraHora.DefaultCellStyle = dataGridViewCellStyle9;
             this.RegraHora.HeaderText = "Hora";
             this.RegraHora.Name = "RegraHora";
             // 
@@ -2012,17 +2012,17 @@
             // 
             // StatusData
             // 
-            dataGridViewCellStyle21.Format = "d";
-            dataGridViewCellStyle21.NullValue = null;
-            this.StatusData.DefaultCellStyle = dataGridViewCellStyle21;
+            dataGridViewCellStyle10.Format = "d";
+            dataGridViewCellStyle10.NullValue = null;
+            this.StatusData.DefaultCellStyle = dataGridViewCellStyle10;
             this.StatusData.HeaderText = "Data";
             this.StatusData.Name = "StatusData";
             // 
             // StatusHora
             // 
-            dataGridViewCellStyle22.Format = "T";
-            dataGridViewCellStyle22.NullValue = null;
-            this.StatusHora.DefaultCellStyle = dataGridViewCellStyle22;
+            dataGridViewCellStyle11.Format = "T";
+            dataGridViewCellStyle11.NullValue = null;
+            this.StatusHora.DefaultCellStyle = dataGridViewCellStyle11;
             this.StatusHora.HeaderText = "Hora";
             this.StatusHora.Name = "StatusHora";
             // 

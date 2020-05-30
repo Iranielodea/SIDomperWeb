@@ -354,6 +354,7 @@
             // cboAtivo
             // 
             this.cboAtivo.Location = new System.Drawing.Point(189, 45);
+            this.cboAtivo.Size = new System.Drawing.Size(121, 25);
             // 
             // lblAtivo
             // 
@@ -366,6 +367,7 @@
             // cbPesquisa
             // 
             this.cbPesquisa.Location = new System.Drawing.Point(289, 30);
+            this.cbPesquisa.Size = new System.Drawing.Size(133, 25);
             // 
             // dgvDados
             // 
@@ -817,7 +819,7 @@
             this.tpOcorrencia.Location = new System.Drawing.Point(4, 26);
             this.tpOcorrencia.Name = "tpOcorrencia";
             this.tpOcorrencia.Padding = new System.Windows.Forms.Padding(3);
-            this.tpOcorrencia.Size = new System.Drawing.Size(1015, 526);
+            this.tpOcorrencia.Size = new System.Drawing.Size(678, 481);
             this.tpOcorrencia.TabIndex = 1;
             this.tpOcorrencia.Text = "Ocorrência";
             // 

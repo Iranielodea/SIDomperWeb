@@ -202,6 +202,60 @@ namespace SIDomper.Win.View
             }
         }
 
+        public override void Salvar()
+        {
+            try
+            {
+                _solicitacaoViewModel.Id = _Id;
+                _solicitacaoViewModel.Data = Funcoes.StrToDate(txtData.txtData.Text);
+                _solicitacaoViewModel.Hora = Funcoes.StrToHora(txtHora.Text);
+                _solicitacaoViewModel.ClienteId = Funcoes.StrToInt(UsrCliente.txtId.Text);
+                _solicitacaoViewModel.UsuarioAberturaId = Funcoes.StrToInt(UsrUsuarioAbertura.txtId.Text);
+                _solicitacaoViewModel.ModuloId = Funcoes.StrToIntNull(UsrModulo.txtId.Text);
+                _solicitacaoViewModel.ProdutoId = Funcoes.StrToIntNull(UsrProduto.txtId.Text);
+                _solicitacaoViewModel.Titulo = txtTitulo.Text;
+                _solicitacaoViewModel.Descricao = txtDescricaoAbertura.Text;
+                _solicitacaoViewModel.Nivel = RetornarNivel();
+                _solicitacaoViewModel.Versao = txtVersao.Text;
+                _solicitacaoViewModel.Anexo = txtAnexoAbertura.Text;
+                _solicitacaoViewModel.AnalistaId = Funcoes.StrToIntNull(UsrAnalista.txtId.Text);
+                _solicitacaoViewModel.StatusId = Funcoes.StrToInt(UsrStatus.txtId.Text);
+                _solicitacaoViewModel.TipoId = Funcoes.StrToIntNull(UsrTipo.txtId.Text);
+                _solicitacaoViewModel.TempoPrevisto = Funcoes.StrToDecimal(txtTempo.Text);
+                _solicitacaoViewModel.PrevisaoEntrega = Funcoes.StrToDateNull(txtDataPrevisao.txtData.Text);
+                _solicitacaoViewModel.DesenvolvedorId = Funcoes.StrToIntNull(UsrDesenvolvedor.txtId.Text);
+                _solicitacaoViewModel.DescricaoLiberacao = txtDescricaoLiberacao.Rtf;
+                _solicitacaoViewModel.UsuarioAtendeAtualId = Funcoes.IdUsuario;
+                _solicitacaoViewModel.Contato = txtContato.Text;
+                _solicitacaoViewModel.VersaoId = Funcoes.StrToIntNull(UsrVersao.txtId.Text);
+                _solicitacaoViewModel.CategoriaId = Funcoes.StrToIntNull(UsrCategoria.txtId.Text);
+
+                _solicitacaoApp = new SolicitacaoApp();
+                var model = _solicitacaoApp.Salvar(_solicitacaoViewModel, Funcoes.IdUsuario, false);
+
+                Funcoes.VerificarMensagem(model.Mensagem);
+                FiltrarDados(model.Id.ToString(), model.Id);
+
+                base.Salvar();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            
+        }
+
+        private int? RetornarNivel()
+        {
+            if (rbBaixo.Checked)
+                return 1;
+            else if (rbNormal.Checked)
+                return 2;
+            else if (rbAlto.Checked)
+                return 3;
+            else
+                return 4;
+        }
 
         private void DadosDescricaoAbertura(SolicitacaoViewModel viewModel)
         {
@@ -273,8 +327,8 @@ namespace SIDomper.Win.View
                 string sCampo = Grade.BuscarCampo(ref dgvDados, cbCampos.Text);
 
                 var filtro = new SolicitacaoFiltroViewModel();
-                filtro.DataInicial = "01/01/2020"; //txtDataInicial.txtData.Text;
-                filtro.DataFinal = "10/01/2020"; //txtDataFinal.txtData.Text;
+                //filtro.DataInicial = "01/05/2020"; //txtDataInicial.txtData.Text;
+                //filtro.DataFinal = "01/06/2020"; //txtDataFinal.txtData.Text;
                 //filtro.IdUsuarioAbertura = ursFiltroUsuario.RetornarSelecao();
                 //filtro.IdCliente = ursFiltroCliente.RetornarSelecao();
                 //filtro.IdTipo = ursFiltroTipo.RetornarSelecao();
@@ -366,7 +420,7 @@ namespace SIDomper.Win.View
 
         private void BuscarDados()
         {
-            FiltrarDados(txtTexto.Text);
+            FiltrarDados(txtTexto.Text, 1718);
             cbCampos.Focus();
         }
 

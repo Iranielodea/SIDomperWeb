@@ -141,6 +141,18 @@ namespace SIDomper.Win.Utilitarios
             }
         }
 
+        public static decimal StrToDecimal(string value)
+        {
+            try
+            {
+                return decimal.Parse(value);
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
         public static void VerificarMensagem(string mensagem)
         {
             if (mensagem != "OK")

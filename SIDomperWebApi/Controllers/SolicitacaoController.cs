@@ -97,6 +97,7 @@ namespace SIDomperWebApi.Controllers
             }
         }
 
+        [Route("Incluir")]
         [HttpPost]
         public SolicitacaoViewModel Incluir([FromBody]SolicitacaoViewModel viewModel, int usuarioId)
         {

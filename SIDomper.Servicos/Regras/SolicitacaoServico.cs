@@ -92,7 +92,7 @@ namespace SIDomper.Servicos.Regras
                 throw new Exception("Informe o Status!");
             if (model.PrevisaoEntrega != null)
             {
-                if (model.PrevisaoEntrega > model.Data)
+                if (model.PrevisaoEntrega < model.Data)
                     throw new Exception("Previsão de Entrega menor que Data de Abertura!");
             }
 
