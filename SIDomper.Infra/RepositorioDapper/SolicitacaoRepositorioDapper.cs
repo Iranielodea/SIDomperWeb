@@ -57,7 +57,7 @@ namespace SIDomper.Infra.RepositorioDapper
                 sb.AppendLine(" WHERE " + campo + " LIKE " + sTexto);
             else
             {
-                sb.AppendLine("WHERE Cha_Id > 0");
+                sb.AppendLine("WHERE Sol_Id > 0");
             }
 
             sb.AppendLine(FiltrarDados(usuarioId, filtro));

@@ -256,12 +256,17 @@
             // cboAtivo
             // 
             this.cboAtivo.Location = new System.Drawing.Point(390, 47);
+            this.cboAtivo.Size = new System.Drawing.Size(121, 25);
             this.cboAtivo.Visible = false;
             // 
             // lblAtivo
             // 
             this.lblAtivo.Location = new System.Drawing.Point(387, 27);
             this.lblAtivo.Visible = false;
+            // 
+            // cbPesquisa
+            // 
+            this.cbPesquisa.Size = new System.Drawing.Size(133, 25);
             // 
             // dgvDados
             // 

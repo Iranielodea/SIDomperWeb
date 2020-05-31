@@ -28,17 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle56 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle57 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle58 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle59 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle60 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle61 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle62 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle63 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle64 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle65 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle66 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgvDados = new System.Windows.Forms.DataGridView();
             this.Sol_Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Ver_Versao = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -216,6 +216,14 @@
             this.StatusNome = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.StatusUsuario = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.UsrStatus = new SIDomper.Win.Componentes.usrPesquisa();
+            this.label30 = new System.Windows.Forms.Label();
+            this.label31 = new System.Windows.Forms.Label();
+            this.label32 = new System.Windows.Forms.Label();
+            this.cbbNivel = new System.Windows.Forms.ComboBox();
+            this.txtDataInicial = new SIDomper.Win.Componentes.usrData();
+            this.txtDataFinal = new SIDomper.Win.Componentes.usrData();
+            this.label33 = new System.Windows.Forms.Label();
+            this.txtIdFiltro = new SIDomper.Win.Componentes.usrSoNumero();
             this.tabControl1.SuspendLayout();
             this.tpPesquisa.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -338,9 +346,38 @@
             this.tbPrincipal.Size = new System.Drawing.Size(1017, 528);
             this.tbPrincipal.Text = "Abertura";
             // 
+            // tpFiltroPrincipal
+            // 
+            this.tpFiltroPrincipal.Controls.Add(this.txtIdFiltro);
+            this.tpFiltroPrincipal.Controls.Add(this.label33);
+            this.tpFiltroPrincipal.Controls.Add(this.txtDataFinal);
+            this.tpFiltroPrincipal.Controls.Add(this.txtDataInicial);
+            this.tpFiltroPrincipal.Controls.Add(this.cbbNivel);
+            this.tpFiltroPrincipal.Controls.Add(this.label32);
+            this.tpFiltroPrincipal.Controls.Add(this.label31);
+            this.tpFiltroPrincipal.Controls.Add(this.label30);
+            this.tpFiltroPrincipal.Size = new System.Drawing.Size(1017, 528);
+            this.tpFiltroPrincipal.Controls.SetChildIndex(this.lblAtivo, 0);
+            this.tpFiltroPrincipal.Controls.SetChildIndex(this.cboAtivo, 0);
+            this.tpFiltroPrincipal.Controls.SetChildIndex(this.label30, 0);
+            this.tpFiltroPrincipal.Controls.SetChildIndex(this.label31, 0);
+            this.tpFiltroPrincipal.Controls.SetChildIndex(this.label32, 0);
+            this.tpFiltroPrincipal.Controls.SetChildIndex(this.cbbNivel, 0);
+            this.tpFiltroPrincipal.Controls.SetChildIndex(this.txtDataInicial, 0);
+            this.tpFiltroPrincipal.Controls.SetChildIndex(this.txtDataFinal, 0);
+            this.tpFiltroPrincipal.Controls.SetChildIndex(this.label33, 0);
+            this.tpFiltroPrincipal.Controls.SetChildIndex(this.txtIdFiltro, 0);
+            // 
             // cboAtivo
             // 
+            this.cboAtivo.Location = new System.Drawing.Point(561, 39);
             this.cboAtivo.Size = new System.Drawing.Size(121, 25);
+            this.cboAtivo.Visible = false;
+            // 
+            // lblAtivo
+            // 
+            this.lblAtivo.Location = new System.Drawing.Point(558, 19);
+            this.lblAtivo.Visible = false;
             // 
             // cbPesquisa
             // 
@@ -368,9 +405,9 @@
             // Sol_Id
             // 
             this.Sol_Id.DataPropertyName = "Id";
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.Format = "000000";
-            this.Sol_Id.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle56.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle56.Format = "000000";
+            this.Sol_Id.DefaultCellStyle = dataGridViewCellStyle56;
             this.Sol_Id.HeaderText = "Id";
             this.Sol_Id.Name = "Sol_Id";
             this.Sol_Id.Width = 80;
@@ -378,9 +415,9 @@
             // Ver_Versao
             // 
             this.Ver_Versao.DataPropertyName = "Versao";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
-            dataGridViewCellStyle2.Format = "0000";
-            this.Ver_Versao.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle57.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
+            dataGridViewCellStyle57.Format = "0000";
+            this.Ver_Versao.DefaultCellStyle = dataGridViewCellStyle57;
             this.Ver_Versao.HeaderText = "Versão";
             this.Ver_Versao.Name = "Ver_Versao";
             this.Ver_Versao.Width = 80;
@@ -661,6 +698,7 @@
             this.btnAnexoAb.TabIndex = 21;
             this.btnAnexoAb.Text = "...";
             this.btnAnexoAb.UseVisualStyleBackColor = true;
+            this.btnAnexoAb.Click += new System.EventHandler(this.btnAnexoAb_Click);
             // 
             // btnVisualizarAb
             // 
@@ -670,6 +708,7 @@
             this.btnVisualizarAb.TabIndex = 22;
             this.btnVisualizarAb.Text = "...";
             this.btnVisualizarAb.UseVisualStyleBackColor = true;
+            this.btnVisualizarAb.Click += new System.EventHandler(this.btnVisualizarAb_Click);
             // 
             // tpAbertura
             // 
@@ -1060,9 +1099,9 @@
             // Data
             // 
             this.Data.DataPropertyName = "Data";
-            dataGridViewCellStyle3.Format = "d";
-            dataGridViewCellStyle3.NullValue = null;
-            this.Data.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle58.Format = "d";
+            dataGridViewCellStyle58.NullValue = null;
+            this.Data.DefaultCellStyle = dataGridViewCellStyle58;
             this.Data.HeaderText = "Previsão Entrega";
             this.Data.Name = "Data";
             // 
@@ -1112,7 +1151,7 @@
             this.tpOcorrenciaGeral.Location = new System.Drawing.Point(4, 26);
             this.tpOcorrenciaGeral.Name = "tpOcorrenciaGeral";
             this.tpOcorrenciaGeral.Padding = new System.Windows.Forms.Padding(3);
-            this.tpOcorrenciaGeral.Size = new System.Drawing.Size(680, 483);
+            this.tpOcorrenciaGeral.Size = new System.Drawing.Size(1017, 528);
             this.tpOcorrenciaGeral.TabIndex = 3;
             this.tpOcorrenciaGeral.Text = "Ocorrência Geral";
             this.tpOcorrenciaGeral.UseVisualStyleBackColor = true;
@@ -1194,6 +1233,7 @@
             this.btnVisualizarGeral.TabIndex = 15;
             this.btnVisualizarGeral.Text = "...";
             this.btnVisualizarGeral.UseVisualStyleBackColor = true;
+            this.btnVisualizarGeral.Click += new System.EventHandler(this.btnVisualizarGeral_Click);
             // 
             // btnAnexoGeral
             // 
@@ -1203,6 +1243,7 @@
             this.btnAnexoGeral.TabIndex = 14;
             this.btnAnexoGeral.Text = "...";
             this.btnAnexoGeral.UseVisualStyleBackColor = true;
+            this.btnAnexoGeral.Click += new System.EventHandler(this.btnAnexoGeral_Click);
             // 
             // label20
             // 
@@ -1303,18 +1344,18 @@
             // OcorrenciaGeralData
             // 
             this.OcorrenciaGeralData.DataPropertyName = "Data";
-            dataGridViewCellStyle4.Format = "d";
-            dataGridViewCellStyle4.NullValue = null;
-            this.OcorrenciaGeralData.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle59.Format = "d";
+            dataGridViewCellStyle59.NullValue = null;
+            this.OcorrenciaGeralData.DefaultCellStyle = dataGridViewCellStyle59;
             this.OcorrenciaGeralData.HeaderText = "Data";
             this.OcorrenciaGeralData.Name = "OcorrenciaGeralData";
             // 
             // OcorrenciaGeralHora
             // 
             this.OcorrenciaGeralHora.DataPropertyName = "Hora";
-            dataGridViewCellStyle5.Format = "t";
-            dataGridViewCellStyle5.NullValue = null;
-            this.OcorrenciaGeralHora.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle60.Format = "t";
+            dataGridViewCellStyle60.NullValue = null;
+            this.OcorrenciaGeralHora.DefaultCellStyle = dataGridViewCellStyle60;
             this.OcorrenciaGeralHora.HeaderText = "Hora";
             this.OcorrenciaGeralHora.Name = "OcorrenciaGeralHora";
             // 
@@ -1410,7 +1451,7 @@
             this.tpOcorrenciaTecnica.Location = new System.Drawing.Point(4, 26);
             this.tpOcorrenciaTecnica.Name = "tpOcorrenciaTecnica";
             this.tpOcorrenciaTecnica.Padding = new System.Windows.Forms.Padding(3);
-            this.tpOcorrenciaTecnica.Size = new System.Drawing.Size(680, 483);
+            this.tpOcorrenciaTecnica.Size = new System.Drawing.Size(1017, 528);
             this.tpOcorrenciaTecnica.TabIndex = 4;
             this.tpOcorrenciaTecnica.Text = "Ocorrência Técnica";
             this.tpOcorrenciaTecnica.UseVisualStyleBackColor = true;
@@ -1538,6 +1579,7 @@
             this.btnVisualizarTecnico.TabIndex = 19;
             this.btnVisualizarTecnico.Text = "...";
             this.btnVisualizarTecnico.UseVisualStyleBackColor = true;
+            this.btnVisualizarTecnico.Click += new System.EventHandler(this.btnVisualizarTecnico_Click);
             // 
             // btnAnexoTecnico
             // 
@@ -1547,6 +1589,7 @@
             this.btnAnexoTecnico.TabIndex = 18;
             this.btnAnexoTecnico.Text = "...";
             this.btnAnexoTecnico.UseVisualStyleBackColor = true;
+            this.btnAnexoTecnico.Click += new System.EventHandler(this.btnAnexoTecnico_Click);
             // 
             // label23
             // 
@@ -1645,17 +1688,17 @@
             // 
             // TecnicaData
             // 
-            dataGridViewCellStyle6.Format = "d";
-            dataGridViewCellStyle6.NullValue = null;
-            this.TecnicaData.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle61.Format = "d";
+            dataGridViewCellStyle61.NullValue = null;
+            this.TecnicaData.DefaultCellStyle = dataGridViewCellStyle61;
             this.TecnicaData.HeaderText = "Data";
             this.TecnicaData.Name = "TecnicaData";
             // 
             // TecnicaHora
             // 
-            dataGridViewCellStyle7.Format = "t";
-            dataGridViewCellStyle7.NullValue = null;
-            this.TecnicaHora.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle62.Format = "t";
+            dataGridViewCellStyle62.NullValue = null;
+            this.TecnicaHora.DefaultCellStyle = dataGridViewCellStyle62;
             this.TecnicaHora.HeaderText = "Hora";
             this.TecnicaHora.Name = "TecnicaHora";
             // 
@@ -1700,7 +1743,7 @@
             this.tpOcorrenciaRegras.Location = new System.Drawing.Point(4, 26);
             this.tpOcorrenciaRegras.Name = "tpOcorrenciaRegras";
             this.tpOcorrenciaRegras.Padding = new System.Windows.Forms.Padding(3);
-            this.tpOcorrenciaRegras.Size = new System.Drawing.Size(680, 483);
+            this.tpOcorrenciaRegras.Size = new System.Drawing.Size(1017, 528);
             this.tpOcorrenciaRegras.TabIndex = 5;
             this.tpOcorrenciaRegras.Text = "Ocorrência Regras";
             this.tpOcorrenciaRegras.UseVisualStyleBackColor = true;
@@ -1828,6 +1871,7 @@
             this.btnVisualizarRegra.TabIndex = 23;
             this.btnVisualizarRegra.Text = "...";
             this.btnVisualizarRegra.UseVisualStyleBackColor = true;
+            this.btnVisualizarRegra.Click += new System.EventHandler(this.btnVisualizarRegra_Click);
             // 
             // btnAnexoRegra
             // 
@@ -1837,6 +1881,7 @@
             this.btnAnexoRegra.TabIndex = 22;
             this.btnAnexoRegra.Text = "...";
             this.btnAnexoRegra.UseVisualStyleBackColor = true;
+            this.btnAnexoRegra.Click += new System.EventHandler(this.btnAnexoRegra_Click);
             // 
             // label26
             // 
@@ -1935,17 +1980,17 @@
             // 
             // RegraData
             // 
-            dataGridViewCellStyle8.Format = "d";
-            dataGridViewCellStyle8.NullValue = null;
-            this.RegraData.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle63.Format = "d";
+            dataGridViewCellStyle63.NullValue = null;
+            this.RegraData.DefaultCellStyle = dataGridViewCellStyle63;
             this.RegraData.HeaderText = "Data";
             this.RegraData.Name = "RegraData";
             // 
             // RegraHora
             // 
-            dataGridViewCellStyle9.Format = "t";
-            dataGridViewCellStyle9.NullValue = null;
-            this.RegraHora.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle64.Format = "t";
+            dataGridViewCellStyle64.NullValue = null;
+            this.RegraHora.DefaultCellStyle = dataGridViewCellStyle64;
             this.RegraHora.HeaderText = "Hora";
             this.RegraHora.Name = "RegraHora";
             // 
@@ -2012,17 +2057,17 @@
             // 
             // StatusData
             // 
-            dataGridViewCellStyle10.Format = "d";
-            dataGridViewCellStyle10.NullValue = null;
-            this.StatusData.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle65.Format = "d";
+            dataGridViewCellStyle65.NullValue = null;
+            this.StatusData.DefaultCellStyle = dataGridViewCellStyle65;
             this.StatusData.HeaderText = "Data";
             this.StatusData.Name = "StatusData";
             // 
             // StatusHora
             // 
-            dataGridViewCellStyle11.Format = "T";
-            dataGridViewCellStyle11.NullValue = null;
-            this.StatusHora.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle66.Format = "T";
+            dataGridViewCellStyle66.NullValue = null;
+            this.StatusHora.DefaultCellStyle = dataGridViewCellStyle66;
             this.StatusHora.HeaderText = "Hora";
             this.StatusHora.Name = "StatusHora";
             // 
@@ -2046,6 +2091,77 @@
             this.UsrStatus.Name = "UsrStatus";
             this.UsrStatus.Size = new System.Drawing.Size(576, 49);
             this.UsrStatus.TabIndex = 16;
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Location = new System.Drawing.Point(18, 70);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(82, 17);
+            this.label30.TabIndex = 2;
+            this.label30.Text = "Data Inicial";
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Location = new System.Drawing.Point(18, 124);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(74, 17);
+            this.label31.TabIndex = 3;
+            this.label31.Text = "Data Final";
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Location = new System.Drawing.Point(18, 19);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(40, 17);
+            this.label32.TabIndex = 4;
+            this.label32.Text = "Nível";
+            // 
+            // cbbNivel
+            // 
+            this.cbbNivel.FormattingEnabled = true;
+            this.cbbNivel.Items.AddRange(new object[] {
+            "Baixo",
+            "Normal",
+            "Alto",
+            "Crítico",
+            "Todos"});
+            this.cbbNivel.Location = new System.Drawing.Point(21, 39);
+            this.cbbNivel.Name = "cbbNivel";
+            this.cbbNivel.Size = new System.Drawing.Size(213, 25);
+            this.cbbNivel.TabIndex = 0;
+            // 
+            // txtDataInicial
+            // 
+            this.txtDataInicial.Location = new System.Drawing.Point(20, 90);
+            this.txtDataInicial.Name = "txtDataInicial";
+            this.txtDataInicial.Size = new System.Drawing.Size(95, 25);
+            this.txtDataInicial.TabIndex = 1;
+            // 
+            // txtDataFinal
+            // 
+            this.txtDataFinal.Location = new System.Drawing.Point(21, 144);
+            this.txtDataFinal.Name = "txtDataFinal";
+            this.txtDataFinal.Size = new System.Drawing.Size(94, 25);
+            this.txtDataFinal.TabIndex = 2;
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Location = new System.Drawing.Point(131, 124);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(21, 17);
+            this.label33.TabIndex = 5;
+            this.label33.Text = "ID";
+            // 
+            // txtIdFiltro
+            // 
+            this.txtIdFiltro.Location = new System.Drawing.Point(134, 144);
+            this.txtIdFiltro.Name = "txtIdFiltro";
+            this.txtIdFiltro.Size = new System.Drawing.Size(67, 25);
+            this.txtIdFiltro.TabIndex = 3;
             // 
             // frmSolicitacao
             // 
@@ -2285,5 +2401,13 @@
         private System.Windows.Forms.TextBox txtIdOcorrenciaGeral;
         private System.Windows.Forms.TextBox txtIdOcorrenciaTecnica;
         private System.Windows.Forms.TextBox txtIdOcorrenciaRegra;
+        private Componentes.usrData txtDataFinal;
+        private Componentes.usrData txtDataInicial;
+        private System.Windows.Forms.ComboBox cbbNivel;
+        private System.Windows.Forms.Label label32;
+        private System.Windows.Forms.Label label31;
+        private System.Windows.Forms.Label label30;
+        private Componentes.usrSoNumero txtIdFiltro;
+        private System.Windows.Forms.Label label33;
     }
 }

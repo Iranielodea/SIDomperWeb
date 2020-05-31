@@ -38,7 +38,10 @@ namespace SIDomper.Apresentacao.App
                 return new Operacao<SolicitacaoViewModel>().Insert(string.Format(URI, idUsuario), model);
             }
             else
+            {
+                URI = Constantes.URL + "Solicitacao/Alterar?usuarioId={0}";
                 return new Operacao<SolicitacaoViewModel>().Update(string.Format(URI, idUsuario, ocorrencia), model);
+            }
         }
 
         public SolicitacaoViewModel Excluir(int id, int idUsuario)

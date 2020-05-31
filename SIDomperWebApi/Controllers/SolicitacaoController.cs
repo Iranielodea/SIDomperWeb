@@ -115,6 +115,7 @@ namespace SIDomperWebApi.Controllers
             }
         }
 
+        [Route("Alterar")]
         [HttpPut]
         public SolicitacaoViewModel Update([FromBody]SolicitacaoViewModel viewModel, int usuarioId)
         {
@@ -219,13 +220,13 @@ namespace SIDomperWebApi.Controllers
 
             if (model.Tipo != null)
             {
-                viewModel.TipoCodigo = model.Status.Codigo;
-                viewModel.TipoNome = model.Status.Nome;
+                viewModel.TipoCodigo = model.Tipo.Codigo;
+                viewModel.TipoNome = model.Tipo.Nome;
             }
 
-            if (!string.IsNullOrEmpty(model.Versao))
+            if (model.VersaoRelacao != null)
             {
-                viewModel.VersaoDescricao = model.Versao;
+                viewModel.VersaoDescricao = model.VersaoRelacao.VersaoStr;
             }
 
             var usuario = _usuarioServico.ObterPorId(usuarioId);

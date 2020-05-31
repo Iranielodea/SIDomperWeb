@@ -227,5 +227,27 @@ namespace SIDomper.Win.Utilitarios
                 return null;
             }
         }
+
+        public static void AbrirAnexo(ref TextBox textBox)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+
+                textBox.Text = openFileDialog.FileName;
+            }
+        }
+
+        public static void VisualizarAnexo(ref TextBox textBox)
+        {
+            if (textBox.Text.Trim() == "")
+            {
+                MessageBox.Show("Não há arquivo para visualizar!");
+                return;
+            }
+            System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
+            startInfo.FileName = textBox.Text;
+            System.Diagnostics.Process.Start(startInfo);
+        }
     }
 }

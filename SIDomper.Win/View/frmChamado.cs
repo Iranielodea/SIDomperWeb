@@ -825,23 +825,12 @@ namespace SIDomper.Win.View
 
         private void btnAnexo_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                txtAnexo.Text = openFileDialog.FileName;
-            }
+            Funcoes.AbrirAnexo(ref txtAnexo);
         }
 
         private void btnVisualizar_Click(object sender, EventArgs e)
         {
-            if (txtAnexo.Text.Trim() == "")
-            {
-                MessageBox.Show("Não há arquivo para visualizar!");
-                return;
-            }
-            System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
-            startInfo.FileName = txtAnexo.Text;
-            System.Diagnostics.Process.Start(startInfo);
+            Funcoes.VisualizarAnexo(ref txtAnexo);
         }
 
         private void dgvOcorrencia_KeyUp(object sender, KeyEventArgs e)

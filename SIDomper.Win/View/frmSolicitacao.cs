@@ -55,8 +55,8 @@ namespace SIDomper.Win.View
 
             UsrAnalista.Programa(EnProgramas.Usuario, false, true, "Analista", true);
             UsrVersao.Programa(EnProgramas.Versao, true, true, "Versão");
-            UsrTipoAnalista.Programa(EnProgramas.Tipo);
-            UsrDesenvolvedor.Programa(EnProgramas.Usuario, false, true, "Desenvolvedor", false);
+            UsrTipoAnalista.ProgramaTipo(EnProgramas.Tipo, false, true, "Tipo", true, EnTipos.Solicitacao);
+            UsrDesenvolvedor.Programa(EnProgramas.Usuario, true, true, "Desenvolvedor", true);
             UsrModuloAnalista.Programa(EnProgramas.Modulo);
             UsrProdutoAnalista.Programa(EnProgramas.Produto, false, false, "Produto", false);
             UsrCategoria.Programa(EnProgramas.Categoria);
@@ -69,6 +69,8 @@ namespace SIDomper.Win.View
             cbCampos.DataSource = Grade.ListarCampos(ref dgvDados);
             cbCampos.SelectedIndex = 6;
             cbPesquisa.Enabled = false;
+
+            cbbNivel.SelectedIndex = 4;
 
             //UsrUsuario.Programa(EnProgramas.Usuario, true, false, "Usuário", false);
             //UsrTipo.ProgramaTipo(EnProgramas.Tipo, true, true, "", true, EnTipos.Solicitacao);
@@ -238,11 +240,11 @@ namespace SIDomper.Win.View
 
                 base.Salvar();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-            
+
         }
 
         private int? RetornarNivel()
@@ -327,13 +329,14 @@ namespace SIDomper.Win.View
                 string sCampo = Grade.BuscarCampo(ref dgvDados, cbCampos.Text);
 
                 var filtro = new SolicitacaoFiltroViewModel();
-                //filtro.DataInicial = "01/05/2020"; //txtDataInicial.txtData.Text;
-                //filtro.DataFinal = "01/06/2020"; //txtDataFinal.txtData.Text;
+                filtro.DataInicial = txtDataInicial.txtData.Text;
+                filtro.DataFinal = txtDataFinal.txtData.Text;
+                filtro.Id = Funcoes.StrToInt(txtIdFiltro.txtValor.Text);
                 //filtro.IdUsuarioAbertura = ursFiltroUsuario.RetornarSelecao();
                 //filtro.IdCliente = ursFiltroCliente.RetornarSelecao();
                 //filtro.IdTipo = ursFiltroTipo.RetornarSelecao();
                 //filtro.IdStatus = ursFiltroStatus.RetornarSelecao();
-                sCampo = "Cli_Nome";
+                //sCampo = "Cli_Nome";
                 if (id > 0)
                 {
                     sCampo = "Sol_Id";
@@ -1113,6 +1116,46 @@ namespace SIDomper.Win.View
         private void dgvOcorrenciaRegra_MouseUp(object sender, MouseEventArgs e)
         {
             CancelarRegra();
+        }
+
+        private void btnAnexoAb_Click(object sender, EventArgs e)
+        {
+            Funcoes.AbrirAnexo(ref txtAnexoAbertura);
+        }
+
+        private void btnVisualizarAb_Click(object sender, EventArgs e)
+        {
+            Funcoes.VisualizarAnexo(ref txtAnexoAbertura);
+        }
+
+        private void btnAnexoGeral_Click(object sender, EventArgs e)
+        {
+            Funcoes.AbrirAnexo(ref txtAnexoGeral);
+        }
+
+        private void btnVisualizarGeral_Click(object sender, EventArgs e)
+        {
+            Funcoes.VisualizarAnexo(ref txtAnexoGeral);
+        }
+
+        private void btnAnexoTecnico_Click(object sender, EventArgs e)
+        {
+            Funcoes.AbrirAnexo(ref txtAnexoTecnico);
+        }
+
+        private void btnVisualizarTecnico_Click(object sender, EventArgs e)
+        {
+            Funcoes.VisualizarAnexo(ref txtAnexoTecnico);
+        }
+
+        private void btnAnexoRegra_Click(object sender, EventArgs e)
+        {
+            Funcoes.AbrirAnexo(ref txtAnexoRegra);
+        }
+
+        private void btnVisualizarRegra_Click(object sender, EventArgs e)
+        {
+            Funcoes.VisualizarAnexo(ref txtAnexoRegra);
         }
     }
 }

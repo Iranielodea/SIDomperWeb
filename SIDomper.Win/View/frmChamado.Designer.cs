@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgvDados = new System.Windows.Forms.DataGridView();
             this.Cha_Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Cha_DataAbertura = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -343,7 +343,7 @@
             this.tpFiltroPrincipal.Controls.Add(this.label14);
             this.tpFiltroPrincipal.Controls.Add(this.txtDataInicial);
             this.tpFiltroPrincipal.Controls.Add(this.label13);
-            this.tpFiltroPrincipal.Size = new System.Drawing.Size(1015, 526);
+            this.tpFiltroPrincipal.Size = new System.Drawing.Size(678, 481);
             this.tpFiltroPrincipal.Controls.SetChildIndex(this.lblAtivo, 0);
             this.tpFiltroPrincipal.Controls.SetChildIndex(this.cboAtivo, 0);
             this.tpFiltroPrincipal.Controls.SetChildIndex(this.label13, 0);
@@ -392,9 +392,9 @@
             // Cha_Id
             // 
             this.Cha_Id.DataPropertyName = "Id";
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.Format = "000000";
-            this.Cha_Id.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.Format = "000000";
+            this.Cha_Id.DefaultCellStyle = dataGridViewCellStyle5;
             this.Cha_Id.HeaderText = "Id";
             this.Cha_Id.Name = "Cha_Id";
             this.Cha_Id.Width = 80;
@@ -402,8 +402,8 @@
             // Cha_DataAbertura
             // 
             this.Cha_DataAbertura.DataPropertyName = "DataAbertura";
-            dataGridViewCellStyle2.Format = "dd/MM/yyyy";
-            this.Cha_DataAbertura.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle6.Format = "dd/MM/yyyy";
+            this.Cha_DataAbertura.DefaultCellStyle = dataGridViewCellStyle6;
             this.Cha_DataAbertura.HeaderText = "Data";
             this.Cha_DataAbertura.Name = "Cha_DataAbertura";
             // 
@@ -614,7 +614,7 @@
             this.tpUsuario.Location = new System.Drawing.Point(4, 26);
             this.tpUsuario.Name = "tpUsuario";
             this.tpUsuario.Padding = new System.Windows.Forms.Padding(3);
-            this.tpUsuario.Size = new System.Drawing.Size(1015, 526);
+            this.tpUsuario.Size = new System.Drawing.Size(678, 481);
             this.tpUsuario.TabIndex = 1;
             this.tpUsuario.Text = "Usuário";
             // 
@@ -634,7 +634,7 @@
             this.tpModulo.Location = new System.Drawing.Point(4, 26);
             this.tpModulo.Name = "tpModulo";
             this.tpModulo.Padding = new System.Windows.Forms.Padding(3);
-            this.tpModulo.Size = new System.Drawing.Size(1015, 526);
+            this.tpModulo.Size = new System.Drawing.Size(678, 481);
             this.tpModulo.TabIndex = 2;
             this.tpModulo.Text = "Módulo";
             // 
@@ -654,7 +654,7 @@
             this.tpTipo.Location = new System.Drawing.Point(4, 26);
             this.tpTipo.Name = "tpTipo";
             this.tpTipo.Padding = new System.Windows.Forms.Padding(3);
-            this.tpTipo.Size = new System.Drawing.Size(1015, 526);
+            this.tpTipo.Size = new System.Drawing.Size(678, 481);
             this.tpTipo.TabIndex = 3;
             this.tpTipo.Text = "Tipo";
             // 
@@ -674,7 +674,7 @@
             this.tpStatus.Location = new System.Drawing.Point(4, 26);
             this.tpStatus.Name = "tpStatus";
             this.tpStatus.Padding = new System.Windows.Forms.Padding(3);
-            this.tpStatus.Size = new System.Drawing.Size(1015, 526);
+            this.tpStatus.Size = new System.Drawing.Size(678, 481);
             this.tpStatus.TabIndex = 4;
             this.tpStatus.Text = "Status";
             // 
@@ -819,7 +819,7 @@
             this.tpOcorrencia.Location = new System.Drawing.Point(4, 26);
             this.tpOcorrencia.Name = "tpOcorrencia";
             this.tpOcorrencia.Padding = new System.Windows.Forms.Padding(3);
-            this.tpOcorrencia.Size = new System.Drawing.Size(678, 481);
+            this.tpOcorrencia.Size = new System.Drawing.Size(1015, 526);
             this.tpOcorrencia.TabIndex = 1;
             this.tpOcorrencia.Text = "Ocorrência";
             // 
@@ -1106,8 +1106,8 @@
             // Data
             // 
             this.Data.DataPropertyName = "Data";
-            dataGridViewCellStyle3.Format = "dd/MM/yyyy";
-            this.Data.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle7.Format = "dd/MM/yyyy";
+            this.Data.DefaultCellStyle = dataGridViewCellStyle7;
             this.Data.HeaderText = "Data";
             this.Data.Name = "Data";
             this.Data.ReadOnly = true;
@@ -1276,9 +1276,9 @@
             this.tpStatusOcorrencia.Location = new System.Drawing.Point(4, 26);
             this.tpStatusOcorrencia.Name = "tpStatusOcorrencia";
             this.tpStatusOcorrencia.Padding = new System.Windows.Forms.Padding(3);
-            this.tpStatusOcorrencia.Size = new System.Drawing.Size(678, 481);
+            this.tpStatusOcorrencia.Size = new System.Drawing.Size(1015, 526);
             this.tpStatusOcorrencia.TabIndex = 2;
-            this.tpStatusOcorrencia.Text = "Ocorrências";
+            this.tpStatusOcorrencia.Text = "Status";
             this.tpStatusOcorrencia.UseVisualStyleBackColor = true;
             // 
             // dgvStatus
@@ -1305,8 +1305,8 @@
             // Hora
             // 
             this.Hora.DataPropertyName = "Hora";
-            dataGridViewCellStyle4.NullValue = null;
-            this.Hora.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle8.NullValue = null;
+            this.Hora.DefaultCellStyle = dataGridViewCellStyle8;
             this.Hora.HeaderText = "Hora";
             this.Hora.Name = "Hora";
             // 
