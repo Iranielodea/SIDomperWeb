@@ -1,5 +1,7 @@
 ﻿using SIDomper.Apresentacao.App;
 using SIDomper.Dominio.Enumeracao;
+using SIDomper.Dominio.Funcoes;
+using SIDomper.Dominio.ViewModel;
 using SIDomper.Win.Utilitarios;
 using SIDomper.Win.View;
 using System;
@@ -27,8 +29,33 @@ namespace SIDomper.Win
 
             Funcoes.CodigoUsuarioLogado = usuario.Codigo;
             Funcoes.NomeUsuarioLogado = usuario.Nome;
+            BuscarUsuarioPermissao(usuario);
 
             //LerMenus();
+        }
+
+        private void BuscarUsuarioPermissao(UsuarioViewModel usuario)
+        {
+            UsuarioPermissaoMenu.Lib_Solicitacao_Ocorr_Geral_Alt = usuario.UsuariosPermissao.Any(x => x.Sigla == "Lib_Solicitacao_Ocorr_Geral_Alt");
+            UsuarioPermissaoMenu.Lib_Solicitacao_Ocorr_Geral_Exc = usuario.UsuariosPermissao.Any(x => x.Sigla == "Lib_Solicitacao_Ocorr_Geral_Exc");
+            UsuarioPermissaoMenu.Lib_Solicitacao_Ocorr_Tecnica_Alt = usuario.UsuariosPermissao.Any(x => x.Sigla == "Lib_Solicitacao_Ocorr_Tecnica_Alt");
+            UsuarioPermissaoMenu.Lib_Solicitacao_Ocorr_Tecnica_Exc = usuario.UsuariosPermissao.Any(x => x.Sigla == "Lib_Solicitacao_Ocorr_Tecnica_Exc");
+            UsuarioPermissaoMenu.Lib_Solicitacao_Ocorr_Regra_Alt = usuario.UsuariosPermissao.Any(x => x.Sigla == "Lib_Solicitacao_Ocorr_Regra_Alt");
+            UsuarioPermissaoMenu.Lib_Solicitacao_Ocorr_Regra_Exc = usuario.UsuariosPermissao.Any(x => x.Sigla == "Lib_Solicitacao_Ocorr_Regra_Exc");
+            UsuarioPermissaoMenu.Lib_Solicitacao_Tempo = usuario.UsuariosPermissao.Any(x => x.Sigla == "Lib_Solicitacao_Tempo");
+
+            UsuarioPermissaoMenu.Lib_Chamado_Ocorr_Alt_Data_Hora = usuario.UsuariosPermissao.Any(x => x.Sigla == "Lib_Chamado_Ocorr_Alt_Data_Hora");
+            UsuarioPermissaoMenu.Lib_Chamado_Ocorr_Alt = usuario.UsuariosPermissao.Any(x => x.Sigla == "Lib_Chamado_Ocorr_Alt");
+            UsuarioPermissaoMenu.Lib_Chamado_Ocorr_Exc = usuario.UsuariosPermissao.Any(x => x.Sigla == "Lib_Chamado_Ocorr_Exc");
+
+            UsuarioPermissaoMenu.Lib_Atividade_Ocorr_Alt_Data_Hora = usuario.UsuariosPermissao.Any(x => x.Sigla == "Lib_Atividade_Ocorr_Alt_Data_Hora");
+            UsuarioPermissaoMenu.Lib_Atividade_Ocorr_Alt = usuario.UsuariosPermissao.Any(x => x.Sigla == "Lib_Atividade_Ocorr_Alt");
+            UsuarioPermissaoMenu.Lib_Atividade_Ocorr_Exc = usuario.UsuariosPermissao.Any(x => x.Sigla == "Lib_Atividade_Ocorr_Exc");
+
+            UsuarioPermissaoMenu.Lib_Conferencia_Tempo_Geral = usuario.UsuariosPermissao.Any(x => x.Sigla == "Lib_Conferencia_Tempo_Geral");
+
+            UsuarioPermissaoMenu.Lib_Orcamento_Alt_Situacao = usuario.UsuariosPermissao.Any(x => x.Sigla == "Lib_Orcamento_Alt_Situacao");
+            UsuarioPermissaoMenu.Lib_Orcamento_Usuario = usuario.UsuariosPermissao.Any(x => x.Sigla == "Lib_Orcamento_Usuario");
         }
 
         private bool FormularioExiste(string nomeFormulario)

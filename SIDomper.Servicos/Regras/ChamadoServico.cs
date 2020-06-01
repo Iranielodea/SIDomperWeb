@@ -60,7 +60,7 @@ namespace SIDomper.Servicos.Regras
         {
             return _chamadoRepositorioDapper.Filtrar(filtro, campo, texto, usuarioId, contem, EnumChamado.Chamado);
             //return _repADO.Filtrar(filtro, campo, texto, usuarioId, contem, tipo);
-            }
+        }
 
         public IEnumerable<ChamadoConsultaViewModel> FiltrarPorId(int id, int idUsuario)
         {
@@ -194,11 +194,12 @@ namespace SIDomper.Servicos.Regras
                         //if (chamado == null)
                         //    chamado = new Chamado();
 
-                        if (model.ChamadoOcorrencias.Count() > 0)
-                        {
-                            AlterarOcorrencia(model);
-                            ExcluirOcorrencias(model);
-                        }
+                        //if (model.ChamadoOcorrencias.Count() > 0)
+                        //{
+                        
+                        AlterarOcorrencia(model);
+                        ExcluirOcorrencias(model);
+                        //}
 
                         //chamado.ClienteId = model.ClienteId;
                         //chamado.Contato = model.Contato;
@@ -387,7 +388,7 @@ namespace SIDomper.Servicos.Regras
                     }
                 }
             }
-           // _repChamadoOcorrenciaColaboradorEF.Commit();
+            // _repChamadoOcorrenciaColaboradorEF.Commit();
         }
 
         private void ExcluirOcorrenciasColaborador(ChamadoOcorrencia chamadoOcorrencia)

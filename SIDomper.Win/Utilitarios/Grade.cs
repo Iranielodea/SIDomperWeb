@@ -49,11 +49,19 @@ namespace SIDomper.Win.Utilitarios
         {
             if (grid.RowCount > 0)
             {
-                string texto = grid.CurrentRow.Cells[id].Value.ToString();
-                int resultado = Convert.ToInt32(texto);
-                return resultado;
+                try
+                {
+                    string texto = grid.CurrentRow.Cells[id].Value.ToString();
+                    int resultado = Convert.ToInt32(texto);
+                    return resultado;
+                }
+                catch
+                {
+
+                }
             }
-            throw new Exception("Não há Registro!");
+            return 0;
+            //throw new Exception("Não há Registro!");
         }
 
         public static string RetornarValorCampo(ref DataGridView grid, string campo)

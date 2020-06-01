@@ -5,12 +5,15 @@ using SIDomper.Infra.EF;
 using SIDomper.Infra.RepositorioDapper;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Transactions;
 
 namespace SIDomper.Servicos.Regras
 {
     public class SolicitacaoServico
     {
         private readonly SolicitacaoEF _rep;
+        private readonly SolicitacaoOcorrenciaEF _repOcorrencia;
         private readonly EnProgramas _tipoPrograma;
         private readonly UsuarioServico _repUsuario;
         private readonly ParametroServico _parametro;
@@ -27,6 +30,7 @@ namespace SIDomper.Servicos.Regras
             _listaEmail = new List<string>();
             _usuarioPermissao = new UsuarioPermissaoServico();
             _solicitacaoRepositorioDapper = new SolicitacaoRepositorioDapper();
+            _repOcorrencia = new SolicitacaoOcorrenciaEF();
         }
 
         public Solicitacao Novo(int usuarioId)
@@ -127,9 +131,76 @@ namespace SIDomper.Servicos.Regras
             //    AdicionarSolicitacaoStatus(solicitacaoStatus);
             //}
 
-            model.UsuarioAtendeAtualId = idUsuario;
-            _rep.Salvar(model);
-            _rep.Commit();
+            using (var trans = new TransactionScope())
+            {
+                if (model.Id == 0)
+                {
+                    model.UsuarioAtendeAtualId = idUsuario;
+                }
+                else
+                {
+
+                    AlterarOcorrencia(model);
+                    ExcluirOcorrencias(model);
+                }
+                _rep.Salvar(model);
+                _rep.Commit();
+                trans.Complete();
+            }
+        }
+
+        private void AlterarOcorrencia(Solicitacao model)
+        {
+            var temp = new SolicitacaoOcorrencia();
+            foreach (var item in model.SolicitacaoOcorrencias)
+            {
+                item.SolicitacaoId = model.Id;
+                if (item.UsuarioId == 0)
+                    throw new Exception("Informe o Usuário!");
+
+                if (string.IsNullOrWhiteSpace(item.Descricao))
+                    throw new Exception("Informe uma descrição!");
+
+                if (item.Id <= 0)
+                {
+                    _repOcorrencia.Salvar(item);
+                }
+                else
+                {
+                    temp = _repOcorrencia.ObterPorId(item.Id);
+                    if (temp != null)
+                    {
+                        temp = item;
+                        _repOcorrencia.Salvar(temp);
+                    }
+                }
+            }
+            _repOcorrencia.Commit();
+        }
+
+        private void ExcluirOcorrencias(Solicitacao model)
+        {
+            string idDelecao = "";
+            int i = 1;
+            var banco = _rep.ObterPorId(model.Id);
+            foreach (var itemBanco in banco.SolicitacaoOcorrencias)
+            {
+                var dados = model.SolicitacaoOcorrencias.FirstOrDefault(x => x.Id == itemBanco.Id);
+                if (dados == null)
+                {
+                    if (itemBanco.Id > 0)
+                    {
+                        if (i == 1)
+                            idDelecao += itemBanco.Id;
+                        else
+                            idDelecao += "," + itemBanco.Id;
+                        i++;
+                    }
+                }
+            }
+
+            if (idDelecao != "")
+                _repOcorrencia.ExcluirOcorrenciaIds(idDelecao);
         }
 
         public string RetornarCaminhoAnexo()

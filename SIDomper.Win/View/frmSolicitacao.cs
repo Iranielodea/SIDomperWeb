@@ -1,5 +1,8 @@
 ﻿using SIDomper.Apresentacao.App;
+using SIDomper.Apresentacao.Comum;
+using SIDomper.Dominio.Constantes;
 using SIDomper.Dominio.Enumeracao;
+using SIDomper.Dominio.Funcoes;
 using SIDomper.Dominio.ViewModel;
 using SIDomper.Win.Base;
 using SIDomper.Win.Utilitarios;
@@ -208,6 +211,15 @@ namespace SIDomper.Win.View
         {
             try
             {
+                if (btnCronoSalvar.Enabled)
+                    throw new Exception("Salve o Cronograma!");
+                if (btnGeralSalvar.Enabled)
+                    throw new Exception("Salve a Ocorrência Geral!");
+                if (btnTecnicoSalvar.Enabled)
+                    throw new Exception("Salve a Ocorrência Técnica!");
+                if (btnRegraSalvar.Enabled)
+                    throw new Exception("Salve a Ocorrência Regra!");
+
                 _solicitacaoViewModel.Id = _Id;
                 _solicitacaoViewModel.Data = Funcoes.StrToDate(txtData.txtData.Text);
                 _solicitacaoViewModel.Hora = Funcoes.StrToHora(txtHora.Text);
@@ -567,7 +579,7 @@ namespace SIDomper.Win.View
             if (dgvOcorrenciaGeral.RowCount > 0)
             {
                 txtIdOcorrenciaGeral.Text = Grade.RetornarId(ref dgvOcorrenciaGeral, "SOcor_Id").ToString();
-                UsrGeralUsuario.txtId.Text = Grade.RetornarValorCampo(ref dgvOcorrenciaGeral, "OcorrenciaGeralId");
+                UsrGeralUsuario.txtId.Text = Grade.RetornarValorCampo(ref dgvOcorrenciaGeral, "OcorrenciaGeralUsuarioId");
                 UsrGeralUsuario.SetCodigoMask(Grade.RetornarValorCampo(ref dgvOcorrenciaGeral, "OcorrenciaGeralCodigoUsuario"));
                 UsrGeralUsuario.txtNome.Text = Grade.RetornarValorCampo(ref dgvOcorrenciaGeral, "OcorrenciaGeralNomeUsuario");
 
@@ -582,8 +594,8 @@ namespace SIDomper.Win.View
         {
             if (dgvOcorrenciaTecnica.RowCount > 0)
             {
-                txtIdOcorrenciaTecnica.Text = Grade.RetornarId(ref dgvOcorrenciaTecnica, "SOcor_Id").ToString();
-                UsrTecnicaUsuario.txtId.Text = Grade.RetornarValorCampo(ref dgvOcorrenciaTecnica, "TecnicaId");
+                txtIdOcorrenciaTecnica.Text = Grade.RetornarId(ref dgvOcorrenciaTecnica, "TecnicaId").ToString();
+                UsrTecnicaUsuario.txtId.Text = Grade.RetornarValorCampo(ref dgvOcorrenciaTecnica, "TecnicaUsuarioId");
                 UsrTecnicaUsuario.SetCodigoMask(Grade.RetornarValorCampo(ref dgvOcorrenciaTecnica, "TecnicaCodigoUsuario"));
                 UsrTecnicaUsuario.txtNome.Text = Grade.RetornarValorCampo(ref dgvOcorrenciaTecnica, "TecnicaNomeUsuario");
 
@@ -598,8 +610,8 @@ namespace SIDomper.Win.View
         {
             if (dgvOcorrenciaRegra.RowCount > 0)
             {
-                txtIdOcorrenciaRegra.Text = Grade.RetornarId(ref dgvOcorrenciaRegra, "SOcor_Id").ToString();
-                UsrRegrasUsuario.txtId.Text = Grade.RetornarValorCampo(ref dgvOcorrenciaRegra, "RegraId");
+                txtIdOcorrenciaRegra.Text = Grade.RetornarId(ref dgvOcorrenciaRegra, "RegraId").ToString();
+                UsrRegrasUsuario.txtId.Text = Grade.RetornarValorCampo(ref dgvOcorrenciaRegra, "RegraUsuarioId");
                 UsrRegrasUsuario.SetCodigoMask(Grade.RetornarValorCampo(ref dgvOcorrenciaRegra, "RegraCodigoUsuario"));
                 UsrRegrasUsuario.txtNome.Text = Grade.RetornarValorCampo(ref dgvOcorrenciaRegra, "RegraNomeUsuario");
 
@@ -677,7 +689,7 @@ namespace SIDomper.Win.View
             txtGeralHora.Text = DateTime.Now.ToShortTimeString();
             txtDescricaoGeral.Clear();
             txtAnexoGeral.Clear();
-            tpGeralEdicao.Show();
+            tabControl5.SelectedIndex = 0;
             txtIdOcorrenciaGeral.Text = _solicitacaoViewModel.OcorrenciaRetornarMenorId().ToString();
             txtGeralData.Focus();
         }
@@ -686,6 +698,12 @@ namespace SIDomper.Win.View
         {
             if (dgvOcorrenciaGeral.RowCount > 0)
             {
+                if (UsuarioPermissaoMenu.Lib_Solicitacao_Ocorr_Geral_Alt == false)
+                {
+                    MessageBox.Show(Mensagem.UsuarioSemPermissao);
+                    return;
+                }
+
                 Tela.HabilitarDesabilitar(tpGeralEdicao, true);
                 Tela.BotaoPadraoEditar(ref btnGeralNovo, ref btnGeralEditar, ref btnGeralSalvar, ref btnGeralExcluir, ref btnGeralCancelar);
                 tabControl5.SelectedIndex = 0;
@@ -697,8 +715,8 @@ namespace SIDomper.Win.View
         private void SalvarGeral()
         {
             SalvarOcorrencias(
-                Funcoes.StrToInt(UsrGeralUsuario.txtId.Text),
-                txtAnexoTecnico.Text,
+                Funcoes.StrToInt(txtIdOcorrenciaGeral.Text),
+                txtAnexoGeral.Text,
                 1,
                 Funcoes.StrToInt(UsrGeralUsuario.txtId.Text),
                 Funcoes.StrToInt(UsrGeralUsuario.txtCodigo.txtValor.Text),
@@ -718,9 +736,15 @@ namespace SIDomper.Win.View
         {
             if (dgvOcorrenciaGeral.RowCount > 0)
             {
+                if (UsuarioPermissaoMenu.Lib_Solicitacao_Ocorr_Geral_Exc == false)
+                {
+                    MessageBox.Show(Mensagem.UsuarioSemPermissao);
+                    return;
+                }
+
                 if (Funcoes.Confirmar("Deseja Excluir?"))
                 {
-                    int id = Grade.RetornarId(ref dgvOcorrenciaGeral, "Id");
+                    int id = Grade.RetornarId(ref dgvOcorrenciaGeral, "SOcor_Id");
                     var model = _solicitacaoViewModel.SolicitacaoOcorrencias.FirstOrDefault(x => x.Id == id);
 
                     if (model != null)
@@ -753,7 +777,7 @@ namespace SIDomper.Win.View
             txtTecnicaHora.Text = DateTime.Now.ToShortTimeString();
             txtDescricaoTecnica.Clear();
             txtAnexoTecnico.Clear();
-            tpTecnicaEdicao.Show();
+            tabControl6.SelectedIndex = 0;
             txtIdOcorrenciaTecnica.Text = _solicitacaoViewModel.OcorrenciaRetornarMenorId().ToString();
             txtTecnicaData.Focus();
         }
@@ -762,11 +786,17 @@ namespace SIDomper.Win.View
         {
             if (dgvOcorrenciaTecnica.RowCount > 0)
             {
+                if (UsuarioPermissaoMenu.Lib_Solicitacao_Ocorr_Tecnica_Alt == false)
+                {
+                    MessageBox.Show(Mensagem.UsuarioSemPermissao);
+                    return;
+                }
+
                 Tela.HabilitarDesabilitar(tpTecnicaEdicao, true);
                 Tela.BotaoPadraoEditar(ref btnTecnicoNovo, ref btnTecnicoEditar, ref btnTecnicoSalvar, ref btnTecnicoExcluir, ref btnTecnicoCancelar);
                 tabControl6.SelectedIndex = 0;
                 PopularOcorrenciaTecnica();
-                txtIdOcorrenciaRegra.Text = Grade.RetornarId(ref dgvOcorrenciaTecnica, "SOco_Id").ToString();
+                txtIdOcorrenciaRegra.Text = Grade.RetornarId(ref dgvOcorrenciaTecnica, "TecnicaId").ToString();
                 txtTecnicaData.Focus();
             }
         }
@@ -774,7 +804,7 @@ namespace SIDomper.Win.View
         private void SalvarTecnica()
         {
             SalvarOcorrencias(
-                Funcoes.StrToInt(UsrTecnicaUsuario.txtId.Text),
+                Funcoes.StrToInt(txtIdOcorrenciaTecnica.Text),
                 txtAnexoTecnico.Text,
                 2,
                 Funcoes.StrToInt(UsrTecnicaUsuario.txtId.Text),
@@ -795,9 +825,15 @@ namespace SIDomper.Win.View
         {
             if (dgvOcorrenciaTecnica.RowCount > 0)
             {
+                if (UsuarioPermissaoMenu.Lib_Solicitacao_Ocorr_Tecnica_Exc == false)
+                {
+                    MessageBox.Show(Mensagem.UsuarioSemPermissao);
+                    return;
+                }
+
                 if (Funcoes.Confirmar("Deseja Excluir?"))
                 {
-                    int id = Grade.RetornarId(ref dgvOcorrenciaTecnica, "Id");
+                    int id = Grade.RetornarId(ref dgvOcorrenciaTecnica, "TecnicaId");
                     var model = _solicitacaoViewModel.SolicitacaoOcorrencias.FirstOrDefault(x => x.Id == id);
 
                     if (model != null)
@@ -830,7 +866,7 @@ namespace SIDomper.Win.View
             txtRegraHora.Text = DateTime.Now.ToShortTimeString();
             txtDescricaoRegra.Clear();
             txtAnexoRegra.Clear();
-            tpRegraEdicao.Show();
+            tabControl7.SelectedIndex = 0;
             txtIdOcorrenciaRegra.Text = _solicitacaoViewModel.OcorrenciaRetornarMenorId().ToString();
             txtRegraData.Focus();
         }
@@ -839,9 +875,15 @@ namespace SIDomper.Win.View
         {
             if (dgvOcorrenciaRegra.RowCount > 0)
             {
+                if (UsuarioPermissaoMenu.Lib_Solicitacao_Ocorr_Regra_Alt == false)
+                {
+                    MessageBox.Show(Mensagem.UsuarioSemPermissao);
+                    return;
+                }
+
                 Tela.HabilitarDesabilitar(tpRegraEdicao, true);
                 Tela.BotaoPadraoEditar(ref btnRegraNovo, ref btnRegraEditar, ref btnRegraSalvar, ref btnRegraExcluir, ref btnRegraCancelar);
-                tpRegraEdicao.Show();
+                tabControl7.SelectedIndex = 0;
                 PopularOcorrenciaRegras();
                 txtRegraData.Focus();
             }
@@ -881,7 +923,7 @@ namespace SIDomper.Win.View
         private void SalvarRegra()
         {
             SalvarOcorrencias(
-                Funcoes.StrToInt(UsrRegrasUsuario.txtId.Text),
+                Funcoes.StrToInt(txtIdOcorrenciaRegra.Text),
                 txtAnexoRegra.Text,
                 3,
                 Funcoes.StrToInt(UsrRegrasUsuario.txtId.Text),
@@ -902,9 +944,15 @@ namespace SIDomper.Win.View
         {
             if (dgvOcorrenciaRegra.RowCount > 0)
             {
+                if (UsuarioPermissaoMenu.Lib_Solicitacao_Ocorr_Regra_Exc == false)
+                {
+                    MessageBox.Show(Mensagem.UsuarioSemPermissao);
+                    return;
+                }
+
                 if (Funcoes.Confirmar("Deseja Excluir?"))
                 {
-                    int id = Grade.RetornarId(ref dgvOcorrenciaRegra, "Id");
+                    int id = Grade.RetornarId(ref dgvOcorrenciaRegra, "RegraId");
                     var model = _solicitacaoViewModel.SolicitacaoOcorrencias.FirstOrDefault(x => x.Id == id);
                     if (model != null)
                         _solicitacaoViewModel.SolicitacaoOcorrencias.Remove(model);

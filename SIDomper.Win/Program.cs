@@ -31,7 +31,7 @@ namespace SIDomper.Win
 
             //Carrega configurações do banco de dados
             var usuarioApp = new UsuarioApp();
-            usuarioApp.ObterPorCodigo(21);
+            usuarioApp.ObterPorCodigo(1);
 
             Thread.Sleep(1000);
 

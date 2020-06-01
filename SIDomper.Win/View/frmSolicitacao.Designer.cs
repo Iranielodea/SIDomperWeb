@@ -136,7 +136,7 @@
             this.UsrGeralUsuario = new SIDomper.Win.Componentes.usrPesquisa();
             this.tpGeralPesquisa = new System.Windows.Forms.TabPage();
             this.dgvOcorrenciaGeral = new System.Windows.Forms.DataGridView();
-            this.OcorrenciaGeralId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SOcor_Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.OcorrenciaGeralData = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.OcorrenciaGeralHora = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.OcorrenciaGeralUsuarioId = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -356,7 +356,6 @@
             this.tpFiltroPrincipal.Controls.Add(this.label32);
             this.tpFiltroPrincipal.Controls.Add(this.label31);
             this.tpFiltroPrincipal.Controls.Add(this.label30);
-            this.tpFiltroPrincipal.Size = new System.Drawing.Size(1017, 528);
             this.tpFiltroPrincipal.Controls.SetChildIndex(this.lblAtivo, 0);
             this.tpFiltroPrincipal.Controls.SetChildIndex(this.cboAtivo, 0);
             this.tpFiltroPrincipal.Controls.SetChildIndex(this.label30, 0);
@@ -751,7 +750,7 @@
             this.tpAnalista.Location = new System.Drawing.Point(4, 26);
             this.tpAnalista.Name = "tpAnalista";
             this.tpAnalista.Padding = new System.Windows.Forms.Padding(3);
-            this.tpAnalista.Size = new System.Drawing.Size(1017, 528);
+            this.tpAnalista.Size = new System.Drawing.Size(680, 483);
             this.tpAnalista.TabIndex = 2;
             this.tpAnalista.Text = "Analista";
             this.tpAnalista.UseVisualStyleBackColor = true;
@@ -764,7 +763,7 @@
             this.tabControl4.Location = new System.Drawing.Point(3, 3);
             this.tabControl4.Name = "tabControl4";
             this.tabControl4.SelectedIndex = 0;
-            this.tabControl4.Size = new System.Drawing.Size(1011, 522);
+            this.tabControl4.Size = new System.Drawing.Size(674, 477);
             this.tabControl4.TabIndex = 0;
             // 
             // tpAnalistaPrincipal
@@ -787,7 +786,7 @@
             this.tpAnalistaPrincipal.Location = new System.Drawing.Point(4, 26);
             this.tpAnalistaPrincipal.Name = "tpAnalistaPrincipal";
             this.tpAnalistaPrincipal.Padding = new System.Windows.Forms.Padding(3);
-            this.tpAnalistaPrincipal.Size = new System.Drawing.Size(1003, 492);
+            this.tpAnalistaPrincipal.Size = new System.Drawing.Size(666, 447);
             this.tpAnalistaPrincipal.TabIndex = 0;
             this.tpAnalistaPrincipal.Text = "Principal";
             this.tpAnalistaPrincipal.UseVisualStyleBackColor = true;
@@ -940,7 +939,7 @@
             this.tpCronograma.Location = new System.Drawing.Point(4, 26);
             this.tpCronograma.Name = "tpCronograma";
             this.tpCronograma.Padding = new System.Windows.Forms.Padding(3);
-            this.tpCronograma.Size = new System.Drawing.Size(1003, 492);
+            this.tpCronograma.Size = new System.Drawing.Size(666, 447);
             this.tpCronograma.TabIndex = 1;
             this.tpCronograma.Text = "Cronograma";
             this.tpCronograma.UseVisualStyleBackColor = true;
@@ -1169,8 +1168,8 @@
             // 
             // tabControl5
             // 
-            this.tabControl5.Controls.Add(this.tpGeralEdicao);
             this.tabControl5.Controls.Add(this.tpGeralPesquisa);
+            this.tabControl5.Controls.Add(this.tpGeralEdicao);
             this.tabControl5.Location = new System.Drawing.Point(3, 3);
             this.tabControl5.Name = "tabControl5";
             this.tabControl5.SelectedIndex = 0;
@@ -1319,7 +1318,7 @@
             // 
             this.dgvOcorrenciaGeral.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvOcorrenciaGeral.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.OcorrenciaGeralId,
+            this.SOcor_Id,
             this.OcorrenciaGeralData,
             this.OcorrenciaGeralHora,
             this.OcorrenciaGeralUsuarioId,
@@ -1334,12 +1333,12 @@
             this.dgvOcorrenciaGeral.KeyUp += new System.Windows.Forms.KeyEventHandler(this.dgvOcorrenciaGeral_KeyUp);
             this.dgvOcorrenciaGeral.MouseUp += new System.Windows.Forms.MouseEventHandler(this.dgvOcorrenciaGeral_MouseUp);
             // 
-            // OcorrenciaGeralId
+            // SOcor_Id
             // 
-            this.OcorrenciaGeralId.DataPropertyName = "Id";
-            this.OcorrenciaGeralId.HeaderText = "Id";
-            this.OcorrenciaGeralId.Name = "OcorrenciaGeralId";
-            this.OcorrenciaGeralId.Visible = false;
+            this.SOcor_Id.DataPropertyName = "Id";
+            this.SOcor_Id.HeaderText = "Id";
+            this.SOcor_Id.Name = "SOcor_Id";
+            this.SOcor_Id.Visible = false;
             // 
             // OcorrenciaGeralData
             // 
@@ -1682,12 +1681,14 @@
             // 
             // TecnicaId
             // 
+            this.TecnicaId.DataPropertyName = "Id";
             this.TecnicaId.HeaderText = "Id";
             this.TecnicaId.Name = "TecnicaId";
             this.TecnicaId.Visible = false;
             // 
             // TecnicaData
             // 
+            this.TecnicaData.DataPropertyName = "Data";
             dataGridViewCellStyle61.Format = "d";
             dataGridViewCellStyle61.NullValue = null;
             this.TecnicaData.DefaultCellStyle = dataGridViewCellStyle61;
@@ -1696,6 +1697,7 @@
             // 
             // TecnicaHora
             // 
+            this.TecnicaHora.DataPropertyName = "Hora";
             dataGridViewCellStyle62.Format = "t";
             dataGridViewCellStyle62.NullValue = null;
             this.TecnicaHora.DefaultCellStyle = dataGridViewCellStyle62;
@@ -1704,30 +1706,35 @@
             // 
             // TecnicaUsuarioId
             // 
+            this.TecnicaUsuarioId.DataPropertyName = "UsuarioId";
             this.TecnicaUsuarioId.HeaderText = "UsuarioId";
             this.TecnicaUsuarioId.Name = "TecnicaUsuarioId";
             this.TecnicaUsuarioId.Visible = false;
             // 
             // TecnicaCodigoUsuario
             // 
+            this.TecnicaCodigoUsuario.DataPropertyName = "CodigoUsuario";
             this.TecnicaCodigoUsuario.HeaderText = "CodigoUsuario";
             this.TecnicaCodigoUsuario.Name = "TecnicaCodigoUsuario";
             this.TecnicaCodigoUsuario.Visible = false;
             // 
             // TecnicaNomeUsuario
             // 
+            this.TecnicaNomeUsuario.DataPropertyName = "NomeUsuario";
             this.TecnicaNomeUsuario.HeaderText = "Operador";
             this.TecnicaNomeUsuario.Name = "TecnicaNomeUsuario";
             this.TecnicaNomeUsuario.Width = 700;
             // 
             // TecnicaAnexo
             // 
+            this.TecnicaAnexo.DataPropertyName = "Anexo";
             this.TecnicaAnexo.HeaderText = "TecnicaAnexo";
             this.TecnicaAnexo.Name = "TecnicaAnexo";
             this.TecnicaAnexo.Visible = false;
             // 
             // TecnicaDescricao
             // 
+            this.TecnicaDescricao.DataPropertyName = "Descricao";
             this.TecnicaDescricao.HeaderText = "TecnicaDescricao";
             this.TecnicaDescricao.Name = "TecnicaDescricao";
             this.TecnicaDescricao.Visible = false;
@@ -1974,12 +1981,14 @@
             // 
             // RegraId
             // 
+            this.RegraId.DataPropertyName = "Id";
             this.RegraId.HeaderText = "Id";
             this.RegraId.Name = "RegraId";
             this.RegraId.Visible = false;
             // 
             // RegraData
             // 
+            this.RegraData.DataPropertyName = "Data";
             dataGridViewCellStyle63.Format = "d";
             dataGridViewCellStyle63.NullValue = null;
             this.RegraData.DefaultCellStyle = dataGridViewCellStyle63;
@@ -1988,6 +1997,7 @@
             // 
             // RegraHora
             // 
+            this.RegraHora.DataPropertyName = "Hora";
             dataGridViewCellStyle64.Format = "t";
             dataGridViewCellStyle64.NullValue = null;
             this.RegraHora.DefaultCellStyle = dataGridViewCellStyle64;
@@ -1996,30 +2006,35 @@
             // 
             // RegraUsuarioId
             // 
+            this.RegraUsuarioId.DataPropertyName = "UsuarioId";
             this.RegraUsuarioId.HeaderText = "UsuarioId";
             this.RegraUsuarioId.Name = "RegraUsuarioId";
             this.RegraUsuarioId.Visible = false;
             // 
             // RegraCodigoUsuario
             // 
+            this.RegraCodigoUsuario.DataPropertyName = "CodigoUsuario";
             this.RegraCodigoUsuario.HeaderText = "CodigoUsuario";
             this.RegraCodigoUsuario.Name = "RegraCodigoUsuario";
             this.RegraCodigoUsuario.Visible = false;
             // 
             // RegraAnexo
             // 
+            this.RegraAnexo.DataPropertyName = "Anexo";
             this.RegraAnexo.HeaderText = "Anexo";
             this.RegraAnexo.Name = "RegraAnexo";
             this.RegraAnexo.Visible = false;
             // 
             // RegraDescricao
             // 
+            this.RegraDescricao.DataPropertyName = "Descricao";
             this.RegraDescricao.HeaderText = "Descricao";
             this.RegraDescricao.Name = "RegraDescricao";
             this.RegraDescricao.Visible = false;
             // 
             // RegraNomeUsuario
             // 
+            this.RegraNomeUsuario.DataPropertyName = "NomeUsuario";
             this.RegraNomeUsuario.HeaderText = "Operador";
             this.RegraNomeUsuario.Name = "RegraNomeUsuario";
             this.RegraNomeUsuario.Width = 700;
@@ -2367,7 +2382,25 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn NomeUsuario;
         private System.Windows.Forms.DataGridViewTextBoxColumn UsuarioId;
         private System.Windows.Forms.DataGridViewTextBoxColumn CodigoUsuario;
-        private System.Windows.Forms.DataGridViewTextBoxColumn OcorrenciaGeralId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn StatusId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn StatusData;
+        private System.Windows.Forms.DataGridViewTextBoxColumn StatusHora;
+        private System.Windows.Forms.DataGridViewTextBoxColumn StatusNome;
+        private System.Windows.Forms.DataGridViewTextBoxColumn StatusUsuario;
+        private Componentes.usrPesquisa UsrStatus;
+        private System.Windows.Forms.TextBox txtIdCronograma;
+        private System.Windows.Forms.TextBox txtIdOcorrenciaGeral;
+        private System.Windows.Forms.TextBox txtIdOcorrenciaTecnica;
+        private System.Windows.Forms.TextBox txtIdOcorrenciaRegra;
+        private Componentes.usrData txtDataFinal;
+        private Componentes.usrData txtDataInicial;
+        private System.Windows.Forms.ComboBox cbbNivel;
+        private System.Windows.Forms.Label label32;
+        private System.Windows.Forms.Label label31;
+        private System.Windows.Forms.Label label30;
+        private Componentes.usrSoNumero txtIdFiltro;
+        private System.Windows.Forms.Label label33;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SOcor_Id;
         private System.Windows.Forms.DataGridViewTextBoxColumn OcorrenciaGeralData;
         private System.Windows.Forms.DataGridViewTextBoxColumn OcorrenciaGeralHora;
         private System.Windows.Forms.DataGridViewTextBoxColumn OcorrenciaGeralUsuarioId;
@@ -2391,23 +2424,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn RegraAnexo;
         private System.Windows.Forms.DataGridViewTextBoxColumn RegraDescricao;
         private System.Windows.Forms.DataGridViewTextBoxColumn RegraNomeUsuario;
-        private System.Windows.Forms.DataGridViewTextBoxColumn StatusId;
-        private System.Windows.Forms.DataGridViewTextBoxColumn StatusData;
-        private System.Windows.Forms.DataGridViewTextBoxColumn StatusHora;
-        private System.Windows.Forms.DataGridViewTextBoxColumn StatusNome;
-        private System.Windows.Forms.DataGridViewTextBoxColumn StatusUsuario;
-        private Componentes.usrPesquisa UsrStatus;
-        private System.Windows.Forms.TextBox txtIdCronograma;
-        private System.Windows.Forms.TextBox txtIdOcorrenciaGeral;
-        private System.Windows.Forms.TextBox txtIdOcorrenciaTecnica;
-        private System.Windows.Forms.TextBox txtIdOcorrenciaRegra;
-        private Componentes.usrData txtDataFinal;
-        private Componentes.usrData txtDataInicial;
-        private System.Windows.Forms.ComboBox cbbNivel;
-        private System.Windows.Forms.Label label32;
-        private System.Windows.Forms.Label label31;
-        private System.Windows.Forms.Label label30;
-        private Componentes.usrSoNumero txtIdFiltro;
-        private System.Windows.Forms.Label label33;
     }
 }

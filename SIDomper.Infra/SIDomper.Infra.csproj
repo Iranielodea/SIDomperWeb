@@ -109,6 +109,7 @@
     <Compile Include="EF\Map\CategoriaMap.cs" />
     <Compile Include="EF\Map\ModuloMap.cs" />
     <Compile Include="EF\CategoriaEF.cs" />
+    <Compile Include="EF\SolicitacaoOcorrenciaEF.cs" />
     <Compile Include="RepositorioDapper\AgendamentoRepositorioDapper.cs" />
     <Compile Include="RepositorioDapper\BaseConhecimentoRepositorioDapper.cs" />
     <Compile Include="RepositorioDapper\ChamadoRepositorioDapper.cs" />

@@ -99,6 +99,7 @@
     <Compile Include="Enumeracao\EnumOrcamento.cs" />
     <Compile Include="Enumeracao\EnumProgramas.cs" />
     <Compile Include="Enumeracao\EnumTipoManutencao.cs" />
+    <Compile Include="Funcoes\UsuarioPermissaoMenu.cs" />
     <Compile Include="Funcoes\Utils.cs" />
     <Compile Include="Funcoes\Validacoes.cs" />
     <Compile Include="Interfaces\IRepositorio.cs" />

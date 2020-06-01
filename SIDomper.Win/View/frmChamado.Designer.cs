@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgvDados = new System.Windows.Forms.DataGridView();
             this.Cha_Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Cha_DataAbertura = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -392,9 +392,9 @@
             // Cha_Id
             // 
             this.Cha_Id.DataPropertyName = "Id";
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.Format = "000000";
-            this.Cha_Id.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.Format = "000000";
+            this.Cha_Id.DefaultCellStyle = dataGridViewCellStyle1;
             this.Cha_Id.HeaderText = "Id";
             this.Cha_Id.Name = "Cha_Id";
             this.Cha_Id.Width = 80;
@@ -402,8 +402,8 @@
             // Cha_DataAbertura
             // 
             this.Cha_DataAbertura.DataPropertyName = "DataAbertura";
-            dataGridViewCellStyle6.Format = "dd/MM/yyyy";
-            this.Cha_DataAbertura.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle2.Format = "dd/MM/yyyy";
+            this.Cha_DataAbertura.DefaultCellStyle = dataGridViewCellStyle2;
             this.Cha_DataAbertura.HeaderText = "Data";
             this.Cha_DataAbertura.Name = "Cha_DataAbertura";
             // 
@@ -1106,8 +1106,8 @@
             // Data
             // 
             this.Data.DataPropertyName = "Data";
-            dataGridViewCellStyle7.Format = "dd/MM/yyyy";
-            this.Data.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle3.Format = "dd/MM/yyyy";
+            this.Data.DefaultCellStyle = dataGridViewCellStyle3;
             this.Data.HeaderText = "Data";
             this.Data.Name = "Data";
             this.Data.ReadOnly = true;
@@ -1276,7 +1276,7 @@
             this.tpStatusOcorrencia.Location = new System.Drawing.Point(4, 26);
             this.tpStatusOcorrencia.Name = "tpStatusOcorrencia";
             this.tpStatusOcorrencia.Padding = new System.Windows.Forms.Padding(3);
-            this.tpStatusOcorrencia.Size = new System.Drawing.Size(1015, 526);
+            this.tpStatusOcorrencia.Size = new System.Drawing.Size(678, 481);
             this.tpStatusOcorrencia.TabIndex = 2;
             this.tpStatusOcorrencia.Text = "Status";
             this.tpStatusOcorrencia.UseVisualStyleBackColor = true;
@@ -1305,8 +1305,8 @@
             // Hora
             // 
             this.Hora.DataPropertyName = "Hora";
-            dataGridViewCellStyle8.NullValue = null;
-            this.Hora.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle4.NullValue = null;
+            this.Hora.DefaultCellStyle = dataGridViewCellStyle4;
             this.Hora.HeaderText = "Hora";
             this.Hora.Name = "Hora";
             // 
