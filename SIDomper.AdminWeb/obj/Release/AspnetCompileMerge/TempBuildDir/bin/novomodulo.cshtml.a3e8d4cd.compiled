@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<preserve resultType="2" virtualPath="/Views/Orcamento/NovoModulo.cshtml" hash="fffffffff9e71233" filehash="ffffe4963ebff1df" flags="110000" assembly="AppCode" type="ASP._Page_Views_Orcamento_NovoModulo_cshtml">
+<preserve resultType="2" virtualPath="/Views/Orcamento/NovoModulo.cshtml" hash="ffffffffbfe2e0da" filehash="ffffe68df911bf2a" flags="110000" assembly="AppCode" type="ASP._Page_Views_Orcamento_NovoModulo_cshtml">
   <filedeps>
     <filedep name="/Views/Orcamento/NovoModulo.cshtml" />
   </filedeps>

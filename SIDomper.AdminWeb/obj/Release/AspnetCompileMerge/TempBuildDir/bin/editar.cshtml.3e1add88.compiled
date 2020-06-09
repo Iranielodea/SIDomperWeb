@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<preserve resultType="2" virtualPath="/Views/Cliente/Editar.cshtml" hash="fffffffff9e71233" filehash="ffffedfd6413458a" flags="110000" assembly="AppCode" type="ASP._Page_Views_Cliente_Editar_cshtml">
+<preserve resultType="2" virtualPath="/Views/Cliente/Editar.cshtml" hash="ffffffffbfe2e0da" filehash="b7639845306" flags="110000" assembly="AppCode" type="ASP._Page_Views_Cliente_Editar_cshtml">
   <filedeps>
     <filedep name="/Views/Cliente/Editar.cshtml" />
   </filedeps>

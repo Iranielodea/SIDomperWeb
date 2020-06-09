@@ -240,7 +240,9 @@
     <Content Include="Content\js\plugins\vue\vue.runtime.js" />
     <Content Include="Content\js\plugins\vue\vue.runtime.min.js" />
     <Content Include="Global.asax" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\Cliente\Editar.cshtml" />
     <Content Include="Views\Cliente\Index.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />

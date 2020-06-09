@@ -34,7 +34,7 @@ namespace SIDomper.Infra.EF
 
         public void ExcluirOcorrenciaIds(string ids)
         {
-            _rep.context.Database.ExecuteSqlCommand("DELETE FROM Solicitacao_Ocorrencia WHERE SOcor_Id in (" + ids + ")");
+            _rep.context.Database.ExecuteSqlCommand("DELETE FROM Solicitacao_Ocorrencia WHERE SCro_Id in (" + ids + ")");
         }
     }
 }

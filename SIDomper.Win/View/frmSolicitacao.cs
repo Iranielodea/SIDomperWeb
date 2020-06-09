@@ -1,5 +1,4 @@
 ﻿using SIDomper.Apresentacao.App;
-using SIDomper.Apresentacao.Comum;
 using SIDomper.Dominio.Constantes;
 using SIDomper.Dominio.Enumeracao;
 using SIDomper.Dominio.Funcoes;
@@ -199,11 +198,35 @@ namespace SIDomper.Win.View
                 CarregarOcorrenciaRegra(_solicitacaoViewModel);
                 CarregarStatus(_solicitacaoViewModel);
 
+                if (_solicitacaoViewModel.SolicitacaoOcorrencias.Count > 0)
+                {
+                    PreencherGradeInicial(1);
+                    PreencherGradeInicial(2);
+                    PreencherGradeInicial(3);
+                }
+
                 txtData.txtData.Focus();
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
+            }
+        }
+
+        private void PreencherGradeInicial(int classificacao)
+        {
+            int id = _solicitacaoViewModel.SolicitacaoOcorrencias.FirstOrDefault(x => x.Classificacao == classificacao).Id;
+            switch(classificacao)
+            {
+                case 1:
+                    PopularOcorrenciaGeral(id);
+                    break;
+                case 2:
+                    PopularOcorrenciaTecnica(id);
+                    break;
+                case 3:
+                    PopularOcorrenciaRegras(id);
+                    break;
             }
         }
 
@@ -556,69 +579,117 @@ namespace SIDomper.Win.View
             txtCronoHoraInicial.Clear();
             txtCronoHoraFinal.Clear();
             txtIdCronograma.Text = _solicitacaoViewModel.CronogramaRetornarMenorId().ToString();
+            tabControl4.SelectedIndex = 0;
             UsrCronoOperador.txtCodigo.Focus();
         }
 
-        private void PopularCronograma()
+        private void PopularCronograma(int id)
         {
             if (dgvCronograma.RowCount > 0)
             {
-                txtIdCronograma.Text = Grade.RetornarId(ref dgvCronograma, "SCro_Id").ToString();
-                UsrCronoOperador.txtId.Text = Grade.RetornarValorCampo(ref dgvCronograma, "UsuarioId");
-                UsrCronoOperador.SetCodigoMask(Grade.RetornarValorCampo(ref dgvCronograma, "CodigoUsuario"));
-                UsrCronoOperador.txtNome.Text = Grade.RetornarValorCampo(ref dgvCronograma, "NomeUsuario");
+                if (id == 0)
+                    id = int.Parse(Grade.RetornarId(ref dgvCronograma, "Id").ToString());
 
-                txtCronoData.txtData.Text = Grade.RetornarValorCampo(ref dgvCronograma, "Data");
-                txtCronoHoraInicial.Text = Grade.RetornarValorCampo(ref dgvCronograma, "HoraInicio");
-                txtCronoHoraFinal.Text = Grade.RetornarValorCampo(ref dgvCronograma, "HoraFim");
+                var model = _solicitacaoViewModel.SolicitacaoCronogramas.FirstOrDefault(x => x.Id == id);
+
+                txtIdCronograma.Text = model.Id.ToString();
+                UsrCronoOperador.txtId.Text = model.UsuarioId.ToString();
+                UsrCronoOperador.SetCodigoMask(model.CodigoUsuario.ToString());
+                UsrCronoOperador.txtNome.Text = model.NomeUsuario;
+
+                txtCronoData.txtData.Text = model.Data.Value.ToShortDateString();
+                txtCronoHoraInicial.Text = model.HoraInicio.ToString();
+                txtCronoHoraFinal.Text = model.HoraFim.ToString();
             }
         }
 
-        private void PopularOcorrenciaGeral()
+        private void PopularOcorrenciaGeral(int id)
         {
             if (dgvOcorrenciaGeral.RowCount > 0)
             {
-                txtIdOcorrenciaGeral.Text = Grade.RetornarId(ref dgvOcorrenciaGeral, "SOcor_Id").ToString();
-                UsrGeralUsuario.txtId.Text = Grade.RetornarValorCampo(ref dgvOcorrenciaGeral, "OcorrenciaGeralUsuarioId");
-                UsrGeralUsuario.SetCodigoMask(Grade.RetornarValorCampo(ref dgvOcorrenciaGeral, "OcorrenciaGeralCodigoUsuario"));
-                UsrGeralUsuario.txtNome.Text = Grade.RetornarValorCampo(ref dgvOcorrenciaGeral, "OcorrenciaGeralNomeUsuario");
+                if (id == 0)
+                    id = int.Parse(Grade.RetornarId(ref dgvOcorrenciaGeral, "SOcor_Id").ToString());
 
-                txtGeralData.txtData.Text = Grade.RetornarValorCampo(ref dgvOcorrenciaGeral, "OcorrenciaGeralData");
-                txtGeralHora.Text = Grade.RetornarValorCampo(ref dgvOcorrenciaGeral, "OcorrenciaGeralHora");
-                txtDescricaoGeral.Text = Grade.RetornarValorCampo(ref dgvOcorrenciaGeral, "OcorrenciaGeralDescricao");
-                txtAnexoGeral.Text = Grade.RetornarValorCampo(ref dgvOcorrenciaGeral, "OcorrenciaGeralAnexo");
+                var model = _solicitacaoViewModel.SolicitacaoOcorrencias.FirstOrDefault(x => x.Id == id);
+
+                if (model != null)
+                {
+                    txtIdOcorrenciaGeral.Text = model.Id.ToString();
+                    UsrGeralUsuario.txtId.Text = model.UsuarioId.ToString();
+                    UsrGeralUsuario.SetCodigoMask(model.CodigoUsuario.ToString());
+                    UsrGeralUsuario.txtNome.Text = model.NomeUsuario;
+
+                    txtGeralData.txtData.Text = model.Data.ToShortDateString();
+                    txtGeralHora.Text = model.Hora.ToString();
+                    txtDescricaoGeral.Text = model.Descricao;
+                    txtAnexoGeral.Text = model.Anexo;
+                }
             }
         }
 
-        private void PopularOcorrenciaTecnica()
+        private void PopularOcorrenciaTecnica(int id)
         {
             if (dgvOcorrenciaTecnica.RowCount > 0)
             {
-                txtIdOcorrenciaTecnica.Text = Grade.RetornarId(ref dgvOcorrenciaTecnica, "TecnicaId").ToString();
-                UsrTecnicaUsuario.txtId.Text = Grade.RetornarValorCampo(ref dgvOcorrenciaTecnica, "TecnicaUsuarioId");
-                UsrTecnicaUsuario.SetCodigoMask(Grade.RetornarValorCampo(ref dgvOcorrenciaTecnica, "TecnicaCodigoUsuario"));
-                UsrTecnicaUsuario.txtNome.Text = Grade.RetornarValorCampo(ref dgvOcorrenciaTecnica, "TecnicaNomeUsuario");
+                if (id == 0)
+                    id = int.Parse(Grade.RetornarId(ref dgvOcorrenciaGeral, "TecnicaId").ToString());
 
-                txtTecnicaData.txtData.Text = Grade.RetornarValorCampo(ref dgvOcorrenciaTecnica, "TecnicaData");
-                txtTecnicaHora.Text = Grade.RetornarValorCampo(ref dgvOcorrenciaTecnica, "TecnicaHora");
-                txtDescricaoTecnica.Rtf = Grade.RetornarValorCampo(ref dgvOcorrenciaTecnica, "TecnicaDescricao");
-                txtAnexoTecnico.Text = Grade.RetornarValorCampo(ref dgvOcorrenciaTecnica, "TecnicaAnexo");
+                var model = _solicitacaoViewModel.SolicitacaoOcorrencias.FirstOrDefault(x => x.Id == id);
+                if (model != null)
+                {
+                    txtIdOcorrenciaTecnica.Text = model.Id.ToString();
+                    UsrTecnicaUsuario.txtId.Text = model.UsuarioId.ToString();
+                    UsrTecnicaUsuario.SetCodigoMask(model.CodigoUsuario.ToString());
+                    UsrTecnicaUsuario.txtNome.Text = model.NomeUsuario;
+
+                    txtTecnicaData.txtData.Text = model.Data.ToString();
+                    txtTecnicaHora.Text = model.Hora.ToString();
+                    txtDescricaoTecnica.Rtf = model.Descricao;
+                    txtAnexoTecnico.Text = model.Anexo;
+                }
+                //txtIdOcorrenciaTecnica.Text = Grade.RetornarId(ref dgvOcorrenciaTecnica, "TecnicaId").ToString();
+                //UsrTecnicaUsuario.txtId.Text = Grade.RetornarValorCampo(ref dgvOcorrenciaTecnica, "TecnicaUsuarioId");
+                //UsrTecnicaUsuario.SetCodigoMask(Grade.RetornarValorCampo(ref dgvOcorrenciaTecnica, "TecnicaCodigoUsuario"));
+                //UsrTecnicaUsuario.txtNome.Text = Grade.RetornarValorCampo(ref dgvOcorrenciaTecnica, "TecnicaNomeUsuario");
+
+                //txtTecnicaData.txtData.Text = Grade.RetornarValorCampo(ref dgvOcorrenciaTecnica, "TecnicaData");
+                //txtTecnicaHora.Text = Grade.RetornarValorCampo(ref dgvOcorrenciaTecnica, "TecnicaHora");
+                //txtDescricaoTecnica.Rtf = Grade.RetornarValorCampo(ref dgvOcorrenciaTecnica, "TecnicaDescricao");
+                //txtAnexoTecnico.Text = Grade.RetornarValorCampo(ref dgvOcorrenciaTecnica, "TecnicaAnexo");
+
             }
         }
 
-        private void PopularOcorrenciaRegras()
+        private void PopularOcorrenciaRegras(int id)
         {
             if (dgvOcorrenciaRegra.RowCount > 0)
             {
-                txtIdOcorrenciaRegra.Text = Grade.RetornarId(ref dgvOcorrenciaRegra, "RegraId").ToString();
-                UsrRegrasUsuario.txtId.Text = Grade.RetornarValorCampo(ref dgvOcorrenciaRegra, "RegraUsuarioId");
-                UsrRegrasUsuario.SetCodigoMask(Grade.RetornarValorCampo(ref dgvOcorrenciaRegra, "RegraCodigoUsuario"));
-                UsrRegrasUsuario.txtNome.Text = Grade.RetornarValorCampo(ref dgvOcorrenciaRegra, "RegraNomeUsuario");
+                if (id == 0)
+                    id = int.Parse(Grade.RetornarId(ref dgvOcorrenciaGeral, "RegraId").ToString());
 
-                txtRegraData.txtData.Text = Grade.RetornarValorCampo(ref dgvOcorrenciaRegra, "RegraData");
-                txtRegraHora.Text = Grade.RetornarValorCampo(ref dgvOcorrenciaRegra, "RegraHora");
-                txtDescricaoRegra.Text = Grade.RetornarValorCampo(ref dgvOcorrenciaRegra, "RegraDescricao");
-                txtAnexoRegra.Text = Grade.RetornarValorCampo(ref dgvOcorrenciaRegra, "RegraAnexo");
+                var model = _solicitacaoViewModel.SolicitacaoOcorrencias.FirstOrDefault(x => x.Id == id);
+                if (model != null)
+                {
+                    txtIdOcorrenciaRegra.Text = model.Id.ToString();
+                    UsrRegrasUsuario.txtId.Text = model.UsuarioId.ToString();
+                    UsrRegrasUsuario.SetCodigoMask(model.CodigoUsuario.ToString());
+                    UsrRegrasUsuario.txtNome.Text = model.NomeUsuario;
+
+                    txtRegraData.txtData.Text = model.Data.ToString();
+                    txtRegraHora.Text = model.Hora.ToString();
+                    txtDescricaoRegra.Text = model.Descricao;
+                    txtAnexoRegra.Text = model.Anexo;
+                }
+
+                //txtIdOcorrenciaRegra.Text = Grade.RetornarId(ref dgvOcorrenciaRegra, "RegraId").ToString();
+                //UsrRegrasUsuario.txtId.Text = Grade.RetornarValorCampo(ref dgvOcorrenciaRegra, "RegraUsuarioId");
+                //UsrRegrasUsuario.SetCodigoMask(Grade.RetornarValorCampo(ref dgvOcorrenciaRegra, "RegraCodigoUsuario"));
+                //UsrRegrasUsuario.txtNome.Text = Grade.RetornarValorCampo(ref dgvOcorrenciaRegra, "RegraNomeUsuario");
+
+                //txtRegraData.txtData.Text = Grade.RetornarValorCampo(ref dgvOcorrenciaRegra, "RegraData");
+                //txtRegraHora.Text = Grade.RetornarValorCampo(ref dgvOcorrenciaRegra, "RegraHora");
+                //txtDescricaoRegra.Text = Grade.RetornarValorCampo(ref dgvOcorrenciaRegra, "RegraDescricao");
+                //txtAnexoRegra.Text = Grade.RetornarValorCampo(ref dgvOcorrenciaRegra, "RegraAnexo");
             }
         }
 
@@ -627,7 +698,7 @@ namespace SIDomper.Win.View
             if (dgvCronograma.RowCount > 0)
             {
                 Tela.BotaoPadraoEditar(ref btnCronoNovo, ref btnCronoEditar, ref btnCronoSalvar, ref btnCronoExcluir, ref btnCronoCancelar);
-                PopularCronograma();
+                PopularCronograma(0);
             }
         }
 
@@ -643,10 +714,10 @@ namespace SIDomper.Win.View
                         _solicitacaoViewModel.SolicitacaoCronogramas.Remove(model);
 
                     Grade.ExcluirRegistro(ref dgvCronograma);
+                    PopularCronograma(id);
+                    CarregarCronogramas(_solicitacaoViewModel);
+                    Tela.BotaoPadraoExcluir(ref btnCronoNovo, ref btnCronoEditar, ref btnCronoSalvar, ref btnCronoExcluir, ref btnCronoCancelar);
                 }
-                Tela.BotaoPadraoExcluir(ref btnCronoNovo, ref btnCronoEditar, ref btnCronoSalvar, ref btnCronoExcluir, ref btnCronoCancelar);
-                PopularCronograma();
-                CarregarCronogramas(_solicitacaoViewModel);
             }
         }
 
@@ -674,7 +745,7 @@ namespace SIDomper.Win.View
         private void CancelarCronograma()
         {
             Tela.BotaoPadraoCancelar(ref btnCronoNovo, ref btnCronoEditar, ref btnCronoSalvar, ref btnCronoExcluir, ref btnCronoCancelar);
-            PopularCronograma();
+            PopularCronograma(0);
         }
 
         private void NovoGeral()
@@ -707,7 +778,7 @@ namespace SIDomper.Win.View
                 Tela.HabilitarDesabilitar(tpGeralEdicao, true);
                 Tela.BotaoPadraoEditar(ref btnGeralNovo, ref btnGeralEditar, ref btnGeralSalvar, ref btnGeralExcluir, ref btnGeralCancelar);
                 tabControl5.SelectedIndex = 0;
-                PopularOcorrenciaGeral();
+                PopularOcorrenciaGeral(0);
                 txtGeralData.Focus();
             }
         }
@@ -752,7 +823,7 @@ namespace SIDomper.Win.View
 
                     Grade.ExcluirRegistro(ref dgvOcorrenciaGeral);
                     Tela.BotaoPadraoExcluir(ref btnGeralNovo, ref btnGeralEditar, ref btnGeralSalvar, ref btnGeralExcluir, ref btnGeralCancelar);
-                    PopularOcorrenciaGeral();
+                    PopularOcorrenciaGeral(id);
                 }
             }
         }
@@ -760,7 +831,7 @@ namespace SIDomper.Win.View
         private void CancelarGeral()
         {
             Tela.BotaoPadraoCancelar(ref btnGeralNovo, ref btnGeralEditar, ref btnGeralSalvar, ref btnGeralExcluir, ref btnGeralCancelar);
-            PopularOcorrenciaGeral();
+            PopularOcorrenciaGeral(0);
             Tela.HabilitarDesabilitar(tpGeralEdicao, false);
         }
 
@@ -795,8 +866,7 @@ namespace SIDomper.Win.View
                 Tela.HabilitarDesabilitar(tpTecnicaEdicao, true);
                 Tela.BotaoPadraoEditar(ref btnTecnicoNovo, ref btnTecnicoEditar, ref btnTecnicoSalvar, ref btnTecnicoExcluir, ref btnTecnicoCancelar);
                 tabControl6.SelectedIndex = 0;
-                PopularOcorrenciaTecnica();
-                txtIdOcorrenciaRegra.Text = Grade.RetornarId(ref dgvOcorrenciaTecnica, "TecnicaId").ToString();
+                PopularOcorrenciaTecnica(0);
                 txtTecnicaData.Focus();
             }
         }
@@ -841,7 +911,7 @@ namespace SIDomper.Win.View
 
                     Grade.ExcluirRegistro(ref dgvOcorrenciaTecnica);
                     Tela.BotaoPadraoExcluir(ref btnTecnicoNovo, ref btnTecnicoEditar, ref btnTecnicoSalvar, ref btnTecnicoExcluir, ref btnTecnicoCancelar);
-                    PopularOcorrenciaTecnica();
+                    PopularOcorrenciaTecnica(0);
                 }
             }
         }
@@ -850,7 +920,7 @@ namespace SIDomper.Win.View
         {
             Tela.HabilitarDesabilitar(tpTecnicaEdicao, false);
             Tela.BotaoPadraoCancelar(ref btnTecnicoNovo, ref btnTecnicoEditar, ref btnTecnicoSalvar, ref btnTecnicoExcluir, ref btnTecnicoCancelar);
-            PopularOcorrenciaTecnica();
+            PopularOcorrenciaTecnica(0);
         }
 
         private void NovoRegra()
@@ -884,7 +954,7 @@ namespace SIDomper.Win.View
                 Tela.HabilitarDesabilitar(tpRegraEdicao, true);
                 Tela.BotaoPadraoEditar(ref btnRegraNovo, ref btnRegraEditar, ref btnRegraSalvar, ref btnRegraExcluir, ref btnRegraCancelar);
                 tabControl7.SelectedIndex = 0;
-                PopularOcorrenciaRegras();
+                PopularOcorrenciaRegras(0);
                 txtRegraData.Focus();
             }
         }
@@ -959,7 +1029,7 @@ namespace SIDomper.Win.View
 
                     Grade.ExcluirRegistro(ref dgvOcorrenciaRegra);
                     Tela.BotaoPadraoExcluir(ref btnRegraNovo, ref btnRegraEditar, ref btnRegraSalvar, ref btnRegraExcluir, ref btnRegraCancelar);
-                    PopularOcorrenciaRegras();
+                    PopularOcorrenciaRegras(0);
                 }
             }
         }
@@ -968,7 +1038,7 @@ namespace SIDomper.Win.View
         {
             Tela.HabilitarDesabilitar(tpRegraEdicao, false);
             Tela.BotaoPadraoCancelar(ref btnRegraNovo, ref btnRegraEditar, ref btnRegraSalvar, ref btnRegraExcluir, ref btnRegraCancelar);
-            PopularOcorrenciaRegras();
+            PopularOcorrenciaRegras(0);
         }
 
         private void btnCronoEditar_Click(object sender, EventArgs e)

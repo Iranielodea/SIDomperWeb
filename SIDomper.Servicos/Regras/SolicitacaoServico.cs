@@ -14,6 +14,7 @@ namespace SIDomper.Servicos.Regras
     {
         private readonly SolicitacaoEF _rep;
         private readonly SolicitacaoOcorrenciaEF _repOcorrencia;
+        private readonly SolicitacaoCronogramaEF _repCronograma;
         private readonly EnProgramas _tipoPrograma;
         private readonly UsuarioServico _repUsuario;
         private readonly ParametroServico _parametro;
@@ -31,6 +32,7 @@ namespace SIDomper.Servicos.Regras
             _usuarioPermissao = new UsuarioPermissaoServico();
             _solicitacaoRepositorioDapper = new SolicitacaoRepositorioDapper();
             _repOcorrencia = new SolicitacaoOcorrenciaEF();
+            _repCronograma = new SolicitacaoCronogramaEF();
         }
 
         public Solicitacao Novo(int usuarioId)
@@ -117,19 +119,7 @@ namespace SIDomper.Servicos.Regras
                 }
             }
 
-            //var novoModel = ObterPorId(model.Id);
-            //if (novoModel !=  null || novoModel.StatusId != model.StatusId)
-            //{
-            //    var solicitacaoStatus = new SolicitacaoStatus();
-            //    solicitacaoStatus.Id = 0;
-            //    solicitacaoStatus.Data = DateTime.Now.Date;
-            //    solicitacaoStatus.Hora = TimeSpan.Parse(DateTime.Now.ToShortTimeString());
-            //    solicitacaoStatus.Solicitacao = model;
-            //    solicitacaoStatus.SolicitacaoId = model.StatusId;
-            //    solicitacaoStatus.UsuarioId = idUsuario;
-
-            //    AdicionarSolicitacaoStatus(solicitacaoStatus);
-            //}
+            
 
             using (var trans = new TransactionScope())
             {
@@ -139,13 +129,36 @@ namespace SIDomper.Servicos.Regras
                 }
                 else
                 {
+                    AlterarCronograma(model);
+                    ExcluirCronograma(model);
 
                     AlterarOcorrencia(model);
                     ExcluirOcorrencias(model);
+
+                    SalvarStatus(model, idUsuario);
                 }
                 _rep.Salvar(model);
                 _rep.Commit();
+                _repOcorrencia.Commit();
+                _repCronograma.Commit();
                 trans.Complete();
+            }
+        }
+
+        private void SalvarStatus(Solicitacao model, int idUsuario)
+        {
+            var novoModel = ObterPorId(model.Id);
+            if (novoModel != null || novoModel.StatusId != model.StatusId)
+            {
+                var solicitacaoStatus = new SolicitacaoStatus();
+                solicitacaoStatus.Id = 0;
+                solicitacaoStatus.Data = DateTime.Now.Date;
+                solicitacaoStatus.Hora = TimeSpan.Parse(DateTime.Now.ToShortTimeString());
+                solicitacaoStatus.Solicitacao = model;
+                solicitacaoStatus.SolicitacaoId = model.StatusId;
+                solicitacaoStatus.UsuarioId = idUsuario;
+
+                AdicionarSolicitacaoStatus(solicitacaoStatus);
             }
         }
 
@@ -176,6 +189,60 @@ namespace SIDomper.Servicos.Regras
                 }
             }
             _repOcorrencia.Commit();
+        }
+
+        private void AlterarCronograma(Solicitacao model)
+        {
+            var temp = new SolicitacaoCronograma();
+            foreach (var item in model.SolicitacaoCronogramas)
+            {
+                item.SolicitacaoId = model.Id;
+                if (item.UsuarioId == 0)
+                    throw new Exception("Informe o Usuário!");
+
+                if (item.Data == null)
+                    throw new Exception("Informe uma Data!");
+
+                if (item.Id <= 0)
+                {
+                    _repCronograma.Salvar(item);
+                }
+                else
+                {
+                    temp = _repCronograma.ObterPorId(item.Id);
+                    if (temp != null)
+                    {
+                        temp = item;
+                        _repCronograma.Salvar(temp);
+                    }
+                }
+            }
+            _repOcorrencia.Commit();
+        }
+
+        private void ExcluirCronograma(Solicitacao model)
+        {
+            string idDelecao = "";
+            int i = 1;
+            var banco = _rep.ObterPorId(model.Id);
+            foreach (var itemBanco in banco.SolicitacaoCronogramas)
+            {
+                var dados = model.SolicitacaoCronogramas.FirstOrDefault(x => x.Id == itemBanco.Id);
+                if (dados == null)
+                {
+                    if (itemBanco.Id > 0)
+                    {
+                        if (i == 1)
+                            idDelecao += itemBanco.Id;
+                        else
+                            idDelecao += "," + itemBanco.Id;
+                        i++;
+                    }
+                }
+            }
+
+            if (idDelecao != "")
+                _repCronograma.ExcluirOcorrenciaIds(idDelecao);
         }
 
         private void ExcluirOcorrencias(Solicitacao model)
@@ -518,6 +585,7 @@ namespace SIDomper.Servicos.Regras
         public void AdicionarSolicitacaoStatus(SolicitacaoStatus model)
         {
             _rep.AdicionarSolicitacaoStatus(model);
+            _rep.Commit();
         }
 
         public bool OcorrenciaUsuarioIgualCadastro(SolicitacaoOcorrencia model, int idUsuario, int tipoOperacao)

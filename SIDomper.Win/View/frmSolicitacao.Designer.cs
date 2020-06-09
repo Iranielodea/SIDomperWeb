@@ -28,17 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle56 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle57 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle58 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle59 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle60 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle61 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle62 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle63 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle64 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle65 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle66 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgvDados = new System.Windows.Forms.DataGridView();
             this.Sol_Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Ver_Versao = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -404,9 +404,9 @@
             // Sol_Id
             // 
             this.Sol_Id.DataPropertyName = "Id";
-            dataGridViewCellStyle56.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle56.Format = "000000";
-            this.Sol_Id.DefaultCellStyle = dataGridViewCellStyle56;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.Format = "000000";
+            this.Sol_Id.DefaultCellStyle = dataGridViewCellStyle1;
             this.Sol_Id.HeaderText = "Id";
             this.Sol_Id.Name = "Sol_Id";
             this.Sol_Id.Width = 80;
@@ -414,9 +414,9 @@
             // Ver_Versao
             // 
             this.Ver_Versao.DataPropertyName = "Versao";
-            dataGridViewCellStyle57.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
-            dataGridViewCellStyle57.Format = "0000";
-            this.Ver_Versao.DefaultCellStyle = dataGridViewCellStyle57;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
+            dataGridViewCellStyle2.Format = "0000";
+            this.Ver_Versao.DefaultCellStyle = dataGridViewCellStyle2;
             this.Ver_Versao.HeaderText = "Versão";
             this.Ver_Versao.Name = "Ver_Versao";
             this.Ver_Versao.Width = 80;
@@ -750,7 +750,7 @@
             this.tpAnalista.Location = new System.Drawing.Point(4, 26);
             this.tpAnalista.Name = "tpAnalista";
             this.tpAnalista.Padding = new System.Windows.Forms.Padding(3);
-            this.tpAnalista.Size = new System.Drawing.Size(680, 483);
+            this.tpAnalista.Size = new System.Drawing.Size(1017, 528);
             this.tpAnalista.TabIndex = 2;
             this.tpAnalista.Text = "Analista";
             this.tpAnalista.UseVisualStyleBackColor = true;
@@ -763,7 +763,7 @@
             this.tabControl4.Location = new System.Drawing.Point(3, 3);
             this.tabControl4.Name = "tabControl4";
             this.tabControl4.SelectedIndex = 0;
-            this.tabControl4.Size = new System.Drawing.Size(674, 477);
+            this.tabControl4.Size = new System.Drawing.Size(1011, 522);
             this.tabControl4.TabIndex = 0;
             // 
             // tpAnalistaPrincipal
@@ -786,7 +786,7 @@
             this.tpAnalistaPrincipal.Location = new System.Drawing.Point(4, 26);
             this.tpAnalistaPrincipal.Name = "tpAnalistaPrincipal";
             this.tpAnalistaPrincipal.Padding = new System.Windows.Forms.Padding(3);
-            this.tpAnalistaPrincipal.Size = new System.Drawing.Size(666, 447);
+            this.tpAnalistaPrincipal.Size = new System.Drawing.Size(1003, 492);
             this.tpAnalistaPrincipal.TabIndex = 0;
             this.tpAnalistaPrincipal.Text = "Principal";
             this.tpAnalistaPrincipal.UseVisualStyleBackColor = true;
@@ -939,7 +939,7 @@
             this.tpCronograma.Location = new System.Drawing.Point(4, 26);
             this.tpCronograma.Name = "tpCronograma";
             this.tpCronograma.Padding = new System.Windows.Forms.Padding(3);
-            this.tpCronograma.Size = new System.Drawing.Size(666, 447);
+            this.tpCronograma.Size = new System.Drawing.Size(1003, 492);
             this.tpCronograma.TabIndex = 1;
             this.tpCronograma.Text = "Cronograma";
             this.tpCronograma.UseVisualStyleBackColor = true;
@@ -1098,9 +1098,9 @@
             // Data
             // 
             this.Data.DataPropertyName = "Data";
-            dataGridViewCellStyle58.Format = "d";
-            dataGridViewCellStyle58.NullValue = null;
-            this.Data.DefaultCellStyle = dataGridViewCellStyle58;
+            dataGridViewCellStyle3.Format = "d";
+            dataGridViewCellStyle3.NullValue = null;
+            this.Data.DefaultCellStyle = dataGridViewCellStyle3;
             this.Data.HeaderText = "Previsão Entrega";
             this.Data.Name = "Data";
             // 
@@ -1168,8 +1168,8 @@
             // 
             // tabControl5
             // 
-            this.tabControl5.Controls.Add(this.tpGeralPesquisa);
             this.tabControl5.Controls.Add(this.tpGeralEdicao);
+            this.tabControl5.Controls.Add(this.tpGeralPesquisa);
             this.tabControl5.Location = new System.Drawing.Point(3, 3);
             this.tabControl5.Name = "tabControl5";
             this.tabControl5.SelectedIndex = 0;
@@ -1343,18 +1343,18 @@
             // OcorrenciaGeralData
             // 
             this.OcorrenciaGeralData.DataPropertyName = "Data";
-            dataGridViewCellStyle59.Format = "d";
-            dataGridViewCellStyle59.NullValue = null;
-            this.OcorrenciaGeralData.DefaultCellStyle = dataGridViewCellStyle59;
+            dataGridViewCellStyle4.Format = "d";
+            dataGridViewCellStyle4.NullValue = null;
+            this.OcorrenciaGeralData.DefaultCellStyle = dataGridViewCellStyle4;
             this.OcorrenciaGeralData.HeaderText = "Data";
             this.OcorrenciaGeralData.Name = "OcorrenciaGeralData";
             // 
             // OcorrenciaGeralHora
             // 
             this.OcorrenciaGeralHora.DataPropertyName = "Hora";
-            dataGridViewCellStyle60.Format = "t";
-            dataGridViewCellStyle60.NullValue = null;
-            this.OcorrenciaGeralHora.DefaultCellStyle = dataGridViewCellStyle60;
+            dataGridViewCellStyle5.Format = "t";
+            dataGridViewCellStyle5.NullValue = null;
+            this.OcorrenciaGeralHora.DefaultCellStyle = dataGridViewCellStyle5;
             this.OcorrenciaGeralHora.HeaderText = "Hora";
             this.OcorrenciaGeralHora.Name = "OcorrenciaGeralHora";
             // 
@@ -1450,7 +1450,7 @@
             this.tpOcorrenciaTecnica.Location = new System.Drawing.Point(4, 26);
             this.tpOcorrenciaTecnica.Name = "tpOcorrenciaTecnica";
             this.tpOcorrenciaTecnica.Padding = new System.Windows.Forms.Padding(3);
-            this.tpOcorrenciaTecnica.Size = new System.Drawing.Size(1017, 528);
+            this.tpOcorrenciaTecnica.Size = new System.Drawing.Size(680, 483);
             this.tpOcorrenciaTecnica.TabIndex = 4;
             this.tpOcorrenciaTecnica.Text = "Ocorrência Técnica";
             this.tpOcorrenciaTecnica.UseVisualStyleBackColor = true;
@@ -1689,18 +1689,18 @@
             // TecnicaData
             // 
             this.TecnicaData.DataPropertyName = "Data";
-            dataGridViewCellStyle61.Format = "d";
-            dataGridViewCellStyle61.NullValue = null;
-            this.TecnicaData.DefaultCellStyle = dataGridViewCellStyle61;
+            dataGridViewCellStyle6.Format = "d";
+            dataGridViewCellStyle6.NullValue = null;
+            this.TecnicaData.DefaultCellStyle = dataGridViewCellStyle6;
             this.TecnicaData.HeaderText = "Data";
             this.TecnicaData.Name = "TecnicaData";
             // 
             // TecnicaHora
             // 
             this.TecnicaHora.DataPropertyName = "Hora";
-            dataGridViewCellStyle62.Format = "t";
-            dataGridViewCellStyle62.NullValue = null;
-            this.TecnicaHora.DefaultCellStyle = dataGridViewCellStyle62;
+            dataGridViewCellStyle7.Format = "t";
+            dataGridViewCellStyle7.NullValue = null;
+            this.TecnicaHora.DefaultCellStyle = dataGridViewCellStyle7;
             this.TecnicaHora.HeaderText = "Hora";
             this.TecnicaHora.Name = "TecnicaHora";
             // 
@@ -1750,7 +1750,7 @@
             this.tpOcorrenciaRegras.Location = new System.Drawing.Point(4, 26);
             this.tpOcorrenciaRegras.Name = "tpOcorrenciaRegras";
             this.tpOcorrenciaRegras.Padding = new System.Windows.Forms.Padding(3);
-            this.tpOcorrenciaRegras.Size = new System.Drawing.Size(1017, 528);
+            this.tpOcorrenciaRegras.Size = new System.Drawing.Size(680, 483);
             this.tpOcorrenciaRegras.TabIndex = 5;
             this.tpOcorrenciaRegras.Text = "Ocorrência Regras";
             this.tpOcorrenciaRegras.UseVisualStyleBackColor = true;
@@ -1989,18 +1989,18 @@
             // RegraData
             // 
             this.RegraData.DataPropertyName = "Data";
-            dataGridViewCellStyle63.Format = "d";
-            dataGridViewCellStyle63.NullValue = null;
-            this.RegraData.DefaultCellStyle = dataGridViewCellStyle63;
+            dataGridViewCellStyle8.Format = "d";
+            dataGridViewCellStyle8.NullValue = null;
+            this.RegraData.DefaultCellStyle = dataGridViewCellStyle8;
             this.RegraData.HeaderText = "Data";
             this.RegraData.Name = "RegraData";
             // 
             // RegraHora
             // 
             this.RegraHora.DataPropertyName = "Hora";
-            dataGridViewCellStyle64.Format = "t";
-            dataGridViewCellStyle64.NullValue = null;
-            this.RegraHora.DefaultCellStyle = dataGridViewCellStyle64;
+            dataGridViewCellStyle9.Format = "t";
+            dataGridViewCellStyle9.NullValue = null;
+            this.RegraHora.DefaultCellStyle = dataGridViewCellStyle9;
             this.RegraHora.HeaderText = "Hora";
             this.RegraHora.Name = "RegraHora";
             // 
@@ -2072,17 +2072,17 @@
             // 
             // StatusData
             // 
-            dataGridViewCellStyle65.Format = "d";
-            dataGridViewCellStyle65.NullValue = null;
-            this.StatusData.DefaultCellStyle = dataGridViewCellStyle65;
+            dataGridViewCellStyle10.Format = "d";
+            dataGridViewCellStyle10.NullValue = null;
+            this.StatusData.DefaultCellStyle = dataGridViewCellStyle10;
             this.StatusData.HeaderText = "Data";
             this.StatusData.Name = "StatusData";
             // 
             // StatusHora
             // 
-            dataGridViewCellStyle66.Format = "T";
-            dataGridViewCellStyle66.NullValue = null;
-            this.StatusHora.DefaultCellStyle = dataGridViewCellStyle66;
+            dataGridViewCellStyle11.Format = "T";
+            dataGridViewCellStyle11.NullValue = null;
+            this.StatusHora.DefaultCellStyle = dataGridViewCellStyle11;
             this.StatusHora.HeaderText = "Hora";
             this.StatusHora.Name = "StatusHora";
             // 

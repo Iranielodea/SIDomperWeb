@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<preserve resultType="2" virtualPath="/Views/Shared/_Header.cshtml" hash="fffffffff9e71233" filehash="34526b62bca7" flags="110000" assembly="AppCode" type="ASP._Page_Views_Shared__Header_cshtml">
+<preserve resultType="2" virtualPath="/Views/Shared/_Header.cshtml" hash="ffffffffbfe2e0da" filehash="1f916b62a3a1" flags="110000" assembly="AppCode" type="ASP._Page_Views_Shared__Header_cshtml">
   <filedeps>
     <filedep name="/Views/Shared/_Header.cshtml" />
   </filedeps>
