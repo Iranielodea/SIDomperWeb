@@ -155,23 +155,31 @@ namespace SIDomperWebApi.Controllers
         public SolicitacaoViewModel BuscarModuloProduto(int idCliente, int idModulo)
         {
             var clienteModuloServico = new ClienteModuloServico();
-            var model = clienteModuloServico.ObterPorModulo(idCliente, idModulo);
             var solicitacaoViewModel = new SolicitacaoViewModel();
-
-            if (model != null)
+            try
             {
-                solicitacaoViewModel.ModuloId = model.ModuloId;
-                solicitacaoViewModel.ModuloCodigo = model.Modulo.Codigo;
-                solicitacaoViewModel.ModuloNome = model.Modulo.Nome;
+                var model = clienteModuloServico.ObterPorModulo(idCliente, idModulo);
 
-                if (model.Produto != null)
+                if (model != null)
                 {
-                    solicitacaoViewModel.ProdutoId = model.ProdutoId;
-                    solicitacaoViewModel.ProdutoCodigo = model.Produto.Codigo;
-                    solicitacaoViewModel.ProdutoNome = model.Produto.Nome;
+                    solicitacaoViewModel.ModuloId = model.ModuloId;
+                    solicitacaoViewModel.ModuloCodigo = model.Modulo.Codigo;
+                    solicitacaoViewModel.ModuloNome = model.Modulo.Nome;
+
+                    if (model.Produto != null)
+                    {
+                        solicitacaoViewModel.ProdutoId = model.ProdutoId;
+                        solicitacaoViewModel.ProdutoCodigo = model.Produto.Codigo;
+                        solicitacaoViewModel.ProdutoNome = model.Produto.Nome;
+                    }
                 }
+                return solicitacaoViewModel;
             }
-            return solicitacaoViewModel;
+            catch (Exception ex)
+            {
+                solicitacaoViewModel.Mensagem = ex.Message;
+                return solicitacaoViewModel;
+            }
         }
 
         private void PopularSolicitacao(SolicitacaoViewModel viewModel, Solicitacao model, int usuarioId)

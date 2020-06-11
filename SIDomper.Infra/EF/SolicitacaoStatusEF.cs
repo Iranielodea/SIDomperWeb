@@ -19,15 +19,17 @@ namespace SIDomper.Infra.EF
 
         public void Salvar(SolicitacaoStatus model)
         {
-            if (model.Id > 0)
-                _rep.Update(model);
-            else
-                _rep.Add(model);
+            _rep.AddUpdate(model);
         }
 
         public void Excluir(SolicitacaoStatus model)
         {
             _rep.Deletar(model);
+        }
+
+        public void Commit()
+        {
+            _rep.Commit();
         }
     }
 }

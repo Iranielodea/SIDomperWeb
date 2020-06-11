@@ -15,6 +15,7 @@ namespace SIDomper.Servicos.Regras
         private readonly SolicitacaoEF _rep;
         private readonly SolicitacaoOcorrenciaEF _repOcorrencia;
         private readonly SolicitacaoCronogramaEF _repCronograma;
+        private readonly SolicitacaoStatusEF _repSolicitacaoStatus;
         private readonly EnProgramas _tipoPrograma;
         private readonly UsuarioServico _repUsuario;
         private readonly ParametroServico _parametro;
@@ -33,6 +34,7 @@ namespace SIDomper.Servicos.Regras
             _solicitacaoRepositorioDapper = new SolicitacaoRepositorioDapper();
             _repOcorrencia = new SolicitacaoOcorrenciaEF();
             _repCronograma = new SolicitacaoCronogramaEF();
+            _repSolicitacaoStatus = new SolicitacaoStatusEF();
         }
 
         public Solicitacao Novo(int usuarioId)
@@ -132,31 +134,12 @@ namespace SIDomper.Servicos.Regras
 
                     AlterarOcorrencia(model);
                     ExcluirOcorrencias(model);
-
-                    //SalvarStatus(model, idUsuario);
                 }
                 _rep.Salvar(model);
                 _rep.Commit();
                 _repOcorrencia.Commit();
                 _repCronograma.Commit();
                 trans.Complete();
-            }
-        }
-
-        private void SalvarStatus(Solicitacao model, int idUsuario)
-        {
-            var novoModel = ObterPorId(model.Id);
-            if (novoModel != null || novoModel.StatusId != model.StatusId)
-            {
-                var solicitacaoStatus = new SolicitacaoStatus();
-                solicitacaoStatus.Id = 0;
-                solicitacaoStatus.Data = DateTime.Now.Date;
-                solicitacaoStatus.Hora = TimeSpan.Parse(DateTime.Now.ToShortTimeString());
-                solicitacaoStatus.Solicitacao = model;
-                solicitacaoStatus.SolicitacaoId = model.StatusId;
-                solicitacaoStatus.UsuarioId = idUsuario;
-
-                AdicionarSolicitacaoStatus(solicitacaoStatus);
             }
         }
 
@@ -578,11 +561,6 @@ namespace SIDomper.Servicos.Regras
             var model = ObterPorId(idSolicitacao);
             model.StatusId = idStatus;
             model.UsuarioAtendeAtualId = idUsuario;
-        }
-
-        public void AdicionarSolicitacaoStatus(SolicitacaoStatus model)
-        {
-            _rep.AdicionarSolicitacaoStatus(model);
         }
 
         public bool OcorrenciaUsuarioIgualCadastro(SolicitacaoOcorrencia model, int idUsuario, int tipoOperacao)

@@ -397,23 +397,33 @@ namespace SIDomperWebApi.Controllers
         public ChamadoViewModel BuscarModuloProduto(int idCliente, int idModulo)
         {
             var clienteModuloServico = new ClienteModuloServico();
-            var model = clienteModuloServico.ObterPorModulo(idCliente, idModulo);
             var chamadoViewModel = new ChamadoViewModel();
 
-            if (model != null)
-            {
-                chamadoViewModel.ModuloId = model.ModuloId;
-                chamadoViewModel.CodModulo = model.Modulo.Codigo;
-                chamadoViewModel.NomeModulo = model.Modulo.Nome;
 
-                if (model.Produto != null)
+            try
+            {
+                var model = clienteModuloServico.ObterPorModulo(idCliente, idModulo);
+
+                if (model != null)
                 {
-                    chamadoViewModel.ProdutoId = model.ProdutoId;
-                    chamadoViewModel.CodProduto = model.Produto.Codigo;
-                    chamadoViewModel.NomeProduto = model.Produto.Nome;
+                    chamadoViewModel.ModuloId = model.ModuloId;
+                    chamadoViewModel.CodModulo = model.Modulo.Codigo;
+                    chamadoViewModel.NomeModulo = model.Modulo.Nome;
+
+                    if (model.Produto != null)
+                    {
+                        chamadoViewModel.ProdutoId = model.ProdutoId;
+                        chamadoViewModel.CodProduto = model.Produto.Codigo;
+                        chamadoViewModel.NomeProduto = model.Produto.Nome;
+                    }
                 }
+                return chamadoViewModel;
             }
-            return chamadoViewModel;
+            catch (Exception ex)
+            {
+                chamadoViewModel.Mensagem = ex.Message;
+                return chamadoViewModel;
+            }
         }
 
         [HttpPost]

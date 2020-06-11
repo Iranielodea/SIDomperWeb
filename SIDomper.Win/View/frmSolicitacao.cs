@@ -85,6 +85,8 @@ namespace SIDomper.Win.View
             _solicitacaoApp = new SolicitacaoApp();
             _solicitacaoViewModel = new SolicitacaoViewModel();
 
+            dgvStatus.Columns["Hora"].DefaultCellStyle.Format = "t";
+
             //ursFiltroStatus.PosicaoTela(altura, largura);
             //ursFiltroTipo.PosicaoTela(altura, largura);
             //ursFiltroUsuario.PosicaoTela(altura, largura);
