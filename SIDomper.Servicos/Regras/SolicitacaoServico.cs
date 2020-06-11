@@ -119,8 +119,6 @@ namespace SIDomper.Servicos.Regras
                 }
             }
 
-            
-
             using (var trans = new TransactionScope())
             {
                 if (model.Id == 0)
@@ -135,7 +133,7 @@ namespace SIDomper.Servicos.Regras
                     AlterarOcorrencia(model);
                     ExcluirOcorrencias(model);
 
-                    SalvarStatus(model, idUsuario);
+                    //SalvarStatus(model, idUsuario);
                 }
                 _rep.Salvar(model);
                 _rep.Commit();
@@ -585,7 +583,6 @@ namespace SIDomper.Servicos.Regras
         public void AdicionarSolicitacaoStatus(SolicitacaoStatus model)
         {
             _rep.AdicionarSolicitacaoStatus(model);
-            _rep.Commit();
         }
 
         public bool OcorrenciaUsuarioIgualCadastro(SolicitacaoOcorrencia model, int idUsuario, int tipoOperacao)

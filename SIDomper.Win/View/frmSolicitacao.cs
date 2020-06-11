@@ -573,13 +573,12 @@ namespace SIDomper.Win.View
         private void NovoCronograma()
         {
             Tela.BotaoPadraoNovo(ref btnCronoNovo, ref btnCronoEditar, ref btnCronoSalvar, ref btnCronoExcluir, ref btnCronoCancelar);
-
+            BloquearCronograma(false);
             UsrCronoOperador.LimparTela();
             txtCronoData.txtData.Clear();
             txtCronoHoraInicial.Clear();
             txtCronoHoraFinal.Clear();
             txtIdCronograma.Text = _solicitacaoViewModel.CronogramaRetornarMenorId().ToString();
-            tabControl4.SelectedIndex = 0;
             UsrCronoOperador.txtCodigo.Focus();
         }
 
@@ -699,6 +698,7 @@ namespace SIDomper.Win.View
             {
                 Tela.BotaoPadraoEditar(ref btnCronoNovo, ref btnCronoEditar, ref btnCronoSalvar, ref btnCronoExcluir, ref btnCronoCancelar);
                 PopularCronograma(0);
+                BloquearCronograma(false);
             }
         }
 
@@ -734,18 +734,23 @@ namespace SIDomper.Win.View
             model.SolicitacaoId = _solicitacaoViewModel.Id;
             model.UsuarioId = int.Parse(UsrCronoOperador.txtId.Text);
             model.Data = DateTime.Parse(txtCronoData.txtData.Text);
+            model.CodigoUsuario = Funcoes.StrToInt(UsrCronoOperador.txtCodigo.txtValor.Text);
+            model.NomeUsuario = UsrCronoOperador.txtNome.Text;
 
             if (model.Id <= 0)
                 _solicitacaoViewModel.SolicitacaoCronogramas.Add(model);
 
             CarregarCronogramas(_solicitacaoViewModel);
             Tela.BotaoPadraoSalvar(ref btnCronoNovo, ref btnCronoEditar, ref btnCronoSalvar, ref btnCronoExcluir, ref btnCronoCancelar);
+            BloquearCronograma(true);
         }
 
         private void CancelarCronograma()
         {
             Tela.BotaoPadraoCancelar(ref btnCronoNovo, ref btnCronoEditar, ref btnCronoSalvar, ref btnCronoExcluir, ref btnCronoCancelar);
             PopularCronograma(0);
+            //ela.HabilitarDesabilitar(tpGeralEdicao, true);
+            BloquearCronograma(true);
         }
 
         private void NovoGeral()
@@ -763,6 +768,14 @@ namespace SIDomper.Win.View
             tabControl5.SelectedIndex = 0;
             txtIdOcorrenciaGeral.Text = _solicitacaoViewModel.OcorrenciaRetornarMenorId().ToString();
             txtGeralData.Focus();
+        }
+
+        private void BloquearCronograma(bool bloquear)
+        {
+            UsrCronoOperador.Enabled = !bloquear;
+            txtCronoData.Enabled = !bloquear;
+            txtCronoHoraInicial.Enabled = !bloquear;
+            txtCronoHoraFinal.Enabled = !bloquear;
         }
 
         private void EditarGeral()
@@ -1274,6 +1287,12 @@ namespace SIDomper.Win.View
         private void btnVisualizarRegra_Click(object sender, EventArgs e)
         {
             Funcoes.VisualizarAnexo(ref txtAnexoRegra);
+        }
+
+        private void dgvDados_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            _grid.OrdenarColunas(ref dgvDados, _listaConsulta, e);
+            cbCampos.SelectedIndex = e.ColumnIndex;
         }
     }
 }
