@@ -1022,10 +1022,5 @@ namespace SIDomper.Win.View
                 formulario.ShowDialog();
             }
         }
-
-        private void dgvStatus_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
-        {
-            Grade.FormatoTime(ref dgvStatus, "Hora");
-        }
     }
 }

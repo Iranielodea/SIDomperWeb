@@ -128,7 +128,7 @@
             this.tpStatusOcorrencia = new System.Windows.Forms.TabPage();
             this.dgvStatus = new System.Windows.Forms.DataGridView();
             this.StatusData = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Hora = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.HoraTela = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.StatusNome = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.UsuarioNome = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControl1.SuspendLayout();
@@ -819,7 +819,7 @@
             this.tpOcorrencia.Location = new System.Drawing.Point(4, 26);
             this.tpOcorrencia.Name = "tpOcorrencia";
             this.tpOcorrencia.Padding = new System.Windows.Forms.Padding(3);
-            this.tpOcorrencia.Size = new System.Drawing.Size(1015, 526);
+            this.tpOcorrencia.Size = new System.Drawing.Size(678, 481);
             this.tpOcorrencia.TabIndex = 1;
             this.tpOcorrencia.Text = "Ocorrência";
             // 
@@ -1276,7 +1276,7 @@
             this.tpStatusOcorrencia.Location = new System.Drawing.Point(4, 26);
             this.tpStatusOcorrencia.Name = "tpStatusOcorrencia";
             this.tpStatusOcorrencia.Padding = new System.Windows.Forms.Padding(3);
-            this.tpStatusOcorrencia.Size = new System.Drawing.Size(678, 481);
+            this.tpStatusOcorrencia.Size = new System.Drawing.Size(1015, 526);
             this.tpStatusOcorrencia.TabIndex = 2;
             this.tpStatusOcorrencia.Text = "Status";
             this.tpStatusOcorrencia.UseVisualStyleBackColor = true;
@@ -1287,14 +1287,13 @@
             this.dgvStatus.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvStatus.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.StatusData,
-            this.Hora,
+            this.HoraTela,
             this.StatusNome,
             this.UsuarioNome});
             this.dgvStatus.Location = new System.Drawing.Point(6, 6);
             this.dgvStatus.Name = "dgvStatus";
             this.dgvStatus.Size = new System.Drawing.Size(1003, 454);
             this.dgvStatus.TabIndex = 0;
-            this.dgvStatus.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvStatus_CellFormatting);
             // 
             // StatusData
             // 
@@ -1302,13 +1301,13 @@
             this.StatusData.HeaderText = "Data";
             this.StatusData.Name = "StatusData";
             // 
-            // Hora
+            // HoraTela
             // 
-            this.Hora.DataPropertyName = "Hora";
+            this.HoraTela.DataPropertyName = "HoraTela";
             dataGridViewCellStyle4.NullValue = null;
-            this.Hora.DefaultCellStyle = dataGridViewCellStyle4;
-            this.Hora.HeaderText = "Hora";
-            this.Hora.Name = "Hora";
+            this.HoraTela.DefaultCellStyle = dataGridViewCellStyle4;
+            this.HoraTela.HeaderText = "Hora";
+            this.HoraTela.Name = "HoraTela";
             // 
             // StatusNome
             // 
@@ -1464,7 +1463,7 @@
         private System.Windows.Forms.TabPage tpStatusOcorrencia;
         private System.Windows.Forms.DataGridView dgvStatus;
         private System.Windows.Forms.DataGridViewTextBoxColumn StatusData;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Hora;
+        private System.Windows.Forms.DataGridViewTextBoxColumn HoraTela;
         private System.Windows.Forms.DataGridViewTextBoxColumn StatusNome;
         private System.Windows.Forms.DataGridViewTextBoxColumn UsuarioNome;
     }

@@ -248,6 +248,11 @@ namespace SIDomperWebApi.Controllers
                     colaborador.NomeUsuario = usuario.Nome;
                 }
             }
+
+            foreach(var item in _ChamadoViewModel.ChamadosStatus)
+            {
+                item.HoraTela = Utils.FormatarHHMMSS(item.Hora);
+            }
             
 
             //var chamadoOcorrenciaServico = new ChamadoOcorrenciaServico();

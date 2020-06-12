@@ -210,11 +210,6 @@
             this.RegraNomeUsuario = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tpStatus = new System.Windows.Forms.TabPage();
             this.dgvStatus = new System.Windows.Forms.DataGridView();
-            this.StatusId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.StatusData = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Hora = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.StatusNome = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.StatusUsuario = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.UsrStatus = new SIDomper.Win.Componentes.usrPesquisa();
             this.label30 = new System.Windows.Forms.Label();
             this.label31 = new System.Windows.Forms.Label();
@@ -224,6 +219,11 @@
             this.txtDataFinal = new SIDomper.Win.Componentes.usrData();
             this.label33 = new System.Windows.Forms.Label();
             this.txtIdFiltro = new SIDomper.Win.Componentes.usrSoNumero();
+            this.StatusId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.StatusData = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.HoraStr = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.StatusNome = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.StatusUsuario = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControl1.SuspendLayout();
             this.tpPesquisa.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -2056,47 +2056,13 @@
             this.dgvStatus.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.StatusId,
             this.StatusData,
-            this.Hora,
+            this.HoraStr,
             this.StatusNome,
             this.StatusUsuario});
             this.dgvStatus.Location = new System.Drawing.Point(7, 6);
             this.dgvStatus.Name = "dgvStatus";
             this.dgvStatus.Size = new System.Drawing.Size(1004, 456);
             this.dgvStatus.TabIndex = 0;
-            // 
-            // StatusId
-            // 
-            this.StatusId.HeaderText = "Id";
-            this.StatusId.Name = "StatusId";
-            this.StatusId.Visible = false;
-            // 
-            // StatusData
-            // 
-            dataGridViewCellStyle10.Format = "d";
-            dataGridViewCellStyle10.NullValue = null;
-            this.StatusData.DefaultCellStyle = dataGridViewCellStyle10;
-            this.StatusData.HeaderText = "Data";
-            this.StatusData.Name = "StatusData";
-            // 
-            // Hora
-            // 
-            this.Hora.DataPropertyName = "Hora";
-            dataGridViewCellStyle11.NullValue = null;
-            this.Hora.DefaultCellStyle = dataGridViewCellStyle11;
-            this.Hora.HeaderText = "Hora";
-            this.Hora.Name = "Hora";
-            // 
-            // StatusNome
-            // 
-            this.StatusNome.HeaderText = "Status";
-            this.StatusNome.Name = "StatusNome";
-            this.StatusNome.Width = 350;
-            // 
-            // StatusUsuario
-            // 
-            this.StatusUsuario.HeaderText = "Operador";
-            this.StatusUsuario.Name = "StatusUsuario";
-            this.StatusUsuario.Width = 350;
             // 
             // UsrStatus
             // 
@@ -2177,6 +2143,40 @@
             this.txtIdFiltro.Name = "txtIdFiltro";
             this.txtIdFiltro.Size = new System.Drawing.Size(67, 25);
             this.txtIdFiltro.TabIndex = 3;
+            // 
+            // StatusId
+            // 
+            this.StatusId.HeaderText = "Id";
+            this.StatusId.Name = "StatusId";
+            this.StatusId.Visible = false;
+            // 
+            // StatusData
+            // 
+            dataGridViewCellStyle10.Format = "d";
+            dataGridViewCellStyle10.NullValue = null;
+            this.StatusData.DefaultCellStyle = dataGridViewCellStyle10;
+            this.StatusData.HeaderText = "Data";
+            this.StatusData.Name = "StatusData";
+            // 
+            // HoraStr
+            // 
+            this.HoraStr.DataPropertyName = "HoraStr";
+            dataGridViewCellStyle11.NullValue = null;
+            this.HoraStr.DefaultCellStyle = dataGridViewCellStyle11;
+            this.HoraStr.HeaderText = "Hora";
+            this.HoraStr.Name = "HoraStr";
+            // 
+            // StatusNome
+            // 
+            this.StatusNome.HeaderText = "Status";
+            this.StatusNome.Name = "StatusNome";
+            this.StatusNome.Width = 350;
+            // 
+            // StatusUsuario
+            // 
+            this.StatusUsuario.HeaderText = "Operador";
+            this.StatusUsuario.Name = "StatusUsuario";
+            this.StatusUsuario.Width = 350;
             // 
             // frmSolicitacao
             // 
@@ -2421,7 +2421,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Sta_Nome;
         private System.Windows.Forms.DataGridViewTextBoxColumn StatusId;
         private System.Windows.Forms.DataGridViewTextBoxColumn StatusData;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Hora;
+        private System.Windows.Forms.DataGridViewTextBoxColumn HoraStr;
         private System.Windows.Forms.DataGridViewTextBoxColumn StatusNome;
         private System.Windows.Forms.DataGridViewTextBoxColumn StatusUsuario;
     }

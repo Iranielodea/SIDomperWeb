@@ -1,5 +1,6 @@
 ﻿using Mapster;
 using SIDomper.Dominio.Entidades;
+using SIDomper.Dominio.Funcoes;
 using SIDomper.Dominio.ViewModel;
 using SIDomper.Servicos.Regras;
 using System;
@@ -273,6 +274,7 @@ namespace SIDomperWebApi.Controllers
                 {
                     item.NomeStatus = item.Status.Nome;
                     item.NomeUsuario = item.Usuario.Nome;
+                    item.HoraStr = Utils.FormatarHHMMSS(item.Hora.Value);
                 }
             }
         }

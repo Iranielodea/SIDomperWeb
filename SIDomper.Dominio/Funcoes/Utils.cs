@@ -103,6 +103,11 @@ namespace SIDomper.Dominio.Funcoes
             return hora.ToString(@"hh\:mm");
         }
 
+        public static string FormatarHHMMSS(TimeSpan hora)
+        {
+            return hora.ToString(@"hh\:mm\:ss");
+        }
+
         public static TimeSpan CalcularHoras(TimeSpan horaInicial, TimeSpan horaFinal)
         {
             return horaFinal - horaInicial;

@@ -85,8 +85,6 @@ namespace SIDomper.Win.View
             _solicitacaoApp = new SolicitacaoApp();
             _solicitacaoViewModel = new SolicitacaoViewModel();
 
-            dgvStatus.Columns["Hora"].DefaultCellStyle.Format = "t";
-
             //ursFiltroStatus.PosicaoTela(altura, largura);
             //ursFiltroTipo.PosicaoTela(altura, largura);
             //ursFiltroUsuario.PosicaoTela(altura, largura);
@@ -131,6 +129,7 @@ namespace SIDomper.Win.View
             {
                 _solicitacaoApp = new SolicitacaoApp();
                 var model = _solicitacaoApp.Editar(Funcoes.IdUsuario, Grade.RetornarId(ref dgvDados, "Sol_Id"));
+                Funcoes.VerificarMensagem(model.Mensagem);
                 _solicitacaoViewModel = model;
                 _Id = _solicitacaoViewModel.Id;
 
@@ -211,7 +210,7 @@ namespace SIDomper.Win.View
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -1141,7 +1140,7 @@ namespace SIDomper.Win.View
             {
                 foreach (var item in viewModel.SolicitacaoStatus)
                 {
-                    dgvStatus.Rows.Add(item.Id, item.Data, item.Hora, item.NomeStatus, item.NomeUsuario);
+                    dgvStatus.Rows.Add(item.Id, item.Data, item.HoraStr, item.NomeStatus, item.NomeUsuario);
                 }
             }
         }

@@ -190,6 +190,7 @@ namespace SIDomper.Dominio.ViewModel
         public TimeSpan? Hora { get; set; }
         public string NomeUsuario { get; set; }
         public string NomeStatus { get; set; }
+        public string HoraStr { get; set; }
 
         public virtual UsuarioViewModel Usuario { get; set; }
         public virtual StatusViewModel Status { get; set; }
