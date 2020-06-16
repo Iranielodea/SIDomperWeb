@@ -268,7 +268,7 @@
             this.tabControl2.Controls.Add(this.tpStatusOcorrencia);
             this.tabControl2.Location = new System.Drawing.Point(5, 5);
             this.tabControl2.Size = new System.Drawing.Size(1023, 556);
-            this.tabControl2.Click += new System.EventHandler(this.tabControl2_Click);
+            this.tabControl2.Click += new System.EventHandler(this.TabControl2_Click);
             this.tabControl2.Controls.SetChildIndex(this.tpStatusOcorrencia, 0);
             this.tabControl2.Controls.SetChildIndex(this.tpOcorrencia, 0);
             this.tabControl2.Controls.SetChildIndex(this.tbPrincipal, 0);
@@ -559,7 +559,7 @@
             this.btnAlterarDataHora.Text = "...";
             this.toolTip1.SetToolTip(this.btnAlterarDataHora, "Alterar Data e Hora");
             this.btnAlterarDataHora.UseVisualStyleBackColor = true;
-            this.btnAlterarDataHora.Click += new System.EventHandler(this.btnAlterarDataHora_Click);
+            this.btnAlterarDataHora.Click += new System.EventHandler(this.BtnAlterarDataHora_Click);
             // 
             // contextMenuStrip1
             // 
@@ -573,7 +573,7 @@
             this.liberarDataEHoraToolStripMenuItem.Name = "liberarDataEHoraToolStripMenuItem";
             this.liberarDataEHoraToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.liberarDataEHoraToolStripMenuItem.Text = "Liberar Data e Hora";
-            this.liberarDataEHoraToolStripMenuItem.Click += new System.EventHandler(this.liberarDataEHoraToolStripMenuItem_Click);
+            this.liberarDataEHoraToolStripMenuItem.Click += new System.EventHandler(this.LiberarDataEHoraToolStripMenuItem_Click);
             // 
             // label13
             // 
@@ -831,7 +831,7 @@
             this.btnColaborador.TabIndex = 28;
             this.btnColaborador.Text = "Colaborador";
             this.btnColaborador.UseVisualStyleBackColor = true;
-            this.btnColaborador.Click += new System.EventHandler(this.btnColaborador_Click);
+            this.btnColaborador.Click += new System.EventHandler(this.BtnColaborador_Click);
             // 
             // btnExcluirOco
             // 
@@ -842,7 +842,7 @@
             this.btnExcluirOco.TabIndex = 13;
             this.btnExcluirOco.Text = "Excluir";
             this.btnExcluirOco.UseVisualStyleBackColor = true;
-            this.btnExcluirOco.Click += new System.EventHandler(this.btnExcluirOco_Click);
+            this.btnExcluirOco.Click += new System.EventHandler(this.BtnExcluirOco_Click);
             // 
             // UsrUsuarioOco
             // 
@@ -892,7 +892,7 @@
             this.btnVisualizar.TabStop = false;
             this.btnVisualizar.Text = "...";
             this.btnVisualizar.UseVisualStyleBackColor = true;
-            this.btnVisualizar.Click += new System.EventHandler(this.btnVisualizar_Click);
+            this.btnVisualizar.Click += new System.EventHandler(this.BtnVisualizar_Click);
             // 
             // btnAnexo
             // 
@@ -903,7 +903,7 @@
             this.btnAnexo.TabStop = false;
             this.btnAnexo.Text = "...";
             this.btnAnexo.UseVisualStyleBackColor = true;
-            this.btnAnexo.Click += new System.EventHandler(this.btnAnexo_Click);
+            this.btnAnexo.Click += new System.EventHandler(this.BtnAnexo_Click);
             // 
             // label26
             // 
@@ -1224,7 +1224,7 @@
             this.btnEspecificao.TabIndex = 9;
             this.btnEspecificao.Text = "Especif.";
             this.btnEspecificao.UseVisualStyleBackColor = true;
-            this.btnEspecificao.Click += new System.EventHandler(this.btnEspecificao_Click);
+            this.btnEspecificao.Click += new System.EventHandler(this.BtnEspecificao_Click);
             // 
             // btnModulo
             // 
@@ -1235,7 +1235,7 @@
             this.btnModulo.TabIndex = 10;
             this.btnModulo.Text = "Módulos";
             this.btnModulo.UseVisualStyleBackColor = true;
-            this.btnModulo.Click += new System.EventHandler(this.btnModulo_Click);
+            this.btnModulo.Click += new System.EventHandler(this.BtnModulo_Click);
             // 
             // btnSolucao
             // 
@@ -1246,7 +1246,7 @@
             this.btnSolucao.TabIndex = 11;
             this.btnSolucao.Text = "Soluções";
             this.btnSolucao.UseVisualStyleBackColor = true;
-            this.btnSolucao.Click += new System.EventHandler(this.btnSolucao_Click);
+            this.btnSolucao.Click += new System.EventHandler(this.BtnSolucao_Click);
             // 
             // btnCliente
             // 
@@ -1257,7 +1257,7 @@
             this.btnCliente.TabIndex = 12;
             this.btnCliente.Text = "Clientes";
             this.btnCliente.UseVisualStyleBackColor = true;
-            this.btnCliente.Click += new System.EventHandler(this.btnCliente_Click);
+            this.btnCliente.Click += new System.EventHandler(this.BtnCliente_Click);
             // 
             // btnAnexo2
             // 
@@ -1268,7 +1268,7 @@
             this.btnAnexo2.TabIndex = 13;
             this.btnAnexo2.Text = "Anexos";
             this.btnAnexo2.UseVisualStyleBackColor = true;
-            this.btnAnexo2.Click += new System.EventHandler(this.btnAnexo2_Click);
+            this.btnAnexo2.Click += new System.EventHandler(this.BtnAnexo2_Click);
             // 
             // tpStatusOcorrencia
             // 

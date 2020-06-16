@@ -8,6 +8,8 @@ using System;
 using System.Linq;
 using SIDomper.Infra.RepositorioDapper;
 using SIDomper.Dominio.ViewModel;
+using System.IO;
+using System.Xml;
 
 namespace SIDomper.Servicos.Regras
 {
@@ -15,9 +17,10 @@ namespace SIDomper.Servicos.Regras
     {
         private readonly UsuarioServico _usuario;
         private readonly ClienteADO _repADO;
-        private readonly ClienteEF  _rep;
+        private readonly ClienteEF _rep;
         private readonly EnProgramas _tipoPrograma;
         private readonly ClienteRepositorioDapper _repositorioConsulta;
+        private readonly RevendaServico _revendaServico;
 
         public ClienteServico()
         {
@@ -26,6 +29,7 @@ namespace SIDomper.Servicos.Regras
             _rep = new ClienteEF();
             _tipoPrograma = EnProgramas.Cliente;
             _repositorioConsulta = new ClienteRepositorioDapper();
+            _revendaServico = new RevendaServico();
         }
 
         public Cliente ObterPorId(int id)
@@ -381,7 +385,7 @@ namespace SIDomper.Servicos.Regras
         {
             _rep.Salvar(model);
         }
-        
+
         public void AtualizarVersao(int idCliente, string versao)
         {
             _rep.AtualizarVersao(idCliente, versao);
@@ -438,6 +442,217 @@ namespace SIDomper.Servicos.Regras
         public void ExcluirModulo(int id)
         {
             _rep.ExcluirModulo(id);
+        }
+
+        public List<string> ImportarXml(string arquivo)
+        {
+            var listaErros = new List<string>();
+            if (!File.Exists(arquivo))
+                return listaErros;
+
+            FileInfo fileInfo = new FileInfo(arquivo);
+            string arquivoXml = fileInfo.Name;
+            string diretorio = fileInfo.DirectoryName;
+
+            int posicao = arquivoXml.IndexOf(".");
+            string arquivoLog = arquivoXml + ".log";
+
+            if (File.Exists(diretorio + arquivoLog))
+                return listaErros;
+
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.LoadXml(arquivo);
+
+            var cliente = new Cliente();
+
+            XmlNodeList xmlNodePrincipalList = xmlDoc.SelectNodes("/Principal");
+            foreach (XmlNode xNode in xmlNodePrincipalList)
+            {
+                string documento = xNode["CNPJ"].InnerText;
+                if (string.IsNullOrEmpty(documento))
+                    documento = xNode["CPF"].InnerText;
+
+                string enquadramento = xNode["Enquadramento"].InnerText;
+
+                if (enquadramento != "01" && enquadramento != "02" && enquadramento != "03")
+                    enquadramento = "00";
+
+                int.TryParse(xNode["Codigo"].InnerText, out int codigo);
+                int.TryParse(xNode["Consultor"].InnerText, out int codigoConsultor);
+                int.TryParse(xNode["revenda"].InnerText, out int codigoRevenda);
+                int.TryParse(xNode["Empresa_Vinculada"].InnerText, out int codigoEmpresaVinculada);
+
+                cliente.Codigo = codigo;
+                cliente.Nome = xNode["Razao"].InnerText;
+                cliente.Fantasia = xNode["Fantasia"].InnerText;
+                cliente.Dcto = documento;
+                cliente.Enquadramento = enquadramento;
+                cliente.Endereco = xNode["Rua"].InnerText;
+                cliente.Bairro = xNode["Bairro"].InnerText;
+                cliente.CEP = xNode["CEP"].InnerText;
+                cliente.Cidade.Nome = xNode["Cidade"].InnerText;
+                cliente.Telefone = xNode["Telefone"].InnerText;
+                cliente.ContatoFinanceiro = xNode["Contato_Financeiro"].InnerText;
+                cliente.ContatoCompraVenda = xNode["Contato_Compra_Venda"].InnerText;
+                cliente.Usuario.Codigo = codigoConsultor;
+                //cliente.Restricao = xNode["Pendencia_Fin"].InnerText == "1";
+                //cliente.Endereco = xNode["Pendencia_Fin"].InnerText;
+                cliente.Logradouro = cliente.Endereco;
+                cliente.Fone1 = xNode["Fone1"].InnerText;
+                cliente.Fone2 = xNode["Fone2"].InnerText;
+                cliente.Celular = xNode["Celular"].InnerText;
+                cliente.OutroFone = xNode["OutroFone"].InnerText;
+                cliente.FoneContatoFinanceiro = xNode["Contato_Financeiro_Fone"].InnerText;
+                cliente.FoneContatoCompraVenda = xNode["Contato_Compra_Venda_Fone"].InnerText;
+                cliente.IE = xNode["IE"].InnerText;
+                cliente.RepresentanteLegal = xNode["Representante_Legal"].InnerText;
+                cliente.CPFRepresentanteLegal = xNode["Representante_Legal_CPF"].InnerText;
+                cliente.EmpresaVinculada = codigoEmpresaVinculada;
+                cliente.Perfil = xNode["Perfil"].InnerText;
+
+                // CIDADE
+                int.TryParse(xNode["Codigo_IBGE"].InnerText, out int codigoIBGE);
+                cliente.Cidade.Codigo = codigoIBGE;
+                cliente.Cidade.Nome = xNode["Nome_Cidade"].InnerText;
+                cliente.Cidade.UF = xNode["UF"].InnerText;
+                cliente.Ativo = true;
+            }
+
+            // EMAIL
+            ImportarXMLEmail(cliente, xmlDoc);
+
+            // MODULOS E PRODUTOS
+            ImportarXMLModulo(cliente, xmlDoc);
+
+            // CONTATOS
+            ImportarXMLContato(cliente, xmlDoc);
+
+            listaErros = ValidarCliente(cliente);
+            if (listaErros.Count == 0)
+                SalvarAPI(cliente);
+
+            return listaErros;
+        }
+
+        private void ImportarXMLContato(Cliente cliente, XmlDocument xmlDoc)
+        {
+            int contador = 1;
+            XmlNodeList xmlNodeContatoList = xmlDoc.SelectNodes("/Registro_Contato");
+            foreach (XmlNode xNode in xmlNodeContatoList)
+            {
+                string nomeContato = xNode["Contato_Nome" + contador.ToString()].InnerText;
+                if (string.IsNullOrEmpty(nomeContato))
+                    break;
+
+                var contato = new Contato
+                {
+                    ClienteId = cliente.Id,
+                    Nome = xNode["Contato_Nome" + contador.ToString()].InnerText,
+                    Email = xNode["Contato_Email" + contador.ToString()].InnerText,
+                    Fone1 = xNode["Contato_Fone1" + contador.ToString()].InnerText,
+                    Fone2 = xNode["Contato_Fone2" + contador.ToString()].InnerText,
+                    Departamento = xNode["Contato_Departamento" + contador.ToString()].InnerText
+                };
+                cliente.Contatos.Add(contato);
+                contador++;
+            }
+        }
+
+        private void ImportarXMLEmail(Cliente cliente, XmlDocument xmlDoc)
+        {
+            string email = "";
+            int contador = 0;
+            XmlNodeList xmlNodeList = xmlDoc.SelectNodes("/Registro_EMail");
+            foreach (XmlNode xNode in xmlNodeList)
+            {
+                if (contador == 0)
+                    email = xNode["Email"].InnerText;
+                else
+                    email = xNode["Email" + contador.ToString()].InnerText;
+
+                if (!string.IsNullOrEmpty(email))
+                {
+                    var emailCliente = new ClienteEmail
+                    {
+                        Id = 0,
+                        ClienteId = cliente.Id,
+                        Notificar = true,
+                        Email = email
+                    };
+                    cliente.Emails.Add(emailCliente);
+                }
+                contador++;
+            }
+        }
+
+        private void ImportarXMLModulo(Cliente cliente, XmlDocument xmlDoc)
+        {
+            int contador = 1;
+            XmlNodeList xmlNodeModuloList = xmlDoc.SelectNodes("/Registro_Modulo");
+            foreach (XmlNode xNode in xmlNodeModuloList)
+            {
+                int.TryParse(xNode["Cod_Grupo"].InnerText, out int codigoModulo);
+                int.TryParse(xNode["Cod_Produto"].InnerText, out int codigoProduto);
+
+                if (codigoModulo == 0)
+                    break;
+
+                var clienteModulo = new ClienteModulo();
+                clienteModulo.Modulo.Codigo = codigoModulo;
+                clienteModulo.Produto.Codigo = codigoProduto;
+                clienteModulo.Modulo.Nome = xNode["Nome_Grupo" + contador.ToString()].InnerText;
+                clienteModulo.Produto.Nome = xNode["Nome_Produto" + contador.ToString()].InnerText;
+                cliente.ClienteModulos.Add(clienteModulo);
+                contador++;
+            }
+        }
+
+        private List<string> ValidarCliente(Cliente cliente)
+        {
+            var listaErros = new List<string>();
+            if (cliente.Codigo == 0)
+                listaErros.Add("Código Cliente não Informado.");
+            if (string.IsNullOrEmpty(cliente.Nome))
+                listaErros.Add("Razão Social não informado.");
+            if (string.IsNullOrEmpty(cliente.Dcto))
+                listaErros.Add("CNPJ/CPF não informado.");
+
+            if (cliente.Usuario.Codigo > 0)
+            {
+                var usuario = _usuario.ObterPorCodigo(cliente.Usuario.Codigo);
+                if (usuario == null)
+                    listaErros.Add("Usuário não cadastrado.");
+            }
+
+            if (cliente.Revenda.Codigo == 0)
+                listaErros.Add("Revenda não informada");
+            else
+            {
+                var revenda = _revendaServico.ObterPorCodigo(cliente.Revenda.Codigo);
+                if (revenda == null)
+                    listaErros.Add("Revenda não cadastrada.");
+            }
+
+            //if (cliente.PendenciaFinanceira == "")
+            //{
+
+            //}
+
+            //if (cliente.Situacao == "")
+            //{
+
+            //}
+
+            string docto = Funcoes.FuncaoGeral.SomenteNumero(cliente.Dcto);
+            bool docValido;
+            if (docto.Length == 11)
+                docValido = Funcoes.Validacao.IsCpf(docto);
+            else
+                docValido = Funcoes.Validacao.IsCnpj(docto);
+            if (!docValido)
+                listaErros.Add("CNPJ/CPF inválido.");
+
+            return listaErros;
         }
     }
 }

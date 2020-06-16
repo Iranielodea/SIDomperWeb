@@ -823,12 +823,12 @@ namespace SIDomper.Win.View
             SalvarOcorrencia();
         }
 
-        private void btnAnexo_Click(object sender, EventArgs e)
+        private void BtnAnexo_Click(object sender, EventArgs e)
         {
             Funcoes.AbrirAnexo(ref txtAnexo);
         }
 
-        private void btnVisualizar_Click(object sender, EventArgs e)
+        private void BtnVisualizar_Click(object sender, EventArgs e)
         {
             Funcoes.VisualizarAnexo(ref txtAnexo);
         }
@@ -920,7 +920,7 @@ namespace SIDomper.Win.View
             NavegarOco();
         }
 
-        private void tabControl2_Click(object sender, EventArgs e)
+        private void TabControl2_Click(object sender, EventArgs e)
         {
             if (tabControl2.SelectedTab == tpOcorrencia)
             {
@@ -928,12 +928,12 @@ namespace SIDomper.Win.View
             }
         }
 
-        private void liberarDataEHoraToolStripMenuItem_Click(object sender, EventArgs e)
+        private void LiberarDataEHoraToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AlterarDataHora();
         }
 
-        private void btnAlterarDataHora_Click(object sender, EventArgs e)
+        private void BtnAlterarDataHora_Click(object sender, EventArgs e)
         {
             AlterarDataHora();
         }
@@ -955,7 +955,7 @@ namespace SIDomper.Win.View
                 btnExcluirOco.Enabled = _chamadoViewModel.PermissaoExcluirOcorrenciaAtividade;
         }
 
-        private void btnExcluirOco_Click(object sender, EventArgs e)
+        private void BtnExcluirOco_Click(object sender, EventArgs e)
         {
             if (dgvOcorrencia.RowCount == 0)
             {
@@ -974,14 +974,14 @@ namespace SIDomper.Win.View
             }
         }
 
-        private void btnCliente_Click(object sender, EventArgs e)
+        private void BtnCliente_Click(object sender, EventArgs e)
         {
             var formulario = new frmCliente();
             //formulario.MdiParent = this;
             Tela.AbrirFormulario(formulario);
         }
 
-        private void btnEspecificao_Click(object sender, EventArgs e)
+        private void BtnEspecificao_Click(object sender, EventArgs e)
         {
             if (Funcoes.StrToInt(UsrCliente.txtId.Text) == 0)
             {
@@ -993,26 +993,26 @@ namespace SIDomper.Win.View
             formulario.ShowDialog();
         }
 
-        private void btnModulo_Click(object sender, EventArgs e)
+        private void BtnModulo_Click(object sender, EventArgs e)
         {
             frmClienteModulo formulario = new frmClienteModulo(int.Parse(UsrCliente.txtId.Text));
             formulario.ShowDialog();
         }
 
-        private void btnAnexo2_Click(object sender, EventArgs e)
+        private void BtnAnexo2_Click(object sender, EventArgs e)
         {
             frmChamadoAnexos frmChamadoAnexos = new frmChamadoAnexos(Grade.RetornarId(ref dgvDados, "Cha_Id"));
             frmChamadoAnexos.ShowDialog();
         }
 
-        private void btnSolucao_Click(object sender, EventArgs e)
+        private void BtnSolucao_Click(object sender, EventArgs e)
         {
             frmChamadoProblemaSolucao formulario = new frmChamadoProblemaSolucao(_chamadoViewModel.ClienteId,
                 Funcoes.IdUsuario, EnumChamado.Chamado);
             formulario.ShowDialog();
         }
 
-        private void btnColaborador_Click(object sender, EventArgs e)
+        private void BtnColaborador_Click(object sender, EventArgs e)
         {
             if (dgvOcorrencia.RowCount > 0)
             {
