@@ -161,8 +161,8 @@ namespace SIDomper.Infra.EF
                 if (filtro.ModuloId > 0)
                     sb.AppendLine(" AND CliMod_Modulo = " + filtro.ModuloId);
 
-                if (!string.IsNullOrEmpty(filtro.filtroIdModulo))
-                    sb.AppendLine("  AND CliMod_Modulo in (" + filtro.filtroIdModulo + ")");
+                if (!string.IsNullOrEmpty(filtro.FiltroIdModulo))
+                    sb.AppendLine("  AND CliMod_Modulo in (" + filtro.FiltroIdModulo + ")");
 
                 if (filtro.ProdutoId > 0)
                     sb.AppendLine(" AND CliMod_Produto = " + filtro.ProdutoId);
@@ -179,11 +179,11 @@ namespace SIDomper.Infra.EF
                     sb.AppendLine("  AND CliMod_Modulo = " + filtro.ModuloId + ")");
                 }
 
-                if (!string.IsNullOrEmpty(filtro.filtroIdModulo))
+                if (!string.IsNullOrEmpty(filtro.FiltroIdModulo))
                 {
                     sb.AppendLine(" AND EXISTS(SELECT 1 FROM Cliente_Modulo ");
                     sb.AppendLine(" WHERE Cli_Id = CliMod_Cliente ");
-                    sb.AppendLine("  AND CliMod_Modulo IN (" + filtro.filtroIdModulo + "))");
+                    sb.AppendLine("  AND CliMod_Modulo IN (" + filtro.FiltroIdModulo + "))");
                 }
 
                 if (filtro.ProdutoId > 0)

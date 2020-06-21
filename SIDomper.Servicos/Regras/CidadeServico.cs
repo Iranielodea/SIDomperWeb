@@ -24,9 +24,11 @@ namespace SIDomper.Servicos.Regras
         {
             _repUsuario.PermissaoMensagem(idUsuario, _tipoPrograma, EnTipoManutencao.Incluir);
 
-            var model = new Cidade();
-            model.Ativo = true;
-            model.Codigo = _rep.ProximoCodigo();
+            var model = new Cidade
+            {
+                Ativo = true,
+                Codigo = _rep.ProximoCodigo()
+            };
 
             return model;
         }
@@ -104,10 +106,8 @@ namespace SIDomper.Servicos.Regras
             if (model.Id > 0)
                 _rep.CidadeRepositorio.Update(model);
             else
-            {
-                model.Codigo = _rep.ProximoCodigo();
                 _rep.CidadeRepositorio.Add(model);
-            }
+
             _rep.CidadeRepositorio.Commit();
         }
 

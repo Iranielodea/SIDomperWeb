@@ -8,12 +8,12 @@ namespace SIDomper.Dominio.Entidades
     {
         public Cliente()
         {
-            List<ClienteEmail> Emails = new List<ClienteEmail>();
-            List<ClienteModulo> ClienteModulos = new List<ClienteModulo>();
-            List<Visita> Visitas = new List<Visita>();
-            List<Orcamento> Orcamentos = new List<Orcamento>();
-            List<Contato> Contatos = new List<Contato>();
-            List<Chamado> Chamados = new List<Chamado>();
+            Emails = new List<ClienteEmail>();
+            ClienteModulos = new List<ClienteModulo>();
+            Visitas = new List<Visita>();
+            Orcamentos = new List<Orcamento>();
+            Contatos = new List<Contato>();
+            Chamados = new List<Chamado>();
             ClienteEspecifiacoes = new List<ClienteEspecifiacao>();
             Solicitacoes = new List<Solicitacao>();
             Agendamentos = new List<Agendamento>();
@@ -115,7 +115,7 @@ namespace SIDomper.Dominio.Entidades
         public string FiltroIdUsuario { get; set; }
         public string FiltroIdRevenda { get; set; }
         public string FiltroIdCidade { get; set; }
-        public string filtroIdModulo { get; set; }
+        public string FiltroIdModulo { get; set; }
         public string FiltroIdProduto { get; set; }
     }
 }

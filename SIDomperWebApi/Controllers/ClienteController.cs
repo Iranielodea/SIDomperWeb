@@ -9,6 +9,7 @@ using System.Web.Http;
 
 namespace SIDomperWebApi.Controllers
 {
+    [Route("api/cliente")]
     public class ClienteController : ApiController
     {
         private readonly ClienteServico _clienteServico;
@@ -80,6 +81,8 @@ namespace SIDomperWebApi.Controllers
                     }
                 }
 
+                
+
                 return model;
             }
             catch (Exception ex)
@@ -87,6 +90,14 @@ namespace SIDomperWebApi.Controllers
                 model.Mensagem = ex.Message;
                 return model;
             }
+        }
+
+        [Route("ImportarXML")]
+        [HttpPost]
+        public void ImportarXML()
+        {
+            var listaxml = _clienteServico.ImportarXml(@"C:\Projetos\Domper\SIDomperWeb\Banco\269.xml");
+            
         }
 
         [HttpGet]
