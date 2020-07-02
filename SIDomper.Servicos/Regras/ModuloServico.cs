@@ -66,9 +66,12 @@ namespace SIDomper.Servicos.Regras
             return _rep.Filtrar(campo, texto, ativo, contem, idCliente);
         }
 
-        public Modulo ObterPorCodigo(int codigo)
+        public Modulo ObterPorCodigo(int codigo, bool? valida = true)
         {
             var model = _rep.ObterPorCodigo(codigo);
+
+            if (valida == null)
+                return model;
 
             if (model == null)
                 throw new Exception("Registro Não Encontrado!");

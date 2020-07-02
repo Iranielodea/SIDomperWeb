@@ -21,6 +21,9 @@ namespace SIDomper.Servicos.Regras
         private readonly EnProgramas _tipoPrograma;
         private readonly ClienteRepositorioDapper _repositorioConsulta;
         private readonly RevendaServico _revendaServico;
+        private readonly ClienteEmailEF _repClienteEmail;
+        private readonly ClienteModuloEF _repClienteModulo;
+        private readonly ContatoServico _contatoServico;
 
         public ClienteServico()
         {
@@ -30,6 +33,9 @@ namespace SIDomper.Servicos.Regras
             _tipoPrograma = EnProgramas.Cliente;
             _repositorioConsulta = new ClienteRepositorioDapper();
             _revendaServico = new RevendaServico();
+            _repClienteEmail = new ClienteEmailEF();
+            _repClienteModulo = new ClienteModuloEF();
+            _contatoServico = new ContatoServico();
         }
 
         public Cliente ObterPorId(int id)
@@ -48,7 +54,7 @@ namespace SIDomper.Servicos.Regras
             return model;
         }
 
-        public Cliente ObterPorCodigo(int codigo)
+        public Cliente ObterPorCodigo(int codigo, bool valida = true)
         {
             try
             {
@@ -56,8 +62,11 @@ namespace SIDomper.Servicos.Regras
 
                 if (model != null)
                 {
-                    if (model.Ativo == false)
-                        throw new Exception("Registro Inativo!");
+                    if (valida)
+                    {
+                        if (model.Ativo == false)
+                            throw new Exception("Registro Inativo!");
+                    }
                 }
                 return model;
             }
@@ -123,6 +132,10 @@ namespace SIDomper.Servicos.Regras
                     var cliente = _rep.ObterPorId(model.Id);
                     if (cliente == null)
                         cliente = new Cliente();
+
+                    //int id = cliente.Id;
+                    //cliente = model;
+                    //cliente.Id = id;
 
                     cliente.IE = model.IE;
                     cliente.Latitude = model.Latitude;
@@ -229,7 +242,7 @@ namespace SIDomper.Servicos.Regras
                 if (item.ModuloId == 0)
                     throw new Exception("Informe o Módulo!");
 
-                if (item.Id == 0)
+                if (item.Id <= 0)
 
                     cliente.ClienteModulos.Add(item);
                 else
@@ -475,7 +488,7 @@ namespace SIDomper.Servicos.Regras
                     if (string.IsNullOrEmpty(documento))
                         documento = RetornarXMLStr(xNode, "CPF");
 
-                    string enquadramento = xNode["Enquadramento"].InnerText;
+                    string enquadramento = RetornarXMLStr(xNode,"Enquadramento");
 
                     if (enquadramento != "01" && enquadramento != "02" && enquadramento != "03")
                         enquadramento = "00";
@@ -505,7 +518,7 @@ namespace SIDomper.Servicos.Regras
 
                     cliente.ContatoCompraVenda = RetornarXMLStr(xNode, "Contato_Compra_Venda");
                     cliente.Usuario.Codigo = RetornarXMLInt(xNode, "Consultor");
-                    cliente.Restricao = RetornarXMLStr(xNode,"Pendencia_Fin") == "S";
+                    cliente.Restricao = RetornarXMLStr(xNode, "Pendencia_Fin") == "S";
                     cliente.Ativo = RetornarXMLStr(xNode, "Situacao") == "A";
                     cliente.Logradouro = cliente.Endereco;
                     cliente.Fone1 = RetornarXMLStr(xNode, "Fone1");
@@ -540,7 +553,10 @@ namespace SIDomper.Servicos.Regras
                 if (listaErros.Count == 0)
                 {
                     GravarDadosXML(cliente);
-                    SalvarAPI(cliente);
+                }
+                else
+                {
+                    // gera arquivos logs (nome do arquivo com o codigo.log)
                 }
 
                 return listaErros;
@@ -562,39 +578,117 @@ namespace SIDomper.Servicos.Regras
 
         private void GravarClienteII(Cliente cliente)
         {
-            var clienteServico = new ClienteServico();
-            var model = clienteServico.ObterPorCodigo(cliente.Codigo);
-
             var revendaServico = new RevendaServico();
-            var revenda = revendaServico.ObterPorCodigo(cliente.Revenda.Codigo);
+            var revenda = revendaServico.ObterPorCodigo(cliente.Revenda.Codigo, false);
 
             var usuarioServico = new UsuarioServico();
-            var usuario = usuarioServico.ObterPorCodigo(cliente.Usuario.Codigo);
+            var usuario = usuarioServico.ObterPorCodigo(cliente.Usuario.Codigo, false);
+
+            var clienteServico = new ClienteServico();
+            var model = clienteServico.ObterPorCodigo(cliente.Codigo, false);
+
+            if (model != null)
+            {
+                int id = model.Id;
+                model = cliente;
+                model.Id = id;
+            }
+            else
+            {
+                model = new Cliente();
+                model = cliente;
+            }
+
+            if (revenda != null)
+                model.RevendaId = revenda.Id;
+            if (usuario != null)
+                model.UsuarioId = usuario.Id;
+
+            int cidadeId = 0;
 
             if (cliente.Cidade.Codigo > 0)
             {
                 var cidadeServico = new CidadeServico();
-                var cidade = cidadeServico.ObterPorCodigo(cliente.Cidade.Codigo);
-                cidadeServico.Salvar(cidade);
-                model.CidadeId = cidade.Id;
+                var cidade = cidadeServico.ObterPorCodigo(cliente.Cidade.Codigo, false);
+                if (cidade != null)
+                {
+                    cidadeServico.Salvar(cidade);
+                    cidadeId = cidade.Id;
+                }
             }
 
-            model.Ativo = cliente.Ativo;
-            model.Restricao = cliente.Restricao;
+            if (cidadeId > 0)
+                model.CidadeId = cidadeId;
 
-            if (model.Id > 0)
+            if (model != null)
             {
-                foreach (var item in model.ClienteModulos)
-                    model.ClienteModulos.Remove(item);
-
-                foreach (var item in model.Contatos)
-                    model.Contatos.Remove(item);
-
-                foreach (var item in model.Emails)
-                    model.Emails.Remove(item);
+                _repClienteEmail.ExcluirPorCliente(model.Id);
+                _repClienteModulo.ExcluirPorCliente(model.Id);
+                _contatoServico.ExcluirPorCliente(model.Id);
             }
+            //EMAILS
+            SalvarEmailCliente(cliente, model);
+
+            //MODULOS
+            SalvarClienteModuloDoCliente(cliente, model);
+
+            // CONTATOS
+            SalvarContatosCliente(cliente, model);
 
             SalvarAPI(model);
+        }
+
+        private void SalvarContatosCliente(Cliente cliente, Cliente model)
+        {
+            var listaContatos = new List<Contato>();
+            foreach (var item in cliente.Contatos)
+            {
+                listaContatos.Add(item);
+            }
+
+            model.Contatos.Clear();
+            foreach (var item in listaContatos)
+            {
+                item.Id = 0;
+                item.ClienteId = model.Id;
+                model.Contatos.Add(item);
+            }
+        }
+
+        private void SalvarClienteModuloDoCliente(Cliente cliente, Cliente model)
+        {
+            var listaModulos = new List<ClienteModulo>();
+            foreach (var item in cliente.ClienteModulos)
+            {
+                listaModulos.Add(item);
+            }
+
+            model.ClienteModulos.Clear();
+            foreach (var item in listaModulos)
+            {
+                var temp = new ClienteModulo();
+                temp.ClienteId = model.Id;
+                temp.ModuloId = item.ModuloId;
+                temp.ProdutoId = item.ProdutoId;
+                model.ClienteModulos.Add(temp);
+            }
+        }
+
+        private void SalvarEmailCliente(Cliente cliente, Cliente model)
+        {
+            var listaEmail = new List<ClienteEmail>();
+            foreach (var email in cliente.Emails)
+            {
+                listaEmail.Add(email);
+            }
+
+            model.Emails.Clear();
+            foreach (var item in listaEmail)
+            {
+                item.Id = 0;
+                item.ClienteId = model.Id;
+                model.Emails.Add(item);
+            }
         }
 
         private void GravarModulo(Cliente cliente)
@@ -606,7 +700,7 @@ namespace SIDomper.Servicos.Regras
             var model = new Modulo();
             foreach (var item in cliente.ClienteModulos)
             {
-                model = moduloServico.ObterPorCodigo(item.Modulo.Codigo);
+                model = moduloServico.ObterPorCodigo(item.Modulo.Codigo, false);
                 if (model == null)
                 {
                     model = new Modulo();
@@ -614,8 +708,14 @@ namespace SIDomper.Servicos.Regras
                     model.Ativo = true;
                     model.Nome = item.Modulo.Nome;
                     model.Codigo = item.Modulo.Codigo;
+                    
                 };
-                moduloServico.Salvar(model);
+                if (model.Codigo > 0)
+                {
+                    moduloServico.Salvar(model);
+                    item.ModuloId = model.Id;
+                    item.Modulo.Id = model.Id;
+                }
             }
         }
 
@@ -628,22 +728,28 @@ namespace SIDomper.Servicos.Regras
             var model = new Produto();
             foreach (var item in cliente.ClienteModulos)
             {
-                model = produtoServico.ObterPorCodigo(item.Produto.Codigo);
+                model = produtoServico.ObterPorCodigo(item.Produto.Codigo, false);
                 if (model == null)
                 {
+                    model = new Produto();
                     model.Id = item.Id;
                     model.Ativo = true;
                     model.Nome = item.Produto.Nome;
                     model.Codigo = item.Produto.Codigo;
                 };
-                produtoServico.Salvar(model);
+                if (model.Codigo > 0)
+                {
+                    produtoServico.Salvar(model);
+                    item.ProdutoId = model.Id;
+                    item.Produto.Id = model.Id;
+                }
             }
         }
 
         private void GravarCidade(Cidade cidade)
         {
             var cidadeServico = new CidadeServico();
-            var model = cidadeServico.ObterPorCodigo(cidade.Codigo);
+            var model = cidadeServico.ObterPorCodigo(cidade.Codigo, false);
 
             if (model == null)
             {
@@ -651,9 +757,15 @@ namespace SIDomper.Servicos.Regras
                 model = cidade;
             }
             else
-                model = cidade;
+            {
+                model.Codigo = cidade.Codigo;
+                model.Ativo = cidade.Ativo;
+                model.Nome = cidade.Nome;
+                model.UF = cidade.UF;
+            }
 
-            cidadeServico.Salvar(model);
+            if (model.Codigo > 0)
+                cidadeServico.Salvar(model);
         }
 
         private string RetornarXMLStr(XmlNode xNode, string nomeTag)
@@ -748,7 +860,7 @@ namespace SIDomper.Servicos.Regras
 
                         if (contador > 150)
                             break;
-                        
+
                         if (codModulo > 0)
                         {
                             var clienteModulo = new ClienteModulo();
@@ -792,16 +904,16 @@ namespace SIDomper.Servicos.Regras
                         if (contador > 150)
                             break;
 
-                        if (string.IsNullOrWhiteSpace(nome))
+                        if (!string.IsNullOrWhiteSpace(nome))
                         {
                             var contato = new Contato
                             {
                                 ClienteId = cliente.Id,
-                                Nome = RetornarXMLStr(xNode, "Contato_Nome"),
-                                Fone1 = RetornarXMLStr(xNode, "Contato_Fone1"),
-                                Fone2 = RetornarXMLStr(xNode, "Contato_Fone2"),
-                                Departamento = RetornarXMLStr(xNode, "Contato_Depto"),
-                                Email = RetornarXMLStr(xNode, "Contato_Email")
+                                Nome = RetornarXMLStr(xNode, "Contato_Nome" + contador),
+                                Fone1 = RetornarXMLStr(xNode, "Contato_Fone1" + contador),
+                                Fone2 = RetornarXMLStr(xNode, "Contato_Fone2" + contador),
+                                Departamento = RetornarXMLStr(xNode, "Contato_Depto" + contador),
+                                Email = RetornarXMLStr(xNode, "Contato_Email" + contador)
                             };
 
                             cliente.Contatos.Add(contato);
@@ -841,16 +953,6 @@ namespace SIDomper.Servicos.Regras
                 if (revenda == null)
                     listaErros.Add("Revenda não cadastrada.");
             }
-
-            //if (cliente.PendenciaFinanceira == "")
-            //{
-
-            //}
-
-            //if (cliente.Situacao == "")
-            //{
-
-            //}
 
             string docto = Funcoes.FuncaoGeral.SomenteNumero(cliente.Dcto);
             bool docValido;

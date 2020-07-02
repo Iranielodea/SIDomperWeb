@@ -21,5 +21,15 @@ namespace SIDomper.Infra.EF
         {
             return _rep.find(id);
         }
+
+        public void ExcluirPorCliente(int clienteId)
+        {
+            _rep.DeleteAll(x => x.ClienteId == clienteId);
+        }
+
+        public void Commit()
+        {
+            _rep.Commit();
+        }
     }
 }

@@ -67,14 +67,17 @@ namespace SIDomper.Servicos.Regras
             _rep.Commit();
         }
 
-        public Usuario ObterPorCodigo(int codigo)
+        public Usuario ObterPorCodigo(int codigo, bool valida = true)
         {
             var model = _rep.ObterPorCodigo(codigo);
 
             if (model != null)
             {
-                if (model.Ativo == false)
-                    throw new System.Exception("Registro Inativo!");
+                if (valida)
+                {
+                    if (model.Ativo == false)
+                        throw new System.Exception("Registro Inativo!");
+                }
             }
             return model;
         }

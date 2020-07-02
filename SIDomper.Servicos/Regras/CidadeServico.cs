@@ -52,9 +52,13 @@ namespace SIDomper.Servicos.Regras
             return _rep.CidadeRepositorio.find(id);
         }
 
-        public Cidade ObterPorCodigo(int codigo)
+        public Cidade ObterPorCodigo(int codigo, bool valida = true)
         {
             var model = _rep.CidadeRepositorio.First(x => x.Codigo == codigo);
+
+            if (valida == false)
+                return model;
+
             if (model == null)
                 throw new Exception("Cidade não Cadastrada!");
             if (model.Ativo == false)

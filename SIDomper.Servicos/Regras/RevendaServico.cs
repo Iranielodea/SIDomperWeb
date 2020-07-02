@@ -48,14 +48,17 @@ namespace SIDomper.Servicos.Regras
             return _rep.ObterPorId(id);
         }
 
-        public Revenda ObterPorCodigo(int codigo)
+        public Revenda ObterPorCodigo(int codigo, bool valida = true)
         {
             var model = _rep.ObterPorCodigo(codigo);
 
             if (model != null)
             {
-                if (model.Ativo == false)
-                    throw new System.Exception("Registro Inativo!");
+                if (valida)
+                {
+                    if (model.Ativo == false)
+                        throw new System.Exception("Registro Inativo!");
+                }
             }
             return model;
         }

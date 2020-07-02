@@ -91,10 +91,11 @@ namespace SIDomper.Infra.EF
 
         public void Salvar(Modulo model)
         {
-            if (model.Id > 0)
-                _rep.Update(model);
-            else
-                _rep.Add(model);
+            _rep.AddUpdate(model);
+            //if (model.Id > 0)
+            //    _rep.Update(model);
+            //else
+            //    _rep.Add(model);
         }
 
         public int ProximoCodigo()

@@ -21,5 +21,15 @@ namespace SIDomper.Servicos.Regras
         {
             return _rep.ObterPorId(id);
         }
+
+        public void ExcluirPorCliente(int clienteId)
+        {
+            _rep.ExcluirPorCliente(clienteId);
+        }
+
+        public void Commit()
+        {
+            _rep.Commit();
+        }
     }
 }

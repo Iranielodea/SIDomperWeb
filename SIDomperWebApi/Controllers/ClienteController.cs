@@ -9,7 +9,7 @@ using System.Web.Http;
 
 namespace SIDomperWebApi.Controllers
 {
-    [Route("api/cliente")]
+    [RoutePrefix("api/cliente")]
     public class ClienteController : ApiController
     {
         private readonly ClienteServico _clienteServico;

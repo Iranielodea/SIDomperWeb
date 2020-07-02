@@ -31,5 +31,20 @@ namespace SIDomper.Infra.EF
         {
             return _rep.First(x => x.ClienteId == idCliente && x.ModuloId == idModulo);
         }
+
+        public void ExcluirPorCliente(int clienteId)
+        {
+            _rep.DeleteAll(x => x.ClienteId == clienteId);
+        }
+
+        public void Salvar(ClienteModulo clienteModulo)
+        {
+            _rep.Update(clienteModulo);
+        }
+
+        public void Commit()
+        {
+            _rep.Commit();
+        }
     }
 }

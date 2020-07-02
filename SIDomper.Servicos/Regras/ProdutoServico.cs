@@ -77,9 +77,13 @@ namespace SIDomper.Servicos.Regras
             return _rep.Filtrar(campo, texto, ativo, contem);
         }
 
-        public Produto ObterPorCodigo(int codigo)
+        public Produto ObterPorCodigo(int codigo, bool validar = true)
         {
             var model = _rep.ObterPorCodigo(codigo);
+
+            if (validar == false)
+                return model;
+
             if (model == null)
                 throw new Exception("Registro não Encontrado!");
 
