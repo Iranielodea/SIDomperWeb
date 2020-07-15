@@ -393,6 +393,7 @@
             // 
             // cboAtivo
             // 
+            this.cboAtivo.Size = new System.Drawing.Size(121, 25);
             this.cboAtivo.TabIndex = 0;
             // 
             // lblPesquisa
@@ -402,6 +403,7 @@
             // cbPesquisa
             // 
             this.cbPesquisa.Location = new System.Drawing.Point(289, 29);
+            this.cbPesquisa.Size = new System.Drawing.Size(133, 25);
             // 
             // dgvDados
             // 
@@ -1115,7 +1117,7 @@
             this.tpModulo.Location = new System.Drawing.Point(4, 26);
             this.tpModulo.Name = "tpModulo";
             this.tpModulo.Padding = new System.Windows.Forms.Padding(3);
-            this.tpModulo.Size = new System.Drawing.Size(1041, 546);
+            this.tpModulo.Size = new System.Drawing.Size(678, 481);
             this.tpModulo.TabIndex = 2;
             this.tpModulo.Text = "Módulos";
             this.tpModulo.UseVisualStyleBackColor = true;
@@ -1216,7 +1218,7 @@
             this.CodProduto});
             this.dgvModulo.Location = new System.Drawing.Point(0, 0);
             this.dgvModulo.Name = "dgvModulo";
-            this.dgvModulo.Size = new System.Drawing.Size(1035, 380);
+            this.dgvModulo.Size = new System.Drawing.Size(672, 380);
             this.dgvModulo.TabIndex = 0;
             this.dgvModulo.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvModulo_CellClick);
             this.dgvModulo.KeyUp += new System.Windows.Forms.KeyEventHandler(this.dgvModulo_KeyUp);

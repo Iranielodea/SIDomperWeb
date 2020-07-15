@@ -17,7 +17,7 @@ namespace SIDomper.Infra.EF
         //private readonly RepositorioDapper<Quadro> _repositorioDapperQuadro;
 
         public ChamadoEF()
-        {
+        {        
             _rep = new Repositorio<Chamado>();
             //_repositorioDapper = new RepositorioDapper<ChamadoConsulta>();
             //_repositorioDapperQuadro = new RepositorioDapper<Quadro>();

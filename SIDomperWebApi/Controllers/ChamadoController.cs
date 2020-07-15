@@ -5,6 +5,7 @@ using SIDomper.Dominio.Funcoes;
 using SIDomper.Dominio.ViewModel;
 using SIDomper.Servicos.Regras;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 
@@ -83,6 +84,42 @@ namespace SIDomperWebApi.Controllers
             {
                 _ChamadoViewModel.Mensagem = ex.Message;
                 return _ChamadoViewModel;
+            }
+        }
+
+        [Route("RetornoDadosAplicativo")]
+        [HttpGet]
+        public ChamadoAplicativoViewModel[] RetornarDadosAplicativo(string cnpj)
+        {
+            var lista = new List<ChamadoAplicativoViewModel>();
+            _chamadoServico = new ChamadoServico();
+            try
+            {
+                return _chamadoServico.RetornarDadosAplicativo(cnpj).ToArray();
+            }
+            catch(Exception ex)
+            {
+                lista.Add(new ChamadoAplicativoViewModel{Id = 0, Mensagem = ex.Message, Data=DateTime.Now, Status="" });
+                return lista.ToArray();
+            }
+        }
+
+        [Route("IncluirAplicativo")]
+        [HttpPost]
+        public ChamadoAplicativoResultadoOutPutViewModel IncluirAplicativo([FromBody] chamadoAplicativoInputViewModel inputModel)
+        {
+            var resposta = new ChamadoAplicativoResultadoOutPutViewModel();
+            try
+            {
+                _chamadoServico = new ChamadoServico();
+
+                _chamadoServico.SalvarAplicativo(inputModel);
+                return resposta;
+            }
+            catch(Exception ex)
+            {
+                resposta.Resultado = ex.Message;
+                return resposta;
             }
         }
 

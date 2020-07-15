@@ -39,4 +39,10 @@ namespace SIDomper.Dominio.ViewModel
         public string Campo { get; set; }
         public string Descricao { get; set; }
     }
+
+    public class ClienteLoginViewModel
+    {
+        public string CNPJ { get; set; }
+        public string Resultado { get; set; }
+    }
 }

@@ -10,6 +10,7 @@ using SIDomper.Infra.RepositorioDapper;
 using SIDomper.Dominio.ViewModel;
 using System.IO;
 using System.Xml;
+using SIDomper.Dominio.Funcoes;
 
 namespace SIDomper.Servicos.Regras
 {
@@ -187,6 +188,27 @@ namespace SIDomper.Servicos.Regras
             {
                 throw new Exception(ex.Message);
             }
+        }
+
+        public ClienteLoginViewModel Login(string cnpj)
+        {
+            string novoCnpj = Utils.FormatarCNPJ(cnpj);
+
+            var clienteLogin = new ClienteLoginViewModel();
+
+            clienteLogin.CNPJ = cnpj;
+            clienteLogin.Resultado = "OK";
+
+            var model = _rep.Login(novoCnpj);
+            if (model == null)
+            {
+                clienteLogin.Resultado = "Cliente não Cadastrado!";
+                return clienteLogin;
+            }
+            if (model.Ativo == false)
+                clienteLogin.Resultado = "Cliente não está Ativo!";
+
+            return clienteLogin;
         }
 
         private void SalvarContato(Cliente cliente, Cliente model)
@@ -455,6 +477,11 @@ namespace SIDomper.Servicos.Regras
         public void ExcluirModulo(int id)
         {
             _rep.ExcluirModulo(id);
+        }
+
+        public Cliente ObterPorCNPJ(string cnpj)
+        {
+            return _rep.ObterPorDocumento(Utils.FormatarCNPJ(cnpj));
         }
 
         public List<string> ImportarXml(string arquivo)

@@ -81,8 +81,6 @@ namespace SIDomperWebApi.Controllers
                     }
                 }
 
-                
-
                 return model;
             }
             catch (Exception ex)
@@ -97,7 +95,23 @@ namespace SIDomperWebApi.Controllers
         public void ImportarXML()
         {
             var listaxml = _clienteServico.ImportarXml(@"C:\Projetos\Domper\SIDomperWeb\Banco\269.xml");
-            
+        }
+
+        [Route("Login")]
+        [HttpGet]
+        public ClienteLoginViewModel Login(string cnpj)
+        {
+            var clienteLoginViewModel = new ClienteLoginViewModel();
+            try
+            {
+                clienteLoginViewModel = _clienteServico.Login(cnpj);
+                return clienteLoginViewModel;
+            }
+            catch(Exception ex)
+            {
+                clienteLoginViewModel.Resultado = ex.Message;
+                return clienteLoginViewModel;
+            }
         }
 
         [HttpGet]

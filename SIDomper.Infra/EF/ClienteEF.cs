@@ -28,6 +28,11 @@ namespace SIDomper.Infra.EF
             return _rep.First(x => x.Codigo == codigo);
         }
 
+        public Cliente ObterPorDocumento(string documento)
+        {
+            return _rep.First(x => x.Dcto == documento);
+        }
+
         public void Excluir(Cliente model)
         {
             _rep.Deletar(model);
@@ -277,6 +282,11 @@ namespace SIDomper.Infra.EF
             {
                 return 1;
             }
+        }
+
+        public Cliente Login(string cnpj)
+        {
+            return _rep.First(x => x.Dcto == cnpj);
         }
     }
 }

@@ -150,6 +150,64 @@ namespace SIDomper.Servicos.Regras
             }
         }
 
+        public void SalvarAplicativo(chamadoAplicativoInputViewModel chamadoInputModel)
+        {
+            try
+            {
+                string codigoUsuario = UsuarioAplicativo();
+                if (string.IsNullOrWhiteSpace(codigoUsuario))
+                    throw new Exception("Informe o Código do Usuário do Aplicativo (parâmetro 54)");
+
+                var usuario = _repUsuario.ObterPorCodigo(int.Parse(codigoUsuario));
+
+                int idUsuario = usuario.Id;
+
+                var clienteServico = new ClienteServico();
+                var tipoServico = new TipoServico();
+                
+                var chamado = new Chamado();
+
+                chamado.DataAbertura = DateTime.Now;
+                chamado.HoraAbertura = TimeSpan.Parse(DateTime.Now.ToShortTimeString());
+
+                chamado.Contato = chamadoInputModel.Contato;
+                chamado.Descricao = chamadoInputModel.Descricao;
+                chamado.Nivel = 2;
+
+                chamado.UsuarioAberturaId = idUsuario;
+
+                var cliente = clienteServico.ObterPorCNPJ(chamadoInputModel.CNPJ);
+                if (cliente != null)
+                    chamado.ClienteId = cliente.Id;
+
+                var modelTipo = tipoServico.RetornarUmRegistro(_tipoChamadoAtividade);
+                if (modelTipo != null)
+                    chamado.TipoId = modelTipo.Id;
+
+                var codStatusAbertura = StatusAbertura();
+
+                if (string.IsNullOrWhiteSpace(codStatusAbertura))
+                    throw new Exception("Informe o código do Status de Abertura. (Parâmetro 9,1)");
+
+                var statusServico = new StatusServico();
+
+                var status = statusServico.ObterPorCodigo(int.Parse(codStatusAbertura));
+                if (status != null)
+                    chamado.StatusId = status.Id;
+
+                Salvar(chamado);
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public IEnumerable<ChamadoAplicativoViewModel> RetornarDadosAplicativo(string cnpj)
+        {
+            return _chamadoRepositorioDapper.RetornarDadosAplicativo(cnpj);
+        }
+
         private void ValidarSalvar(Chamado model)
         {
             string resultado = "";
@@ -603,6 +661,11 @@ namespace SIDomper.Servicos.Regras
         public string StatusAtendimentoChamado()
         {
             return RetornarParametro(10, 1);
+        }
+
+        private string UsuarioAplicativo()
+        {
+            return RetornarParametro(54, 0);
         }
 
         public void UpdateHoraUsuarioAtual(int idChamado, EnumChamado enumChamado, int idUsuario)

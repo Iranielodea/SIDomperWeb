@@ -220,4 +220,24 @@ namespace SIDomper.Dominio.ViewModel
         public string CodigoParametro { get; set; }
         public string QuadroTela { get; set; }
     }
+
+    public class ChamadoAplicativoViewModel : BaseViewModel
+    {
+        public int Id { get; set; }
+        public DateTime Data { get; set; }
+        public string Status { get; set; }
+    }
+
+    public class chamadoAplicativoInputViewModel
+    {
+        public string CNPJ { get; set; }
+        public string Contato { get; set; }
+        public string Descricao { get; set; }
+    }
+
+    public class ChamadoAplicativoResultadoOutPutViewModel
+    {
+        public string Resultado { get; set; } = "OK";
+    }
+
 }

@@ -112,5 +112,29 @@ namespace SIDomper.Dominio.Funcoes
         {
             return horaFinal - horaInicial;
         }
+
+        public static string FormatarCNPJ(string cnpj)
+        {
+            try
+            {
+                return Convert.ToUInt64(SomenteNumero(cnpj)).ToString(@"00\.000\.000\/0000\-00");
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
+        public static string FormatarCPF(string cpf)
+        {
+            try
+            {
+                return Convert.ToUInt64(SomenteNumero(cpf)).ToString((@"000\.000\.000\-00"));
+            }
+            catch
+            {
+                return "";
+            }
+        }
     }
 }

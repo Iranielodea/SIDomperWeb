@@ -14,11 +14,13 @@ namespace SIDomper.Infra.RepositorioDapper
     {
         private readonly RepositorioDapper<ChamadoConsultaViewModel> _repositorioConsulta;
         private readonly RepositorioDapper<QuadroViewModelChamado> _repositorioQuadro;
+        private readonly RepositorioDapper<ChamadoAplicativoViewModel> _repositorioAplicativo;
 
         public ChamadoRepositorioDapper()
         {
             _repositorioConsulta = new RepositorioDapper<ChamadoConsultaViewModel>();
             _repositorioQuadro = new RepositorioDapper<QuadroViewModelChamado>();
+            _repositorioAplicativo = new RepositorioDapper<ChamadoAplicativoViewModel>();
         }
 
         public IEnumerable<ChamadoConsultaViewModel> Filtrar(ChamadoFiltroViewModel filtro, string campo, string texto, int usuarioId, bool contem, EnumChamado tipo)
@@ -117,6 +119,20 @@ namespace SIDomper.Infra.RepositorioDapper
             var lista = _repositorioQuadro.GetAll(sb.ToString());
 
             return lista;
+        }
+
+        public IEnumerable<ChamadoAplicativoViewModel> RetornarDadosAplicativo(string cnpj)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine("SELECT TOP(20)");
+            sb.AppendLine(" Cha_Id as Id,");
+            sb.AppendLine(" Cha_DataAbertura as Data,");
+            sb.AppendLine(" Sta_Nome as Status ");
+            sb.AppendLine("FROM Chamado");
+            sb.AppendLine(" INNER JOIN Status ON Cha_Status = Sta_Id");
+            sb.AppendLine(" INNER JOIN Cliente ON Cha_Cliente = Cli_Id");
+            sb.AppendLine("WHERE Cli_Dcto = '"  + cnpj + "'");
+            return _repositorioAplicativo.GetAll(sb.ToString());
         }
 
         private string RetornarSQLQuadro(int idUsuario, int idRevenda, int codigoParametro, string campoQuadro, EnumChamado tipo)

@@ -60,6 +60,7 @@
     <Compile Include="ADO\VisitaADO.cs" />
     <Compile Include="Comun\Funcoes.cs" />
     <Compile Include="DataBase\Contexto.cs" />
+    <Compile Include="DataBase\RepositorioBaseEF.cs" />
     <Compile Include="DataBase\Repositorio.cs" />
     <Compile Include="DataBase\UnitOfWorkEF.cs" />
     <Compile Include="EF\AgendamentoEF.cs" />
@@ -120,6 +121,8 @@
     <Compile Include="RepositorioDapper\SolicitacaoRepositorioDapper.cs" />
     <Compile Include="RepositorioDapper\VersaoRepositorioDapper.cs" />
     <Compile Include="RepositorioDapper\VisitaRepositorioDapper.cs" />
+    <Compile Include="RepositorioEF\RepositorioUsuario.cs" />
+    <Compile Include="RepositorioEF\RepositorioProduto.cs" />
     <None Include="EF\Map\ObservacaoEF.txt" />
     <Compile Include="EF\Map\ObservacaoMap.cs" />
     <Compile Include="EF\Map\OrcamentoEmailMap.cs" />

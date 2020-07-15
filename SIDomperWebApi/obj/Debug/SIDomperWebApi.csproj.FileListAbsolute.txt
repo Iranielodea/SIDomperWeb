@@ -224,3 +224,14 @@ C:\Projetos\Domper\SIDomperWeb\SIDomperWebApi\obj\Debug\SIDomperWebApi.pdb
 C:\Projetos\Domper\SIDomperWeb\SIDomperWebApi\bin\pt-br\System.Web.Optimization.resources.dll
 C:\Projetos\Domper\SIDomperWeb\SIDomperWebApi\bin\Dapper.dll
 C:\Projetos\Domper\SIDomperWeb\SIDomperWebApi\bin\Dapper.xml
+C:\Projetos\Domper\SIDomperWeb\SIDomperWebApi\bin\WebActivatorEx.dll
+C:\Projetos\Domper\SIDomperWeb\SIDomperWebApi\bin\Ninject.dll
+C:\Projetos\Domper\SIDomperWeb\SIDomperWebApi\bin\Ninject.Web.Common.dll
+C:\Projetos\Domper\SIDomperWeb\SIDomperWebApi\bin\Ninject.Web.Common.WebHost.dll
+C:\Projetos\Domper\SIDomperWeb\SIDomperWebApi\bin\Ninject.Web.WebApi.dll
+C:\Projetos\Domper\SIDomperWeb\SIDomperWebApi\bin\Ninject.Web.WebApi.WebHost.dll
+C:\Projetos\Domper\SIDomperWeb\SIDomperWebApi\bin\Ninject.xml
+C:\Projetos\Domper\SIDomperWeb\SIDomperWebApi\bin\Ninject.Web.Common.xml
+C:\Projetos\Domper\SIDomperWeb\SIDomperWebApi\bin\Ninject.Web.Common.WebHost.xml
+C:\Projetos\Domper\SIDomperWeb\SIDomperWebApi\bin\Ninject.Web.WebApi.xml
+C:\Projetos\Domper\SIDomperWeb\SIDomperWebApi\bin\Ninject.Web.WebApi.WebHost.xml

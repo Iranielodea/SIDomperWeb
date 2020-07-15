@@ -1,6 +1,10 @@
 ﻿using Mapster;
 using SIDomper.Dominio.Entidades;
+using SIDomper.Dominio.Interfaces;
+using SIDomper.Dominio.Interfaces.Servicos;
+using SIDomper.Dominio.Servicos;
 using SIDomper.Dominio.ViewModel;
+using SIDomper.Infra.DataBase;
 using SIDomper.Servicos.Regras;
 using System;
 using System.Collections.Generic;
@@ -11,9 +15,11 @@ namespace SIDomperWebApi.Controllers
     public class ProdutoController : ApiController
     {
         private readonly ProdutoServico _produtoServico;
+        private readonly IServicoProduto _servicoProduto;
 
-        public ProdutoController()
+        public ProdutoController(IServicoProduto servicoProduto)
         {
+            _servicoProduto = servicoProduto;
             _produtoServico = new ProdutoServico();
         }
 
@@ -23,7 +29,8 @@ namespace SIDomperWebApi.Controllers
             var model = new ProdutoViewModel();
             try
             {
-                var item = _produtoServico.ObterPorId(id);
+                //var item = _produtoServico.ObterPorId(id);
+                var item = _servicoProduto.ObterPorId(id);
                 model = item.Adapt<ProdutoViewModel>();
                 return model;
             }
@@ -76,7 +83,8 @@ namespace SIDomperWebApi.Controllers
             var model = new ProdutoViewModel();
             try
             {
-                var prod = _produtoServico.ObterPorCodigo(codigo);
+                var prod = _servicoProduto.ObterPorCodigo(codigo);
+                //var prod = _produtoServico.ObterPorCodigo(codigo);
                 model = prod.Adapt<ProdutoViewModel>();
                 return model;
             }
@@ -92,7 +100,8 @@ namespace SIDomperWebApi.Controllers
         {
             try
             {
-                var lista = _produtoServico.Filtrar(campo, texto, ativo, contem);
+                var lista = _servicoProduto.Filtrar(campo, texto, ativo, contem);
+                //var lista = _produtoServico.Filtrar(campo, texto, ativo, contem);
                 var model = lista.Adapt<ProdutoViewModel[]>();
                 return model;
             }
@@ -109,6 +118,7 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 var produto = model.Adapt<Produto>();
+                //_servicoProduto.Salvar(produto);
                 _produtoServico.Salvar(produto);
                 produtoViewModel = produto.Adapt<ProdutoViewModel>();
                 return produtoViewModel;
@@ -127,7 +137,8 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 var produto = model.Adapt<Produto>();
-                _produtoServico.Salvar(produto);
+                //_produtoServico.Salvar(produto);
+                _servicoProduto.Salvar(produto);
                 produtoViewModel = produto.Adapt<ProdutoViewModel>();
                 return produtoViewModel;
             }

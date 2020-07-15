@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SIDomper.Dominio.Entidades
 {
@@ -32,6 +33,9 @@ namespace SIDomper.Dominio.Entidades
         public int? UsuarioAtendeAtualId { get; set; }
         public TimeSpan? HoraAtendeAtual { get; set; }
         public int TipoMovimento { get; set; }
+
+        [NotMapped]
+        public bool UsaAplicativo { get; set; } = false;
 
         public virtual Cliente Cliente { get; set; }
         public virtual Tipo Tipo { get; set; }
@@ -138,6 +142,4 @@ namespace SIDomper.Dominio.Entidades
         public DateTime DataOcorrencia { get; set; }
         public string NomeAnexo { get; set; }
     }
-
-    
 }
