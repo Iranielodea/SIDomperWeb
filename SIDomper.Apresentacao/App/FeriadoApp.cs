@@ -7,25 +7,25 @@ namespace SIDomper.Apresentacao.App
     {
         public FeriadoViewModel Novo(int idUsuario)
         {
-            string url = Constantes.URL + "feriado?novo={0}&idUsuario={1}";
-            return new Operacao<FeriadoViewModel>().First(string.Format(url, "", idUsuario));
+            string url = Constantes.URL + "feriado/Novo?idUsuario={0}";
+            return new Operacao<FeriadoViewModel>().First(string.Format(url, idUsuario));
         }
 
         public FeriadoViewModel ObterPorId(int id)
         {
-            string url = Constantes.URL + "feriado/{0}";
+            string url = Constantes.URL + "feriado/ObterPorId?id={0}";
             return new Operacao<FeriadoViewModel>().First(string.Format(url, id));
         }
 
         public FeriadoViewModel Editar(int id, int idUsuario)
         {
-            string url = Constantes.URL + "feriado/{0}?idUsuario={1}";
+            string url = Constantes.URL + "feriado/Editar?id={0}&idUsuario={1}";
             return new Operacao<FeriadoViewModel>().First(string.Format(url, id, idUsuario));
         }
 
         public FeriadoViewModel[] Filtrar(string campo, string texto)
         {
-            string url = Constantes.URL + "Feriado?campo={0}&texto={1}";
+            string url = Constantes.URL + "Feriado/Filtrar?campo={0}&texto={1}";
             return new Operacao<FeriadoViewModel>().GetAll(string.Format(url, campo, texto));
         }
 

@@ -1,12 +1,6 @@
 ﻿using SIDomper.Dominio.Interfaces;
 using SIDomper.Dominio.Interfaces.Repositorios;
 using SIDomper.Infra.RepositorioEF;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SIDomper.Infra.DataBase
 {
@@ -96,6 +90,17 @@ namespace SIDomper.Infra.DataBase
                 if (_repositorioCidade == null)
                     _repositorioCidade = new RepositorioCidade(_context);
                 return _repositorioCidade;
+            }
+        }
+
+        private IRepositorioFeriado _repositorioFeriado;
+        public IRepositorioFeriado RepositorioFeriado
+        {
+            get
+            {
+                if (_repositorioFeriado == null)
+                    _repositorioFeriado = new RepositorioFeriado(_context);
+                return _repositorioFeriado;
             }
         }
     }

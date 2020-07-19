@@ -15,5 +15,6 @@ namespace SIDomper.Dominio.Interfaces
         IRepositorioUsuario RepositorioUsuario { get; }
         IRepositorioCategoria RepositorioCategoria { get; }
         IRepositorioCidade RepositorioCidade { get; }
+        IRepositorioFeriado RepositorioFeriado { get; }
     }
 }
