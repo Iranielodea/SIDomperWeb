@@ -173,6 +173,8 @@ namespace SIDomper.Servicos.Regras
                 chamado.Contato = chamadoInputModel.Contato;
                 chamado.Descricao = chamadoInputModel.Descricao;
                 chamado.Nivel = 2;
+                chamado.TipoMovimento = 1;
+                chamado.Origem = 4;
 
                 chamado.UsuarioAberturaId = idUsuario;
 

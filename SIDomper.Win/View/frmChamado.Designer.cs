@@ -1276,7 +1276,7 @@
             this.tpStatusOcorrencia.Location = new System.Drawing.Point(4, 26);
             this.tpStatusOcorrencia.Name = "tpStatusOcorrencia";
             this.tpStatusOcorrencia.Padding = new System.Windows.Forms.Padding(3);
-            this.tpStatusOcorrencia.Size = new System.Drawing.Size(1015, 526);
+            this.tpStatusOcorrencia.Size = new System.Drawing.Size(678, 481);
             this.tpStatusOcorrencia.TabIndex = 2;
             this.tpStatusOcorrencia.Text = "Status";
             this.tpStatusOcorrencia.UseVisualStyleBackColor = true;

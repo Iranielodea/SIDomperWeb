@@ -13,7 +13,8 @@ namespace SIDomper.Dominio.Entidades
             Agendamentos = new List<Agendamento>();
             DataAbertura = DateTime.Now.Date;
             HoraAbertura = TimeSpan.Parse(DateTime.Now.ToString("hh:mm"));
-            TipoMovimento = 1; // chamado 2 - atividade
+            TipoMovimento = 1; //1- chamado 2 - atividade
+            Origem = 1;
 
             //TODO: ver outras properiedades para inicializar
         }
@@ -33,9 +34,10 @@ namespace SIDomper.Dominio.Entidades
         public int? UsuarioAtendeAtualId { get; set; }
         public TimeSpan? HoraAtendeAtual { get; set; }
         public int TipoMovimento { get; set; }
+        public int Origem { get; set; }
 
-        [NotMapped]
-        public bool UsaAplicativo { get; set; } = false;
+        //[NotMapped]
+        //public bool UsaAplicativo { get; set; } = false;
 
         public virtual Cliente Cliente { get; set; }
         public virtual Tipo Tipo { get; set; }

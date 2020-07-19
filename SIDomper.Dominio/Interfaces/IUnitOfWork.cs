@@ -11,6 +11,9 @@ namespace SIDomper.Dominio.Interfaces
         void Executar(string instrucaoSQL);
 
         IRepositorioProduto RepositorioProduto { get; }
+        IRepositorioModulo RepositorioModulo { get; }
         IRepositorioUsuario RepositorioUsuario { get; }
+        IRepositorioCategoria RepositorioCategoria { get; }
+        IRepositorioCidade RepositorioCidade { get; }
     }
 }

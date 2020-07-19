@@ -1,4 +1,5 @@
 ﻿using SIDomper.Dominio.Entidades;
+using SIDomper.Dominio.Enumeracao;
 using SIDomper.Dominio.Interfaces.Repositorios;
 using SIDomper.Infra.DataBase;
 using System.Collections.Generic;
@@ -121,6 +122,16 @@ namespace SIDomper.Infra.RepositorioEF
             return sb.ToString();
         }
 
+        public bool PermissaoAcesso(int idUsuario, EnProgramas enProgramas)
+        {
+            var sql = PermissaoSqlBase(idUsuario, enProgramas);
+            var model = _contexto.Database.SqlQuery< UsuarioPermissaoDepartamento>(sql).FirstOrDefault();
+            if (model.UsuarioADM)
+                return true;
+
+            return (model.Acesso);
+        }
+
         public IEnumerable<UsuarioPermissaoDepartamento> ObterPermissao(string userName, string senha)
         {
             var sb = new StringBuilder();
@@ -177,6 +188,70 @@ namespace SIDomper.Infra.RepositorioEF
 
             //}
             //return lista;
+        }
+
+        private string PermissaoSqlBase(int idUsuario, EnProgramas enProgramas)
+        {
+            var programa = (int)enProgramas;
+
+            var sb = new StringBuilder();
+            sb.AppendLine("SELECT");
+            sb.AppendLine(" Usu_Id AS Id,");
+            sb.AppendLine(" DepAc_Programa AS Programa,");
+            sb.AppendLine(" DepAc_Acesso AS Acesso,");
+            sb.AppendLine(" DepAc_Incluir AS Incluir,");
+            sb.AppendLine(" DepAc_Editar AS Editar,");
+            sb.AppendLine(" DepAc_Excluir AS Excluir,");
+            sb.AppendLine(" DepAc_Relatorio AS Relatorio,");
+            sb.AppendLine(" Usu_Adm AS Adm");
+            sb.AppendLine(" FROM Usuario");
+            sb.AppendLine(" INNER JOIN Departamento ON Usu_Departamento = Dep_Id");
+            sb.AppendLine(" INNER JOIN Departamento_Acesso ON Dep_Id = DepAc_Departamento");
+            sb.AppendLine(" WHERE Usu_Id = " + idUsuario);
+            sb.AppendLine(" AND DepAc_Programa = " + programa);
+            return sb.ToString();
+        }
+
+        public bool PermissaoIncluir(int idUsuario, EnProgramas enProgramas)
+        {
+            var programa = (int)enProgramas;
+
+            var sql = PermissaoSqlBase(idUsuario, enProgramas);
+            var model = _contexto.Database.SqlQuery<UsuarioPermissaoDepartamento>(sql).FirstOrDefault();
+            if (model.UsuarioADM)
+                return true;
+
+            return (model.Incluir);
+        }
+
+        public bool PermissaoEditar(int idUsuario, EnProgramas enProgramas)
+        {
+            var sql = PermissaoSqlBase(idUsuario, enProgramas);
+            var model = _contexto.Database.SqlQuery<UsuarioPermissaoDepartamento>(sql).FirstOrDefault();
+            if (model.UsuarioADM)
+                return true;
+
+            return (model.Editar);
+        }
+
+        public bool PermissaoExcluir(int idUsuario, EnProgramas enProgramas)
+        {
+            var sql = PermissaoSqlBase(idUsuario, enProgramas);
+            var model = _contexto.Database.SqlQuery<UsuarioPermissaoDepartamento>(sql).FirstOrDefault();
+            if (model.UsuarioADM)
+                return true;
+
+            return (model.Excluir);
+        }
+
+        public bool PermissaoRelatorio(int idUsuario, EnProgramas enProgramas)
+        {
+            var sql = PermissaoSqlBase(idUsuario, enProgramas);
+            var model = _contexto.Database.SqlQuery<UsuarioPermissaoDepartamento>(sql).FirstOrDefault();
+            if (model.UsuarioADM)
+                return true;
+
+            return (model.Relatorio);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using SIDomper.Dominio.Entidades;
+using SIDomper.Dominio.Enumeracao;
 using System.Collections.Generic;
 
 namespace SIDomper.Dominio.Interfaces.Repositorios
@@ -10,5 +11,10 @@ namespace SIDomper.Dominio.Interfaces.Repositorios
         string Filtrar(UsuarioFiltro filtro);
         void ExcluirItem(string ids);
         string PermissaoUsuario(int idUsuario);
+        bool PermissaoAcesso(int idUsuario, EnProgramas enProgramas);
+        bool PermissaoIncluir(int idUsuario, EnProgramas enProgramas);
+        bool PermissaoEditar(int idUsuario, EnProgramas enProgramas);
+        bool PermissaoExcluir(int idUsuario, EnProgramas enProgramas);
+        bool PermissaoRelatorio(int idUsuario, EnProgramas enProgramas);
     }
 }

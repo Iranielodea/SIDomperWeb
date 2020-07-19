@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Data;
+using SIDomper.Dominio.Interfaces.Repositorios;
+using SIDomper.Dominio.Entidades;
+using SIDomper.Infra.DataBase;
 
 namespace SIDomper.Infra.ADO
 {

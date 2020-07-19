@@ -14,14 +14,14 @@ namespace SIDomper.Dominio.Servicos
     {
         private readonly IUnitOfWork _uow;
         private readonly IRepositoryReadOnly<UsuarioConsulta> _repositoryReadOnly;
-        private readonly EnProgramas _tipoPrograma;
+        //private readonly EnProgramas _tipoPrograma;
 
         public ServicoUsuario(IUnitOfWork unitOfWork,
            IRepositoryReadOnly<UsuarioConsulta> repositoryReadOnly)
         {
             _uow = unitOfWork;
             _repositoryReadOnly = repositoryReadOnly;
-            _tipoPrograma = EnProgramas.Usuario;
+            //_tipoPrograma = EnProgramas.Usuario;
         }
 
         public void AdicionarPermissao(UsuarioPermissao model)

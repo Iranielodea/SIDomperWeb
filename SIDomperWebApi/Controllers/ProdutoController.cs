@@ -1,28 +1,27 @@
 ﻿using Mapster;
 using SIDomper.Dominio.Entidades;
-using SIDomper.Dominio.Interfaces;
 using SIDomper.Dominio.Interfaces.Servicos;
-using SIDomper.Dominio.Servicos;
 using SIDomper.Dominio.ViewModel;
-using SIDomper.Infra.DataBase;
-using SIDomper.Servicos.Regras;
 using System;
 using System.Collections.Generic;
 using System.Web.Http;
 
 namespace SIDomperWebApi.Controllers
 {
+    //[RoutePrefix("api/chamado")]
+    [RoutePrefix("api/produto")]
     public class ProdutoController : ApiController
     {
-        private readonly ProdutoServico _produtoServico;
+        //private readonly ProdutoServico _produtoServico;
         private readonly IServicoProduto _servicoProduto;
 
         public ProdutoController(IServicoProduto servicoProduto)
         {
             _servicoProduto = servicoProduto;
-            _produtoServico = new ProdutoServico();
+            //_produtoServico = new ProdutoServico();
         }
 
+        [Route("ObterPorId")]
         [HttpGet]
         public ProdutoViewModel ObterPorId(int id)
         {
@@ -40,15 +39,16 @@ namespace SIDomperWebApi.Controllers
                 return model;
             }
         }
-
+        [Route("Editar")]
         [HttpGet]
-        public ProdutoViewModel Editar(int idUsuario, int id)
+        public ProdutoViewModel Editar(int id, int idUsuario)
         {
             var model = new ProdutoViewModel();
             try
             {
                 string mensagem = "";
-                var item = _produtoServico.Editar(idUsuario, id, ref mensagem);
+                //var item = _produtoServico.Editar(idUsuario, id, ref mensagem);
+                var item = _servicoProduto.Editar(id, idUsuario, ref mensagem);
                 model = item.Adapt<ProdutoViewModel>();
                 model.Mensagem = mensagem;
                 return model;
@@ -60,13 +60,15 @@ namespace SIDomperWebApi.Controllers
             }
         }
 
+        [Route("Novo")]
         [HttpGet]
-        public ProdutoViewModel Novo(string novo, int idUsuario)
+        public ProdutoViewModel Novo(int idUsuario)
         {
             var model = new ProdutoViewModel();
             try
             {
-                var item = _produtoServico.Novo(idUsuario);
+                var item = _servicoProduto.Novo(idUsuario);
+                //var item = _produtoServico.Novo(idUsuario);
                 model = item.Adapt<ProdutoViewModel>();
                 return model;
             }
@@ -76,7 +78,7 @@ namespace SIDomperWebApi.Controllers
                 return model;
             }
         }
-
+        [Route("ObterPorCodigo")]
         [HttpGet]
         public ProdutoViewModel ObterPorCodigo(int codigo)
         {
@@ -95,6 +97,7 @@ namespace SIDomperWebApi.Controllers
             }
         }
 
+        [Route("Filtrar")]
         [HttpGet]
         public IEnumerable<ProdutoViewModel> Filtrar(string campo, string texto, string ativo = "A", bool contem = true)
         {
@@ -118,8 +121,8 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 var produto = model.Adapt<Produto>();
-                //_servicoProduto.Salvar(produto);
-                _produtoServico.Salvar(produto);
+                _servicoProduto.Salvar(produto);
+                //_produtoServico.Salvar(produto);
                 produtoViewModel = produto.Adapt<ProdutoViewModel>();
                 return produtoViewModel;
             }
@@ -155,7 +158,8 @@ namespace SIDomperWebApi.Controllers
             var model = new ProdutoViewModel();
             try
             {
-                _produtoServico.Excluir(idUsuario, id);
+                //_produtoServico.Excluir(idUsuario, id);
+                _servicoProduto.Excluir(_servicoProduto.ObterPorId(id), idUsuario);
                 return model;
             }
             catch (Exception ex)

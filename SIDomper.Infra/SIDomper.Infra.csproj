@@ -121,6 +121,9 @@
     <Compile Include="RepositorioDapper\SolicitacaoRepositorioDapper.cs" />
     <Compile Include="RepositorioDapper\VersaoRepositorioDapper.cs" />
     <Compile Include="RepositorioDapper\VisitaRepositorioDapper.cs" />
+    <Compile Include="RepositorioEF\RepositorioModulo.cs" />
+    <Compile Include="RepositorioEF\RepositorioCategoria.cs" />
+    <Compile Include="RepositorioEF\RepositorioCidade.cs" />
     <Compile Include="RepositorioEF\RepositorioUsuario.cs" />
     <Compile Include="RepositorioEF\RepositorioProduto.cs" />
     <None Include="EF\Map\ObservacaoEF.txt" />

@@ -7,31 +7,31 @@ namespace SIDomper.Apresentacao.App
     {
         public CidadeViewModel Novo(int idUsuario)
         {
-            string url = Constantes.URL + "cidade?novo={0}&idUsuario={1}";
-            return new Operacao<CidadeViewModel>().First(string.Format(url, "", idUsuario));
+            string url = Constantes.URL + "cidade/Novo?idUsuario={0}";
+            return new Operacao<CidadeViewModel>().First(string.Format(url, idUsuario));
         }
 
         public CidadeViewModel ObterPorId(int id)
         {
-            string url = Constantes.URL + "cidade/{0}";
+            string url = Constantes.URL + "cidade/ObterPorId?id={0}";
             return new Operacao<CidadeViewModel>().First(string.Format(url, id));
         }
 
         public CidadeViewModel Editar(int id, int idUsuario)
         {
-            string url = Constantes.URL + "cidade/{0}?idUsuario={1}";
+            string url = Constantes.URL + "cidade/Editar?id={0}&idUsuario={1}";
             return new Operacao<CidadeViewModel>().First(string.Format(url, id, idUsuario));
         }
 
         public CidadeViewModel ObterPorCodigo(int codigo)
         {
-            string url = Constantes.URL + "cidade/?codigo={0}";
+            string url = Constantes.URL + "cidade/ObterPorCodigo?codigo={0}";
             return new Operacao<CidadeViewModel>().First(string.Format(url, codigo));
         }
 
         public CidadeViewModel[] Filtrar(string campo, string texto, string ativo = "A", bool contem = true)
         {
-            string url = Constantes.URL + "Cidade?campo={0}&texto={1}&ativo={2}&contem={3}";
+            string url = Constantes.URL + "Cidade/Filtrar?campo={0}&texto={1}&ativo={2}";
             return new Operacao<CidadeViewModel>().GetAll(string.Format(url, campo, texto, ativo, contem));
         }
 

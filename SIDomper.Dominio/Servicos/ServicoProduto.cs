@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using SIDomper.Dominio.Constantes;
 
 namespace SIDomper.Dominio.Servicos
 {
@@ -13,18 +14,41 @@ namespace SIDomper.Dominio.Servicos
     {
         private readonly IUnitOfWork _uow;
         private readonly IRepositoryReadOnly<ProdutoConsulta> _repositoryReadOnly;
-        private readonly EnProgramas _tipoPrograma;
+        private readonly EnProgramas _enProgramas;
 
         public ServicoProduto(IUnitOfWork unitOfWork,
            IRepositoryReadOnly<ProdutoConsulta> repositoryReadOnly)
         {
             _uow = unitOfWork;
             _repositoryReadOnly = repositoryReadOnly;
-            _tipoPrograma = EnProgramas.Produto;
+            _enProgramas = EnProgramas.Produto;
         }
 
-        public void Excluir(Produto model)
+        public Produto Novo(int idUsuario)
         {
+            var produto = new Produto();
+            if (!_uow.RepositorioUsuario.PermissaoIncluir(idUsuario, _enProgramas))
+                throw new Exception(Mensagem.UsuarioSemPermissao);
+
+            produto.Codigo = ProximoCodigo();
+            produto.Ativo = true;
+            return produto;
+        }
+
+        public Produto Editar(int id, int idUsuario, ref string mensagem)
+        {
+            mensagem = "OK";
+            if (!_uow.RepositorioUsuario.PermissaoEditar(idUsuario, _enProgramas))
+                mensagem = Mensagem.UsuarioSemPermissao;
+
+            return ObterPorId(id);
+        }
+
+        public void Excluir(Produto model, int idUsuario)
+        {
+            if (!_uow.RepositorioUsuario.PermissaoExcluir(idUsuario, _enProgramas))
+                throw new Exception(Mensagem.UsuarioSemPermissao);
+
             _uow.RepositorioProduto.Deletar(model);
             _uow.SaveChanges();
         }
@@ -71,7 +95,7 @@ namespace SIDomper.Dominio.Servicos
         {
             var model = _uow.RepositorioProduto.First(x => x.Codigo == codigo);
             if (model == null)
-                throw new Exception("Produto não Cadastrado");
+                throw new Exception("Produto não Cadastrado!");
             return model;
         }
 
@@ -80,7 +104,7 @@ namespace SIDomper.Dominio.Servicos
             return _uow.RepositorioProduto.find(id);
         }
 
-        public int ProximoCodigo()
+        private int ProximoCodigo()
         {
             try
             {
@@ -102,6 +126,12 @@ namespace SIDomper.Dominio.Servicos
             
             _uow.RepositorioProduto.Salvar(model);
             _uow.SaveChanges();
+        }
+
+        public void Relatorio(int idUsuario)
+        {
+            if (!_uow.RepositorioUsuario.PermissaoRelatorio(idUsuario, _enProgramas))
+                throw new Exception(Mensagem.UsuarioSemPermissao);
         }
     }
 }

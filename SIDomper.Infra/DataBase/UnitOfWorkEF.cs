@@ -65,5 +65,38 @@ namespace SIDomper.Infra.DataBase
                 return _repositorioUsuario;
             }
         }
+
+        private IRepositorioModulo _repositorioModulo;
+        public IRepositorioModulo RepositorioModulo
+        {
+            get
+            {
+                if (_repositorioModulo == null)
+                    _repositorioModulo = new RepositorioModulo(_context);
+                return _repositorioModulo;
+            }
+        }
+
+        private IRepositorioCategoria _repositorioCategoria;
+        public IRepositorioCategoria RepositorioCategoria
+        {
+            get
+            {
+                if (_repositorioCategoria == null)
+                    _repositorioCategoria = new RepositorioCategoria(_context);
+                return _repositorioCategoria;
+            }
+        }
+
+        private IRepositorioCidade _repositorioCidade;
+        public IRepositorioCidade RepositorioCidade
+        {
+            get
+            {
+                if (_repositorioCidade == null)
+                    _repositorioCidade = new RepositorioCidade(_context);
+                return _repositorioCidade;
+            }
+        }
     }
 }
