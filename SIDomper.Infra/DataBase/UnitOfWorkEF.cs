@@ -1,4 +1,6 @@
-﻿using SIDomper.Dominio.Interfaces;
+﻿using System;
+using System.Collections.Generic;
+using SIDomper.Dominio.Interfaces;
 using SIDomper.Dominio.Interfaces.Repositorios;
 using SIDomper.Infra.RepositorioEF;
 
@@ -11,6 +13,7 @@ namespace SIDomper.Infra.DataBase
         public UnitOfWorkEF(Contexto context)
         {
             _context = context;
+            _notificacao = new List<string>();
         }
 
         public void BeginTransaction()
@@ -21,6 +24,31 @@ namespace SIDomper.Infra.DataBase
         public void Commit()
         {
             _context.Database.CurrentTransaction.Commit();
+        }
+
+        private List<string> _notificacao;
+        public List<string> Notificacao
+        {
+            get
+            {
+                return _notificacao;
+            }
+        }
+
+        public bool IsValid()
+        {
+            return (_notificacao.Count == 0);
+        }
+
+        public string RetornoNotificacao()
+        {
+            string resultado = "";
+            foreach (var item in _notificacao)
+            {
+                resultado = resultado + item + Environment.NewLine;
+            }
+
+            return resultado;
         }
 
         public void Rollback()
@@ -101,6 +129,50 @@ namespace SIDomper.Infra.DataBase
                 if (_repositorioFeriado == null)
                     _repositorioFeriado = new RepositorioFeriado(_context);
                 return _repositorioFeriado;
+            }
+        }
+
+        private IRepositorioContaEmail _repositorioContaEmail;
+        public IRepositorioContaEmail RepositorioContaEmail
+        {
+            get
+            {
+                if (_repositorioContaEmail == null)
+                    _repositorioContaEmail = new RepositorioContaEmail(_context);
+                return _repositorioContaEmail;
+            }
+        }
+
+        private IRepositorioObservacao _repositorioObservacao;
+        public IRepositorioObservacao RepositorioObservacao
+        {
+            get
+            {
+                if (_repositorioObservacao == null)
+                    _repositorioObservacao = new RepositorioObservacao(_context);
+                return _repositorioObservacao;
+            }
+        }
+
+        private IRepositorioTipo _repositorioTipo;
+        public IRepositorioTipo RepositorioTipo
+        {
+            get
+            {
+                if (_repositorioTipo == null)
+                    _repositorioTipo = new RepositorioTipo(_context);
+                return _repositorioTipo;
+            }
+        }
+
+        private IRepositorioStatus _repositorioStatus;
+        public IRepositorioStatus RepositorioStatus
+        {
+            get
+            {
+                if (_repositorioStatus == null)
+                    _repositorioStatus = new RepositorioStatus(_context);
+                return _repositorioStatus;
             }
         }
     }

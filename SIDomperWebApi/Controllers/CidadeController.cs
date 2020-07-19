@@ -156,7 +156,7 @@ namespace SIDomperWebApi.Controllers
 
         //DELETE api/<controller>/5
         [HttpDelete]
-        public CidadeViewModel Delete(int idUsuario, int id)
+        public CidadeViewModel Delete(int id, int idUsuario)
         {
             var model = new CidadeViewModel();
             try

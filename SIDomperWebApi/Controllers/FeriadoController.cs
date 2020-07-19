@@ -136,7 +136,7 @@ namespace SIDomperWebApi.Controllers
         }
 
         [HttpDelete]
-        public FeriadoViewModel Delete(int idUsuario, int id)
+        public FeriadoViewModel Delete(int id, int idUsuario)
         {
             var model = new FeriadoViewModel();
             try

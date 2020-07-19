@@ -155,14 +155,14 @@ namespace SIDomperWebApi.Controllers
         }
 
         [HttpDelete]
-        public CategoriaViewModel Delete(int idUsuario, int id)
+        public CategoriaViewModel Delete(int id, int idUsuario)
         {
             var model = new CategoriaViewModel();
             try
             {
                 //var categoria = _categoriaServico.ObterPorId(id);
                 //_categoriaServico.Excluir(idUsuario, categoria);
-                _servicoCategoria.Excluir(_servicoCategoria.ObterPorId(id), id);
+                _servicoCategoria.Excluir(_servicoCategoria.ObterPorId(id), idUsuario);
                 return model;
             }
             catch (Exception ex)

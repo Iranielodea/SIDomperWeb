@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgvDados = new System.Windows.Forms.DataGridView();
             this.CtaEm_Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CtaEm_Codigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -99,6 +99,19 @@
             // 
             this.label2.Location = new System.Drawing.Point(398, 14);
             // 
+            // tpEditar
+            // 
+            this.tpEditar.Size = new System.Drawing.Size(697, 430);
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Location = new System.Drawing.Point(4, 363);
+            this.groupBox3.Size = new System.Drawing.Size(689, 63);
+            // 
+            // tabControl2
+            // 
+            this.tabControl2.Size = new System.Drawing.Size(689, 422);
+            // 
             // tbPrincipal
             // 
             this.tbPrincipal.Controls.Add(this.txtPorta);
@@ -122,6 +135,10 @@
             // 
             this.tpFiltroPrincipal.Size = new System.Drawing.Size(681, 392);
             // 
+            // cboAtivo
+            // 
+            this.cboAtivo.Size = new System.Drawing.Size(121, 25);
+            // 
             // lblPesquisa
             // 
             this.lblPesquisa.Location = new System.Drawing.Point(258, 11);
@@ -129,6 +146,7 @@
             // cbPesquisa
             // 
             this.cbPesquisa.Location = new System.Drawing.Point(261, 31);
+            this.cbPesquisa.Size = new System.Drawing.Size(133, 25);
             // 
             // dgvDados
             // 
@@ -155,9 +173,9 @@
             // CtaEm_Codigo
             // 
             this.CtaEm_Codigo.DataPropertyName = "Codigo";
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
-            dataGridViewCellStyle1.Format = "0000";
-            this.CtaEm_Codigo.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
+            dataGridViewCellStyle2.Format = "0000";
+            this.CtaEm_Codigo.DefaultCellStyle = dataGridViewCellStyle2;
             this.CtaEm_Codigo.HeaderText = "Código";
             this.CtaEm_Codigo.Name = "CtaEm_Codigo";
             this.CtaEm_Codigo.Width = 80;
@@ -303,10 +321,10 @@
             // 
             // txtPorta
             // 
-            this.txtPorta.Location = new System.Drawing.Point(25, 357);
+            this.txtPorta.Location = new System.Drawing.Point(19, 274);
             this.txtPorta.Margin = new System.Windows.Forms.Padding(4);
             this.txtPorta.Name = "txtPorta";
-            this.txtPorta.Size = new System.Drawing.Size(133, 33);
+            this.txtPorta.Size = new System.Drawing.Size(88, 27);
             this.txtPorta.TabIndex = 5;
             // 
             // frmContaEmail

@@ -8,25 +8,25 @@ namespace SIDomper.Apresentacao.App
     {
         public TipoViewModel Novo(int idUsuario)
         {
-            string url = Constantes.URL + "tipo?novo={0}&idUsuario={1}";
-            return new Operacao<TipoViewModel>().First(string.Format(url, "", idUsuario));
+            string url = Constantes.URL + "tipo/Novo?idUsuario={0}";
+            return new Operacao<TipoViewModel>().First(string.Format(url, idUsuario));
         }
 
         public TipoViewModel ObterPorId(int id)
         {
-            string url = Constantes.URL + "tipo/{0}";
+            string url = Constantes.URL + "tipo/ObterPorId?id={0}";
             return new Operacao<TipoViewModel>().First(string.Format(url, id));
         }
 
         public TipoViewModel Editar(int id, int idUsuario)
         {
-            string url = Constantes.URL + "tipo/{0}?idUsuario={1}";
+            string url = Constantes.URL + "tipo/Editar?id={0}&idUsuario={1}";
             return new Operacao<TipoViewModel>().First(string.Format(url, id, idUsuario));
         }
 
         public TipoViewModel ObterPorCodigo(int codigo, EnTipos enTipos)
         {
-            string url = Constantes.URL + "tipo?codigo={0}&enTipos={1}";
+            string url = Constantes.URL + "tipo/ObterPorCodigoTipo?codigo={0}&enTipos={1}";
             //string url = Constantes.URL + "tipo/?codigo={0}";
             return new Operacao<TipoViewModel>().First(string.Format(url, codigo, (int)enTipos));
         }
@@ -37,7 +37,7 @@ namespace SIDomper.Apresentacao.App
             if (contem)
                 sContem = "1";
 
-            string url = Constantes.URL + "tipo?campo={0}&texto={1}&enTipos={2}&ativo={3}&contem={4}";
+            string url = Constantes.URL + "tipo/Filtrar?campo={0}&texto={1}&enTipos={2}&ativo={3}&contem={4}";
             string resultado = string.Format(url, campo, texto, (int)tipo, ativo, sContem);
             return new Operacao<TipoConsultaViewModel>().GetAll(resultado);
         }

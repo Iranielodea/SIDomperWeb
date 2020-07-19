@@ -1,6 +1,7 @@
 ﻿using Mapster;
 using SIDomper.Dominio.Entidades;
 using SIDomper.Dominio.Enumeracao;
+using SIDomper.Dominio.Servicos;
 using SIDomper.Dominio.ViewModel;
 using SIDomper.Servicos.Regras;
 using System;
@@ -9,22 +10,27 @@ using System.Web.Http;
 
 namespace SIDomperWebApi.Controllers
 {
+    [RoutePrefix("api/status")]
     public class StatusController : ApiController
     {
-        private readonly StatusServico _statusServico;
+        //private readonly StatusServico _statusServico;
+        private readonly ServicoStatus _servicoStatus;
 
-        public StatusController()
+        public StatusController(ServicoStatus servicoStatus)
         {
-            _statusServico = new StatusServico();
+            //_statusServico = new StatusServico();
+            _servicoStatus = servicoStatus;
         }
 
+        [Route("ObterPorId")]
         [HttpGet]
         public StatusViewModel ObterPorId(int id)
         {
             var model = new StatusViewModel();
             try
             {
-                var item = _statusServico.ObterPorId(id);
+                var item = _servicoStatus.ObterPorId(id);
+                //var item = _statusServico.ObterPorId(id);
                 model = item.Adapt<StatusViewModel>();
                 return model;
             }
@@ -35,14 +41,16 @@ namespace SIDomperWebApi.Controllers
             }
         }
 
+        [Route("Editar")]
         [HttpGet]
-        public StatusViewModel Editar(int idUsuario, int id)
+        public StatusViewModel Editar(int id, int idUsuario)
         {
             var model = new StatusViewModel();
             try
             {
                 string mensagem = "";
-                var item = _statusServico.Editar(idUsuario, id, ref mensagem);
+                var item = _servicoStatus.Editar(id, idUsuario, ref mensagem);
+                //var item = _statusServico.Editar(idUsuario, id, ref mensagem);
                 model = item.Adapt<StatusViewModel>();
                 model.Mensagem = mensagem;
                 return model;
@@ -54,13 +62,15 @@ namespace SIDomperWebApi.Controllers
             }
         }
 
+        [Route("Novo")]
         [HttpGet]
-        public StatusViewModel Novo(string novo, int idUsuario)
+        public StatusViewModel Novo(int idUsuario)
         {
             var model = new StatusViewModel();
             try
             {
-                var item = _statusServico.Novo(idUsuario);
+                var item = _servicoStatus.Novo(idUsuario);
+                //var item = _statusServico.Novo(idUsuario);
                 model = item.Adapt<StatusViewModel>();
                 return model;
             }
@@ -71,13 +81,15 @@ namespace SIDomperWebApi.Controllers
             }
         }
 
+        [Route("ObterPorCodigoStatus")]
         [HttpGet]
         public StatusViewModel ObterPorCodigo(int codigo, EnStatus enStatus)
         {
             var model = new StatusViewModel();
             try
             {
-                var prod = _statusServico.ObterPorCodigo(codigo, enStatus);
+                var prod = _servicoStatus.ObterPorCodigo(codigo, enStatus);
+                //var prod = _statusServico.ObterPorCodigo(codigo, enStatus);
                 model = prod.Adapt<StatusViewModel>();
                 return model;
             }
@@ -88,12 +100,14 @@ namespace SIDomperWebApi.Controllers
             }
         }
 
+        [Route("Filtrar")]
         [HttpGet]
         public IEnumerable<StatusConsultaViewModel> Filtrar(string campo, string texto, EnStatus enStatus, string ativo = "A", bool contem = true)
         {
             try
             {
-                var lista = _statusServico.Filtrar(campo, texto, enStatus, ativo, contem);
+                var lista = _servicoStatus.Filtrar(campo, texto, enStatus, ativo, contem);
+                //var lista = _statusServico.Filtrar(campo, texto, enStatus, ativo, contem);
                 var model = lista.Adapt<StatusConsultaViewModel[]>();
                 return model;
             }
@@ -110,7 +124,8 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 var status = model.Adapt<Status>();
-                _statusServico.Salvar(status);
+                _servicoStatus.Salvar(status);
+                //_statusServico.Salvar(status);
                 statusViewModel = status.Adapt<StatusViewModel>();
                 return statusViewModel;
             }
@@ -128,7 +143,8 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 var status = model.Adapt<Status>();
-                _statusServico.Salvar(status);
+                _servicoStatus.Salvar(status);
+                //_statusServico.Salvar(status);
                 statusViewModel = status.Adapt<StatusViewModel>();
                 return statusViewModel;
             }
@@ -145,8 +161,9 @@ namespace SIDomperWebApi.Controllers
             var model = new StatusViewModel();
             try
             {
-                var status = _statusServico.ObterPorId(id);
-                _statusServico.Excluir(status, idUsuario);
+                //var status = _statusServico.ObterPorId(id);
+                //_statusServico.Excluir(status, idUsuario);
+                _servicoStatus.Excluir(_servicoStatus.ObterPorId(id), idUsuario);
                 return model;
             }
             catch (Exception ex)

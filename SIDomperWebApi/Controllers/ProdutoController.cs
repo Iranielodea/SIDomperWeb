@@ -153,7 +153,7 @@ namespace SIDomperWebApi.Controllers
         }
 
         [HttpDelete]
-        public ProdutoViewModel Delete(int idUsuario, int id)
+        public ProdutoViewModel Delete(int id, int idUsuario)
         {
             var model = new ProdutoViewModel();
             try

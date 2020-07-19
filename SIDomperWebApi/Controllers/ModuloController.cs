@@ -155,7 +155,7 @@ namespace SIDomperWebApi.Controllers
         }
 
         [HttpDelete]
-        public ModuloViewModel Delete(int idUsuario, int id)
+        public ModuloViewModel Delete(int id, int idUsuario)
         {
             var model = new ModuloViewModel();
             try

@@ -8,25 +8,25 @@ namespace SIDomper.Apresentacao.App
     {
         public StatusViewModel Novo(int idUsuario)
         {
-            string url = Constantes.URL + "status?novo={0}&idUsuario={1}";
-            return new Operacao<StatusViewModel>().First(string.Format(url, "", idUsuario));
+            string url = Constantes.URL + "status/Novo?idUsuario={0}";
+            return new Operacao<StatusViewModel>().First(string.Format(url, idUsuario));
         }
 
         public StatusViewModel ObterPorId(int id)
         {
-            string url = Constantes.URL + "status/{0}";
+            string url = Constantes.URL + "status/ObterPorId?id={0}";
             return new Operacao<StatusViewModel>().First(string.Format(url, id));
         }
 
         public StatusViewModel Editar(int id, int idUsuario, EnStatus enStatus)
         {
-            string url = Constantes.URL + "status/{0}?idUsuario={1}";
+            string url = Constantes.URL + "status/Editar?id={0}&idUsuario={1}";
             return new Operacao<StatusViewModel>().First(string.Format(url, id, idUsuario));
         }
 
         public StatusViewModel ObterPorCodigo(int codigo, EnStatus enStatus)
         {
-            string url = Constantes.URL + "Status?codigo={0}&enStatus={1}";
+            string url = Constantes.URL + "Status/ObterPorCodigoStatus?codigo={0}";
             //string url = Constantes.URL + "status/?codigo={0}";
             return new Operacao<StatusViewModel>().First(string.Format(url, codigo, (int)enStatus));
         }
@@ -38,7 +38,7 @@ namespace SIDomper.Apresentacao.App
                 sContem = "1";
 
             //string url = "http://localhost:64735/api/status?campo=sta_nome&texto=A&enStatus=1&ativo=A&contem=1";
-            string url = Constantes.URL + "status?campo={0}&texto={1}&enStatus={2}&ativo={3}&contem={4}";
+            string url = Constantes.URL + "status/Filtrar?campo={0}&texto={1}&enStatus={2}&ativo={3}&contem={4}";
             string resultado = string.Format(url, campo, texto, (int)tipo, ativo, sContem);
             return new Operacao<StatusConsultaViewModel>().GetAll(resultado);
         }

@@ -26,10 +26,10 @@ namespace SIDomper.Dominio.Servicos
 
         public Produto Novo(int idUsuario)
         {
-            var produto = new Produto();
             if (!_uow.RepositorioUsuario.PermissaoIncluir(idUsuario, _enProgramas))
                 throw new Exception(Mensagem.UsuarioSemPermissao);
 
+            var produto = new Produto();
             produto.Codigo = ProximoCodigo();
             produto.Ativo = true;
             return produto;
@@ -119,10 +119,13 @@ namespace SIDomper.Dominio.Servicos
         public void Salvar(Produto model)
         {
             if (model.Codigo <= 0)
-                throw new Exception("Informe o Código!");
+                _uow.Notificacao.Add("Informe o Código!");
 
             if (string.IsNullOrWhiteSpace(model.Nome))
-                throw new Exception("Informe o Nome!");
+                _uow.Notificacao.Add("Informe o Nome!");
+
+            if (!_uow.IsValid())
+                throw new Exception(_uow.RetornoNotificacao());
             
             _uow.RepositorioProduto.Salvar(model);
             _uow.SaveChanges();

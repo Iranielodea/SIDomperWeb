@@ -7,26 +7,26 @@ namespace SIDomper.Apresentacao.App
     {
         public ObservacaoViewModel Novo(int idUsuario)
         {
-            string url = Constantes.URL + "observacao?novo={0}&idUsuario={1}";
-            return new Operacao<ObservacaoViewModel>().First(string.Format(url, "", idUsuario));
+            string url = Constantes.URL + "observacao/Novo?idUsuario={0}";
+            return new Operacao<ObservacaoViewModel>().First(string.Format(url, idUsuario));
         }
 
         public ObservacaoViewModel ObterPorId(int id)
         {
-            string url = Constantes.URL + "observacao/{0}";
+            string url = Constantes.URL + "observacao/ObterPorId?id={0}";
             return new Operacao<ObservacaoViewModel>().First(string.Format(url, id));
         }
 
         public ObservacaoViewModel Editar(int id, int idUsuario)
         {
-            string url = Constantes.URL + "observacao/{0}?idUsuario={1}";
+            string url = Constantes.URL + "observacao/Editar?id={0}&idUsuario={1}";
             return new Operacao<ObservacaoViewModel>().First(string.Format(url, id, idUsuario));
         }
 
 
         public ObservacaoViewModel ObterPorCodigo(int codigo)
         {
-            string url = Constantes.URL + "observacao/?codigo{0}";
+            string url = Constantes.URL + "observacao/ObterPorCodigo?codigo={0}";
             return new Operacao<ObservacaoViewModel>().First(string.Format(url, codigo));
         }
 
@@ -36,7 +36,7 @@ namespace SIDomper.Apresentacao.App
             if (contem)
                 sContem = "1";
 
-            string url = Constantes.URL + "Observacao?campo={0}&texto={1}&ativo={2}&contem={3}";
+            string url = Constantes.URL + "Observacao/Filtrar?campo={0}&texto={1}&ativo={2}";
             return new Operacao<ObservacaoConsultaViewModel>().GetAll(string.Format(url, campo, texto, ativo, sContem));
         }
 
@@ -56,16 +56,16 @@ namespace SIDomper.Apresentacao.App
             return new Operacao<ObservacaoViewModel>().Delete(string.Format(url, id, idUsuario));
         }
 
-        public ObservacaoViewModel ObservacaoEmailPadrao(string emailPadrao, int idPrograma)
+        public ObservacaoViewModel ObservacaoEmailPadrao(int idPrograma)
         {
-            string url = Constantes.URL + "Observacao?obsPadrao={0}&idPrograma={1}";
-            return new Operacao<ObservacaoViewModel>().First(string.Format(url, emailPadrao, idPrograma));
+            string url = Constantes.URL + "Observacao/ObservacaoEmailPadrao?idPrograma={0}";
+            return new Operacao<ObservacaoViewModel>().First(string.Format(url, idPrograma));
         }
 
-        public ObservacaoViewModel ObservacaoPadrao(string obspadrao, int idPrograma)
+        public ObservacaoViewModel ObservacaoPadrao(int idPrograma)
         {
-            string url = Constantes.URL + "Observacao?obsPadrao={0}&idPrograma={1}";
-            return new Operacao<ObservacaoViewModel>().First(string.Format(url, obspadrao, idPrograma));
+            string url = Constantes.URL + "Observacao/ObservacaoPadrao?idPrograma={0}";
+            return new Operacao<ObservacaoViewModel>().First(string.Format(url, idPrograma));
         }
     }
 }
