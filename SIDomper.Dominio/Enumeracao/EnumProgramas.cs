@@ -24,6 +24,7 @@
         ModeloRelatorio = 117,
         Ramal = 118,
         Recado = 119,
+        Escala = 120,
         Cidade = 121,
         Feriado = 123,
         Categoria = 124,

@@ -175,5 +175,27 @@ namespace SIDomper.Infra.DataBase
                 return _repositorioStatus;
             }
         }
+
+        private IRepositorioEscala _repositorioEscala;
+        public IRepositorioEscala RepositorioEscala
+        {
+            get
+            {
+                if (_repositorioEscala == null)
+                    _repositorioEscala = new RepositorioEscala(_context);
+                return _repositorioEscala;
+            }
+        }
+
+        private IRepositorioParametro _repositorioParametro;
+        public IRepositorioParametro RepositorioParametro
+        {
+            get
+            {
+                if (_repositorioParametro == null)
+                    _repositorioParametro = new RepositorioParametro(_context);
+                return _repositorioParametro;
+            }
+        }
     }
 }
