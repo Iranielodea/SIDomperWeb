@@ -9,7 +9,7 @@ namespace SIDomper.Dominio.Interfaces.Servicos
 {
     public interface IServicoParametro
     {
-        IEnumerable<ParametroConsulta> Filtrar(string campo, string texto, string ativo = "A", bool contem = true);
+        IEnumerable<ParametroConsulta> Filtrar(string campo, string texto, bool contem = true);
         Parametro Novo(int idUsuario);
         Parametro Editar(int id, int idUsuario, ref string mensagem);
         Parametro ObterPorId(int id);

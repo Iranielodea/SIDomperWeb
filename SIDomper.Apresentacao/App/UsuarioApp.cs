@@ -7,38 +7,38 @@ namespace SIDomper.Apresentacao.App
     {
         public UsuarioViewModel Novo(int idUsuario)
         {
-            string url = Constantes.URL + "usuario?novo={0}&idUsuario={1}";
-            return new Operacao<UsuarioViewModel>().First(string.Format(url, "", idUsuario));
+            string url = Constantes.URL + "usuario/Novo?idUsuario={0}";
+            return new Operacao<UsuarioViewModel>().First(string.Format(url, idUsuario));
         }
 
         public UsuarioPermissaoDepartamentoViewModel[] ObterPermissaoPorDepartamento(string userName, string senha)
         {
-            string url = Constantes.URL + "/Usuario?userName={0}&senha={1}&permissaoDep={2}";
+            string url = Constantes.URL + "Usuario/ObterPermissaoPorDepartamento?userName={0}&senha={1}&permissaoDep={2}";
             return new Operacao<UsuarioPermissaoDepartamentoViewModel>().GetAll(string.Format(url, userName, senha, "A"));
         }
 
         public UsuarioViewModel ObterPorId(int id)
         {
             //string url = Constantes.URL + "usuario/{0}?idUsuario={1}";
-            string url = Constantes.URL + "usuario/{0}";
+            string url = Constantes.URL + "usuario/ObterPorId?id={0}";
             return new Operacao<UsuarioViewModel>().First(string.Format(url, id));
         }
 
         public UsuarioViewModel Editar(int id, int idUsuario)
         {
-            string url = Constantes.URL + "usuario/{0}?idUsuario={1}";
+            string url = Constantes.URL + "usuario/Editar?id={0}&idUsuario={1}";
             return new Operacao<UsuarioViewModel>().First(string.Format(url, id, idUsuario));
         }
 
         public UsuarioViewModel ObterPorCodigo(int codigo)
         {
-            string url = Constantes.URL + "usuario/?codigo={0}";
+            string url = Constantes.URL + "usuario/ObterPorCodigo?codigo={0}";
             return new Operacao<UsuarioViewModel>().First(string.Format(url, codigo));
         }
 
         public UsuarioViewModel ObterPorUsuario(string userName, string senha)
         {
-            string url = Constantes.URL + "Usuario?login={0}&senha={1}";
+            string url = Constantes.URL + "Usuario/ObterPorUsuario?login={0}&senha={1}";
             return new Operacao<UsuarioViewModel>().First(string.Format(url, userName, senha));
         }
 
@@ -66,7 +66,7 @@ namespace SIDomper.Apresentacao.App
 
         public UsuarioConsultaViewModel[] Filtrar(UsuarioFiltroViewModel filtro)
         {            
-            string url = Constantes.URL + "usuario?pesquisar={0}";
+            string url = Constantes.URL + "usuario/FiltrarSimples?pesquisar={0}";
             return new Operacao<UsuarioConsultaViewModel>().ObjetoToJSon(string.Format(url, ""), filtro);
         }
     }

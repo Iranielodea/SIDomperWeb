@@ -27,5 +27,6 @@ namespace SIDomper.Dominio.Interfaces
         IRepositorioStatus RepositorioStatus { get; }
         IRepositorioEscala RepositorioEscala { get; }
         IRepositorioParametro RepositorioParametro { get; }
+        IRepositorioRevenda RepositorioRevenda { get; }
     }
 }

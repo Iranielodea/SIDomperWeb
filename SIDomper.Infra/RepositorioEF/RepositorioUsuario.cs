@@ -134,60 +134,60 @@ namespace SIDomper.Infra.RepositorioEF
 
         public IEnumerable<UsuarioPermissaoDepartamento> ObterPermissao(string userName, string senha)
         {
-            var sb = new StringBuilder();
-            sb.AppendLine("SELECT");
-            sb.AppendLine(" Usu_Id AS Id,");
-            sb.AppendLine(" DepAc_Programa AS Programa,");
-            sb.AppendLine(" DepAc_Acesso AS Acesso,");
-            sb.AppendLine(" DepAc_Incluir AS Incluir,");
-            sb.AppendLine(" DepAc_Editar AS Editar,");
-            sb.AppendLine(" DepAc_Excluir AS Excluir,");
-            sb.AppendLine(" DepAc_Relatorio AS Relatorio,");
-            sb.AppendLine(" Usu_Adm AS Adm");
-            sb.AppendLine(" FROM Usuario");
-            sb.AppendLine(" INNER JOIN Departamento ON Usu_Departamento = Dep_Id");
-            sb.AppendLine(" INNER JOIN Departamento_Acesso ON Dep_Id = DepAc_Departamento");
-            sb.AppendLine(" WHERE Usu_UserName = '" + userName + "'");
-            sb.AppendLine(" AND Usu_Password = '" + senha + "'");
-            sb.AppendLine(" and Usu_Ativo = 1");
-            sb.AppendLine(" and Dep_Ativo = 1");
+            //var sb = new StringBuilder();
+            //sb.AppendLine("SELECT");
+            //sb.AppendLine(" Usu_Id AS Id,");
+            //sb.AppendLine(" DepAc_Programa AS Programa,");
+            //sb.AppendLine(" DepAc_Acesso AS Acesso,");
+            //sb.AppendLine(" DepAc_Incluir AS Incluir,");
+            //sb.AppendLine(" DepAc_Editar AS Editar,");
+            //sb.AppendLine(" DepAc_Excluir AS Excluir,");
+            //sb.AppendLine(" DepAc_Relatorio AS Relatorio,");
+            //sb.AppendLine(" Usu_Adm AS Adm");
+            //sb.AppendLine(" FROM Usuario");
+            //sb.AppendLine(" INNER JOIN Departamento ON Usu_Departamento = Dep_Id");
+            //sb.AppendLine(" INNER JOIN Departamento_Acesso ON Dep_Id = DepAc_Departamento");
+            //sb.AppendLine(" WHERE Usu_UserName = '" + userName + "'");
+            //sb.AppendLine(" AND Usu_Password = '" + senha + "'");
+            //sb.AppendLine(" and Usu_Ativo = 1");
+            //sb.AppendLine(" and Dep_Ativo = 1");
 
-            return _contexto.Database.SqlQuery<UsuarioPermissaoDepartamento>(sb.ToString()).ToList();
+            //return _contexto.Database.SqlQuery<UsuarioPermissaoDepartamento>(sb.ToString()).ToList();
 
-            //var query = from usu in _contexto.Usuarios
-            //            join dep in _contexto.Departamentos on usu.DepartamentoId equals dep.Id
-            //            join ace in _contexto.DepartamentoAcessos on dep.Id equals ace.DepartamentoId
-            //            where usu.UserName == userName && usu.Password == senha && usu.Ativo == true && dep.Ativo == true
-            //            select new
-            //            {
-            //                usu.Id,
-            //                ace.Programa,
-            //                ace.Acesso,
-            //                ace.Incluir,
-            //                ace.Editar,
-            //                ace.Excluir,
-            //                ace.Relatorio,
-            //                usu.Adm
-            //            };
+            var query = from usu in _contexto.Usuarios
+                        join dep in _contexto.Departamentos on usu.DepartamentoId equals dep.Id
+                        join ace in _contexto.DepartamentoAcessos on dep.Id equals ace.DepartamentoId
+                        where usu.UserName == userName && usu.Password == senha && usu.Ativo == true && dep.Ativo == true
+                        select new
+                        {
+                            usu.Id,
+                            ace.Programa,
+                            ace.Acesso,
+                            ace.Incluir,
+                            ace.Editar,
+                            ace.Excluir,
+                            ace.Relatorio,
+                            usu.Adm
+                        };
 
-            //var lista = new List<UsuarioPermissaoDepartamento>();
-            //foreach (var item in query)
-            //{
-            //    var model = new UsuarioPermissaoDepartamento()
-            //    {
-            //        Acesso = item.Acesso,
-            //        Editar = item.Editar,
-            //        Excluir = item.Excluir,
-            //        IdPrograma = item.Programa,
-            //        IdUsuario = item.Id,
-            //        Incluir = item.Incluir,
-            //        Relatorio = item.Relatorio,
-            //        UsuarioADM = item.Adm
-            //    };
-            //    lista.Add(model);
+            var lista = new List<UsuarioPermissaoDepartamento>();
+            foreach (var item in query)
+            {
+                var model = new UsuarioPermissaoDepartamento()
+                {
+                    Acesso = item.Acesso,
+                    Editar = item.Editar,
+                    Excluir = item.Excluir,
+                    IdPrograma = item.Programa,
+                    IdUsuario = item.Id,
+                    Incluir = item.Incluir,
+                    Relatorio = item.Relatorio,
+                    UsuarioADM = item.Adm
+                };
+                lista.Add(model);
 
-            //}
-            //return lista;
+            }
+            return lista;
         }
 
         private string PermissaoSqlBase(int idUsuario, EnProgramas enProgramas)
@@ -252,6 +252,18 @@ namespace SIDomper.Infra.RepositorioEF
                 return true;
 
             return (model.Relatorio);
+        }
+
+        public void ExcluirPermissao(int id)
+        {
+            var model = _contexto.UsuarioPermissoes.First(x => x.Id == id);
+            if (model != null)
+                _contexto.UsuarioPermissoes.Remove(model);
+        }
+
+        public void AdicionarPermissao(UsuarioPermissao model)
+        {
+            _contexto.UsuarioPermissoes.Add(model);
         }
     }
 }

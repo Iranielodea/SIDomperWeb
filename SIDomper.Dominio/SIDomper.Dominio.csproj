@@ -114,6 +114,7 @@
     <Compile Include="Interfaces\Repositorios\IRepositorioObservacao.cs" />
     <Compile Include="Interfaces\Repositorios\IRepositorioEscala.cs" />
     <Compile Include="Interfaces\Repositorios\IRepositorioParametro.cs" />
+    <Compile Include="Interfaces\Repositorios\IRepositorioRevenda.cs" />
     <Compile Include="Interfaces\Repositorios\IRepositorioStatus.cs" />
     <Compile Include="Interfaces\Repositorios\IRepositorioTipo.cs" />
     <Compile Include="Interfaces\Repositorios\IRepositorioProduto.cs" />
@@ -126,6 +127,7 @@
     <Compile Include="Interfaces\Servicos\IServicoContaEmail.cs" />
     <Compile Include="Interfaces\Servicos\IServicoObservacao.cs" />
     <Compile Include="Interfaces\Servicos\IServicoParametro.cs" />
+    <Compile Include="Interfaces\Servicos\IServicoRevenda.cs" />
     <Compile Include="Interfaces\Servicos\IServicoStatus.cs" />
     <Compile Include="Interfaces\Servicos\IServicoTipo.cs" />
     <Compile Include="Interfaces\Servicos\IServicoProduto.cs" />
@@ -140,6 +142,7 @@
     <Compile Include="Servicos\ServicoObservacao.cs" />
     <Compile Include="Servicos\ServicoParametro.cs" />
     <Compile Include="Servicos\ServicoProduto.cs" />
+    <Compile Include="Servicos\ServicoRevenda.cs" />
     <Compile Include="Servicos\ServicoStatus.cs" />
     <Compile Include="Servicos\ServicoTipo.cs" />
     <Compile Include="Servicos\ServicoUsuario.cs" />

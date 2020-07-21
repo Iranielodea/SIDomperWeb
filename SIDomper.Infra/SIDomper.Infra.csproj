@@ -129,6 +129,7 @@
     <Compile Include="RepositorioEF\RepositorioObservacao.cs" />
     <Compile Include="RepositorioEF\RepositorioEscala.cs" />
     <Compile Include="RepositorioEF\RepositorioParametro.cs" />
+    <Compile Include="RepositorioEF\RepositorioRevenda.cs" />
     <Compile Include="RepositorioEF\RepositorioStatus.cs" />
     <Compile Include="RepositorioEF\RepositorioTipo.cs" />
     <Compile Include="RepositorioEF\RepositorioUsuario.cs" />
