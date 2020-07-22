@@ -64,8 +64,10 @@ namespace SIDomper.Servicos.Regras
 
         public IEnumerable<ChamadoConsultaViewModel> FiltrarPorId(int id, int idUsuario)
         {
-            var filtro = new ChamadoFiltroViewModel();
-            filtro.Id = id;
+            var filtro = new ChamadoFiltroViewModel
+            {
+                Id = id
+            };
             return _chamadoRepositorioDapper.Filtrar(filtro, "Cha_Id", "", idUsuario, false, EnumChamado.Chamado);
 
             //return _repADO.Filtrar(filtro, "Cha_Id", "", idUsuario, false, EnumChamado.Chamado);
@@ -164,19 +166,20 @@ namespace SIDomper.Servicos.Regras
 
                 var clienteServico = new ClienteServico();
                 var tipoServico = new TipoServico();
-                
-                var chamado = new Chamado();
 
-                chamado.DataAbertura = DateTime.Now;
-                chamado.HoraAbertura = TimeSpan.Parse(DateTime.Now.ToShortTimeString());
+                var chamado = new Chamado
+                {
+                    DataAbertura = DateTime.Now,
+                    HoraAbertura = TimeSpan.Parse(DateTime.Now.ToShortTimeString()),
 
-                chamado.Contato = chamadoInputModel.Contato;
-                chamado.Descricao = chamadoInputModel.Descricao;
-                chamado.Nivel = 2;
-                chamado.TipoMovimento = 1;
-                chamado.Origem = 4;
+                    Contato = chamadoInputModel.Contato,
+                    Descricao = chamadoInputModel.Descricao,
+                    Nivel = 2,
+                    TipoMovimento = 1,
+                    Origem = 4,
 
-                chamado.UsuarioAberturaId = idUsuario;
+                    UsuarioAberturaId = idUsuario
+                };
 
                 var cliente = clienteServico.ObterPorCNPJ(chamadoInputModel.CNPJ);
                 if (cliente != null)

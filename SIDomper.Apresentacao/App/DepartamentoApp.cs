@@ -7,31 +7,31 @@ namespace SIDomper.Apresentacao.App
     {
         public DepartamentoViewModel Novo(int idUsuario)
         {
-            string url = Constantes.URL + "departamento?novo={0}&idUsuario={1}";
-            return new Operacao<DepartamentoViewModel>().First(string.Format(url, "", idUsuario));
+            string url = Constantes.URL + "departamento/Novo?idUsuario={0}";
+            return new Operacao<DepartamentoViewModel>().First(string.Format(url, idUsuario));
         }
 
         public DepartamentoViewModel ObterPorId(int id)
         {
-            string url = Constantes.URL + "departamento/{0}";
+            string url = Constantes.URL + "departamento/ObterPorId?id={0}";
             return new Operacao<DepartamentoViewModel>().First(string.Format(url, id));
         }
 
         public DepartamentoViewModel Editar(int id, int idUsuario)
         {
-            string url = Constantes.URL + "departamento/{0}?idUsuario={1}";
+            string url = Constantes.URL + "departamento/Editar?id={0}&idUsuario={1}";
             return new Operacao<DepartamentoViewModel>().First(string.Format(url, id, idUsuario));
         }
 
         public DepartamentoViewModel ObterPorCodigo(int codigo)
         {
-            string url = Constantes.URL + "departamento?codigo={0}";
+            string url = Constantes.URL + "departamento/ObterPorCodigo?codigo={0}";
             return new Operacao<DepartamentoViewModel>().First(string.Format(url, codigo));
         }
 
         public DepartamentoConsultaViewModel[] Filtrar(string campo, string texto, string ativo = "A", bool contem = true)
         {
-            string url = Constantes.URL + "Departamento?campo={0}&texto={1}&ativo={2}&contem={3}";
+            string url = Constantes.URL + "Departamento/Filtrar?campo={0}&texto={1}&ativo={2}";
             return new Operacao<DepartamentoConsultaViewModel>().GetAll(string.Format(url, campo, texto, ativo, contem));
         }
 

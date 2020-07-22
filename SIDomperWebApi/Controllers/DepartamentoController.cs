@@ -1,5 +1,6 @@
 ﻿using Mapster;
 using SIDomper.Dominio.Entidades;
+using SIDomper.Dominio.Servicos;
 using SIDomper.Dominio.ViewModel;
 using SIDomper.Servicos.Regras;
 using System;
@@ -8,22 +9,26 @@ using System.Web.Http;
 
 namespace SIDomperWebApi.Controllers
 {
+    [RoutePrefix("api/departamento")]
     public class DepartamentoController : ApiController
     {
-        private readonly DepartamentoServico _departamentoServico;
+        //private readonly DepartamentoServico _departamentoServico;
+        private readonly ServicoDepartamento _servicoDepartamento;
 
-        public DepartamentoController()
+        public DepartamentoController(ServicoDepartamento servicoDepartamento)
         {
-            _departamentoServico = new DepartamentoServico();
+            //_departamentoServico = new DepartamentoServico();
+            _servicoDepartamento = servicoDepartamento;
         }
 
+        [Route("ObterPorId")]
         [HttpGet]
         public DepartamentoViewModel ObterPorId(int id)
         {
             var model = new DepartamentoViewModel();
             try
             {
-                var item = _departamentoServico.ObterPorId(id);
+                var item = _servicoDepartamento.ObterPorId(id);
                 model = item.Adapt<DepartamentoViewModel>();
                 return model;
             }
@@ -34,14 +39,15 @@ namespace SIDomperWebApi.Controllers
             }
         }
 
+        [Route("Editar")]
         [HttpGet]
-        public DepartamentoViewModel Editar(int idUsuario, int id)
+        public DepartamentoViewModel Editar(int id, int idUsuario)
         {
             var model = new DepartamentoViewModel();
             try
             {
                 string mensagem = "";
-                var item = _departamentoServico.Editar(idUsuario, id, ref mensagem);
+                var item = _servicoDepartamento.Editar(id, idUsuario, ref mensagem);
                 model = item.Adapt<DepartamentoViewModel>();
 
                 model.Mensagem = mensagem;
@@ -54,13 +60,14 @@ namespace SIDomperWebApi.Controllers
             }
         }
 
+        [Route("Novo")]
         [HttpGet]
-        public DepartamentoViewModel Novo(string novo, int idUsuario)
+        public DepartamentoViewModel Novo(int idUsuario)
         {
             var model = new DepartamentoViewModel();
             try
             {
-                var item = _departamentoServico.Novo(idUsuario);
+                var item = _servicoDepartamento.Novo(idUsuario);
                 model = item.Adapt<DepartamentoViewModel>();
                 return model;
             }
@@ -71,13 +78,14 @@ namespace SIDomperWebApi.Controllers
             }
         }
 
+        [Route("ObterPorCodigo")]
         [HttpGet]
         public DepartamentoViewModel ObterPorCodigo(int codigo)
         {
             var model = new DepartamentoViewModel();
             try
             {
-                var prod = _departamentoServico.ObterPorCodigo(codigo);
+                var prod = _servicoDepartamento.ObterPorCodigo(codigo);
                 model = prod.Adapt<DepartamentoViewModel>();
                 return model;
             }
@@ -88,12 +96,13 @@ namespace SIDomperWebApi.Controllers
             }
         }
 
+        [Route("Filtrar")]
         [HttpGet]
         public IEnumerable<DepartamentoConsultaViewModel> Filtrar(string campo, string texto, string ativo = "A", bool contem = true)
         {
             try
             {
-                var lista = _departamentoServico.Filtrar(campo, texto, ativo, contem);
+                var lista = _servicoDepartamento.Filtrar(campo, texto, ativo, contem);
                     var model = lista.Adapt<DepartamentoConsultaViewModel[]>();
                 return model;
             }
@@ -103,7 +112,6 @@ namespace SIDomperWebApi.Controllers
             }
         }
 
-
         [HttpPost]
         public DepartamentoViewModel Incluir(DepartamentoViewModel model)
         {
@@ -112,7 +120,7 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 var departamento = model.Adapt<Departamento>();
-                _departamentoServico.Salvar(departamento);
+                _servicoDepartamento.Salvar(departamento);
 
                 departamentoViewModel = departamento.Adapt<DepartamentoViewModel>();
                 return departamentoViewModel;
@@ -131,7 +139,7 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 var departamento = model.Adapt<Departamento>();
-                _departamentoServico.Salvar(departamento);
+                _servicoDepartamento.Salvar(departamento);
 
                 departamentoViewModel = departamento.Adapt<DepartamentoViewModel>();
                 return departamentoViewModel;
@@ -145,13 +153,12 @@ namespace SIDomperWebApi.Controllers
 
         //DELETE api/<controller>/5
         [HttpDelete]
-        public DepartamentoViewModel Delete(int idUsuario, int id)
+        public DepartamentoViewModel Delete(int id, int idUsuario)
         {
             var model = new DepartamentoViewModel();
             try
             {
-                var departamento = _departamentoServico.ObterPorId(id);
-                _departamentoServico.Excluir(idUsuario, departamento);
+                _servicoDepartamento.Excluir(_servicoDepartamento.ObterPorId(id), idUsuario);
                 return model;
             }
             catch (Exception ex)

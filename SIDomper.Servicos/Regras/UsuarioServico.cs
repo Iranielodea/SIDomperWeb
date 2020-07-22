@@ -44,8 +44,10 @@ namespace SIDomper.Servicos.Regras
         {
             PermissaoMensagem(idUsuario, _tipoPrograma, EnTipoManutencao.Incluir);
 
-            var model = new Usuario();
-            model.Ativo = true;
+            var model = new Usuario
+            {
+                Ativo = true
+            };
 
             return model;
         }

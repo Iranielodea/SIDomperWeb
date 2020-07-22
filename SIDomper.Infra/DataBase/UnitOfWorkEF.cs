@@ -230,5 +230,16 @@ namespace SIDomper.Infra.DataBase
                 return _repositorioRamal;
             }
         }
+
+        private IRepositorioDepartamento _repositorioDepartamento;
+        public IRepositorioDepartamento RepositorioDepartamento
+        {
+            get
+            {
+                if (_repositorioDepartamento == null)
+                    _repositorioDepartamento = new RepositorioDepartamento(_context);
+                return _repositorioDepartamento;
+            }
+        }
     }
 }

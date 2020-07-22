@@ -116,6 +116,7 @@
     <Compile Include="Interfaces\Repositorios\IRepositorioEscala.cs" />
     <Compile Include="Interfaces\Repositorios\IRepositorioParametro.cs" />
     <Compile Include="Interfaces\Repositorios\IRepositorioCliente.cs" />
+    <Compile Include="Interfaces\Repositorios\IRepositorioDepartamento.cs" />
     <Compile Include="Interfaces\Repositorios\IRepositorioRamal.cs" />
     <Compile Include="Interfaces\Repositorios\IRepositorioRevenda.cs" />
     <Compile Include="Interfaces\Repositorios\IRepositorioStatus.cs" />
@@ -124,6 +125,7 @@
     <Compile Include="Interfaces\Repositorios\IRepositorioUsuario.cs" />
     <Compile Include="Interfaces\Repositorios\IRepositorioUsuarioWrite.cs" />
     <Compile Include="Interfaces\Servicos\IServicoCidade.cs" />
+    <Compile Include="Interfaces\Servicos\IServicoDepartamento.cs" />
     <Compile Include="Interfaces\Servicos\IServicoEscala.cs" />
     <Compile Include="Interfaces\Servicos\IServicoFeriado.cs" />
     <Compile Include="Interfaces\Servicos\IServicoModulo.cs" />
@@ -142,6 +144,7 @@
     <Compile Include="Servicos\ServicoCidade.cs" />
     <Compile Include="Servicos\ServicoCliente.cs" />
     <Compile Include="Servicos\ServicoContaEmail.cs" />
+    <Compile Include="Servicos\ServicoDepartamento.cs" />
     <Compile Include="Servicos\ServicoEscala.cs" />
     <Compile Include="Servicos\ServicoFeriado.cs" />
     <Compile Include="Servicos\ServicoModulo.cs" />
