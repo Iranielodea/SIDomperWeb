@@ -126,7 +126,7 @@ namespace SIDomper.Dominio.Servicos
 
             if (!_uow.IsValid())
                 throw new Exception(_uow.RetornoNotificacao());
-            
+
             _uow.RepositorioProduto.Salvar(model);
             _uow.SaveChanges();
         }

@@ -192,7 +192,13 @@ namespace SIDomper.Servicos.Regras
 
         public ClienteLoginViewModel Login(string cnpj)
         {
-            string novoCnpj = Utils.FormatarCNPJ(cnpj);
+            string documento = Utils.SomenteNumero(cnpj);
+
+            string novoCnpj;
+            if (documento.Length == 11)
+                novoCnpj = Utils.FormatarCPF(cnpj); 
+            else
+                novoCnpj = Utils.FormatarCNPJ(cnpj);
 
             var clienteLogin = new ClienteLoginViewModel();
 

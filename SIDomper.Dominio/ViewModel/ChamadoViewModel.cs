@@ -42,6 +42,7 @@ namespace SIDomper.Dominio.ViewModel
         public string NomeStatus { get; set; }
         public bool UsuarioPermissaoAlterarDataHora { get; set; }
         public string Versao { get; set; }
+        public int Origem { get; set; }
 
         public string NomeFantasia { get; set; }
         public string NomeRevenda { get; set; }

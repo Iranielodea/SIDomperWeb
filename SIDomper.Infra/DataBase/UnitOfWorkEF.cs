@@ -208,5 +208,27 @@ namespace SIDomper.Infra.DataBase
                 return _repositorioRevenda;
             }
         }
+
+        private IRepositorioCliente _repositorioCliente;
+        public IRepositorioCliente RepositorioCliente
+        {
+            get
+            {
+                if (_repositorioCliente == null)
+                    _repositorioCliente = new RepositorioCliente(_context);
+                return _repositorioCliente;
+            }
+        }
+
+        private IRepositorioRamal _repositorioRamal;
+        public IRepositorioRamal RepositorioRamal
+        {
+            get
+            {
+                if (_repositorioRamal == null)
+                    _repositorioRamal = new RepositorioRamal(_context);
+                return _repositorioRamal;
+            }
+        }
     }
 }

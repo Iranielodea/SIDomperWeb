@@ -2,6 +2,7 @@
 using SIDomper.Dominio.Entidades;
 using SIDomper.Dominio.Enumeracao;
 using SIDomper.Dominio.Interfaces;
+using SIDomper.Dominio.Interfaces.Repositorios;
 using SIDomper.Dominio.Interfaces.Servicos;
 using System;
 using System.Collections.Generic;
@@ -13,13 +14,16 @@ namespace SIDomper.Dominio.Servicos
     {
         private readonly IUnitOfWork _uow;
         private readonly IRepositoryReadOnly<UsuarioConsulta> _repositoryReadOnly;
+        private readonly IRepositorioUsuarioWrite _repositorioUsuarioWrite;
         private readonly EnProgramas _enProgramas;
 
         public ServicoUsuario(IUnitOfWork unitOfWork,
-           IRepositoryReadOnly<UsuarioConsulta> repositoryReadOnly)
+           IRepositoryReadOnly<UsuarioConsulta> repositoryReadOnly, 
+           IRepositorioUsuarioWrite repositorioUsuarioWrite)
         {
             _uow = unitOfWork;
             _repositoryReadOnly = repositoryReadOnly;
+            _repositorioUsuarioWrite = repositorioUsuarioWrite;
             _enProgramas = EnProgramas.Usuario;
         }
 
@@ -68,9 +72,11 @@ namespace SIDomper.Dominio.Servicos
             if (!_uow.RepositorioUsuario.PermissaoIncluir(idUsuario, _enProgramas))
                 throw new Exception(Mensagem.UsuarioSemPermissao);
 
-            var usuario = new Usuario();
-            usuario.Codigo = ProximoCodigo();
-            usuario.Ativo = true;
+            var usuario = new Usuario
+            {
+                Codigo = ProximoCodigo(),
+                Ativo = true
+            };
             return usuario;
         }
 
@@ -137,33 +143,23 @@ namespace SIDomper.Dominio.Servicos
                 throw new Exception(_uow.RetornoNotificacao());
 
             if (model.Id == 0)
-                _uow.RepositorioUsuario.Salvar(model);
+            {
+                var id = _repositorioUsuarioWrite.Insert(model);
+            }
             else
             {
+                _repositorioUsuarioWrite.Update(model);
+
                 var usuario = ObterPorId(model.Id);
                 if (usuario == null)
                     usuario = new Usuario();
 
                 AlterarPermissao(usuario, model);
-                ExcluirPermissao(usuario, model);
-
-                usuario.Adm = model.Adm;
-                usuario.Ativo = model.Ativo;
-                usuario.ClienteId = model.ClienteId;
-                usuario.Codigo = model.Codigo;
-                usuario.ContaEmailId = model.ContaEmailId;
-                usuario.DepartamentoId = model.DepartamentoId;
-                usuario.Email = model.Email;
-                usuario.Nome = model.Nome;
-                usuario.Notificar = model.Notificar;
-                usuario.OnLine = model.OnLine;
-                usuario.Password = model.Password;
-                usuario.RevendaId = model.RevendaId;
-                usuario.UserName = model.UserName;
+                ExcluirPermissaoUsuario(usuario, model);
 
                 _uow.RepositorioUsuario.Salvar(usuario);
+                _uow.SaveChanges();
             }
-            _uow.SaveChanges();
         }
 
         private int ProximoCodigo()
@@ -236,7 +232,7 @@ namespace SIDomper.Dominio.Servicos
             return resultado;
         }
 
-        private void AlterarPermissao(Usuario usuario, Usuario model)
+        private void AlterarPermissao(Usuario usuarioBanco, Usuario model)
         {
             foreach (var item in model.UsuariosPermissao)
             {
@@ -244,10 +240,10 @@ namespace SIDomper.Dominio.Servicos
                     throw new Exception("Informe a sigla!");
 
                 if (item.Id == 0)
-                    usuario.UsuariosPermissao.Add(item);
+                    usuarioBanco.UsuariosPermissao.Add(item);
                 else
                 {
-                    var temp = usuario.UsuariosPermissao.FirstOrDefault(x => x.Id == item.Id);
+                    var temp = usuarioBanco.UsuariosPermissao.FirstOrDefault(x => x.Id == item.Id);
                     if (temp != null)
                     {
                         temp.Sigla = item.Sigla;
@@ -256,11 +252,11 @@ namespace SIDomper.Dominio.Servicos
             }
         }
 
-        private void ExcluirPermissao(Usuario usuario, Usuario model)
+        private void ExcluirPermissaoUsuario(Usuario usuarioBanco, Usuario model)
         {
             string idDelecao = "";
             int i = 1;
-            foreach (var itemBanco in usuario.UsuariosPermissao)
+            foreach (var itemBanco in usuarioBanco.UsuariosPermissao)
             {
                 var dados = model.UsuariosPermissao.FirstOrDefault(x => x.Id == itemBanco.Id);
                 if (dados == null)
@@ -275,6 +271,9 @@ namespace SIDomper.Dominio.Servicos
                     }
                 }
             }
+
+            if (idDelecao != "")
+                _uow.Executar("DELETE FROM Usuario_Permissao WHERE UsuP_Id in (" + idDelecao + ")");
         }
 
         public Usuario Editar(int id, int idUsuario, ref string mensagem)

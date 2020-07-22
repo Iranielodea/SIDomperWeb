@@ -53,8 +53,6 @@
             this.btnPassaTodos = new System.Windows.Forms.Button();
             this.btnPassa1 = new System.Windows.Forms.Button();
             this.dgvPermissao = new System.Windows.Forms.DataGridView();
-            this.UsuP_Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Sigla = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label12 = new System.Windows.Forms.Label();
             this.lstPermissao = new System.Windows.Forms.ListBox();
             this.tpFiltroRevenda = new System.Windows.Forms.TabPage();
@@ -67,6 +65,8 @@
             this.UsrContaEmail = new SIDomper.Win.Componentes.usrPesquisa();
             this.UsrRevenda = new SIDomper.Win.Componentes.usrPesquisa();
             this.UsrCliente = new SIDomper.Win.Componentes.usrPesquisa();
+            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Sigla = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControl1.SuspendLayout();
             this.tpPesquisa.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -168,6 +168,14 @@
             // tpFiltroPrincipal
             // 
             this.tpFiltroPrincipal.Size = new System.Drawing.Size(751, 538);
+            // 
+            // cboAtivo
+            // 
+            this.cboAtivo.Size = new System.Drawing.Size(121, 25);
+            // 
+            // cbPesquisa
+            // 
+            this.cbPesquisa.Size = new System.Drawing.Size(133, 25);
             // 
             // dgvDados
             // 
@@ -338,7 +346,7 @@
             this.tpPermissao.Location = new System.Drawing.Point(4, 26);
             this.tpPermissao.Name = "tpPermissao";
             this.tpPermissao.Padding = new System.Windows.Forms.Padding(3);
-            this.tpPermissao.Size = new System.Drawing.Size(751, 538);
+            this.tpPermissao.Size = new System.Drawing.Size(751, 499);
             this.tpPermissao.TabIndex = 1;
             this.tpPermissao.Text = "Permissões";
             // 
@@ -396,26 +404,12 @@
             // 
             this.dgvPermissao.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvPermissao.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.UsuP_Id,
+            this.Id,
             this.Sigla});
             this.dgvPermissao.Location = new System.Drawing.Point(373, 48);
             this.dgvPermissao.Name = "dgvPermissao";
             this.dgvPermissao.Size = new System.Drawing.Size(372, 327);
             this.dgvPermissao.TabIndex = 2;
-            // 
-            // UsuP_Id
-            // 
-            this.UsuP_Id.DataPropertyName = "Id";
-            this.UsuP_Id.HeaderText = "Id";
-            this.UsuP_Id.Name = "UsuP_Id";
-            this.UsuP_Id.Visible = false;
-            // 
-            // Sigla
-            // 
-            this.Sigla.DataPropertyName = "Sigla";
-            this.Sigla.HeaderText = "Opções";
-            this.Sigla.Name = "Sigla";
-            this.Sigla.Width = 300;
             // 
             // label12
             // 
@@ -533,6 +527,20 @@
             this.UsrCliente.Size = new System.Drawing.Size(554, 49);
             this.UsrCliente.TabIndex = 8;
             // 
+            // Id
+            // 
+            this.Id.DataPropertyName = "Id";
+            this.Id.HeaderText = "Id";
+            this.Id.Name = "Id";
+            this.Id.Visible = false;
+            // 
+            // Sigla
+            // 
+            this.Sigla.DataPropertyName = "Sigla";
+            this.Sigla.HeaderText = "Opções";
+            this.Sigla.Name = "Sigla";
+            this.Sigla.Width = 300;
+            // 
             // frmUsuario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
@@ -596,8 +604,6 @@
         private System.Windows.Forms.Button btnRetornaTodos;
         private System.Windows.Forms.Button btnRetorna1;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.DataGridViewTextBoxColumn UsuP_Id;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Sigla;
         private System.Windows.Forms.TabPage tpFiltroRevenda;
         private Filtros.ursFiltroPadrao usrDepartamentoFiltro;
         public System.Windows.Forms.TabPage tpFiltroDepartamento;
@@ -608,5 +614,7 @@
         private Componentes.usrPesquisa UsrContaEmail;
         private Componentes.usrPesquisa UsrRevenda;
         private Componentes.usrPesquisa UsrCliente;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Sigla;
     }
 }

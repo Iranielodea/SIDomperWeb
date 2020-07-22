@@ -2,6 +2,7 @@
 using SIDomper.Dominio.Entidades;
 using SIDomper.Dominio.Servicos;
 using SIDomper.Dominio.ViewModel;
+using SIDomper.Servicos.Regras;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,15 +13,17 @@ namespace SIDomperWebApi.Controllers
     [RoutePrefix("api/usuario")]
     public class UsuarioController : ApiController
     {
-        //private readonly UsuarioServico _usuarioServico;
+        private readonly UsuarioServico _usuarioServico;
         //private readonly ClienteServico _clienteServico;
         private readonly ServicoUsuario _servicoUsuario;
+        private readonly ServicoCliente _servicoCliente;
 
-        public UsuarioController(ServicoUsuario servicoUsuario)
+        public UsuarioController(ServicoUsuario servicoUsuario, ServicoCliente servicoCliente)
         {
-            //_usuarioServico = new UsuarioServico();
+            _usuarioServico = new UsuarioServico();
             //_clienteServico = new ClienteServico();
             _servicoUsuario = servicoUsuario;
+            _servicoCliente = servicoCliente;
         }
 
         [Route("ObterPorId")]
@@ -52,26 +55,18 @@ namespace SIDomperWebApi.Controllers
             {
                 string mensagem = "";
                 var item = _servicoUsuario.Editar(id, idUsuario, ref mensagem);
+
                 model = item.Adapt<UsuarioViewModel>();
+
+                if (item.ClienteId.HasValue)
+                {
+                    var cliente = _servicoCliente.ObterPorId(item.ClienteId.Value);
+                    model.ClienteCodigo = cliente.Codigo;
+                    model.NomeCliente = cliente.Nome;
+                }
+
                 model.Mensagem = mensagem;
                 return model;
-
-
-                //bool permissao = true;
-                //Cliente cliente = new Cliente();
-                //var item = _usuarioServico.Editar(idUsuario, id, ref permissao);
-                //if (item.ClienteId.HasValue)
-                //    cliente = _clienteServico.ObterPorId(item.ClienteId.Value);
-                
-                //model = item.Adapt<UsuarioViewModel>();
-                //model.ClienteCodigo = cliente.Codigo;
-                //model.NomeCliente = cliente.Nome;
-                //model.Cliente = cliente.Adapt<ClienteViewModel>();
-
-                //if (permissao == false)
-                //    model.Mensagem = "Usuário sem permissão!";
-
-                //return model;
             }
             catch (Exception ex)
             {

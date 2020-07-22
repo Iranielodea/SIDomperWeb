@@ -7,25 +7,25 @@ namespace SIDomper.Apresentacao.App
     {
         public RamalViewModel Novo(int idUsuario)
         {
-            string url = Constantes.URL + "ramal?novo={0}&idUsuario={1}";
+            string url = Constantes.URL + "ramal/Novo?idUsuario={0}";
             return new Operacao<RamalViewModel>().First(string.Format(url, "", idUsuario));
         }
 
         public RamalViewModel ObterPorId(int id)
         {
-            string url = Constantes.URL + "ramal/{0}";
+            string url = Constantes.URL + "ramal/ObterPorId?id={0}";
             return new Operacao<RamalViewModel>().First(string.Format(url, id));
         }
 
         public RamalViewModel Editar(int id, int idUsuario)
         {
-            string url = Constantes.URL + "ramal/{0}?idUsuario={1}";
+            string url = Constantes.URL + "ramal//Editar?id={0}&idUsuario={1}";
             return new Operacao<RamalViewModel>().First(string.Format(url, id, idUsuario));
         }
 
         public RamalConsultaViewModel[] Filtrar(string campo, string texto, bool contem = true)
         {
-            string url = Constantes.URL + "ramal?campo={0}&texto={1}&contem={2}";
+            string url = Constantes.URL + "ramal/Filtrar?campo={0}&texto={1}&ativo={2}";
             return new Operacao<RamalConsultaViewModel>().GetAll(string.Format(url, campo, texto, contem));
         }
 

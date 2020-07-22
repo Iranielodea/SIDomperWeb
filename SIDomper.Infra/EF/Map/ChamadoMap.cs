@@ -30,6 +30,7 @@ namespace SIDomper.Infra.EF.Map
             Property(x => x.UsuarioAtendeAtualId).HasColumnName("Cha_UsuarioAtendeAtual");
             Property(x => x.HoraAtendeAtual).HasColumnName("Cha_HoraAtendeAtual");
             Property(x => x.TipoMovimento).HasColumnName("Cha_TipoMovimento");
+            Property(x => x.Origem).HasColumnName("Cha_Origem");
 
             this.HasRequired(t => t.Cliente)
                 .WithMany(t => t.Chamados)

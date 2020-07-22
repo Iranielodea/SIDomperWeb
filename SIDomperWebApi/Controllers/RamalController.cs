@@ -1,5 +1,6 @@
 ﻿using Mapster;
 using SIDomper.Dominio.Entidades;
+using SIDomper.Dominio.Interfaces.Servicos;
 using SIDomper.Dominio.ViewModel;
 using SIDomper.Servicos.Regras;
 using System;
@@ -8,22 +9,24 @@ using System.Web.Http;
 
 namespace SIDomperWebApi.Controllers
 {
+    [RoutePrefix("api/ramal")]
     public class RamalController : ApiController
     {
-        private readonly RamalServico _ramalServico;
+        private readonly IServicoRamal _servicoRamal;
 
-        public RamalController()
+        public RamalController(IServicoRamal servicoRamal)
         {
-            _ramalServico = new RamalServico();
+            _servicoRamal = servicoRamal;
         }
 
+        [Route("ObterPorId")]
         [HttpGet]
         public RamalViewModel ObterPorId(int id)
         {
             var model = new RamalViewModel();
             try
             {
-                var item = _ramalServico.ObterPorId(id);
+                var item = _servicoRamal.ObterPorId(id);
                 model = item.Adapt<RamalViewModel>();
                 return model;
             }
@@ -34,14 +37,15 @@ namespace SIDomperWebApi.Controllers
             }
         }
 
+        [Route("Editar")]
         [HttpGet]
-        public RamalViewModel Editar(int idUsuario, int id)
+        public RamalViewModel Editar(int id, int idUsuario)
         {
             var model = new RamalViewModel();
             try
             {
                 string mensagem = "";
-                var item = _ramalServico.Editar(idUsuario, id, ref mensagem);
+                var item = _servicoRamal.Editar(id, idUsuario, ref mensagem);
                 model = item.Adapt<RamalViewModel>();
                 model.Mensagem = mensagem;
                 return model;
@@ -53,13 +57,14 @@ namespace SIDomperWebApi.Controllers
             }
         }
 
+        [Route("Novo")]
         [HttpGet]
-        public RamalViewModel Novo(string novo, int idUsuario)
+        public RamalViewModel Novo(int idUsuario)
         {
             var model = new RamalViewModel();
             try
             {
-                var item = _ramalServico.Novo(idUsuario);
+                var item = _servicoRamal.Novo(idUsuario);
                 model = item.Adapt<RamalViewModel>();
                 return model;
             }
@@ -70,12 +75,13 @@ namespace SIDomperWebApi.Controllers
             }
         }
 
+        [Route("Filtrar")]
         [HttpGet]
         public IEnumerable<RamalConsultaViewModel> Filtrar(string campo, string texto, bool contem = true)
         {
             try
             {
-                var lista = _ramalServico.Filtrar(campo, texto, contem);
+                var lista = _servicoRamal.Filtrar(campo, texto, contem);
                 var model = lista.Adapt<RamalConsultaViewModel[]>();
                 return model;
             }
@@ -94,7 +100,7 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 var ramal = model.Adapt<Ramal>();
-                _ramalServico.Salvar(ramal);
+                _servicoRamal.Salvar(ramal);
 
                 ramalViewModel = ramal.Adapt<RamalViewModel>();
                 return ramalViewModel;
@@ -113,7 +119,7 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 var ramal = model.Adapt<Ramal>();
-                _ramalServico.Salvar(ramal);
+                _servicoRamal.Salvar(ramal);
 
                 ramalViewModel = ramal.Adapt<RamalViewModel>();
                 return ramalViewModel;
@@ -127,13 +133,12 @@ namespace SIDomperWebApi.Controllers
 
         //DELETE api/<controller>/5
         [HttpDelete]
-        public RamalViewModel Delete(int idUsuario, int id)
+        public RamalViewModel Delete(int id, int idUsuario)
         {
             var model = new RamalViewModel();
             try
             {
-                var ramal = _ramalServico.ObterPorId(id);
-                _ramalServico.Excluir(idUsuario, ramal);
+                _servicoRamal.Excluir(_servicoRamal.ObterPorId(id), idUsuario);
                 return model;
             }
             catch (Exception ex)
