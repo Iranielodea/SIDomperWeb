@@ -112,3 +112,14 @@ C:\Projetos\Domper\SIDomperWeb\SIDomperWebApi\obj\Release\SIDomperWebApi.csproj.
 C:\Projetos\Domper\SIDomperWeb\SIDomperWebApi\obj\Release\SIDomperWebApi.csproj.CopyComplete
 C:\Projetos\Domper\SIDomperWeb\SIDomperWebApi\obj\Release\SIDomperWebApi.dll
 C:\Projetos\Domper\SIDomperWeb\SIDomperWebApi\obj\Release\SIDomperWebApi.pdb
+C:\Projetos\Domper\SIDomperWeb\SIDomperWebApi\bin\Ninject.dll
+C:\Projetos\Domper\SIDomperWeb\SIDomperWebApi\bin\Ninject.Web.Common.dll
+C:\Projetos\Domper\SIDomperWeb\SIDomperWebApi\bin\Ninject.Web.Common.WebHost.dll
+C:\Projetos\Domper\SIDomperWeb\SIDomperWebApi\bin\Ninject.Web.WebApi.dll
+C:\Projetos\Domper\SIDomperWeb\SIDomperWebApi\bin\Ninject.Web.WebApi.WebHost.dll
+C:\Projetos\Domper\SIDomperWeb\SIDomperWebApi\bin\WebActivatorEx.dll
+C:\Projetos\Domper\SIDomperWeb\SIDomperWebApi\bin\Ninject.xml
+C:\Projetos\Domper\SIDomperWeb\SIDomperWebApi\bin\Ninject.Web.Common.xml
+C:\Projetos\Domper\SIDomperWeb\SIDomperWebApi\bin\Ninject.Web.Common.WebHost.xml
+C:\Projetos\Domper\SIDomperWeb\SIDomperWebApi\bin\Ninject.Web.WebApi.xml
+C:\Projetos\Domper\SIDomperWeb\SIDomperWebApi\bin\Ninject.Web.WebApi.WebHost.xml

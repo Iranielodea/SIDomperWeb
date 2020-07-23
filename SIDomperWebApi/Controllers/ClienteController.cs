@@ -1,9 +1,8 @@
 ﻿using Mapster;
 using SIDomper.Dominio.Entidades;
+using SIDomper.Dominio.Interfaces.Servicos;
 using SIDomper.Dominio.ViewModel;
-using SIDomper.Servicos.Regras;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 
@@ -12,28 +11,32 @@ namespace SIDomperWebApi.Controllers
     [RoutePrefix("api/cliente")]
     public class ClienteController : ApiController
     {
-        private readonly ClienteServico _clienteServico;
+        //private readonly ClienteServico _clienteServico;
+        private readonly IServicoCliente _servicoCliente;
 
-        public ClienteController()
+        public ClienteController(IServicoCliente servicoCliente)
         {
-            _clienteServico = new ClienteServico();
+            //_clienteServico = new ClienteServico();
+            _servicoCliente = servicoCliente;
         }
 
         // GET: Cliente
-        [HttpGet]
-        public List<Cliente> Get()
-        {
-            var lista = _clienteServico.Listar(1, "");            
-            return lista;
-        }
+        //[HttpGet]
+        //public List<Cliente> Get()
+        //{
+        //    var lista = _servicoCliente.Listar(1, "");
+        //    //var lista = _clienteServico.Listar(1, "");
+        //    return lista;
+        //}
 
+        [Route("ObterPorId")]
         [HttpGet]
         public ClienteViewModelApi ObterPorId(int id)
         {
             var model = new ClienteViewModelApi();
             try
             {
-                var item = _clienteServico.ObterPorId(id);
+                var item = _servicoCliente.ObterPorId(id);
                 model = item.Adapt<ClienteViewModelApi>();
                 model.NomeUsuario = item.Usuario.Nome;
 
@@ -46,17 +49,16 @@ namespace SIDomperWebApi.Controllers
             }
         }
 
+        [Route("Editar")]
         [HttpGet]
         public ClienteViewModelApi Editar(int idUsuario, int idCliente)
         {
             var model = new ClienteViewModelApi();
             try
             {
-                bool permissao = true;
-                var item = _clienteServico.Editar(idUsuario, idCliente, ref permissao);
+                string mensagem = "";
+                var item = _servicoCliente.Editar(idCliente, idUsuario, ref mensagem);
                 model = item.Adapt<ClienteViewModelApi>();
-                if (permissao == false)
-                    model.Mensagem = "Usuário sem permissão!";
 
                 if (item.Usuario != null)
                 {
@@ -94,7 +96,7 @@ namespace SIDomperWebApi.Controllers
         [HttpPost]
         public void ImportarXML()
         {
-            var listaxml = _clienteServico.ImportarXml(@"C:\Projetos\Domper\SIDomperWeb\Banco\269.xml");
+            var listaxml = _servicoCliente.ImportarXml(@"C:\Projetos\Domper\SIDomperWeb\Banco\269.xml");
         }
 
         [Route("Login")]
@@ -104,7 +106,7 @@ namespace SIDomperWebApi.Controllers
             var clienteLoginViewModel = new ClienteLoginViewModel();
             try
             {
-                clienteLoginViewModel = _clienteServico.Login(cnpj);
+                clienteLoginViewModel = _servicoCliente.Login(cnpj);
                 return clienteLoginViewModel;
             }
             catch(Exception ex)
@@ -114,13 +116,14 @@ namespace SIDomperWebApi.Controllers
             }
         }
 
+        [Route("Novo")]
         [HttpGet]
-        public ClienteViewModelApi Novo(string novo, int idCliente)
+        public ClienteViewModelApi Novo(int idUsuario)
         {
             var model = new ClienteViewModelApi();
             try
             {
-                var item = _clienteServico.Novo(idCliente);
+                var item = _servicoCliente.Novo(idUsuario);
                 model = item.Adapt<ClienteViewModelApi>();
                 return model;
             }
@@ -131,13 +134,14 @@ namespace SIDomperWebApi.Controllers
             }
         }
 
+        [Route("ObterPorCodigo")]
         [HttpGet]
         public ClienteViewModelApi ObterPorCodigo(int codigo)
         {
             var model = new ClienteViewModelApi();
             try
             {
-                var prod = _clienteServico.ObterPorCodigo(codigo);
+                var prod = _servicoCliente.ObterPorCodigo(codigo);
                 model = prod.Adapt<ClienteViewModelApi>();
                 model.NomeUsuario = prod.Usuario.Nome;
                 return model;
@@ -149,12 +153,13 @@ namespace SIDomperWebApi.Controllers
             }
         }
 
+        [Route("Filtrar")]
         [HttpPost]
         public ClienteConsultaViewModelApi[] Filtrar([FromBody] ClienteFiltroViewModelApi filtro, int idUsuario, bool contem = true)
         {
             try
             {
-                return _clienteServico.Filtrar(idUsuario, filtro, 1, filtro.Campo, filtro.Valor, contem).ToArray();
+                return _servicoCliente.Filtrar(idUsuario, filtro, 1, filtro.Campo, filtro.Valor, contem).ToArray();
             }
             catch (Exception ex)
             {
@@ -169,7 +174,8 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 var cliente = model.Adapt<Cliente>();
-                _clienteServico.SalvarAPI(cliente);
+                _servicoCliente.Salvar(cliente);
+                //_clienteServico.SalvarAPI(cliente);
                 clienteViewModel = cliente.Adapt<ClienteViewModelApi>();
                 return clienteViewModel;
             }
@@ -187,7 +193,7 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 var cliente = model.Adapt<Cliente>();
-                _clienteServico.SalvarAPI(cliente);
+                _servicoCliente.Salvar(cliente);
                 clienteViewModel = cliente.Adapt<ClienteViewModelApi>();
                 return clienteViewModel;
             }
@@ -199,13 +205,12 @@ namespace SIDomperWebApi.Controllers
         }
 
         [HttpDelete]
-        public ClienteViewModelApi Delete(int idCliente, int id)
+        public ClienteViewModelApi Delete(int id, int idCliente)
         {
             var model = new ClienteViewModelApi();
             try
             {
-                var cliente = _clienteServico.ObterPorId(id);
-                _clienteServico.Excluir(idCliente, cliente);
+                _servicoCliente.Excluir(_servicoCliente.ObterPorId(id), idCliente);
                 return model;
             }
             catch (Exception ex)

@@ -4,7 +4,7 @@
     {
         //public static string URL
         //{
-        //    get { return "http://192.168.100.6:80/api/"; }
+        //    get { return "http://localhost:83/api/"; }
         //    set { URL = value; }
         //}
 
