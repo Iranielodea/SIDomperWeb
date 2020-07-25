@@ -135,6 +135,7 @@
     <Compile Include="RepositorioEF\RepositorioDepartamento.cs" />
     <Compile Include="RepositorioEF\RepositorioBaseConhecimento.cs" />
     <Compile Include="RepositorioEF\RepositorioAgendamento.cs" />
+    <Compile Include="RepositorioEF\RepositorioVersao.cs" />
     <Compile Include="RepositorioEF\RepositorioRamal.cs" />
     <Compile Include="RepositorioEF\RepositorioRevenda.cs" />
     <Compile Include="RepositorioEF\RepositorioStatus.cs" />

@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using SIDomper.Dominio.Entidades;
-using SIDomper.Dominio.Interfaces;
+﻿using SIDomper.Dominio.Entidades;
 using SIDomper.Dominio.Interfaces.Repositorios;
 using SIDomper.Infra.DataBase;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace SIDomper.Infra.RepositorioEF
 {

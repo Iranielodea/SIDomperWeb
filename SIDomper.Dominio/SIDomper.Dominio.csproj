@@ -119,6 +119,7 @@
     <Compile Include="Interfaces\Repositorios\IRepositorioCliente.cs" />
     <Compile Include="Interfaces\Repositorios\IRepositorioDepartamento.cs" />
     <Compile Include="Interfaces\Repositorios\IRepositorioBaseConhecimento.cs" />
+    <Compile Include="Interfaces\Repositorios\IRepositorioVersao.cs" />
     <Compile Include="Interfaces\Repositorios\IRepositorioRamal.cs" />
     <Compile Include="Interfaces\Repositorios\IRepositorioRevenda.cs" />
     <Compile Include="Interfaces\Repositorios\IRepositorioStatus.cs" />
@@ -144,6 +145,7 @@
     <Compile Include="Interfaces\Servicos\IServicoTipo.cs" />
     <Compile Include="Interfaces\Servicos\IServicoProduto.cs" />
     <Compile Include="Interfaces\Servicos\IServicoUsuario.cs" />
+    <Compile Include="Interfaces\Servicos\IServicoVersao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Servicos\ServicoAgendamento.cs" />
     <Compile Include="Servicos\ServicoBaseConhecimento.cs" />
@@ -163,6 +165,7 @@
     <Compile Include="Servicos\ServicoStatus.cs" />
     <Compile Include="Servicos\ServicoTipo.cs" />
     <Compile Include="Servicos\ServicoUsuario.cs" />
+    <Compile Include="Servicos\ServicoVersao.cs" />
     <Compile Include="ViewModel\AgendamentoViewModel.cs" />
     <Compile Include="ViewModel\BaseConhViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
