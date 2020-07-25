@@ -1,7 +1,6 @@
 ﻿using SIDomper.Dominio.Entidades;
 using SIDomper.Dominio.Enumeracao;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace SIDomper.Dominio.Interfaces.Servicos
 {
@@ -12,16 +11,12 @@ namespace SIDomper.Dominio.Interfaces.Servicos
         Status Editar(int id, int idUsuario, ref string mensagem);
         Status ObterPorId(int id);
         Status ObterPorCodigo(int codigo);
-        Status ObterPorCodigo(int codigo, EnStatus enStatus);
         void Relatorio(int idUsuario);
         List<Status> ListarVisitas(string nome);
         void Excluir(Status model, int idUsuario);
         void Salvar(Status model);
-        bool NotificarSupervisor(int statusId);
-        bool NotificarConsultor(int statusId);
-        bool NotificarRevenda(int statusId);
-        bool NotificarCliente(int statusId);
-        IEnumerable<Status> ObterPorPrograma(EnStatus enStatus);
         IEnumerable<Status> ListarTodos();
+        Status ObterPorCodigo(int codigo, EnStatus enStatus);
+        IEnumerable<Status> ObterPorPrograma(EnStatus enStatus);
     }
 }

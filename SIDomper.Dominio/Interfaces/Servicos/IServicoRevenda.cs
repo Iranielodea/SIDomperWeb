@@ -13,6 +13,5 @@ namespace SIDomper.Dominio.Interfaces.Servicos
         void Relatorio(int idUsuario);
         void Excluir(Revenda model, int idUsuario);
         void Salvar(Revenda model);
-        string RetornarEmails(Revenda model);
     }
 }

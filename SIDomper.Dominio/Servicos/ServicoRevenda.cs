@@ -118,19 +118,6 @@ namespace SIDomper.Dominio.Servicos
                 throw new Exception(Mensagem.UsuarioSemPermissao);
         }
 
-        public string RetornarEmails(Revenda model)
-        {
-            string email = "";
-            foreach (var item in model.RevendaEmails)
-            {
-                if (email == "")
-                    email = item.Email;
-                else
-                    email = email + ";" + item.Email;
-            }
-            return email;
-        }
-
         public void Salvar(Revenda model)
         {
             if (model.Codigo <= 0)

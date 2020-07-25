@@ -399,10 +399,12 @@ namespace SIDomper.Dominio.Servicos
             model.ClienteModulos.Clear();
             foreach (var item in listaModulos)
             {
-                var temp = new ClienteModulo();
-                temp.ClienteId = model.Id;
-                temp.ModuloId = item.ModuloId;
-                temp.ProdutoId = item.ProdutoId;
+                var temp = new ClienteModulo
+                {
+                    ClienteId = model.Id,
+                    ModuloId = item.ModuloId,
+                    ProdutoId = item.ProdutoId
+                };
                 model.ClienteModulos.Add(temp);
             }
         }
@@ -455,11 +457,13 @@ namespace SIDomper.Dominio.Servicos
                 var model = _uow.RepositorioProduto.First(x => x.Codigo == item.Produto.Codigo);
                 if (model == null)
                 {
-                    model = new Produto();
-                    model.Id = item.Id;
-                    model.Ativo = true;
-                    model.Nome = item.Produto.Nome;
-                    model.Codigo = item.Produto.Codigo;
+                    model = new Produto
+                    {
+                        Id = item.Id,
+                        Ativo = true,
+                        Nome = item.Produto.Nome,
+                        Codigo = item.Produto.Codigo
+                    };
                 };
                 if (model.Codigo > 0)
                 {
@@ -480,11 +484,13 @@ namespace SIDomper.Dominio.Servicos
                 var model = _uow.RepositorioModulo.First(x => x.Codigo == item.Modulo.Codigo);
                 if (model == null)
                 {
-                    model = new Modulo();
-                    model.Id = item.Id;
-                    model.Ativo = true;
-                    model.Nome = item.Modulo.Nome;
-                    model.Codigo = item.Modulo.Codigo;
+                    model = new Modulo
+                    {
+                        Id = item.Id,
+                        Ativo = true,
+                        Nome = item.Modulo.Nome,
+                        Codigo = item.Modulo.Codigo
+                    };
 
                 };
                 if (model.Codigo > 0)
@@ -706,10 +712,11 @@ namespace SIDomper.Dominio.Servicos
             else
                 novoCnpj = Utils.FormatarCNPJ(cnpj);
 
-            var clienteLogin = new ClienteLoginViewModel();
-
-            clienteLogin.CNPJ = cnpj;
-            clienteLogin.Resultado = "OK";
+            var clienteLogin = new ClienteLoginViewModel
+            {
+                CNPJ = cnpj,
+                Resultado = "OK"
+            };
 
             var model = _uow.RepositorioCliente.First(x => x.Dcto == novoCnpj);
             if (model == null)
@@ -728,9 +735,11 @@ namespace SIDomper.Dominio.Servicos
             if (!_uow.RepositorioUsuario.PermissaoIncluir(idUsuario, _enProgramas))
                 throw new Exception(Mensagem.UsuarioSemPermissao);
 
-            var cliente = new Cliente();
-            cliente.Codigo = ProximoCodigo();
-            cliente.Ativo = true;
+            var cliente = new Cliente
+            {
+                Codigo = ProximoCodigo(),
+                Ativo = true
+            };
             return cliente;
         }
 
@@ -1004,25 +1013,6 @@ namespace SIDomper.Dominio.Servicos
                     }
                 }
             }
-        }
-
-        public string EmailsDoCliente(Cliente cliente)
-        {
-            if (cliente.Emails == null)
-                return "";
-
-            string email = "";
-            foreach (var item in cliente.Emails)
-            {
-                if (item.Notificar)
-                {
-                    if (email == "")
-                        email = email + item.Email;
-                    else
-                        email = email + ";" + item.Email;
-                }
-            }
-            return email;
         }
     }
 }

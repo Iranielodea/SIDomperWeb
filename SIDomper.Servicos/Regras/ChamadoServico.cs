@@ -152,7 +152,7 @@ namespace SIDomper.Servicos.Regras
             }
         }
 
-        public void SalvarAplicativo(chamadoAplicativoInputViewModel chamadoInputModel)
+        public void SalvarAplicativo(ChamadoAplicativoInputViewModel chamadoInputModel)
         {
             try
             {

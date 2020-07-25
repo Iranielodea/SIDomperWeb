@@ -4,5 +4,6 @@ namespace SIDomper.Dominio.Interfaces.Repositorios
 {
     public interface IRepositorioCliente : IRepositorio<Cliente>
     {
+        string EmailsDoCliente(Cliente cliente);
     }
 }

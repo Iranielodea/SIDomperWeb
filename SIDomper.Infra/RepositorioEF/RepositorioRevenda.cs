@@ -9,5 +9,18 @@ namespace SIDomper.Infra.RepositorioEF
         public RepositorioRevenda(Contexto contexto) : base(contexto)
         {
         }
+
+        public string RetornarEmails(Revenda model)
+        {
+            string email = "";
+            foreach (var item in model.RevendaEmails)
+            {
+                if (email == "")
+                    email = item.Email;
+                else
+                    email = email + ";" + item.Email;
+            }
+            return email;
+        }
     }
 }

@@ -98,13 +98,13 @@ namespace SIDomper.Dominio.ViewModel
         {
             Revenda = new Revenda();
             Modulo = new Modulo();
-            clienteFiltro = new ClienteFiltro();
+            ClienteFiltro = new ClienteFiltro();
         }
         public string DataInicial { get; set; }
         public string DataFinal { get; set; }
         public string IdUsuarioAbertura { get; set; }
         public string IdCliente { get; set; }
-        public string idTipo { get; set; }
+        public string IdTipo { get; set; }
         public string IdStatus { get; set; }
         public int Id { get; set; }
         public int TipoMovimento { get; set; }
@@ -115,7 +115,7 @@ namespace SIDomper.Dominio.ViewModel
 
         public Revenda Revenda { get; set; }
         public Modulo Modulo { get; set; }
-        public ClienteFiltro clienteFiltro { get; set; }
+        public ClienteFiltro ClienteFiltro { get; set; }
     }
 
     public class ChamadoOcorrenciaViewModel : BaseViewModel
@@ -227,9 +227,12 @@ namespace SIDomper.Dominio.ViewModel
         public int Id { get; set; }
         public DateTime Data { get; set; }
         public string Status { get; set; }
+        public string Contato { get; set; }
+        public string DescricaoProblema { get; set; }
+        public string DescricaoSolucao { get; set; }
     }
 
-    public class chamadoAplicativoInputViewModel
+    public class ChamadoAplicativoInputViewModel
     {
         public string CNPJ { get; set; }
         public string Contato { get; set; }

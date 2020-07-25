@@ -90,34 +90,16 @@ namespace SIDomper.Dominio.Servicos
             return _uow.RepositorioStatus.Get(x => x.Programa == 2 && x.Nome.Contains(nome) && x.Ativo == true).OrderBy(o => o.Nome).ToList();
         }
 
-        public bool NotificarCliente(int statusId)
-        {
-            return _uow.RepositorioStatus.GetAll().Any(x => x.Id == statusId && x.NotificarCliente);
-        }
-
-        public bool NotificarConsultor(int statusId)
-        {
-            return _uow.RepositorioStatus.GetAll().Any(x => x.Id == statusId && x.NotificarConsultor);
-        }
-
-        public bool NotificarRevenda(int statusId)
-        {
-            return _uow.RepositorioStatus.GetAll().Any(x => x.Id == statusId && x.NotificarRevenda);
-        }
-
-        public bool NotificarSupervisor(int statusId)
-        {
-            return _uow.RepositorioStatus.GetAll().Any(x => x.Id == statusId && x.NotificarSupervisor);
-        }
-
         public Status Novo(int idUsuario)
         {
             if (!_uow.RepositorioUsuario.PermissaoIncluir(idUsuario, _enProgramas))
                 throw new Exception(Mensagem.UsuarioSemPermissao);
 
-            var status = new Status();
-            status.Codigo = ProximoCodigo();
-            status.Ativo = true;
+            var status = new Status
+            {
+                Codigo = ProximoCodigo(),
+                Ativo = true
+            };
             return status;
         }
 
@@ -131,10 +113,7 @@ namespace SIDomper.Dominio.Servicos
 
         public Status ObterPorCodigo(int codigo, EnStatus enStatus)
         {
-            if (enStatus == EnStatus.Todos)
-                return _uow.RepositorioStatus.First(x => x.Codigo == codigo && x.Ativo == true);
-            else
-                return _uow.RepositorioStatus.First(x => x.Codigo == codigo && x.Programa == (int)enStatus && x.Ativo == true);
+            return _uow.RepositorioStatus.ObterPorCodigo(codigo, enStatus);
         }
 
         public Status ObterPorId(int id)
@@ -144,7 +123,7 @@ namespace SIDomper.Dominio.Servicos
 
         public IEnumerable<Status> ObterPorPrograma(EnStatus enStatus)
         {
-            return _uow.RepositorioStatus.GetAll().Where(x => x.Programa == (int)enStatus);
+            return _uow.RepositorioStatus.ObterPorPrograma(enStatus);
         }
 
         public void Relatorio(int idUsuario)

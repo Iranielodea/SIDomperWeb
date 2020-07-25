@@ -441,7 +441,7 @@ namespace SIDomper.Win.View
                 filtro.DataFinal = txtDataFinal.txtData.Text;
                 filtro.IdUsuarioAbertura = ursFiltroUsuario.RetornarSelecao();
                 filtro.IdModulo = ursFiltroModulo.RetornarSelecao();
-                filtro.idTipo = ursFiltroTipo.RetornarSelecao();
+                filtro.IdTipo = ursFiltroTipo.RetornarSelecao();
                 filtro.IdStatus = ursFiltroStatus.RetornarSelecao();
 
                 if (id > 0)

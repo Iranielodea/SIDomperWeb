@@ -6,7 +6,7 @@ using SIDomper.Infra.RepositorioEF;
 
 namespace SIDomper.Infra.DataBase
 {
-    public class UnitOfWorkEF : IUnitOfWork
+    public class UnitOfWorkEF : IUnitOfWork, IDisposable
     {
         private Contexto _context;
 
@@ -64,6 +64,12 @@ namespace SIDomper.Infra.DataBase
         public void Executar(string instrucaoSQL)
         {
             _context.Database.ExecuteSqlCommand(instrucaoSQL);
+        }
+
+        public void Dispose()
+        {
+            if (_context != null)
+                _context.Dispose();
         }
 
         private IRepositorioProduto _repositorioProduto;
@@ -239,6 +245,28 @@ namespace SIDomper.Infra.DataBase
                 if (_repositorioDepartamento == null)
                     _repositorioDepartamento = new RepositorioDepartamento(_context);
                 return _repositorioDepartamento;
+            }
+        }
+
+        private IRepositorioBaseConhecimento _repositorioBaseConhecimento;
+        public IRepositorioBaseConhecimento RepositorioBaseConhecimento
+        {
+            get
+            {
+                if (_repositorioBaseConhecimento == null)
+                    _repositorioBaseConhecimento = new RepositorioBaseConhecimento(_context);
+                return _repositorioBaseConhecimento;
+            }
+        }
+
+        private IRepositorioAgendamento _repositorioAgendamento;
+        public IRepositorioAgendamento RepositorioAgendamento
+        {
+            get
+            {
+                if (_repositorioAgendamento == null)
+                    _repositorioAgendamento = new RepositorioAgendamento(_context);
+                return _repositorioAgendamento;
             }
         }
     }

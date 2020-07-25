@@ -86,12 +86,12 @@ namespace SIDomper.Dominio.Servicos
 
         public Observacao ObterEmailPadrao(int? programa)
         {
-            return _uow.RepositorioObservacao.First(x => x.EmailPadrao == true && x.Programa == programa && x.Ativo);
+            return _uow.RepositorioObservacao.ObterEmailPadrao(programa);
         }
 
         public Observacao ObterPadrao(int? programa)
         {
-            return _uow.RepositorioObservacao.First(x => x.Padrao == true && x.Programa == programa && x.Ativo);
+            return _uow.RepositorioObservacao.ObterPadrao(programa);
         }
 
         public Observacao ObterPorCodigo(int codigo)

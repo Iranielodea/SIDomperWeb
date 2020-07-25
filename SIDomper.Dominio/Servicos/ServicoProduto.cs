@@ -29,9 +29,11 @@ namespace SIDomper.Dominio.Servicos
             if (!_uow.RepositorioUsuario.PermissaoIncluir(idUsuario, _enProgramas))
                 throw new Exception(Mensagem.UsuarioSemPermissao);
 
-            var produto = new Produto();
-            produto.Codigo = ProximoCodigo();
-            produto.Ativo = true;
+            var produto = new Produto
+            {
+                Codigo = ProximoCodigo(),
+                Ativo = true
+            };
             return produto;
         }
 

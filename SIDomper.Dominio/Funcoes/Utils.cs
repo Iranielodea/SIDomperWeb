@@ -136,5 +136,23 @@ namespace SIDomper.Dominio.Funcoes
                 return "";
             }
         }
+
+        public static string DataIngles(string data)
+        {
+            try
+            {
+                DateTime dataNova = Convert.ToDateTime(data);
+                return "'" + dataNova.ToString("yyyy-MM-dd") + "'";
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
+        public static bool DataEmBranco(string data)
+        {
+            return (data.Trim() == "/  /");
+        }
     }
 }

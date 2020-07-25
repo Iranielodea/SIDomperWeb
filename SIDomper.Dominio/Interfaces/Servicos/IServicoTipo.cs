@@ -16,8 +16,6 @@ namespace SIDomper.Dominio.Interfaces.Servicos
         IQueryable<Tipo> Listar(string nome);
         void Excluir(Tipo model, int idUsuario);
         void Salvar(Tipo model);
-        Tipo RetornarUmRegistro(EnumChamado enumChamado);
-        Tipo RetornarUmRegistroPrograma(EnTipos enTipos);
         List<Tipo> ListarTipos(string nome, EnTipos enTipos);
     }
 }

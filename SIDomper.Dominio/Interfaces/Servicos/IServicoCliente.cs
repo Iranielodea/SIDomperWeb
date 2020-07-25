@@ -17,6 +17,5 @@ namespace SIDomper.Dominio.Interfaces.Servicos
         void Salvar(Cliente model);
         ClienteLoginViewModel Login(string cnpj);        
         bool ImportarXml(string arquivo);
-        string EmailsDoCliente(Cliente cliente);
     }
 }

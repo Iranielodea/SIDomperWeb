@@ -24,11 +24,6 @@ namespace SIDomper.Dominio.Servicos
             _enProgramas = EnProgramas.Parametro;
         }
 
-        public IEnumerable<Parametro> BuscarTitulosChamados()
-        {
-            return _uow.RepositorioParametro.Get(x => x.Codigo == 3 || x.Codigo == 4 || x.Codigo == 5 || x.Codigo == 6 || x.Codigo == 7 || x.Codigo == 8);
-        }
-
         public Parametro Editar(int id, int idUsuario, ref string mensagem)
         {
             mensagem = "OK";
@@ -85,8 +80,10 @@ namespace SIDomper.Dominio.Servicos
             if (!_uow.RepositorioUsuario.PermissaoIncluir(idUsuario, _enProgramas))
                 throw new Exception(Mensagem.UsuarioSemPermissao);
 
-            var parametro = new Parametro();
-            parametro.Codigo = ProximoCodigo();
+            var parametro = new Parametro
+            {
+                Codigo = ProximoCodigo()
+            };
             return parametro;
         }
 
@@ -105,10 +102,7 @@ namespace SIDomper.Dominio.Servicos
 
         public Parametro ObterPorParametro(int codigo, int programa)
         {
-            if (programa == 0)
-                return _uow.RepositorioParametro.First(x => x.Codigo == codigo);
-            else
-                return _uow.RepositorioParametro.First(x => x.Codigo == codigo && x.Programa == programa);
+            return _uow.RepositorioParametro.ObterPorParametro(codigo, programa);
         }
 
         public void Relatorio(int idUsuario)

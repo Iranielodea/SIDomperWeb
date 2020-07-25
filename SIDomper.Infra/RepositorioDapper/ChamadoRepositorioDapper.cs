@@ -1,4 +1,5 @@
 ﻿using SIDomper.Dominio.Enumeracao;
+using SIDomper.Dominio.Funcoes;
 using SIDomper.Dominio.ViewModel;
 using SIDomper.Infra.Comun;
 using SIDomper.Infra.EF;
@@ -83,8 +84,8 @@ namespace SIDomper.Infra.RepositorioDapper
             if (!string.IsNullOrWhiteSpace(filtro.IdCliente))
                 sb.AppendLine(" AND Cha_Cliente IN " + filtro.IdCliente);
 
-            if (!string.IsNullOrWhiteSpace(filtro.idTipo))
-                sb.AppendLine(" AND Cha_Tipo IN " + filtro.idTipo);
+            if (!string.IsNullOrWhiteSpace(filtro.IdTipo))
+                sb.AppendLine(" AND Cha_Tipo IN " + filtro.IdTipo);
 
             if (!string.IsNullOrWhiteSpace(filtro.IdStatus))
                 sb.AppendLine(" AND Cha_Status IN " + filtro.IdStatus);
@@ -98,8 +99,8 @@ namespace SIDomper.Infra.RepositorioDapper
             if (!string.IsNullOrWhiteSpace(filtro.IdUsuarioAbertura))
                 sb.AppendLine(" AND Cha_UsuarioAbertura IN " + filtro.IdUsuarioAbertura);
 
-            if (filtro.clienteFiltro.UsuarioId > 0)
-                sb.AppendLine(" AND Cli_Usuario IN " + filtro.clienteFiltro.UsuarioId);
+            if (filtro.ClienteFiltro.UsuarioId > 0)
+                sb.AppendLine(" AND Cli_Usuario IN " + filtro.ClienteFiltro.UsuarioId);
             sb.AppendLine(" ORDER BY " + campo);
 
             var lista = _repositorioConsulta.GetAll(sb.ToString());
@@ -123,15 +124,28 @@ namespace SIDomper.Infra.RepositorioDapper
 
         public IEnumerable<ChamadoAplicativoViewModel> RetornarDadosAplicativo(string cnpj)
         {
+            string novoCnpj;
+            if (cnpj.Length == 11)
+                novoCnpj = Utils.FormatarCPF(cnpj);
+            else
+                novoCnpj = Utils.FormatarCNPJ(cnpj);
+
+            // lista 20 chamados independente de quantas
+            // ocorrencias tenha
             var sb = new StringBuilder();
-            sb.AppendLine("SELECT TOP(20)");
+            sb.AppendLine("SELECT TOP(20) WITH TIES");
             sb.AppendLine(" Cha_Id as Id,");
             sb.AppendLine(" Cha_DataAbertura as Data,");
-            sb.AppendLine(" Sta_Nome as Status ");
+            sb.AppendLine(" Cha_Contato as Contato,");
+            sb.AppendLine(" Sta_Nome as Status, ");
+            sb.AppendLine(" ChOco_DescricaoTecnica as DescricaoProblema,");
+            sb.AppendLine(" ChOco_DescricaoSolucao as DescricaoSolucao ");
             sb.AppendLine("FROM Chamado");
+            sb.AppendLine(" LEFT JOIN Chamado_Ocorrencia ON Cha_Id = ChOco_Chamado");
             sb.AppendLine(" INNER JOIN Status ON Cha_Status = Sta_Id");
             sb.AppendLine(" INNER JOIN Cliente ON Cha_Cliente = Cli_Id");
-            sb.AppendLine("WHERE Cli_Dcto = '"  + cnpj + "'");
+            sb.AppendLine(" WHERE Cli_Dcto = '"  + novoCnpj + "'");
+            sb.AppendLine(" ORDER BY Cha_Id DESC");
             return _repositorioAplicativo.GetAll(sb.ToString());
         }
 

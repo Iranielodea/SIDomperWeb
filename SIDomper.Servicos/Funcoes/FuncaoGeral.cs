@@ -41,7 +41,7 @@ namespace SIDomper.Servicos.Funcoes
 
         public static string DataIngles(string data)
         {
-            return Infra.Comun.Funcoes.DataIngles(data);
+            return Utils.DataIngles(data);
         }
 
         public static double CalcularDatas(DateTime dataInicial, DateTime dataFinal)
@@ -52,7 +52,7 @@ namespace SIDomper.Servicos.Funcoes
 
         public static bool DataEmBranco(string data)
         {
-            return (data.Trim() == "/  /");
+            return Utils.DataEmBranco(data);
         }
 
         public static DateTime PrimeiroDiaMesCorrente()

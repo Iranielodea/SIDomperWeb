@@ -1,6 +1,5 @@
 ﻿using SIDomper.Dominio.Entidades;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace SIDomper.Dominio.Interfaces.Servicos
 {

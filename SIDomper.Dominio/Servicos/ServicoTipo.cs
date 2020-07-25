@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace SIDomper.Dominio.Servicos
 {
@@ -121,23 +120,6 @@ namespace SIDomper.Dominio.Servicos
         {
             if (!_uow.RepositorioUsuario.PermissaoRelatorio(idUsuario, _enProgramas))
                 throw new Exception(Mensagem.UsuarioSemPermissao);
-        }
-
-        public Tipo RetornarUmRegistro(EnumChamado enumChamado)
-        {
-            var model = new Tipo();
-            if (enumChamado == EnumChamado.Chamado)
-                model = _uow.RepositorioTipo.First(x => x.Programa == (int)EnTipos.Chamado && x.Ativo == true);
-            else
-                model = _uow.RepositorioTipo.First(x => x.Programa == (int)EnTipos.Atividade && x.Ativo == true);
-
-            return model;
-        }
-
-        public Tipo RetornarUmRegistroPrograma(EnTipos enTipos)
-        {
-            int tipo = (int)enTipos;
-            return _uow.RepositorioTipo.First(x => x.Programa == tipo && x.Ativo == true);
         }
 
         public void Salvar(Tipo model)

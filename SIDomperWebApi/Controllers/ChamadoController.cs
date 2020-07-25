@@ -95,7 +95,14 @@ namespace SIDomperWebApi.Controllers
             _chamadoServico = new ChamadoServico();
             try
             {
-                return _chamadoServico.RetornarDadosAplicativo(cnpj).ToArray();
+                var listaRetorno = _chamadoServico.RetornarDadosAplicativo(cnpj).ToArray();
+                foreach (var item in listaRetorno)
+                {
+                    item.DescricaoProblema = item.DescricaoProblema.Replace("\r", "").Replace("\n", "");
+                    item.DescricaoSolucao = item.DescricaoSolucao.Replace("\r", "").Replace("\n","");
+                }
+
+                return listaRetorno;
             }
             catch(Exception ex)
             {
@@ -106,7 +113,7 @@ namespace SIDomperWebApi.Controllers
 
         [Route("IncluirAplicativo")]
         [HttpPost]
-        public ChamadoAplicativoResultadoOutPutViewModel IncluirAplicativo([FromBody] chamadoAplicativoInputViewModel inputModel)
+        public ChamadoAplicativoResultadoOutPutViewModel IncluirAplicativo([FromBody] ChamadoAplicativoInputViewModel inputModel)
         {
             var resposta = new ChamadoAplicativoResultadoOutPutViewModel();
             try
@@ -209,8 +216,7 @@ namespace SIDomperWebApi.Controllers
             if (idEncerramento > 0 || enChamadoAtividade == EnumChamado.Atividade)
                 codStatus = _chamadoServico.StatusAberturaAtividade();
 
-            int CodStatus;
-            int.TryParse(codStatus, out CodStatus);
+            int.TryParse(codStatus, out int CodStatus);
 
             if (CodStatus == 0)
                 throw new Exception("Informe o Status para abertura nos Parâmetros do Sistema!");
@@ -355,12 +361,13 @@ namespace SIDomperWebApi.Controllers
 
                 foreach (var chamadoStatus in item.ChamadosStatus)
                 {
-                    ChamadoStatusViewModel model = new ChamadoStatusViewModel();
-
-                    model.Data = chamadoStatus.Data;
-                    model.Hora = (TimeSpan)chamadoStatus.Hora;
-                    model.NomeStatus = chamadoStatus.Status.Nome;
-                    model.NomeUsuario = chamadoStatus.Usuario.Nome;                    
+                    ChamadoStatusViewModel model = new ChamadoStatusViewModel
+                    {
+                        Data = chamadoStatus.Data,
+                        Hora = (TimeSpan)chamadoStatus.Hora,
+                        NomeStatus = chamadoStatus.Status.Nome,
+                        NomeUsuario = chamadoStatus.Usuario.Nome
+                    };
                     _ChamadoViewModel.ChamadosStatus.Add(model);
                 }
 
