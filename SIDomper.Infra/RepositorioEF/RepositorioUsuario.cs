@@ -2,6 +2,7 @@
 using SIDomper.Dominio.Enumeracao;
 using SIDomper.Dominio.Interfaces.Repositorios;
 using SIDomper.Infra.DataBase;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -264,6 +265,39 @@ namespace SIDomper.Infra.RepositorioEF
         public void AdicionarPermissao(UsuarioPermissao model)
         {
             _contexto.UsuarioPermissoes.Add(model);
+        }
+
+        public bool HorarioUsoSistema(string userName, string senha, int idUsuario = 0)
+        {
+            bool resultado = true;
+            Usuario usuario = new Usuario();
+
+            if (idUsuario > 0)
+                usuario = _contexto.Usuarios.FirstOrDefault(x => x.Id == idUsuario);
+            else
+            {
+                usuario =_contexto.Usuarios.FirstOrDefault(x => x.UserName == userName);
+
+                if (usuario != null)
+                {
+                    if (usuario.Password != senha)
+                        throw new Exception("Usuário não cadastrado!");
+                }
+            }
+
+            if (usuario != null)
+            {
+                if (usuario.Departamento.HoraInicial != null && usuario.Departamento.HoraFinal != null)
+                {
+                    TimeSpan horaAtual = DateTime.Now.TimeOfDay;
+
+                    if (horaAtual >= usuario.Departamento.HoraInicial && horaAtual <= usuario.Departamento.HoraFinal)
+                        resultado = true;
+                    else
+                        resultado = false;
+                }
+            }
+            return resultado;
         }
     }
 }

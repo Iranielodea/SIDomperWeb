@@ -108,6 +108,7 @@
     <Compile Include="Interfaces\IRepositoryReadOnly.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Interfaces\Repositorios\IRepositorioAgendamento.cs" />
+    <Compile Include="Interfaces\Repositorios\IRepositorioVisita.cs" />
     <Compile Include="Interfaces\Repositorios\IRepositorioModulo.cs" />
     <Compile Include="Interfaces\Repositorios\IRepositorioCategoria.cs" />
     <Compile Include="Interfaces\Repositorios\IRepositorioCidade.cs" />
@@ -146,6 +147,7 @@
     <Compile Include="Interfaces\Servicos\IServicoProduto.cs" />
     <Compile Include="Interfaces\Servicos\IServicoUsuario.cs" />
     <Compile Include="Interfaces\Servicos\IServicoVersao.cs" />
+    <Compile Include="Interfaces\Servicos\IServicoVisita.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Servicos\ServicoAgendamento.cs" />
     <Compile Include="Servicos\ServicoBaseConhecimento.cs" />
@@ -166,6 +168,7 @@
     <Compile Include="Servicos\ServicoTipo.cs" />
     <Compile Include="Servicos\ServicoUsuario.cs" />
     <Compile Include="Servicos\ServicoVersao.cs" />
+    <Compile Include="Servicos\ServicoVisita.cs" />
     <Compile Include="ViewModel\AgendamentoViewModel.cs" />
     <Compile Include="ViewModel\BaseConhViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />

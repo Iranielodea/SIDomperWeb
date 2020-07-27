@@ -34,5 +34,6 @@ namespace SIDomper.Dominio.Interfaces
         IRepositorioBaseConhecimento RepositorioBaseConhecimento { get; }
         IRepositorioAgendamento RepositorioAgendamento { get; }
         IRepositorioVersao RepositorioVersao { get; }
+        IRepositorioVisita RepositorioVisita { get; }
     }
 }

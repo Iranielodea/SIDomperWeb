@@ -1,5 +1,6 @@
 ﻿using Mapster;
 using SIDomper.Dominio.Entidades;
+using SIDomper.Dominio.Interfaces.Servicos;
 using SIDomper.Dominio.ViewModel;
 using SIDomper.Servicos.Regras;
 using System;
@@ -8,22 +9,26 @@ using System.Web.Http;
 
 namespace SIDomperWebApi.Controllers
 {
+    [RoutePrefix("api/visita")]
     public class VisitaController : ApiController
     {
-        private readonly VisitaServico _visitaServico;
+        //private readonly VisitaServico _visitaServico;
+        private readonly IServicoVisita _servicoVisita;
 
-        public VisitaController()
+        public VisitaController(IServicoVisita servicoVisita)
         {
-            _visitaServico = new VisitaServico();
+            //_visitaServico = new VisitaServico();
+            _servicoVisita = servicoVisita;
         }
 
+        [Route("ObterPorId")]
         [HttpGet]
         public VisitaViewModelApi ObterPorId(int id)
         {
             var model = new VisitaViewModelApi();
             try
             {
-                var item = _visitaServico.ObterPorId(id);
+                var item = _servicoVisita.ObterPorId(id);
                 model = item.Adapt<VisitaViewModelApi>();
 
                 PopularDados(model, item);
@@ -37,13 +42,14 @@ namespace SIDomperWebApi.Controllers
             }
         }
 
+        [Route("Novo")]
         [HttpGet]
-        public VisitaViewModelApi Novo(string novo, int idUsuario, int idClienteAgendamento, int idAgendamento)
+        public VisitaViewModelApi Novo(int idUsuario, int idClienteAgendamento, int idAgendamento)
         {
             var model = new VisitaViewModelApi();
             try
             {
-                var item = _visitaServico.Novo(idUsuario, idClienteAgendamento);
+                var item = _servicoVisita.Novo(idUsuario, idClienteAgendamento);
                 model = item.Adapt<VisitaViewModelApi>();
 
                 if (item.Usuario != null)
@@ -82,8 +88,7 @@ namespace SIDomperWebApi.Controllers
         {
             if (idAgendamento > 0)
             {
-                var AgendamentoServico = new AgendamentoServico();
-                var agendamento = AgendamentoServico.ObterPorId(idAgendamento);
+                var agendamento = _servicoVisita.ObterPorId(idAgendamento);
                 if (agendamento != null)
                 {
                     model.Data = agendamento.Data;
@@ -113,14 +118,15 @@ namespace SIDomperWebApi.Controllers
         Nas Descricoes abrir tela de Observacoes tipo Visita
           
          */
+        [Route("Editar")]
         [HttpGet]
-        public VisitaViewModelApi Editar(int idUsuario, int id)
+        public VisitaViewModelApi Editar(int id, int idUsuario)
         {
             var model = new VisitaViewModelApi();
             try
             {
                 string mensagem = "";
-                var item = _visitaServico.Editar(idUsuario, id, ref mensagem);
+                var item = _servicoVisita.Editar(id, idUsuario, ref mensagem);
                 model = item.Adapt<VisitaViewModelApi>();
 
                 PopularDados(model, item);
@@ -150,12 +156,13 @@ namespace SIDomperWebApi.Controllers
             model.NomeCliente = item.Cliente.Nome;
         }
 
+        [Route("Filtrar")]
         [HttpPost]
         public VisitaConsultaViewModelApi[] Filtrar([FromBody] VisitaFiltroViewModelApi filtro, int idUsuario, string campo, string valor)
         {
             try
             {
-                return _visitaServico.FiltrarAPI(idUsuario, filtro, campo, valor).ToArray();
+                return _servicoVisita.Filtrar(idUsuario, filtro, campo, valor).ToArray();
             }
             catch (Exception ex)
             {
@@ -170,7 +177,7 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 var visita = model.Adapt<Visita>();
-                _visitaServico.Salvar(visita, idUsuario);
+                _servicoVisita.Salvar(visita, idUsuario);
                 visitaViewModel = visita.Adapt<VisitaViewModelApi>();
                 return visitaViewModel;
             }
@@ -188,7 +195,7 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 var visita = model.Adapt<Visita>();
-                _visitaServico.Salvar(visita, idUsuario);
+                _servicoVisita.Salvar(visita, idUsuario);
                 visitaViewModel = visita.Adapt<VisitaViewModelApi>();
                 return visitaViewModel;
             }
@@ -200,12 +207,12 @@ namespace SIDomperWebApi.Controllers
         }
 
         [HttpDelete]
-        public VisitaViewModelApi Delete(int idUsuario, int id)
+        public VisitaViewModelApi Delete(int id, int idUsuario)
         {
             var model = new VisitaViewModelApi();
             try
             {
-                _visitaServico.Excluir(idUsuario, id);
+                _servicoVisita.Excluir(_servicoVisita.ObterPorId(id), idUsuario);
                 return model;
             }
             catch (Exception ex)
@@ -215,6 +222,7 @@ namespace SIDomperWebApi.Controllers
             }
         }
 
+        [Route("EnviarEmail")]
         [HttpPost]
         public VisitaViewModelApi EnviarEmail([FromBody] VisitaViewModelApi model, int idUsuario, string email)
         {
@@ -222,9 +230,9 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 var visita = model.Adapt<Visita>();
-                visita = _visitaServico.ObterPorId(model.Id);
+                visita = _servicoVisita.ObterPorId(model.Id);
 
-                _visitaServico.EnviarEmailVisita(visita, idUsuario);
+                _servicoVisita.EnviarEmailVisita(visita, idUsuario);
                 visitaViewModel = visita.Adapt<VisitaViewModelApi>();
                 return visitaViewModel;
             }

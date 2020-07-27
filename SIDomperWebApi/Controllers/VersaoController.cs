@@ -1,31 +1,31 @@
 ﻿using Mapster;
 using SIDomper.Dominio.Entidades;
+using SIDomper.Dominio.Interfaces.Servicos;
 using SIDomper.Dominio.ViewModel;
-using SIDomper.Servicos.Regras;
 using System;
 using System.Linq;
 using System.Web.Http;
 
 namespace SIDomperWebApi.Controllers
 {
+    [RoutePrefix("api/versao")]
     public class VersaoController : ApiController
     {
-        private readonly VersaoServico _versaoServico;
-        private readonly StatusServico _statusServico;
+        private readonly IServicoVersao _servicoVersao;
 
-        public VersaoController()
+        public VersaoController(IServicoVersao servicoVersao)
         {
-            _versaoServico = new VersaoServico();
-            _statusServico = new StatusServico();
+            _servicoVersao = servicoVersao;
         }
 
+        [Route("ObterPorId")]
         [HttpGet]
         public VersaoViewModel ObterPorId(int id)
         {
             var model = new VersaoViewModel();
             try
             {
-                var item = _versaoServico.ObterPorId(id);
+                var item = _servicoVersao.ObterPorId(id);
                 model = item.Adapt<VersaoViewModel>();
 
                 return model;
@@ -37,17 +37,13 @@ namespace SIDomperWebApi.Controllers
             }
         }
 
+        [Route("Filtrar")]
         [HttpPost]
         public VersaoConsultaViewModel[] Filtrar([FromBody] VersaoFiltroViewModel filtro, bool contem)
         {
             try
             {
-                return _versaoServico.Filtrar(filtro, filtro.Campo, filtro.Texto, contem).ToArray();
-
-                //var FiltroVersao = filtro.Adapt<VersaoFiltro>();
-                //var Lista = _versaoServico.Filtrar(FiltroVersao, filtro.Campo, filtro.Texto, contem);
-                //var model = Lista.Adapt<VersaoConsultaViewModel[]>();
-                //return model;
+                return _servicoVersao.Filtrar(filtro, filtro.Campo, filtro.Texto, contem).ToArray();
             }
             catch (Exception ex)
             {
@@ -55,17 +51,16 @@ namespace SIDomperWebApi.Controllers
             }
         }
 
+        [Route("Editar")]
         [HttpGet]
-        public VersaoViewModel Editar(int idUsuario, int id)
+        public VersaoViewModel Editar(int id, int idUsuario)
         {
             var model = new VersaoViewModel();
             try
             {
                 string mensagem = "";
-                var item = _versaoServico.Editar(idUsuario, id, ref mensagem);
+                var item = _servicoVersao.Editar(id, idUsuario, ref mensagem);
                 model = item.Adapt<VersaoViewModel>();
-
-                //BuscarStatusDesenvolvedor(model);
 
                 model.CodUsuario = item.Usuario.Codigo;
                 model.NomeUsuario = item.Usuario.Nome;
@@ -92,13 +87,14 @@ namespace SIDomperWebApi.Controllers
             }
         }
 
+        [Route("Novo")]
         [HttpGet]
-        public VersaoViewModel Novo(string novo, int idUsuario)
+        public VersaoViewModel Novo(int idUsuario)
         {
             var model = new VersaoViewModel();
             try
             {
-                var item = _versaoServico.Novo(idUsuario);
+                var item = _servicoVersao.Novo(idUsuario);
                 model = item.Adapt<VersaoViewModel>();
 
                 if (item.Usuario != null)
@@ -114,7 +110,13 @@ namespace SIDomperWebApi.Controllers
                     model.NomeTipo = item.Tipo.Nome;
                 }
 
-                BuscarStatusDesenvolvedor(model);
+                var Status = _servicoVersao.ObterStatusDesenvolvedor();
+                if (Status != null)
+                {
+                    model.StatusIdParam = Status.Id;
+                    model.StatusCodigoParam = Status.Codigo;
+                    model.StatusNomeParam = Status.Nome;
+                }
 
                 return model;
             }
@@ -125,25 +127,6 @@ namespace SIDomperWebApi.Controllers
             }
         }
 
-        private void BuscarStatusDesenvolvedor(VersaoViewModel model)
-        {
-            var parametro = _versaoServico.ObterStatusDesenvolvedor();
-            if (parametro != null)
-            {
-                int codigo;
-                int.TryParse(parametro.Valor, out codigo);
-
-                var Status = _statusServico.ObterPorCodigo(codigo);
-
-                if (Status != null)
-                {
-                    model.StatusIdParam = Status.Id;
-                    model.StatusCodigoParam = Status.Codigo;
-                    model.StatusNomeParam = Status.Nome;
-                }
-            }
-        }
-
         [HttpPost]
         public VersaoViewModel Incluir(VersaoViewModel model)
         {
@@ -151,7 +134,7 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 var versao = model.Adapt<Versao>();
-                _versaoServico.Salvar(versao);
+                _servicoVersao.Salvar(versao);
                 versaoViewModel = versao.Adapt<VersaoViewModel>();
                 return versaoViewModel;
             }
@@ -169,7 +152,7 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 var versao = model.Adapt<Versao>();
-                _versaoServico.Salvar(versao);
+                _servicoVersao.Salvar(versao);
                 versaoViewModel = versao.Adapt<VersaoViewModel>();
                 return versaoViewModel;
             }
@@ -181,12 +164,12 @@ namespace SIDomperWebApi.Controllers
         }
 
         [HttpDelete]
-        public VersaoViewModel Delete(int idUsuario, int id)
+        public VersaoViewModel Delete(int id, int idUsuario)
         {
             var model = new VersaoViewModel();
             try
             {
-                _versaoServico.Excluir(idUsuario, id);
+                _servicoVersao.Excluir(_servicoVersao.ObterPorId(id), idUsuario);
                 return model;
             }
             catch (Exception ex)

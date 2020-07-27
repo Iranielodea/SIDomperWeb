@@ -170,6 +170,7 @@ namespace SIDomper.Win.View
                 UsrStatus.txtNome.Text = _visita.NomeStatus;
 
                 txtValor.txtValor.Text = _visita.Valor.ToString("n2");
+                txtVersao.Text = _visita.Versao;
 
                 txtDocto.Focus();
                 _Id = _visita.Id;
@@ -264,6 +265,7 @@ namespace SIDomper.Win.View
                 _visita.TipoId = int.Parse(UsrTipo.txtId.Text);
                 _visita.StatusId = int.Parse(UsrStatus.txtId.Text);
                 _visita.Valor = decimal.Parse(txtValor.txtValor.Text);
+                _visita.Versao = txtVersao.Text;
 
                 var model = _visitaApp.Salvar(_visita, Funcoes.IdUsuario);
 

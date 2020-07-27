@@ -26,7 +26,7 @@ namespace SIDomper.Apresentacao.App
 
         public StatusViewModel ObterPorCodigo(int codigo, EnStatus enStatus)
         {
-            string url = Constantes.URL + "Status/ObterPorCodigoStatus?codigo={0}";
+            string url = Constantes.URL + "Status/ObterPorCodigoStatus?codigo={0}&enStatus={1}";
             //string url = Constantes.URL + "status/?codigo={0}";
             return new Operacao<StatusViewModel>().First(string.Format(url, codigo, (int)enStatus));
         }

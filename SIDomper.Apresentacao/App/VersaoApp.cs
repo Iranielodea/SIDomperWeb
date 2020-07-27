@@ -7,19 +7,19 @@ namespace SIDomper.Apresentacao.App
     {
         public VersaoViewModel Novo(int idUsuario)
         {
-            string url = Constantes.URL + "versao?novo={0}&idUsuario={1}";
-            return new Operacao<VersaoViewModel>().First(string.Format(url, "", idUsuario));
+            string url = Constantes.URL + "versao/Novo?idUsuario={0}";
+            return new Operacao<VersaoViewModel>().First(string.Format(url, idUsuario));
         }
 
         public VersaoViewModel ObterPorId(int id)
         {
-            string url = Constantes.URL + "versao/{0}";
+            string url = Constantes.URL + "versao/ObterPorId?id={0}";
             return new Operacao<VersaoViewModel>().First(string.Format(url, id));
         }
 
         public VersaoViewModel Editar(int id, int idUsuario)
         {
-            string url = Constantes.URL + "versao/{0}?idUsuario={1}";
+            string url = Constantes.URL + "versao/Editar?id={0}&idUsuario={1}";
             return new Operacao<VersaoViewModel>().First(string.Format(url, id, idUsuario));
         }
 
@@ -41,7 +41,7 @@ namespace SIDomper.Apresentacao.App
 
         public VersaoConsultaViewModel[] Filtrar(VersaoFiltroViewModel filtro, bool contem)
         {
-            string url = Constantes.URL + "versao?contem={0}";
+            string url = Constantes.URL + "versao/Filtrar?contem={0}";
             return new Operacao<VersaoConsultaViewModel>().ObjetoToJSon(string.Format(url, contem), filtro);
         }
     }

@@ -8,19 +8,19 @@ namespace SIDomper.Apresentacao.App
     {
         public VisitaViewModelApi Novo(int idUsuario, int idClienteAgendamento, int idAgendamento)
         {
-            string url = Constantes.URL + "visita?novo={0}&idUsuario={1}&idClienteAgendamento={2}&idAgendamento={3}";
-            return new Operacao<VisitaViewModelApi>().First(string.Format(url, "", idUsuario, idClienteAgendamento, idAgendamento));
+            string url = Constantes.URL + "visita/Novo?idUsuario={0}&idClienteAgendamento={1}&idAgendamento={2}";
+            return new Operacao<VisitaViewModelApi>().First(string.Format(url, idUsuario, idClienteAgendamento, idAgendamento));
         }
 
         public VisitaViewModelApi ObterPorId(int id)
         {
-            string url = Constantes.URL + "visita/{0}";
+            string url = Constantes.URL + "visita/ObterPorId?id={id}";
             return new Operacao<VisitaViewModelApi>().First(string.Format(url, id));
         }
 
         public VisitaViewModelApi Editar(int id, int idUsuario)
         {
-            string url = Constantes.URL + "visita/{0}?idUsuario={1}";
+            string url = Constantes.URL + "visita/Editar?id={0}&idUsuario={1}";
             return new Operacao<VisitaViewModelApi>().First(string.Format(url, id, idUsuario));
         }
 
@@ -42,14 +42,14 @@ namespace SIDomper.Apresentacao.App
 
         public VisitaConsultaViewModelApi[] Filtrar(VisitaFiltroViewModelApi filtro, int idUsuario, string campo, string valor)
         {
-            string url = Constantes.URL + "visita?idUsuario={0}&campo={1}&valor={2}";
+            string url = Constantes.URL + "visita/Filtrar?idUsuario={0}&campo={1}&valor={2}";
             return new Operacao<VisitaConsultaViewModelApi>().ObjetoToJSon(string.Format(url, idUsuario, campo, valor), filtro);
         }
 
         public VisitaViewModelApi EnviarEmail(VisitaViewModelApi model, int idUsuario)
         {
             //api / Visita?idUsuario={idUsuario}&email={ email}
-            string URI = Constantes.URL + "Visita?idUsuario={0}&email{1}";
+            string URI = Constantes.URL + "Visita/EnviarEmail?idUsuario={0}&email={1}";
             return new Operacao<VisitaViewModelApi>().ObjetoToJSon(string.Format(URI, idUsuario,""), model).First();
         }
     }

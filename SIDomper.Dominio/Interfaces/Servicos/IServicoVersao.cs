@@ -14,9 +14,9 @@ namespace SIDomper.Dominio.Interfaces.Servicos
         Versao Novo(int idUsuario);
         Versao Editar(int id, int idUsuario, ref string mensagem);
         Versao ObterPorId(int id);
-        Versao ObterPorCodigo(int codigo);
         void Relatorio(int idUsuario);
         void Excluir(Versao model, int idUsuario);
         void Salvar(Versao model);
+        Status ObterStatusDesenvolvedor();
     }
 }

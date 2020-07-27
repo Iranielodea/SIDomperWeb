@@ -280,5 +280,16 @@ namespace SIDomper.Infra.DataBase
                 return _repositorioVersao;
             }
         }
+
+        private IRepositorioVisita _repositorioVisita;
+        public IRepositorioVisita RepositorioVisita
+        {
+            get
+            {
+                if (_repositorioVisita == null)
+                    _repositorioVisita = new RepositorioVisita(_context);
+                return _repositorioVisita;
+            }
+        }
     }
 }

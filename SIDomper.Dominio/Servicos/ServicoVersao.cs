@@ -69,15 +69,17 @@ namespace SIDomper.Dominio.Servicos
             var sb = new StringBuilder();
             sb.AppendLine(consulta);
 
-            if (!string.IsNullOrWhiteSpace(texto))
-                sb.AppendLine(" WHERE " + campo + " LIKE " + sTexto);
+            if (filtro.Id > 0)
+                sb.AppendLine(" WHERE Ver_Id = " + filtro.Id);
             else
             {
-                sb.AppendLine(" WHERE Ver_Id > 0");
+                if (!string.IsNullOrWhiteSpace(texto))
+                    sb.AppendLine(" WHERE " + campo + " LIKE " + sTexto);
+                else
+                {
+                    sb.AppendLine(" WHERE Ver_Id > 0");
+                }
             }
-
-            if (filtro.Id > 0)
-                sb.AppendLine(" AND Ver_Id = " + filtro.Id);
 
             if (!Funcoes.Utils.DataEmBranco(filtro.DataInicial))
                 sb.AppendLine(" AND Ver_DataInicio >= " + Funcoes.Utils.DataIngles(filtro.DataInicial));
@@ -111,8 +113,10 @@ namespace SIDomper.Dominio.Servicos
             if (!_uow.RepositorioUsuario.PermissaoIncluir(idUsuario, _enProgramas))
                 throw new Exception(Mensagem.UsuarioSemPermissao);
 
-            var model = new Versao();
-            model.Usuario = _uow.RepositorioUsuario.find(idUsuario);
+            var model = new Versao
+            {
+                Usuario = _uow.RepositorioUsuario.find(idUsuario)
+            };
 
             var observacao = _uow.RepositorioObservacao.ObterPadrao((int)EnProgramas.Versao);
             if (observacao != null)
@@ -123,24 +127,44 @@ namespace SIDomper.Dominio.Servicos
             return model;
         }
 
-        public Versao ObterPorCodigo(int codigo)
-        {
-            throw new NotImplementedException();
-        }
-
         public Versao ObterPorId(int id)
         {
-            throw new NotImplementedException();
+            return _uow.RepositorioVersao.find(id);
+        }
+
+        public Status ObterStatusDesenvolvedor()
+        {
+            var parametro = _uow.RepositorioParametro.ObterPorParametro(48, 0);
+            int.TryParse(parametro.Valor, out int codigo);
+            return _uow.RepositorioStatus.First(x => x.Codigo == codigo);
         }
 
         public void Relatorio(int idUsuario)
         {
-            throw new NotImplementedException();
+            if (!_uow.RepositorioUsuario.PermissaoRelatorio(idUsuario, _enProgramas))
+                throw new Exception(Mensagem.UsuarioSemPermissao);
         }
 
         public void Salvar(Versao model)
         {
-            throw new NotImplementedException();
+            if (Funcoes.Utils.DataEmBranco(model.DataInicio.ToString()))
+                _uow.Notificacao.Add("Informe a Data Início");
+            if (Funcoes.Utils.DataEmBranco(model.DataLiberacao.ToString()))
+                _uow.Notificacao.Add("Informe a Data Liberação");
+
+            if (model.TipoId == 0)
+                _uow.Notificacao.Add("Informe o Tipo!");
+            if (model.StatusId == 0)
+                _uow.Notificacao.Add("Informe o Status!");
+            if (string.IsNullOrWhiteSpace(model.Descricao))
+                _uow.Notificacao.Add("Informe a Descrição!");
+            if (model.DataInicio > model.DataLiberacao)
+                _uow.Notificacao.Add("Data de Início maior que Data de Liberação!");
+            if (!_uow.IsValid())
+                throw new Exception(_uow.RetornoNotificacao());
+
+            _uow.RepositorioVersao.Salvar(model);
+            _uow.SaveChanges();
         }
     }
 }
