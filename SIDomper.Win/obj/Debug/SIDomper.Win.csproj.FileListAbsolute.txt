@@ -108,3 +108,4 @@ C:\Projetos\Domper\SIDomperWeb\SIDomper.Win\obj\Debug\SIDomper.Win.View.frmCateg
 C:\Projetos\Domper\SIDomperWeb\SIDomper.Win\obj\Debug\SIDomper.Win.View.frmSolicitacao.resources
 C:\Projetos\Domper\SIDomperWeb\SIDomper.Win\obj\Debug\SIDomper.Win.View.frmModeloRelatorio.resources
 C:\Projetos\Domper\SIDomperWeb\SIDomper.Win\obj\Debug\SIDomper.Win.Componentes.usrBotoesEdicao.resources
+C:\Projetos\Domper\SIDomperWeb\SIDomper.Win\obj\Debug\SIDomper.Win.View.frmLogin.resources

@@ -152,7 +152,14 @@ namespace SIDomper.Dominio.Funcoes
 
         public static bool DataEmBranco(string data)
         {
-            return (data.Trim() == "/  /");
+            try
+            {
+                return (data.Trim() == "/  /");
+            }
+            catch
+            {
+                return true;
+            }
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Mapster;
 using SIDomper.Dominio.Entidades;
+using SIDomper.Dominio.Interfaces.Servicos;
 using SIDomper.Dominio.ViewModel;
 using SIDomper.Servicos.Regras;
 using System;
@@ -11,12 +12,12 @@ namespace SIDomperWebApi.Controllers
     [RoutePrefix("api/recado")]
     public class RecadoController : ApiController
     {
-        private RecadoServico _servico;
         private RecadoViewModel _viewModel;
+        private readonly IServicoRecado _servicoRecado;
 
-        public RecadoController()
+        public RecadoController(IServicoRecado servicoRecado)
         {
-            _servico = new RecadoServico();
+            _servicoRecado = servicoRecado;
             _viewModel = new RecadoViewModel();
         }
 
@@ -26,7 +27,7 @@ namespace SIDomperWebApi.Controllers
         {
             try
             {
-                var model = _servico.Novo(idUsuario);
+                var model = _servicoRecado.Novo(idUsuario);
                 _viewModel = model.Adapt<RecadoViewModel>();
 
                 _viewModel.StatusId = model.Status.Id;
@@ -56,7 +57,7 @@ namespace SIDomperWebApi.Controllers
         {
             try
             {
-                return _servico.Filtrar(filtro).ToArray();
+                return _servicoRecado.Filtrar(filtro).ToArray();
             }
             catch (Exception ex)
             {
@@ -71,7 +72,7 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 string mensagem = "";
-                var model = _servico.Editar(idUsuario, id, ref mensagem);
+                var model = _servicoRecado.Editar(id, idUsuario, ref mensagem);
                 _viewModel = model.Adapt<RecadoViewModel>();
 
                 _viewModel.CodigoStatus = model.Status.Codigo;
@@ -106,7 +107,7 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 var recado = model.Adapt<Recado>();
-                _servico.Salvar(recado);
+                _servicoRecado.Salvar(recado);
                 _viewModel = recado.Adapt<RecadoViewModel>();
                 return _viewModel;
             }
@@ -123,7 +124,7 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 var recado = model.Adapt<Recado>();
-                _servico.Salvar(recado);
+                _servicoRecado.Salvar(recado);
                 _viewModel = recado.Adapt<RecadoViewModel>();
                 return _viewModel;
             }
@@ -140,8 +141,7 @@ namespace SIDomperWebApi.Controllers
         {
             try
             {
-                var model = _servico.ObterPorId(id);
-                _servico.Excluir(idUsuario, model);
+                _servicoRecado.Excluir(_servicoRecado.ObterPorId(id), idUsuario);
                 return _viewModel;
             }
             catch (Exception ex)

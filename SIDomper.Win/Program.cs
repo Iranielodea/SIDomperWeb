@@ -1,4 +1,5 @@
 ﻿using SIDomper.Apresentacao.App;
+using SIDomper.Win.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,7 +44,7 @@ namespace SIDomper.Win
 
             formulario.Dispose();
 
-            Application.Run(new frmMenuPrincipal());
+            Application.Run(new frmLogin());
         }
     }
 }

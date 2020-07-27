@@ -12,12 +12,12 @@ namespace SIDomper.Win
 {
     public partial class frmMenuPrincipal : Form
     {
-        
-        public frmMenuPrincipal()
+
+        public frmMenuPrincipal(string userName, string password)
         {
             InitializeComponent();
 
-            PermissaoDepartamento.Listar = PermissaoDepartamento.ListaPermissaoDepartamentos("esilva", "esil@2006");
+            PermissaoDepartamento.Listar = PermissaoDepartamento.ListaPermissaoDepartamentos(userName, password);
             //PermissaoDepartamento.Listar = PermissaoDepartamento.ListaPermissaoDepartamentos("ielodea", "12");
             //PermissaoDepartamento.Listar = PermissaoDepartamento.ListaPermissaoDepartamentos("jrsilva", "jr231123");
 
@@ -30,6 +30,27 @@ namespace SIDomper.Win
             Funcoes.CodigoUsuarioLogado = usuario.Codigo;
             Funcoes.NomeUsuarioLogado = usuario.Nome;
             BuscarUsuarioPermissao(usuario);
+
+            //LerMenus();
+        }
+
+        public frmMenuPrincipal()
+        {
+            InitializeComponent();
+
+            //PermissaoDepartamento.Listar = PermissaoDepartamento.ListaPermissaoDepartamentos("esilva", "esil@2006");
+            ////PermissaoDepartamento.Listar = PermissaoDepartamento.ListaPermissaoDepartamentos("ielodea", "12");
+            ////PermissaoDepartamento.Listar = PermissaoDepartamento.ListaPermissaoDepartamentos("jrsilva", "jr231123");
+
+            //Funcoes.IdUsuario = PermissaoDepartamento.Listar.FirstOrDefault(x => x.IdPrograma == 1).IdUsuario;
+            //Funcoes.UsuarioADM = PermissaoDepartamento.Listar.FirstOrDefault(x => x.IdPrograma == 1).UsuarioADM;
+
+            //var usuarioApp = new UsuarioApp();
+            //var usuario = usuarioApp.ObterPorId(Funcoes.IdUsuario);
+
+            //Funcoes.CodigoUsuarioLogado = usuario.Codigo;
+            //Funcoes.NomeUsuarioLogado = usuario.Nome;
+            //BuscarUsuarioPermissao(usuario);
 
             //LerMenus();
         }
@@ -619,6 +640,11 @@ namespace SIDomper.Win
         private void mModeloRelatorios_Click(object sender, EventArgs e)
         {
             MostrarModeloRelatorios();
+        }
+
+        private void frmMenuPrincipal_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

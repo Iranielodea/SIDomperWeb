@@ -35,6 +35,7 @@
             this.mClientes = new System.Windows.Forms.ToolStripMenuItem();
             this.mDepartamentos = new System.Windows.Forms.ToolStripMenuItem();
             this.mFeriados = new System.Windows.Forms.ToolStripMenuItem();
+            this.mModeloRelatorios = new System.Windows.Forms.ToolStripMenuItem();
             this.mModulos = new System.Windows.Forms.ToolStripMenuItem();
             this.mObservacoes = new System.Windows.Forms.ToolStripMenuItem();
             this.mProdutos = new System.Windows.Forms.ToolStripMenuItem();
@@ -74,7 +75,6 @@
             this.btnQuadro = new System.Windows.Forms.Button();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
-            this.mModeloRelatorios = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -119,7 +119,7 @@
             // mCategorias
             // 
             this.mCategorias.Name = "mCategorias";
-            this.mCategorias.Size = new System.Drawing.Size(180, 22);
+            this.mCategorias.Size = new System.Drawing.Size(170, 22);
             this.mCategorias.Tag = "124";
             this.mCategorias.Text = "Categorias";
             this.mCategorias.Click += new System.EventHandler(this.mCategorias_Click);
@@ -127,7 +127,7 @@
             // mCidades
             // 
             this.mCidades.Name = "mCidades";
-            this.mCidades.Size = new System.Drawing.Size(180, 22);
+            this.mCidades.Size = new System.Drawing.Size(170, 22);
             this.mCidades.Tag = "121";
             this.mCidades.Text = "Cidades";
             this.mCidades.Click += new System.EventHandler(this.mCidades_Click);
@@ -135,7 +135,7 @@
             // mClientes
             // 
             this.mClientes.Name = "mClientes";
-            this.mClientes.Size = new System.Drawing.Size(180, 22);
+            this.mClientes.Size = new System.Drawing.Size(170, 22);
             this.mClientes.Tag = "103";
             this.mClientes.Text = "Clientes";
             this.mClientes.Click += new System.EventHandler(this.mClientes_Click);
@@ -143,7 +143,7 @@
             // mDepartamentos
             // 
             this.mDepartamentos.Name = "mDepartamentos";
-            this.mDepartamentos.Size = new System.Drawing.Size(180, 22);
+            this.mDepartamentos.Size = new System.Drawing.Size(170, 22);
             this.mDepartamentos.Tag = "105";
             this.mDepartamentos.Text = "Departamentos";
             this.mDepartamentos.Click += new System.EventHandler(this.mDepartamentos_Click);
@@ -151,15 +151,23 @@
             // mFeriados
             // 
             this.mFeriados.Name = "mFeriados";
-            this.mFeriados.Size = new System.Drawing.Size(180, 22);
+            this.mFeriados.Size = new System.Drawing.Size(170, 22);
             this.mFeriados.Tag = "123";
             this.mFeriados.Text = "Feriados";
             this.mFeriados.Click += new System.EventHandler(this.mFeriados_Click);
             // 
+            // mModeloRelatorios
+            // 
+            this.mModeloRelatorios.Name = "mModeloRelatorios";
+            this.mModeloRelatorios.Size = new System.Drawing.Size(170, 22);
+            this.mModeloRelatorios.Tag = "117";
+            this.mModeloRelatorios.Text = "Modelo Relatórios";
+            this.mModeloRelatorios.Click += new System.EventHandler(this.mModeloRelatorios_Click);
+            // 
             // mModulos
             // 
             this.mModulos.Name = "mModulos";
-            this.mModulos.Size = new System.Drawing.Size(180, 22);
+            this.mModulos.Size = new System.Drawing.Size(170, 22);
             this.mModulos.Tag = "102";
             this.mModulos.Text = "Módulos";
             this.mModulos.Click += new System.EventHandler(this.mModulos_Click);
@@ -167,7 +175,7 @@
             // mObservacoes
             // 
             this.mObservacoes.Name = "mObservacoes";
-            this.mObservacoes.Size = new System.Drawing.Size(180, 22);
+            this.mObservacoes.Size = new System.Drawing.Size(170, 22);
             this.mObservacoes.Tag = "116";
             this.mObservacoes.Text = "Observações";
             this.mObservacoes.Click += new System.EventHandler(this.mObservacoes_Click);
@@ -175,7 +183,7 @@
             // mProdutos
             // 
             this.mProdutos.Name = "mProdutos";
-            this.mProdutos.Size = new System.Drawing.Size(180, 22);
+            this.mProdutos.Size = new System.Drawing.Size(170, 22);
             this.mProdutos.Tag = "101";
             this.mProdutos.Text = "Produtos";
             this.mProdutos.Click += new System.EventHandler(this.mProdutos_Click);
@@ -183,7 +191,7 @@
             // mRamais
             // 
             this.mRamais.Name = "mRamais";
-            this.mRamais.Size = new System.Drawing.Size(180, 22);
+            this.mRamais.Size = new System.Drawing.Size(170, 22);
             this.mRamais.Tag = "118";
             this.mRamais.Text = "Ramais";
             this.mRamais.Click += new System.EventHandler(this.mRamais_Click);
@@ -191,7 +199,7 @@
             // mRevendas
             // 
             this.mRevendas.Name = "mRevendas";
-            this.mRevendas.Size = new System.Drawing.Size(180, 22);
+            this.mRevendas.Size = new System.Drawing.Size(170, 22);
             this.mRevendas.Tag = "100";
             this.mRevendas.Text = "Revendas";
             this.mRevendas.Click += new System.EventHandler(this.mRevendas_Click);
@@ -199,7 +207,7 @@
             // mStatus
             // 
             this.mStatus.Name = "mStatus";
-            this.mStatus.Size = new System.Drawing.Size(180, 22);
+            this.mStatus.Size = new System.Drawing.Size(170, 22);
             this.mStatus.Tag = "107";
             this.mStatus.Text = "Status";
             this.mStatus.Click += new System.EventHandler(this.mStatus_Click);
@@ -207,7 +215,7 @@
             // mTipos
             // 
             this.mTipos.Name = "mTipos";
-            this.mTipos.Size = new System.Drawing.Size(180, 22);
+            this.mTipos.Size = new System.Drawing.Size(170, 22);
             this.mTipos.Tag = "106";
             this.mTipos.Text = "Tipos";
             this.mTipos.Click += new System.EventHandler(this.mTipos_Click);
@@ -215,7 +223,7 @@
             // mUsuarios
             // 
             this.mUsuarios.Name = "mUsuarios";
-            this.mUsuarios.Size = new System.Drawing.Size(180, 22);
+            this.mUsuarios.Size = new System.Drawing.Size(170, 22);
             this.mUsuarios.Tag = "104";
             this.mUsuarios.Text = "Usuários";
             this.mUsuarios.Click += new System.EventHandler(this.mUsuarios_Click);
@@ -223,13 +231,13 @@
             // mSeparador1
             // 
             this.mSeparador1.Name = "mSeparador1";
-            this.mSeparador1.Size = new System.Drawing.Size(177, 6);
+            this.mSeparador1.Size = new System.Drawing.Size(167, 6);
             this.mSeparador1.Tag = "0";
             // 
             // mSairSistema
             // 
             this.mSairSistema.Name = "mSairSistema";
-            this.mSairSistema.Size = new System.Drawing.Size(180, 22);
+            this.mSairSistema.Size = new System.Drawing.Size(170, 22);
             this.mSairSistema.Tag = "0";
             this.mSairSistema.Text = "Sair do Sistema";
             // 
@@ -559,14 +567,6 @@
             this.flowLayoutPanel3.Size = new System.Drawing.Size(879, 10);
             this.flowLayoutPanel3.TabIndex = 6;
             // 
-            // mModeloRelatorios
-            // 
-            this.mModeloRelatorios.Name = "mModeloRelatorios";
-            this.mModeloRelatorios.Size = new System.Drawing.Size(180, 22);
-            this.mModeloRelatorios.Tag = "117";
-            this.mModeloRelatorios.Text = "Modelo Relatórios";
-            this.mModeloRelatorios.Click += new System.EventHandler(this.mModeloRelatorios_Click);
-            // 
             // frmMenuPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -581,6 +581,7 @@
             this.Name = "frmMenuPrincipal";
             this.Text = "Menu Principal";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmMenuPrincipal_FormClosed);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.flowLayoutPanel1.ResumeLayout(false);

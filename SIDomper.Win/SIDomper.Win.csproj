@@ -174,6 +174,12 @@
     <Compile Include="View\frmAgendamento.Designer.cs">
       <DependentUpon>frmAgendamento.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\frmLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\frmLogin.Designer.cs">
+      <DependentUpon>frmLogin.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\frmModeloRelatorio.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -371,6 +377,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\frmAgendamento.resx">
       <DependentUpon>frmAgendamento.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\frmLogin.resx">
+      <DependentUpon>frmLogin.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\frmModeloRelatorio.resx">
       <DependentUpon>frmModeloRelatorio.cs</DependentUpon>

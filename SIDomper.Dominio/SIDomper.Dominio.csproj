@@ -108,6 +108,7 @@
     <Compile Include="Interfaces\IRepositoryReadOnly.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Interfaces\Repositorios\IRepositorioAgendamento.cs" />
+    <Compile Include="Interfaces\Repositorios\IRepositorioRecado.cs" />
     <Compile Include="Interfaces\Repositorios\IRepositorioVisita.cs" />
     <Compile Include="Interfaces\Repositorios\IRepositorioModulo.cs" />
     <Compile Include="Interfaces\Repositorios\IRepositorioCategoria.cs" />
@@ -141,6 +142,7 @@
     <Compile Include="Interfaces\Servicos\IServicoParametro.cs" />
     <Compile Include="Interfaces\Servicos\IServicoCliente.cs" />
     <Compile Include="Interfaces\Servicos\IServicoRamal.cs" />
+    <Compile Include="Interfaces\Servicos\IServicoRecado.cs" />
     <Compile Include="Interfaces\Servicos\IServicoRevenda.cs" />
     <Compile Include="Interfaces\Servicos\IServicoStatus.cs" />
     <Compile Include="Interfaces\Servicos\IServicoTipo.cs" />
@@ -163,6 +165,7 @@
     <Compile Include="Servicos\ServicoParametro.cs" />
     <Compile Include="Servicos\ServicoProduto.cs" />
     <Compile Include="Servicos\ServicoRamal.cs" />
+    <Compile Include="Servicos\ServicoRecado.cs" />
     <Compile Include="Servicos\ServicoRevenda.cs" />
     <Compile Include="Servicos\ServicoStatus.cs" />
     <Compile Include="Servicos\ServicoTipo.cs" />

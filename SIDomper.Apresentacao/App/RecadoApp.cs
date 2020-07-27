@@ -7,13 +7,13 @@ namespace SIDomper.Apresentacao.App
     {
         public RecadoViewModel Novo(int idUsuario)
         {
-            string url = Constantes.URL + "recado/novo?idUsuario={0}";
+            string url = Constantes.URL + "recado/Novo?idUsuario={0}";
             return new Operacao<RecadoViewModel>().First(string.Format(url, idUsuario));
         }
 
         public RecadoViewModel Editar(int idUsuario, int id)
         {
-            string url = Constantes.URL + "recado/editar?idUsuario={0}&id={1}";
+            string url = Constantes.URL + "recado/Editar?idUsuario={0}&id={1}";
             return new Operacao<RecadoViewModel>().First(string.Format(url, idUsuario, id));
         }
 
@@ -35,7 +35,7 @@ namespace SIDomper.Apresentacao.App
 
         public RecadoViewModel Excluir(int idUsuario, int id)
         {
-            string url = Constantes.URL + "recado/Excluir?idUsuario={0}&Id={1}";
+            string url = Constantes.URL + "recado/Excluir?idUsuario={0}&id={1}";
             return new Operacao<RecadoViewModel>().Delete(string.Format(url, idUsuario, id));
         }
     }
