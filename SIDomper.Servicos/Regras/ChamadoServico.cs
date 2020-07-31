@@ -58,7 +58,7 @@ namespace SIDomper.Servicos.Regras
 
         public IEnumerable<ChamadoConsultaViewModel> Filtrar(ChamadoFiltroViewModel filtro, string campo, string texto, int usuarioId, bool contem, EnumChamado tipo)
         {
-            return _chamadoRepositorioDapper.Filtrar(filtro, campo, texto, usuarioId, contem, EnumChamado.Chamado);
+            return _chamadoRepositorioDapper.Filtrar(filtro, campo, texto, usuarioId, contem, tipo);
             //return _repADO.Filtrar(filtro, campo, texto, usuarioId, contem, tipo);
         }
 

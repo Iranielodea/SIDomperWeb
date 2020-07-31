@@ -137,6 +137,7 @@ namespace SIDomper.Infra.RepositorioDapper
             sb.AppendLine(" Cha_Id as Id,");
             sb.AppendLine(" Cha_DataAbertura as Data,");
             sb.AppendLine(" Cha_Contato as Contato,");
+            sb.AppendLine(" Cha_Descricao as Descricao,");
             sb.AppendLine(" Sta_Nome as Status, ");
             sb.AppendLine(" ChOco_DescricaoTecnica as DescricaoProblema,");
             sb.AppendLine(" ChOco_DescricaoSolucao as DescricaoSolucao ");

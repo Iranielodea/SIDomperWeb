@@ -7,25 +7,25 @@ namespace SIDomper.Apresentacao.App
     {
         public AgendamentoViewModel Novo(int idUsuario)
         {
-            string url = Constantes.URL + "agendamento/novo?idUsuario={0}";
+            string url = Constantes.URL + "agendamento/Novo?idUsuario={0}";
             return new Operacao<AgendamentoViewModel>().First(string.Format(url, idUsuario));
         }
 
         public AgendamentoViewModel Editar(int idUsuario, int id)
         {
-            string url = Constantes.URL + "agendamento/editar?idUsuario={0}&id={1}";
+            string url = Constantes.URL + "agendamento/Editar?idUsuario={0}&id={1}";
             return new Operacao<AgendamentoViewModel>().First(string.Format(url, idUsuario, id));
         }
 
         public AgendamentoViewModel ObterPorId(int id)
         {
-            string url = Constantes.URL + "agendamento/{0}";
+            string url = Constantes.URL + "agendamento/ObterPorId?id={0}";
             return new Operacao<AgendamentoViewModel>().First(string.Format(url, id));
         }
 
         public AgendamentoConsultaViewModel[] Filtrar(AgendamentoFiltroViewModel filtro, string campo, string texto, int idUsuario, bool contem = true)
         {
-            string url = Constantes.URL + "Agendamento?campo={0}&texto={1}&idUsuario={2}&contem={3}";
+            string url = Constantes.URL + "Agendamento/Filtrar?campo={0}&texto={1}&idUsuario={2}&contem={3}";
             return new Operacao<AgendamentoConsultaViewModel>().ObjetoToJSon(string.Format(url, campo, texto, idUsuario, contem), filtro);
         }
 
@@ -46,7 +46,7 @@ namespace SIDomper.Apresentacao.App
 
         public AgendamentoViewModel Excluir(int idUsuario, int id)
         {
-            string url = Constantes.URL + "agendamento/{0}?id={1}";
+            string url = Constantes.URL + "agendamento/{0}?idUsuario={1}";
             return new Operacao<AgendamentoViewModel>().Delete(string.Format(url, idUsuario, id));
         }
 

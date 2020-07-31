@@ -186,10 +186,11 @@ namespace SIDomper.Dominio.Servicos
         {
             if (!_uow.RepositorioUsuario.PermissaoIncluir(idUsuario, _enProgramas))
                 throw new Exception(Mensagem.UsuarioSemPermissao);
+            // TODO: tirar este comentario
+            //if (VerificarAgendamentoAberto(idUsuario))
+            //    throw new Exception("Há Agendamentos em Aberto!");
 
-            if (VerificarAgendamentoAberto(idUsuario))
-                throw new Exception("Há Agendamentos em Aberto!");
-
+            int codigoStatus = StatusAbertura();
             var model = new Agendamento
             {
                 Programa = 2,
@@ -197,7 +198,7 @@ namespace SIDomper.Dominio.Servicos
                 Hora = TimeSpan.Parse(DateTime.Now.ToShortTimeString()),
                 Usuario = _uow.RepositorioUsuario.find(idUsuario),
                 Tipo = _uow.RepositorioTipo.RetornarTipoAgendamento(),
-                Status = _uow.RepositorioStatus.First(x => x.Codigo == StatusAbertura())
+                Status = _uow.RepositorioStatus.First(x => x.Codigo == codigoStatus)
             };
 
             return model;
@@ -224,7 +225,7 @@ namespace SIDomper.Dominio.Servicos
 
         private int StatusAbertura()
         {
-            var parametroModel = _uow.RepositorioParametro.ObterPorParametro(33, 12);
+            var parametroModel = _uow.RepositorioParametro.ObterPorParametro(33, 112);
 
             if (parametroModel != null)
                 return int.Parse(parametroModel.Valor);
@@ -354,7 +355,7 @@ namespace SIDomper.Dominio.Servicos
             if (id == 0)
             {
                 //TODO: tirar comentario
-                //EnviarEmailAgendamento(model, usuarioId);
+                EnviarEmailAgendamento(model, usuarioId);
             }
         }
 
@@ -511,8 +512,7 @@ namespace SIDomper.Dominio.Servicos
             if (notificar)
             {
                 var usuario = _uow.RepositorioUsuario.find(usuarioId);
-                var departamento = _uow.RepositorioDepartamento.find(usuario.DepartamentoId);
-                foreach (var item in departamento.DepartamentosEmail)
+                foreach (var item in usuario.Departamento.DepartamentosEmail)
                 {
                     Adicionar(item.Email);
                 }

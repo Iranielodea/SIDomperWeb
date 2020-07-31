@@ -26,7 +26,7 @@ namespace SIDomper.Apresentacao.App
 
         public ChamadoConsultaViewModel[] Filtrar(ChamadoFiltroViewModel filtro, int idUsuario, string campo, string valor, bool contem, EnumChamado enChamado)
         {
-            string url = Constantes.URL + "Chamado?idUsuario={0}&campo={1}&valor={2}&contem={3}&enChamado={4}";
+            string url = Constantes.URL + "Chamado/Filtrar?idUsuario={0}&campo={1}&valor={2}&contem={3}&enChamado={4}";
             return new Operacao<ChamadoConsultaViewModel>().ObjetoToJSon(string.Format(url, idUsuario, campo, valor, contem, enChamado), filtro);
         }
 

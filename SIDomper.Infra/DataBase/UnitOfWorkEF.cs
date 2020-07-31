@@ -302,5 +302,17 @@ namespace SIDomper.Infra.DataBase
                 return _repositorioRecado;
             }
         }
+
+        private IRepositorioChamado _repositorioChamado;
+        public IRepositorioChamado RepositorioChamado
+        {
+            get
+            {
+                if (_repositorioChamado == null)
+                    _repositorioChamado = new RepositorioChamado(_context);
+                return _repositorioChamado;
+            }
+        }
+
     }
 }

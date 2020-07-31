@@ -2,6 +2,7 @@
 using SIDomper.Dominio.Entidades;
 using SIDomper.Dominio.Enumeracao;
 using SIDomper.Dominio.Funcoes;
+using SIDomper.Dominio.Interfaces.Servicos;
 using SIDomper.Dominio.ViewModel;
 using SIDomper.Servicos.Regras;
 using System;
@@ -19,6 +20,7 @@ namespace SIDomperWebApi.Controllers
         private UsuarioPermissaoServico _usuarioPermissaoServico;
         private ChamadoViewModel _ChamadoViewModel;
         private StatusServico _statusServico;
+        //private readonly IServicoChamado _servicoChamado;
 
         public ChamadoController()
         {
@@ -26,6 +28,7 @@ namespace SIDomperWebApi.Controllers
             _usuarioPermissaoServico = new UsuarioPermissaoServico();
             _statusServico = new StatusServico();
             _ChamadoViewModel = new ChamadoViewModel();
+            //_servicoChamado = servicoChamado;
         }
 
         [Route("Novo")]
@@ -96,17 +99,27 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 var listaRetorno = _chamadoServico.RetornarDadosAplicativo(cnpj).ToArray();
+
+                if (listaRetorno.Count() == 0)
+                    throw new Exception("Registro não Encontrado!");
+
                 foreach (var item in listaRetorno)
                 {
-                    item.DescricaoProblema = item.DescricaoProblema.Replace("\r", "").Replace("\n", "");
-                    item.DescricaoSolucao = item.DescricaoSolucao.Replace("\r", "").Replace("\n","");
+                    if (!string.IsNullOrWhiteSpace(item.Data))
+                        item.Data = Convert.ToDateTime(item.Data).ToShortDateString();
+                    if (!string.IsNullOrWhiteSpace(item.DescricaoProblema))
+                        item.DescricaoProblema = item.DescricaoProblema.Replace("\r", "").Replace("\n", "");
+                    if (!string.IsNullOrWhiteSpace(item.DescricaoSolucao))
+                        item.DescricaoSolucao = item.DescricaoSolucao.Replace("\r", "").Replace("\n","");
+                    if (!string.IsNullOrWhiteSpace(item.Descricao))
+                        item.Descricao = item.Descricao.Replace("\r", "").Replace("\n", "");
                 }
 
                 return listaRetorno;
             }
             catch(Exception ex)
             {
-                lista.Add(new ChamadoAplicativoViewModel{Id = 0, Mensagem = ex.Message, Data=DateTime.Now, Status="" });
+                lista.Add(new ChamadoAplicativoViewModel{Id = 0, Mensagem = ex.Message, Data=DateTime.Now.ToString(), Status="" });
                 return lista.ToArray();
             }
         }
@@ -414,6 +427,7 @@ namespace SIDomperWebApi.Controllers
             }
         }
 
+        [Route("Filtrar")]
         [HttpPost]
         public ChamadoConsultaViewModel[] Filtrar([FromBody] ChamadoFiltroViewModel filtro, int idUsuario, string campo, string valor, bool contem, EnumChamado enChamado)
         {
@@ -483,6 +497,7 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 var chamado = model.Adapt<Chamado>();
+                //_servicoChamado.Salvar(chamado, idUsuario, ocorrencia);
                 _chamadoServico.Salvar(chamado, idUsuario, ocorrencia);
                 chamadoViewModel = chamado.Adapt<ChamadoViewModel>();
                 return chamadoViewModel;
@@ -502,6 +517,7 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 var chamado = model.Adapt<Chamado>();
+                //_chamadoServico.Salvar(chamado, idUsuario, ocorrencia);
                 _chamadoServico.Salvar(chamado, idUsuario, ocorrencia);
                 chamadoViewModel = chamado.Adapt<ChamadoViewModel>();
                 return chamadoViewModel;

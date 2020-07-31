@@ -149,11 +149,11 @@ namespace SIDomper.Dominio.Servicos
             AtualizarVersaoCliente(model);
             _uow.SaveChanges();
 
-            //if (id == 0)
-            //{
-            //    model = ObterPorId(model.Id);
-            //    EnviarEmailVisita(model, usuarioId);
-            //}
+            if (id == 0)
+            {
+                model = ObterPorId(model.Id);
+                EnviarEmailVisita(model, usuarioId);
+            }
         }
 
         public void EnviarEmailVisita(Visita model, int usuarioId)
@@ -214,7 +214,11 @@ namespace SIDomper.Dominio.Servicos
             if (string.IsNullOrWhiteSpace(emailConta))
                 return "";
 
-            var listaEmail = _uow.RepositorioAgendamento.RetornarEmailClientes(visita.Id);
+            var status = _uow.RepositorioStatus.find(visita.StatusId);
+            if (status.NotificarCliente == false)
+                return "";
+
+            var listaEmail = visita.Cliente.Emails.Where(x => x.Notificar);
 
             int contador = 0;
 
@@ -277,9 +281,7 @@ namespace SIDomper.Dominio.Servicos
                 if (visita.Cliente.Revenda == null)
                     return;
 
-                var revenda = _uow.RepositorioRevenda.find(visita.Cliente.Revenda.Id);
-
-                foreach (var item in revenda.RevendaEmails)
+                foreach (var item in visita.Cliente.Revenda.RevendaEmails)
                 {
                     Adicionar(item.Email);
                 }
@@ -304,14 +306,11 @@ namespace SIDomper.Dominio.Servicos
                 if (visita.Cliente.UsuarioId != null)
                     idUsuario = Convert.ToInt32(visita.Cliente.UsuarioId);
 
-                var usuarioModel = _uow.RepositorioUsuario.find(idUsuario);
+                var email = _uow.RepositorioUsuario.find(idUsuario);
 
-                if (usuarioModel == null)
-                    return;
-
-                if (!string.IsNullOrEmpty(usuarioModel.Email))
+                if (!string.IsNullOrEmpty(email.Email))
                 {
-                    Adicionar(usuarioModel.Email);
+                    Adicionar(email.Email);
                 }
             }
         }
@@ -322,9 +321,7 @@ namespace SIDomper.Dominio.Servicos
 
             if (notificar)
             {
-                var usuario = _uow.RepositorioUsuario.find(usuarioId);
-                var departamento = _uow.RepositorioDepartamento.find(usuario.DepartamentoId);
-                foreach (var item in departamento.DepartamentosEmail)
+                foreach (var item in visita.Usuario.Departamento.DepartamentosEmail)
                 {
                     Adicionar(item.Email);
                 }

@@ -28,5 +28,10 @@ namespace SIDomper.Infra.RepositorioEF
             }
             return email;
         }
+
+        public Cliente ObterPorDocumento(string documento)
+        {
+            return base.First(x => x.Dcto == documento);
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Mapster;
 using SIDomper.Dominio.Entidades;
+using SIDomper.Dominio.Servicos;
 using SIDomper.Dominio.ViewModel;
 using SIDomper.Servicos.Regras;
 using System;
@@ -11,20 +12,21 @@ namespace SIDomperWebApi.Controllers
     [RoutePrefix("api/agendamento")]
     public class AgendamentoController : ApiController
     {
-        private readonly AgendamentoServico _agendamentoServico;
+        private readonly ServicoAgendamento _servicoAgendamento;
 
-        public AgendamentoController()
+        public AgendamentoController(ServicoAgendamento servicoAgendamento)
         {
-            _agendamentoServico = new AgendamentoServico();
+            _servicoAgendamento = servicoAgendamento;
         }
 
+        [Route("ObterPorId")]
         [HttpGet]
         public AgendamentoViewModel ObterPorId(int id)
         {
             var model = new AgendamentoViewModel();
             try
             {
-                var item = _agendamentoServico.ObterPorId(id);
+                var item = _servicoAgendamento.ObterPorId(id);
                 model = item.Adapt<AgendamentoViewModel>();
                 return model;
             }
@@ -65,7 +67,7 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 string mensagem = "";
-                var item = _agendamentoServico.Editar(idUsuario, id, ref mensagem);
+                var item = _servicoAgendamento.Editar(idUsuario, id, ref mensagem);
                 model = item.Adapt<AgendamentoViewModel>();
 
                 PopularDados(item, model);
@@ -87,7 +89,7 @@ namespace SIDomperWebApi.Controllers
             var model = new AgendamentoViewModel();
             try
             {
-                var item = _agendamentoServico.Novo(idUsuario);
+                var item = _servicoAgendamento.Novo(idUsuario);
                 model = item.Adapt<AgendamentoViewModel>();
 
                 PopularDados(item, model);
@@ -101,12 +103,13 @@ namespace SIDomperWebApi.Controllers
             }
         }
 
+        [Route("Filtrar")]
         [HttpPost]
         public IEnumerable<AgendamentoConsultaViewModel> Filtrar([FromBody]AgendamentoFiltroViewModel filtro, string campo, string texto, int idUsuario, bool contem = true)
         {
             try
             {
-                return _agendamentoServico.Filtrar(filtro, campo, texto, idUsuario, contem);
+                return _servicoAgendamento.Filtrar(filtro, campo, texto, idUsuario, contem);
             }
             catch (Exception ex)
             {
@@ -122,7 +125,7 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 var agendamento = model.Adapt<Agendamento>();
-                _agendamentoServico.Salvar(agendamento, usuarioId);
+                _servicoAgendamento.Salvar(agendamento, usuarioId);
                 agendamentoViewModel = agendamento.Adapt<AgendamentoViewModel>();
                 return agendamentoViewModel;
             }
@@ -141,7 +144,7 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 var agendamento = model.Adapt<Agendamento>();
-                _agendamentoServico.Salvar(agendamento, usuarioId);
+                _servicoAgendamento.Salvar(agendamento, usuarioId);
                 agendamentoViewModel = agendamento.Adapt<AgendamentoViewModel>();
                 return agendamentoViewModel;
             }
@@ -158,7 +161,7 @@ namespace SIDomperWebApi.Controllers
             var model = new AgendamentoViewModel();
             try
             {
-                _agendamentoServico.Excluir(idUsuario, id);
+                _servicoAgendamento.Excluir(_servicoAgendamento.ObterPorId(id), idUsuario);
                 return model;
             }
             catch (Exception ex)
@@ -175,7 +178,7 @@ namespace SIDomperWebApi.Controllers
             var model = new AgendamentoViewModel();
             try
             {
-                _agendamentoServico.Reagendamento(idUsuario, idAgendamento, data, hora, texto);
+                _servicoAgendamento.Reagendamento(idUsuario, idAgendamento, data, hora, texto);
                 model.Mensagem = "OK";
                 return model;
             }
@@ -193,7 +196,7 @@ namespace SIDomperWebApi.Controllers
             var model = new AgendamentoViewModel();
             try
             {
-                _agendamentoServico.Cancelamento(idUsuario, idAgendamento, data, hora, texto);
+                _servicoAgendamento.Cancelamento(idUsuario, idAgendamento, data, hora, texto);
                 model.Mensagem = "OK";
                 return model;
             }
@@ -211,7 +214,7 @@ namespace SIDomperWebApi.Controllers
             var model = new AgendamentoViewModel();
             try
             {
-                _agendamentoServico.Encerramento(idUsuario, idAgenda, idPrograma);
+                _servicoAgendamento.Encerramento(idUsuario, idAgenda, idPrograma);
                 model.Mensagem = "OK";
                 return model;
             }
@@ -229,7 +232,7 @@ namespace SIDomperWebApi.Controllers
             var model = new AgendamentoViewModel();
             try
             {
-                _agendamentoServico.EncerramentoWEB(idUsuario, idAgenda);
+                _servicoAgendamento.EncerramentoWEB(idUsuario, idAgenda);
                 model.Mensagem = "OK";
                 return model;
             }
@@ -246,7 +249,7 @@ namespace SIDomperWebApi.Controllers
         {
             try
             {
-                var lista = _agendamentoServico.Quadros(dataInicial, dataFinal, idUsuario, idRevenda);
+                var lista = _servicoAgendamento.Quadros(dataInicial, dataFinal, idUsuario, idRevenda);
                 //var model = lista.Adapt<AgendamentoQuadroViewModel[]>();
                 return lista;
             }

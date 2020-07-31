@@ -320,7 +320,7 @@ namespace SIDomper.Infra.EF
 
         public List<ChamadoAnexo> RetornarAnexos(int chamadoId)
         {
-            var query = from cha in _rep.context.Chamados
+            var query = from cha in _rep.context.Chamados.AsNoTracking()
                     join oco in _rep.context.ChamadoOcorrencias on cha.Id equals oco.ChamadoId
                     join cli in _rep.context.Clientes on cha.ClienteId equals cli.Id
                     where cha.Id == chamadoId

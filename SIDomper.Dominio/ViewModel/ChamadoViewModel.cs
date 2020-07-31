@@ -225,11 +225,12 @@ namespace SIDomper.Dominio.ViewModel
     public class ChamadoAplicativoViewModel : BaseViewModel
     {
         public int Id { get; set; }
-        public DateTime Data { get; set; }
+        public string Data { get; set; }
         public string Status { get; set; }
         public string Contato { get; set; }
         public string DescricaoProblema { get; set; }
         public string DescricaoSolucao { get; set; }
+        public string Descricao { get; set; }
     }
 
     public class ChamadoAplicativoInputViewModel
