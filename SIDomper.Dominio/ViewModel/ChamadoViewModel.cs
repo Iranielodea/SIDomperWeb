@@ -231,6 +231,7 @@ namespace SIDomper.Dominio.ViewModel
         public string DescricaoProblema { get; set; }
         public string DescricaoSolucao { get; set; }
         public string Descricao { get; set; }
+        public TimeSpan Hora { get; set; }
     }
 
     public class ChamadoAplicativoInputViewModel

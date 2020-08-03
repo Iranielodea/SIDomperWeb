@@ -67,7 +67,7 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 string mensagem = "";
-                var item = _servicoAgendamento.Editar(idUsuario, id, ref mensagem);
+                var item = _servicoAgendamento.Editar(id, idUsuario, ref mensagem);
                 model = item.Adapt<AgendamentoViewModel>();
 
                 PopularDados(item, model);

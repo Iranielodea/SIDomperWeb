@@ -149,7 +149,7 @@ namespace SIDomper.Dominio.Servicos
             _uow.SaveChanges();
 
             // TODO: tirar o comentario
-            //EnviarEmailAoSalvar(model);
+            EnviarEmailAoSalvar(model);
         }
 
         private void EnviarEmail(int idUsuarioOrigem, int idUsuarioDestino, int id)
@@ -166,7 +166,7 @@ namespace SIDomper.Dominio.Servicos
             {
                 var model = ObterPorId(id);
                 if (model != null)
-                    _uow.RepositorioContaEmail.EnviarEmail(idUsuarioDestino, email, "", assunto, TextoEmail(model), "");
+                    _uow.RepositorioContaEmail.EnviarEmail(idUsuarioOrigem, email, "", assunto, TextoEmail(model), "");
             }
         }
 
@@ -180,6 +180,17 @@ namespace SIDomper.Dominio.Servicos
                 ModoAbrEnc = "A";
                 status = " (Aberto)";
             }
+
+            if (model.Cliente == null)
+                model.Cliente = _uow.RepositorioCliente.find(model.ClienteId);
+            if (model.Tipo == null)
+                model.Tipo = _uow.RepositorioTipo.find(model.TipoId);
+            if (model.Status == null)
+                model.Status = _uow.RepositorioStatus.find(model.StatusId);
+            if (model.UsuarioDestino == null)
+                model.UsuarioDestino = _uow.RepositorioUsuario.find(model.UsuarioDestinoId);
+            if (model.UsuarioLcto == null)
+                model.UsuarioLcto = _uow.RepositorioUsuario.find(model.UsuarioLctoId);
 
             var sb = new StringBuilder();
             sb.AppendLine("Recado Sistema Domper: " + status);

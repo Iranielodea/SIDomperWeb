@@ -47,7 +47,7 @@ namespace SIDomper.Apresentacao.App
         public AgendamentoViewModel Excluir(int idUsuario, int id)
         {
             string url = Constantes.URL + "agendamento/{0}?idUsuario={1}";
-            return new Operacao<AgendamentoViewModel>().Delete(string.Format(url, idUsuario, id));
+            return new Operacao<AgendamentoViewModel>().Delete(string.Format(url, id, idUsuario));
         }
 
         public AgendamentoViewModel Reagendamento(int idUsuario, int idAgendamento, string data, string hora, string texto)

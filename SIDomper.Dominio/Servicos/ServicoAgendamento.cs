@@ -6,6 +6,7 @@ using SIDomper.Dominio.Interfaces.Servicos;
 using SIDomper.Dominio.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SIDomper.Dominio.Servicos
@@ -407,6 +408,13 @@ namespace SIDomper.Dominio.Servicos
 
         private string TextoEmail(Agendamento agendamento)
         {
+            if (agendamento.Cliente == null)
+                agendamento.Cliente = _uow.RepositorioCliente.find(agendamento.ClienteId);
+            if (agendamento.Tipo == null)
+                agendamento.Tipo = _uow.RepositorioTipo.find(agendamento.TipoId);
+            if (agendamento.Status == null)
+                agendamento.Status = _uow.RepositorioStatus.find(agendamento.StatusId);
+
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("Caro(a) : " + agendamento.Cliente.Nome + ", seguem abaixo informações referente ao agendamento da Domper Consultoria e Sistemas:");
             sb.AppendLine("");
@@ -543,7 +551,7 @@ namespace SIDomper.Dominio.Servicos
             if (string.IsNullOrWhiteSpace(emailConta))
                 return "";
 
-            var listaEmail = _uow.RepositorioAgendamento.RetornarEmailClientes(agendamento.Id);
+            var listaEmail = _uow.RepositorioAgendamento.RetornarEmailClientes(agendamento.Id).ToList();
 
             int contador = 0;
 

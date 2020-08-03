@@ -107,6 +107,9 @@ namespace SIDomperWebApi.Controllers
                 {
                     if (!string.IsNullOrWhiteSpace(item.Data))
                         item.Data = Convert.ToDateTime(item.Data).ToShortDateString();
+                    //if (!string.IsNullOrWhiteSpace(item.Data))
+                    //    item.Hora = item.Hora;
+                    
                     if (!string.IsNullOrWhiteSpace(item.DescricaoProblema))
                         item.DescricaoProblema = item.DescricaoProblema.Replace("\r", "").Replace("\n", "");
                     if (!string.IsNullOrWhiteSpace(item.DescricaoSolucao))

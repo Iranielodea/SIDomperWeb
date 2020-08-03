@@ -136,6 +136,7 @@ namespace SIDomper.Infra.RepositorioDapper
             sb.AppendLine("SELECT TOP(20) WITH TIES");
             sb.AppendLine(" Cha_Id as Id,");
             sb.AppendLine(" Cha_DataAbertura as Data,");
+            sb.AppendLine(" Cha_HoraAbertura as Hora,");
             sb.AppendLine(" Cha_Contato as Contato,");
             sb.AppendLine(" Cha_Descricao as Descricao,");
             sb.AppendLine(" Sta_Nome as Status, ");

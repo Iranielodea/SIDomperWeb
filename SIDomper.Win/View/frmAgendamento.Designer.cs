@@ -31,6 +31,13 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgvDados = new System.Windows.Forms.DataGridView();
+            this.Age_Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Age_Data = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Age_Hora = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Age_NomeCliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Tip_Nome = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Sta_Nome = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Usu_Nome = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label3 = new System.Windows.Forms.Label();
             this.txtContato = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -60,13 +67,6 @@
             this.ursFiltroTipo = new SIDomper.Win.Filtros.ursFiltroPadrao();
             this.tpStatus = new System.Windows.Forms.TabPage();
             this.ursFiltroStatus = new SIDomper.Win.Filtros.ursFiltroPadrao();
-            this.Age_Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Age_Data = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Age_Hora = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Age_NomeCliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Tip_Nome = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Sta_Nome = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Usu_Nome = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControl1.SuspendLayout();
             this.tpPesquisa.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -120,6 +120,19 @@
             this.cbCampos.Location = new System.Drawing.Point(11, 30);
             this.cbCampos.Size = new System.Drawing.Size(218, 25);
             // 
+            // tpEditar
+            // 
+            this.tpEditar.Size = new System.Drawing.Size(976, 571);
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Location = new System.Drawing.Point(4, 504);
+            this.groupBox3.Size = new System.Drawing.Size(968, 63);
+            // 
+            // tabControl2
+            // 
+            this.tabControl2.Size = new System.Drawing.Size(968, 563);
+            // 
             // tbPrincipal
             // 
             this.tbPrincipal.Controls.Add(this.label7);
@@ -137,6 +150,7 @@
             this.tbPrincipal.Controls.Add(this.txtContato);
             this.tbPrincipal.Controls.Add(this.label3);
             this.tbPrincipal.Controls.Add(this.txtCodigo);
+            this.tbPrincipal.Size = new System.Drawing.Size(960, 533);
             // 
             // tabControl3
             // 
@@ -167,12 +181,17 @@
             // cboAtivo
             // 
             this.cboAtivo.Location = new System.Drawing.Point(474, 48);
+            this.cboAtivo.Size = new System.Drawing.Size(121, 25);
             this.cboAtivo.Visible = false;
             // 
             // lblAtivo
             // 
             this.lblAtivo.Location = new System.Drawing.Point(471, 28);
             this.lblAtivo.Visible = false;
+            // 
+            // cbPesquisa
+            // 
+            this.cbPesquisa.Size = new System.Drawing.Size(133, 25);
             // 
             // dgvDados
             // 
@@ -191,6 +210,59 @@
             this.dgvDados.Size = new System.Drawing.Size(968, 441);
             this.dgvDados.TabIndex = 2;
             this.dgvDados.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvDados_ColumnHeaderMouseClick);
+            // 
+            // Age_Id
+            // 
+            this.Age_Id.DataPropertyName = "Id";
+            this.Age_Id.HeaderText = "Id";
+            this.Age_Id.Name = "Age_Id";
+            this.Age_Id.Visible = false;
+            // 
+            // Age_Data
+            // 
+            this.Age_Data.DataPropertyName = "Data";
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
+            this.Age_Data.DefaultCellStyle = dataGridViewCellStyle1;
+            this.Age_Data.HeaderText = "Data";
+            this.Age_Data.Name = "Age_Data";
+            // 
+            // Age_Hora
+            // 
+            this.Age_Hora.DataPropertyName = "Hora";
+            dataGridViewCellStyle2.Format = "t";
+            dataGridViewCellStyle2.NullValue = null;
+            this.Age_Hora.DefaultCellStyle = dataGridViewCellStyle2;
+            this.Age_Hora.HeaderText = "Hora";
+            this.Age_Hora.Name = "Age_Hora";
+            this.Age_Hora.Width = 60;
+            // 
+            // Age_NomeCliente
+            // 
+            this.Age_NomeCliente.DataPropertyName = "NomeCliente";
+            this.Age_NomeCliente.HeaderText = "Cliente";
+            this.Age_NomeCliente.Name = "Age_NomeCliente";
+            this.Age_NomeCliente.Width = 300;
+            // 
+            // Tip_Nome
+            // 
+            this.Tip_Nome.DataPropertyName = "TipoNome";
+            this.Tip_Nome.HeaderText = "Tipo";
+            this.Tip_Nome.Name = "Tip_Nome";
+            this.Tip_Nome.Width = 150;
+            // 
+            // Sta_Nome
+            // 
+            this.Sta_Nome.DataPropertyName = "StatusNome";
+            this.Sta_Nome.HeaderText = "Status";
+            this.Sta_Nome.Name = "Sta_Nome";
+            this.Sta_Nome.Width = 150;
+            // 
+            // Usu_Nome
+            // 
+            this.Usu_Nome.DataPropertyName = "UsuarioNome";
+            this.Usu_Nome.HeaderText = "Usuário";
+            this.Usu_Nome.Name = "Usu_Nome";
+            this.Usu_Nome.Width = 150;
             // 
             // label3
             // 
@@ -462,59 +534,6 @@
             this.ursFiltroStatus.Name = "ursFiltroStatus";
             this.ursFiltroStatus.Size = new System.Drawing.Size(950, 461);
             this.ursFiltroStatus.TabIndex = 1;
-            // 
-            // Age_Id
-            // 
-            this.Age_Id.DataPropertyName = "Id";
-            this.Age_Id.HeaderText = "Id";
-            this.Age_Id.Name = "Age_Id";
-            this.Age_Id.Visible = false;
-            // 
-            // Age_Data
-            // 
-            this.Age_Data.DataPropertyName = "Data";
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
-            this.Age_Data.DefaultCellStyle = dataGridViewCellStyle1;
-            this.Age_Data.HeaderText = "Data";
-            this.Age_Data.Name = "Age_Data";
-            // 
-            // Age_Hora
-            // 
-            this.Age_Hora.DataPropertyName = "Hora";
-            dataGridViewCellStyle2.Format = "t";
-            dataGridViewCellStyle2.NullValue = null;
-            this.Age_Hora.DefaultCellStyle = dataGridViewCellStyle2;
-            this.Age_Hora.HeaderText = "Hora";
-            this.Age_Hora.Name = "Age_Hora";
-            this.Age_Hora.Width = 60;
-            // 
-            // Age_NomeCliente
-            // 
-            this.Age_NomeCliente.DataPropertyName = "NomeCliente";
-            this.Age_NomeCliente.HeaderText = "Cliente";
-            this.Age_NomeCliente.Name = "Age_NomeCliente";
-            this.Age_NomeCliente.Width = 300;
-            // 
-            // Tip_Nome
-            // 
-            this.Tip_Nome.DataPropertyName = "TipoNome";
-            this.Tip_Nome.HeaderText = "Tipo";
-            this.Tip_Nome.Name = "Tip_Nome";
-            this.Tip_Nome.Width = 150;
-            // 
-            // Sta_Nome
-            // 
-            this.Sta_Nome.DataPropertyName = "StatusNome";
-            this.Sta_Nome.HeaderText = "Status";
-            this.Sta_Nome.Name = "Sta_Nome";
-            this.Sta_Nome.Width = 150;
-            // 
-            // Usu_Nome
-            // 
-            this.Usu_Nome.DataPropertyName = "UsuarioNome";
-            this.Usu_Nome.HeaderText = "Usuário";
-            this.Usu_Nome.Name = "Usu_Nome";
-            this.Usu_Nome.Width = 150;
             // 
             // frmAgendamento
             // 

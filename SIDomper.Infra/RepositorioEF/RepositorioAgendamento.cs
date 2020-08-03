@@ -21,6 +21,9 @@ namespace SIDomper.Infra.RepositorioEF
         {
             var sb = new StringBuilder();
             sb.AppendLine(" SELECT");
+            sb.AppendLine(" CliEm_Id as Id,");
+            sb.AppendLine(" CliEm_Cliente as ClienteId,");
+            sb.AppendLine(" CliEm_Notificar as Notificar,");
             sb.AppendLine(" CliEm_Email as Email");
             sb.AppendLine(" FROM Agendamento");
             sb.AppendLine(" INNER JOIN Cliente_Email ON Age_Cliente = CliEm_Cliente");

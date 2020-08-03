@@ -90,6 +90,8 @@ namespace SIDomper.Win.View
                 rbVisita.Checked = (model.Programa == 2);
                 rbAtividade.Checked = (model.Programa == 7);
 
+                UsrCliente.LimparTela();
+
                 usrData.txtData.Focus();
                 _Id = 0;
             }
