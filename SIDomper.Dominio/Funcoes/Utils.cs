@@ -50,6 +50,12 @@ namespace SIDomper.Dominio.Funcoes
             }
         }
 
+        public static double CalcularDatas(DateTime dataInicial, DateTime dataFinal)
+        {
+            TimeSpan data = dataFinal.Subtract(dataInicial);
+            return data.TotalDays;
+        }
+
         public static double HoraToDecimal(string hora)
         {
             double d = 0;

@@ -46,8 +46,7 @@ namespace SIDomper.Servicos.Funcoes
 
         public static double CalcularDatas(DateTime dataInicial, DateTime dataFinal)
         {
-            TimeSpan data = dataFinal.Subtract(dataInicial);
-            return data.TotalDays;
+            return Utils.CalcularDatas(dataInicial, dataFinal);
         }
 
         public static bool DataEmBranco(string data)

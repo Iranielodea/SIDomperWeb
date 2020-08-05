@@ -156,6 +156,7 @@
     <Compile Include="Servicos\ServicoAgendamento.cs" />
     <Compile Include="Servicos\ServicoBaseConhecimento.cs" />
     <Compile Include="Servicos\ServicoChamado.cs" />
+    <Compile Include="Servicos\ServicoChamadoQuadro.cs" />
     <Compile Include="Servicos\ServicoCidade.cs" />
     <Compile Include="Servicos\ServicoCliente.cs" />
     <Compile Include="Servicos\ServicoContaEmail.cs" />
