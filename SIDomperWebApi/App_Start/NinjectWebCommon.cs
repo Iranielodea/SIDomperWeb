@@ -124,6 +124,7 @@ namespace SIDomperWebApi.App_Start
             kernel.Bind<IServicoVisita>().To<ServicoVisita>();
             kernel.Bind<IServicoRecado>().To<ServicoRecado>();
             kernel.Bind<IServicoChamado>().To<ServicoChamado>();
+            kernel.Bind<IServicoChamadoQuadro>().To<ServicoChamadoQuadro>();
         }
     }
 }

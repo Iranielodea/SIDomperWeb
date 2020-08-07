@@ -18,6 +18,8 @@ namespace SIDomper.Dominio.Servicos
         private readonly IRepositoryReadOnly<ChamadoConsultaViewModel> _repositoryReadOnly;
         private readonly IRepositoryReadOnly<ChamadoAplicativoViewModel> _repositoryAplicativoReadOnly;
         private readonly IRepositoryReadOnly<ChamadoAnexo> _repositoryAnexoReadOnly;
+        private readonly IRepositoryReadOnly<ChamadoOcorrencia> _repositoryProbemaSolucaoReadOnly;
+        private readonly IServicoChamadoQuadro _servicoChamadoQuadro;
         private readonly EnProgramas _enProgramas;
         private readonly EnumChamado _enumChamadoAtividade;
         List<string> _listaEmail;
@@ -26,7 +28,9 @@ namespace SIDomper.Dominio.Servicos
         public ServicoChamado(IUnitOfWork unitOfWork,
            IRepositoryReadOnly<ChamadoConsultaViewModel> repositoryReadOnly,
            EnumChamado enumChamado, IRepositoryReadOnly<ChamadoAplicativoViewModel> repositoryAplicativoReadOnly,
-           IRepositoryReadOnly<ChamadoAnexo> repositoryAnexoReadOnly)
+           IRepositoryReadOnly<ChamadoAnexo> repositoryAnexoReadOnly,
+           IServicoChamadoQuadro servicoChamadoQuadro,
+           IRepositoryReadOnly<ChamadoOcorrencia> repositoryProbemaSolucaoReadOnly)
         {
             _uow = unitOfWork;
             _repositoryReadOnly = repositoryReadOnly;
@@ -34,6 +38,8 @@ namespace SIDomper.Dominio.Servicos
             _enumChamadoAtividade = enumChamado;
             _repositoryAplicativoReadOnly = repositoryAplicativoReadOnly;
             _repositoryAnexoReadOnly = repositoryAnexoReadOnly;
+            _repositoryProbemaSolucaoReadOnly = repositoryProbemaSolucaoReadOnly;
+            _servicoChamadoQuadro = servicoChamadoQuadro;
 
             _listaEmail = new List<string>();
             _listaEmailCliente = new List<string>();
@@ -46,7 +52,8 @@ namespace SIDomper.Dominio.Servicos
 
         public ChamadoQuadroViewModel AbrirQuadro(int idUsuario, int idRevenda)
         {
-            throw new NotImplementedException();
+            //var quadro = new ServicoChamadoQuadro()
+            return _servicoChamadoQuadro.AbrirQuadro(idUsuario, idRevenda, _enProgramas);
         }
 
         public Chamado Editar(int id, int idUsuario, ref string mensagem)
@@ -54,6 +61,10 @@ namespace SIDomper.Dominio.Servicos
             mensagem = "OK";
             var model = ObterPorId(id);
             if (!_uow.RepositorioUsuario.PermissaoEditar(idUsuario, _enProgramas))
+            {
+                mensagem = Mensagem.UsuarioSemPermissao;
+            }
+            else
             {
                 if (model.UsuarioAberturaId != idUsuario)
                     mensagem = Mensagem.UsuarioSemPermissao;
@@ -108,7 +119,7 @@ namespace SIDomper.Dominio.Servicos
                 sb.AppendLine(" WHERE " + campo + " LIKE " + sTexto);
             else
             {
-                sb.AppendLine("WHERE Cha_Id > 0");
+                sb.AppendLine(" WHERE Cha_Id > 0");
             }
 
             if (filtro.Id > 0)
@@ -310,8 +321,40 @@ namespace SIDomper.Dominio.Servicos
             {
                 string texto = TextoEmail(model, enChamado);
                 string assunto = RetornarAssunto(model, enChamado);
-                
+
                 _uow.RepositorioContaEmail.EnviarEmail(usuarioId, emailCliente, emailOculto, assunto, texto, "");
+            }
+        }
+
+        public void UpdateHoraUsuarioAtual(int idChamado, EnumChamado enumChamado, int idUsuario, int idStatus)
+        {
+            string codigoStatus = "";
+
+            if (enumChamado == EnumChamado.Chamado)
+                codigoStatus = _uow.RepositorioChamado.StatusAtendimentoChamado();
+            else
+                codigoStatus = _uow.RepositorioChamado.StatusAtendimentoAtividade();
+
+            if (!string.IsNullOrWhiteSpace(codigoStatus))
+            {
+                int.TryParse(codigoStatus, out int codStatus);
+
+                var modelStatus = _uow.RepositorioStatus.First(x => x.Codigo == codStatus);
+
+                if (modelStatus == null)
+                    throw new Exception("Informe o Status Atendimento na Tabela de Parâmetros !");
+
+                var model = _uow.RepositorioChamado.First(x => x.Id == idChamado && x.StatusId == idStatus && x.UsuarioAtendeAtualId == idUsuario);
+                if (model != null)
+                {
+                    DateTime hora = DateTime.Now;
+                    model.HoraAtendeAtual = TimeSpan.Parse(hora.ToShortTimeString());
+                    model.StatusId = idStatus;
+                    model.UsuarioAtendeAtualId = idUsuario;
+                    model.Id = idChamado;
+
+                    Salvar(model);
+                }
             }
         }
 
@@ -718,6 +761,45 @@ namespace SIDomper.Dominio.Servicos
         {
             var cliente = _uow.RepositorioCliente.First(x => x.Id == idCliente);
             return cliente.ClienteModulos.FirstOrDefault(m => m.ModuloId == idModulo);
+        }
+
+        public string CaminhoAnexo()
+        {
+            return _uow.RepositorioChamado.CaminhoAnexo();
+        }
+
+        public IEnumerable<ChamadoOcorrencia> ListarProblemaSolucao(ChamadoFiltro filtro, string texto, int idUsuario, EnumChamado tipo)
+        {
+            string sConsulta = _uow.RepositorioUsuario.PermissaoUsuario(idUsuario);
+
+            var sb = new StringBuilder();
+
+            sb.AppendLine(" SELECT ");
+            sb.AppendLine("   ChOco_Chamado,");
+            sb.AppendLine("   ChOco_Data,");
+            sb.AppendLine("   ChOco_HoraInicio,");
+            sb.AppendLine("   ChOco_HoraFim,");
+            sb.AppendLine("   ChOco_DescricaoSolucao,");
+            sb.AppendLine("   ChOco_DescricaoTecnica,");
+            sb.AppendLine("   Usu_Nome");
+            sb.AppendLine(" FROM Chamado_Ocorrencia");
+            sb.AppendLine("   INNER JOIN Chamado ON ChOco_Chamado = Cha_Id");
+            sb.AppendLine("   INNER JOIN Cliente ON Cha_Cliente = Cli_Id");
+            sb.AppendLine("   INNER JOIN Usuario ON ChOco_Usuario = Usu_Id	");
+            sb.AppendLine(" WHERE ((ChOco_DescricaoTecnica LIKE " + texto + ") OR (ChOco_DescricaoSolucao LIKE " + texto + "))");
+            sb.AppendLine(sConsulta);
+
+            if (tipo == EnumChamado.Chamado)
+                sb.AppendLine(" AND cha_TipoMovimento = 1");
+            else
+                sb.AppendLine(" AND cha_TipoMovimento = 2");
+
+            if (filtro.IdCliente != "")
+                sb.AppendLine(" AND Cha_Cliente IN " + filtro.IdCliente);
+
+            sb.AppendLine(" ORDER BY ChOco_Data");
+
+            return _repositoryProbemaSolucaoReadOnly.GetAll(sb.ToString());
         }
     }
 }

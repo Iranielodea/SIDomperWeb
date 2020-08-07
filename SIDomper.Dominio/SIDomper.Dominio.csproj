@@ -133,6 +133,7 @@
     <Compile Include="Interfaces\Servicos\IServicoAgendamento.cs" />
     <Compile Include="Interfaces\Servicos\IServicoBaseConhecimento.cs" />
     <Compile Include="Interfaces\Servicos\IServicoChamado.cs" />
+    <Compile Include="Interfaces\Servicos\IServicoChamadoQuadro.cs" />
     <Compile Include="Interfaces\Servicos\IServicoCidade.cs" />
     <Compile Include="Interfaces\Servicos\IServicoDepartamento.cs" />
     <Compile Include="Interfaces\Servicos\IServicoEscala.cs" />

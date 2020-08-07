@@ -24,11 +24,11 @@ namespace Testes
             catch(Exception ex)
             {
                 throw new Exception(ex.Message);
-                Console.WriteLine("Erro: " + ex.Message);
-                foreach (var item in lista)
-                {
-                    Console.WriteLine(item);
-                }
+                //Console.WriteLine("Erro: " + ex.Message);
+                //foreach (var item in lista)
+                //{
+                //    Console.WriteLine(item);
+                //}
             }
 
             Console.WriteLine("Fim ----------------------");

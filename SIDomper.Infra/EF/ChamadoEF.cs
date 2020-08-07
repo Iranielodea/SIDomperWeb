@@ -309,8 +309,10 @@ namespace SIDomper.Infra.EF
             var lista = new List<ClienteEmail>();
             foreach (var item in query)
             {
-                var model = new ClienteEmail();
-                model.Email = item.Email;
+                var model = new ClienteEmail
+                {
+                    Email = item.Email
+                };
 
                 lista.Add(model);
             }

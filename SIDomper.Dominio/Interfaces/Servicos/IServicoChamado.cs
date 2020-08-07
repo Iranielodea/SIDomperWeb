@@ -23,5 +23,7 @@ namespace SIDomper.Dominio.Interfaces.Servicos
         ChamadoQuadroViewModel AbrirQuadro(int idUsuario, int idRevenda);
         IEnumerable<ChamadoAnexo> RetornarAnexos(int chamadoId);
         ClienteModulo ObterPorModulo(int idCliente, int idModulo);
+        void UpdateHoraUsuarioAtual(int idChamado, EnumChamado enumChamado, int idUsuario, int idStatus);
+        IEnumerable<ChamadoOcorrencia> ListarProblemaSolucao(ChamadoFiltro filtro, string texto, int idUsuario, EnumChamado tipo);
     }
 }

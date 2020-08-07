@@ -1,6 +1,7 @@
 ﻿using SIDomper.Dominio.Entidades;
 using SIDomper.Dominio.Enumeracao;
 using SIDomper.Dominio.Interfaces;
+using SIDomper.Dominio.Interfaces.Servicos;
 using SIDomper.Dominio.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace SIDomper.Dominio.Servicos
 {
-    public class ServicoChamadoQuadro
+    public class ServicoChamadoQuadro : IServicoChamadoQuadro
     {
         private readonly IRepositoryReadOnly<QuadroViewModelChamado> _repositoryQuadroReadOnly;
         private readonly IUnitOfWork _uow;
@@ -77,17 +78,17 @@ namespace SIDomper.Dominio.Servicos
 
         public string StatusAtendimentoChamado()
         {
-            return _uow.RepositorioParametro.ObterPorParametro(10, 1).Valor;
+            return _uow.RepositorioChamado.StatusAtendimentoChamado();
         }
 
         public string StatusAbertura()
         {
-            return _uow.RepositorioParametro.ObterPorParametro(9, 1).Valor;
+            return _uow.RepositorioChamado.StatusAbertura();
         }
 
         public string StatusAberturaAtividade()
         {
-            return _uow.RepositorioParametro.ObterPorParametro(31, 111).Valor;
+            return _uow.RepositorioChamado.StatusAberturaAtividade();
         }
 
         private List<Status> BuscarTitulosQuadro()
@@ -222,6 +223,7 @@ namespace SIDomper.Dominio.Servicos
             sb.AppendLine("	Cha_DataAbertura as DataAbertura,");
             sb.AppendLine("	Cha_HoraAbertura as HoraAbertura,");
             sb.AppendLine("	Cli_Nome as NomeCliente,");
+            sb.AppendLine("	Cli_Perfil as Perfil,");
             sb.AppendLine("	CASE cha_Nivel");
             sb.AppendLine("		WHEN 1 THEN '1-Baixo'");
             sb.AppendLine("		WHEN 2 THEN '2-Normal'");

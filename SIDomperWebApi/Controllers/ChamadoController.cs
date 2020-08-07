@@ -312,6 +312,8 @@ namespace SIDomperWebApi.Controllers
             {
                 item.HoraTela = Utils.FormatarHHMMSS(item.Hora);
             }
+
+            _ChamadoViewModel.TotalHoras = _ChamadoViewModel.ChamadoOcorrencias.Sum(x => x.TotalHoras);
             
 
             //var chamadoOcorrenciaServico = new ChamadoOcorrenciaServico();

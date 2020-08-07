@@ -43,6 +43,7 @@ namespace SIDomper.Dominio.ViewModel
         public bool UsuarioPermissaoAlterarDataHora { get; set; }
         public string Versao { get; set; }
         public int Origem { get; set; }
+        public double TotalHoras { get; set; }
 
         public string NomeFantasia { get; set; }
         public string NomeRevenda { get; set; }
@@ -207,6 +208,7 @@ namespace SIDomper.Dominio.ViewModel
         public string DataAbertura { get; set; }
         public string HoraAbertura { get; set; }
         public string NomeCliente { get; set; }
+        public string Perfil { get; set; }
         public string Nivel { get; set; }
         public string NomeTipo { get; set; }
         public string NomeUsuario { get; set; }
