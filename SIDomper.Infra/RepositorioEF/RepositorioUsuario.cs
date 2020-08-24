@@ -299,5 +299,10 @@ namespace SIDomper.Infra.RepositorioEF
             }
             return resultado;
         }
+
+        public UsuarioPermissao ObterPermissaoPorSigla(int idUsuario, string sigla)
+        {
+            return _contexto.UsuarioPermissoes.FirstOrDefault(x => x.UsuarioId == idUsuario && x.Sigla == sigla);
+        }
     }
 }

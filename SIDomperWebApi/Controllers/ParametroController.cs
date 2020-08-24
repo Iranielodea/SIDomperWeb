@@ -12,12 +12,10 @@ namespace SIDomperWebApi.Controllers
     [RoutePrefix("api/parametro")]
     public class ParametroController : ApiController
     {
-        //private readonly ParametroServico _parametroServico;
         private readonly IServicoParametro _servicoParametro;
 
         public ParametroController(IServicoParametro servicoParametro)
         {
-            //_parametroServico = new ParametroServico();
             _servicoParametro = servicoParametro;
         }
 
@@ -29,7 +27,6 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 var prod = _servicoParametro.ObterPorId(id);
-                //var prod = _parametroServico.ObterPorId(id);
                 model = prod.Adapt<ParametroViewModel>();
                 return model;
             }
@@ -48,7 +45,6 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 var item = _servicoParametro.Novo(idUsuario);
-                //var item = _parametroServico.Novo(idUsuario);
                 model = item.Adapt<ParametroViewModel>();
                 return model;
             }
@@ -67,7 +63,6 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 var prod = _servicoParametro.ObterPorParametro(codigo, programa);
-                //var prod = _parametroServico.ObterPorParametro(codigo, programa);
                 model = prod.Adapt<ParametroViewModel>();
                 return model;
             }
@@ -87,7 +82,6 @@ namespace SIDomperWebApi.Controllers
             {
                 string mensagem = "";
                 var parametro = _servicoParametro.Editar(id, idUsuario, ref mensagem);
-                //var prod = _parametroServico.Editar(idUsuario, id, ref mensagem);
                 model = parametro.Adapt<ParametroViewModel>();
                 model.Mensagem = mensagem;
                 return model;
@@ -106,7 +100,6 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 var lista = _servicoParametro.Filtrar(campo, texto, contem);
-                //var lista = _parametroServico.Filtrar(campo, texto, contem);
                 var model = lista.Adapt<ParametroViewModel[]>();
                 return model;
             }
@@ -124,7 +117,6 @@ namespace SIDomperWebApi.Controllers
             {
                 var parametro = model.Adapt<Parametro>();
                 _servicoParametro.Salvar(parametro);
-                //_parametroServico.Salvar(parametro);
                 parametroViewModel = parametro.Adapt<ParametroViewModel>();
                 return parametroViewModel;
             }
@@ -143,7 +135,6 @@ namespace SIDomperWebApi.Controllers
             {
                 var parametro = model.Adapt<Parametro>();
                 _servicoParametro.Salvar(parametro);
-                //_parametroServico.Salvar(parametro);
                 parametroViewModel = parametro.Adapt<ParametroViewModel>();
                 return parametroViewModel;
             }
@@ -160,7 +151,6 @@ namespace SIDomperWebApi.Controllers
             var model = new ParametroViewModel();
             try
             {
-                //_parametroServico.Excluir(idUsuario, id);
                 _servicoParametro.Excluir(_servicoParametro.ObterPorId(id), idUsuario);
                 return model;
             }

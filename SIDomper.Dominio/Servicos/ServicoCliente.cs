@@ -760,6 +760,8 @@ namespace SIDomper.Dominio.Servicos
             var model = _uow.RepositorioCliente.First(x => x.Codigo == codigo);
             if (model == null)
                 throw new Exception("Cliente não Cadastrado!");
+            if (model.Ativo == false)
+                throw new Exception("Cliente Inativo!");
             return model;
         }
 

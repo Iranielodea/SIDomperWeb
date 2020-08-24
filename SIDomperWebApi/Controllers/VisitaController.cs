@@ -12,12 +12,10 @@ namespace SIDomperWebApi.Controllers
     [RoutePrefix("api/visita")]
     public class VisitaController : ApiController
     {
-        //private readonly VisitaServico _visitaServico;
         private readonly IServicoVisita _servicoVisita;
 
         public VisitaController(IServicoVisita servicoVisita)
         {
-            //_visitaServico = new VisitaServico();
             _servicoVisita = servicoVisita;
         }
 

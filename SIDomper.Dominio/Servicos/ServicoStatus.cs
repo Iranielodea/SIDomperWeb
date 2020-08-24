@@ -113,7 +113,12 @@ namespace SIDomper.Dominio.Servicos
 
         public Status ObterPorCodigo(int codigo, EnStatus enStatus)
         {
-            return _uow.RepositorioStatus.ObterPorCodigo(codigo, enStatus);
+            var model = _uow.RepositorioStatus.ObterPorCodigo(codigo, enStatus);
+            if (model == null)
+                throw new Exception("Status não Cadastrado!");
+            if (model.Ativo == false)
+                throw new Exception("Status Inativo!");
+            return model;
         }
 
         public Status ObterPorId(int id)

@@ -91,6 +91,8 @@ namespace SIDomper.Dominio.Servicos
             var model = _uow.RepositorioCidade.First(x => x.Codigo == codigo);
             if (model == null)
                 throw new Exception("Cidade não Cadastrada!");
+            if (model.Ativo == false)
+                throw new Exception("Cidade Inativa!");
             return model;
         }
 

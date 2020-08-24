@@ -12,12 +12,10 @@ namespace SIDomperWebApi.Controllers
     [RoutePrefix("api/tipo")]
     public class TipoController : ApiController
     {
-        //private readonly TipoServico _tipoServico;
         private readonly IServicoTipo _servicoTipo;
 
         public TipoController(IServicoTipo servicoTipo)
         {
-            //_tipoServico = new TipoServico();
             _servicoTipo = servicoTipo;
         }
 
@@ -29,7 +27,6 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 var item = _servicoTipo.ObterPorId(id);
-                //var item = _tipoServico.ObterPorId(id);
                 model = item.Adapt<TipoViewModel>();
                 return model;
             }
@@ -49,7 +46,6 @@ namespace SIDomperWebApi.Controllers
             {
                 string mensagem = "";
                 var item = _servicoTipo.Editar(id, idUsuario, ref mensagem);
-                //var item = _tipoServico.Editar(idUsuario, id, ref mensagem);
                 model = item.Adapt<TipoViewModel>();
                 model.Mensagem = mensagem;
                 return model;
@@ -69,7 +65,6 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 var item = _servicoTipo.Novo(idUsuario);
-                //var item = _tipoServico.Novo(idUsuario);
                 model = item.Adapt<TipoViewModel>();
                 return model;
             }
@@ -88,7 +83,6 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 var prod = _servicoTipo.ObterPorCodigo(codigo, enTipos);
-                //var prod = _tipoServico.ObterPorCodigo(codigo, enTipos);
                 model = prod.Adapt<TipoViewModel>();
                 return model;
             }
@@ -106,7 +100,6 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 var lista = _servicoTipo.Filtrar(campo, texto, enTipos, ativo, contem);
-                //var lista = _tipoServico.Filtrar(campo, texto, enTipos, ativo, contem);
                 var model = lista.Adapt<TipoConsultaViewModel[]>();
                 return model;
             }
@@ -124,7 +117,6 @@ namespace SIDomperWebApi.Controllers
             {
                 var tipo = model.Adapt<Tipo>();
                 _servicoTipo.Salvar(tipo);
-                //_tipoServico.Salvar(tipo);
                 TipoViewModel = tipo.Adapt<TipoViewModel>();
                 return TipoViewModel;
             }
@@ -143,7 +135,6 @@ namespace SIDomperWebApi.Controllers
             {
                 var tipo = model.Adapt<Tipo>();
                 _servicoTipo.Salvar(tipo);
-                //_tipoServico.Salvar(tipo);
                 TipoViewModel = tipo.Adapt<TipoViewModel>();
                 return TipoViewModel;
             }
@@ -161,7 +152,6 @@ namespace SIDomperWebApi.Controllers
             var model = new TipoViewModel();
             try
             {
-                //_tipoServico.Excluir(idUsuario, id);
                 _servicoTipo.Excluir(_servicoTipo.ObterPorId(id), idUsuario);
                 return model;
             }

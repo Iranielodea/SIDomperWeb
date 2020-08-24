@@ -12,12 +12,10 @@ namespace SIDomperWebApi.Controllers
     [RoutePrefix("api/observacao")]
     public class ObservacaoController : ApiController
     {
-        //private readonly ObservacaoServico _observacaoServico;
         private readonly IServicoObservacao _servicoObservacao;
 
         public ObservacaoController(IServicoObservacao servicoObservacao)
         {
-            //_observacaoServico = new ObservacaoServico();
             _servicoObservacao = servicoObservacao;
         }
 
@@ -29,7 +27,6 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 var item = _servicoObservacao.ObterPorId(id);
-                //var item = _observacaoServico.ObterPorId(id);
                 model = item.Adapt<ObservacaoViewModel>();
                 return model;
             }
@@ -49,7 +46,6 @@ namespace SIDomperWebApi.Controllers
             {
                 string mensagem = "";
                 var item = _servicoObservacao.Editar(id, idUsuario, ref mensagem);
-                //var item = _observacaoServico.Editar(idUsuario, id, ref mensagem);
                 model = item.Adapt<ObservacaoViewModel>();
                 model.Mensagem = mensagem;
                 return model;
@@ -69,7 +65,6 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 var item = _servicoObservacao.Novo(idUsuario);
-                //var item = _observacaoServico.Novo(idUsuario);
                 model = item.Adapt<ObservacaoViewModel>();
                 return model;
             }
@@ -88,7 +83,6 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 var item = _servicoObservacao.ObterPadrao(idPrograma);
-                //var item = _observacaoServico.ObterPadrao(idPrograma);
                 model = item.Adapt<ObservacaoViewModel>();
                 return model;
             }
@@ -107,7 +101,6 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 var item = _servicoObservacao.ObterEmailPadrao(idPrograma);
-                //var item = _observacaoServico.ObterEmailPadrao(idPrograma);
                 model = item.Adapt<ObservacaoViewModel>();
                 return model;
             }
@@ -126,7 +119,6 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 var prod = _servicoObservacao.ObterPorCodigo(codigo);
-                //var prod = _observacaoServico.ObterPorCodigo(codigo);
                 model = prod.Adapt<ObservacaoViewModel>();
                 return model;
             }
@@ -144,7 +136,6 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 var lista = _servicoObservacao.Filtrar(campo, texto, ativo, contem);
-                //var lista = _observacaoServico.Filtrar(campo, texto, ativo, contem);
                 var model = lista.Adapt<ObservacaoConsultaViewModel[]>();
                 return model;
             }
@@ -162,7 +153,6 @@ namespace SIDomperWebApi.Controllers
             {
                 var observacao = model.Adapt<Observacao>();
                 _servicoObservacao.Salvar(observacao);
-                //_observacaoServico.Salvar(observacao);
                 observacaoViewModel = observacao.Adapt<ObservacaoViewModel>();
                 return observacaoViewModel;
             }
@@ -181,7 +171,6 @@ namespace SIDomperWebApi.Controllers
             {
                 var observacao = model.Adapt<Observacao>();
                 _servicoObservacao.Salvar(observacao);
-                //_observacaoServico.Salvar(observacao);
                 observacaoViewModel = observacao.Adapt<ObservacaoViewModel>();
                 return observacaoViewModel;
             }
@@ -198,7 +187,6 @@ namespace SIDomperWebApi.Controllers
             var model = new ObservacaoViewModel();
             try
             {
-                //_observacaoServico.Excluir(idUsuario, id);
                 _servicoObservacao.Excluir(_servicoObservacao.ObterPorId(id), idUsuario);
                 return model;
             }

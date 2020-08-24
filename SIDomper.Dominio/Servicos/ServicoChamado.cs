@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace SIDomper.Dominio.Servicos
 {
@@ -19,48 +18,77 @@ namespace SIDomper.Dominio.Servicos
         private readonly IRepositoryReadOnly<ChamadoAplicativoViewModel> _repositoryAplicativoReadOnly;
         private readonly IRepositoryReadOnly<ChamadoAnexo> _repositoryAnexoReadOnly;
         private readonly IRepositoryReadOnly<ChamadoOcorrencia> _repositoryProbemaSolucaoReadOnly;
-        private readonly IServicoChamadoQuadro _servicoChamadoQuadro;
-        private readonly EnProgramas _enProgramas;
-        private readonly EnumChamado _enumChamadoAtividade;
+        private readonly IRepositoryReadOnly<QuadroViewModelChamado> _repositoryQuadroReadOnly;
         List<string> _listaEmail;
         List<string> _listaEmailCliente;
 
         public ServicoChamado(IUnitOfWork unitOfWork,
            IRepositoryReadOnly<ChamadoConsultaViewModel> repositoryReadOnly,
-           EnumChamado enumChamado, IRepositoryReadOnly<ChamadoAplicativoViewModel> repositoryAplicativoReadOnly,
+           IRepositoryReadOnly<ChamadoAplicativoViewModel> repositoryAplicativoReadOnly,
            IRepositoryReadOnly<ChamadoAnexo> repositoryAnexoReadOnly,
-           IServicoChamadoQuadro servicoChamadoQuadro,
-           IRepositoryReadOnly<ChamadoOcorrencia> repositoryProbemaSolucaoReadOnly)
+           IRepositoryReadOnly<ChamadoOcorrencia> repositoryProbemaSolucaoReadOnly,
+           IRepositoryReadOnly<QuadroViewModelChamado> repositoryQuadroReadOnly)
         {
             _uow = unitOfWork;
             _repositoryReadOnly = repositoryReadOnly;
-            _enProgramas = EnProgramas.Chamado;
-            _enumChamadoAtividade = enumChamado;
             _repositoryAplicativoReadOnly = repositoryAplicativoReadOnly;
             _repositoryAnexoReadOnly = repositoryAnexoReadOnly;
             _repositoryProbemaSolucaoReadOnly = repositoryProbemaSolucaoReadOnly;
-            _servicoChamadoQuadro = servicoChamadoQuadro;
-
+            _repositoryQuadroReadOnly = repositoryQuadroReadOnly;
             _listaEmail = new List<string>();
             _listaEmailCliente = new List<string>();
-
-            if (enumChamado == EnumChamado.Chamado)
-                _enProgramas = EnProgramas.Chamado;
-            else
-                _enProgramas = EnProgramas.Atividade;
         }
 
-        public ChamadoQuadroViewModel AbrirQuadro(int idUsuario, int idRevenda)
+        public ChamadoQuadroViewModel AbrirQuadro(int idUsuario, int idRevenda, EnProgramas enProgramas)
         {
-            //var quadro = new ServicoChamadoQuadro()
-            return _servicoChamadoQuadro.AbrirQuadro(idUsuario, idRevenda, _enProgramas);
+            var lista = new List<QuadroViewModelChamado>();
+            var quadroViewModel = new ChamadoQuadroViewModel();
+
+            if (enProgramas == EnProgramas.Chamado)
+            {
+                //lista = _repADO.QuadroChamado(idUsuario, idRevenda, EnumChamado.Chamado).ToList();
+                lista = QuadroChamado(idUsuario, idRevenda, EnumChamado.Chamado).ToList();
+
+                quadroViewModel.Quadro1 = lista.Where(x => x.QuadroTela == "Q1").OrderBy(x => x.Id).ToList();
+                quadroViewModel.Quadro2 = lista.Where(x => x.QuadroTela == "Q2").OrderBy(x => x.Id).ToList();
+                quadroViewModel.Quadro3 = lista.Where(x => x.QuadroTela == "Q3").OrderBy(x => x.Id).ToList();
+                quadroViewModel.Quadro4 = lista.Where(x => x.QuadroTela == "Q4").OrderBy(x => x.Id).ToList();
+                quadroViewModel.Quadro5 = lista.Where(x => x.QuadroTela == "Q5").OrderBy(x => x.Id).ToList();
+                quadroViewModel.Quadro6 = lista.Where(x => x.QuadroTela == "Q6").OrderBy(x => x.Id).ToList();
+
+                var listaStatus = BuscarTitulosQuadro();
+
+                quadroViewModel.Titulo1 = listaStatus[0].Nome;
+                quadroViewModel.Titulo2 = listaStatus[1].Nome;
+                quadroViewModel.Titulo3 = listaStatus[2].Nome;
+                quadroViewModel.Titulo4 = listaStatus[3].Nome;
+                quadroViewModel.Titulo5 = listaStatus[4].Nome;
+                quadroViewModel.Titulo6 = listaStatus[5].Nome;
+
+                int.TryParse(StatusAbertura(), out int codigoStatusAbertura);
+                int.TryParse(StatusAtendimentoChamado(), out int codigoStatusOcorrencia);
+
+                string statusAbertura = _uow.RepositorioStatus.First(x => x.Codigo == codigoStatusAbertura).Nome;
+                string statusOcorrencia = _uow.RepositorioStatus.First(x => x.Codigo == codigoStatusOcorrencia).Nome;
+
+                PreencherQuadro(statusAbertura, statusOcorrencia, quadroViewModel.Titulo1, quadroViewModel.Quadro1);
+                PreencherQuadro(statusAbertura, statusOcorrencia, quadroViewModel.Titulo2, quadroViewModel.Quadro2);
+                PreencherQuadro(statusAbertura, statusOcorrencia, quadroViewModel.Titulo3, quadroViewModel.Quadro3);
+                PreencherQuadro(statusAbertura, statusOcorrencia, quadroViewModel.Titulo4, quadroViewModel.Quadro4);
+                PreencherQuadro(statusAbertura, statusOcorrencia, quadroViewModel.Titulo5, quadroViewModel.Quadro5);
+                PreencherQuadro(statusAbertura, statusOcorrencia, quadroViewModel.Titulo6, quadroViewModel.Quadro6);
+            }
+            else
+                lista = QuadroChamado(idUsuario, idRevenda, EnumChamado.Atividade).ToList();
+
+            return quadroViewModel;
         }
 
-        public Chamado Editar(int id, int idUsuario, ref string mensagem)
+        public Chamado Editar(int id, int idUsuario, EnProgramas enProgramas, ref string mensagem)
         {
             mensagem = "OK";
             var model = ObterPorId(id);
-            if (!_uow.RepositorioUsuario.PermissaoEditar(idUsuario, _enProgramas))
+            if (!_uow.RepositorioUsuario.PermissaoEditar(idUsuario, enProgramas))
             {
                 mensagem = Mensagem.UsuarioSemPermissao;
             }
@@ -73,9 +101,9 @@ namespace SIDomper.Dominio.Servicos
             return model;
         }
 
-        public void Excluir(Chamado model, int idUsuario)
+        public void Excluir(Chamado model, int idUsuario, EnProgramas enProgramas)
         {
-            if (!_uow.RepositorioUsuario.PermissaoExcluir(idUsuario, _enProgramas))
+            if (!_uow.RepositorioUsuario.PermissaoExcluir(idUsuario, enProgramas))
                 throw new Exception(Mensagem.UsuarioSemPermissao);
 
             _uow.RepositorioChamado.Deletar(model);
@@ -115,61 +143,67 @@ namespace SIDomper.Dominio.Servicos
             sb.AppendLine("	INNER JOIN Usuario ON Cha_UsuarioAbertura = Usu_Id");
             sb.AppendLine(" LEFT JOIN Revenda ON Cli_Revenda = Rev_Id");
 
-            if (!string.IsNullOrWhiteSpace(texto))
-                sb.AppendLine(" WHERE " + campo + " LIKE " + sTexto);
+            if (filtro.Id > 0)
+                sb.AppendLine(" WHERE Cha_Id = " + filtro.Id);
             else
             {
-                sb.AppendLine(" WHERE Cha_Id > 0");
+
+                if (!string.IsNullOrWhiteSpace(texto))
+                    sb.AppendLine(" WHERE " + campo + " LIKE " + sTexto);
+                else
+                {
+                    sb.AppendLine(" WHERE Cha_Id > 0");
+                }
+
+                if (filtro.Id > 0)
+                    sb.AppendLine(" AND Cha_Id = " + filtro.Id);
+
+                if (tipo == EnumChamado.Chamado)
+                    sb.AppendLine(" AND Cha_TipoMovimento = 1");
+                else
+                    sb.AppendLine(" AND Cha_TipoMovimento = 2");
+
+                sb.AppendLine(_uow.RepositorioUsuario.PermissaoUsuario(usuarioId));
+
+                if ((!string.IsNullOrWhiteSpace(filtro.DataInicial)) && (filtro.DataInicial.Trim() != "/  /"))
+                    sb.AppendLine(" AND Cha_DataAbertura >=" + Funcoes.Utils.DataIngles(filtro.DataInicial));
+
+                if ((!string.IsNullOrWhiteSpace(filtro.DataFinal)) && (filtro.DataFinal.Trim() != "/  /"))
+                    sb.AppendLine(" AND Cha_DataAbertura <=" + Funcoes.Utils.DataIngles(filtro.DataFinal));
+
+                if (!string.IsNullOrWhiteSpace(filtro.IdCliente))
+                    sb.AppendLine(" AND Cha_Cliente IN " + filtro.IdCliente);
+
+                if (!string.IsNullOrWhiteSpace(filtro.IdTipo))
+                    sb.AppendLine(" AND Cha_Tipo IN " + filtro.IdTipo);
+
+                if (!string.IsNullOrWhiteSpace(filtro.IdStatus))
+                    sb.AppendLine(" AND Cha_Status IN " + filtro.IdStatus);
+
+                if (!string.IsNullOrWhiteSpace(filtro.IdModulo))
+                    sb.AppendLine(" AND Cha_Modulo IN " + filtro.IdModulo);
+
+                if (!string.IsNullOrWhiteSpace(filtro.IdRevenda))
+                    sb.AppendLine(" AND Cha_Revenda IN " + filtro.IdRevenda);
+
+                if (!string.IsNullOrWhiteSpace(filtro.IdUsuarioAbertura))
+                    sb.AppendLine(" AND Cha_UsuarioAbertura IN " + filtro.IdUsuarioAbertura);
+
+                if (filtro.ClienteFiltro.UsuarioId > 0)
+                    sb.AppendLine(" AND Cli_Usuario IN " + filtro.ClienteFiltro.UsuarioId);
+                sb.AppendLine(" ORDER BY " + campo);
             }
-
-            if (filtro.Id > 0)
-                sb.AppendLine(" AND Cha_Id = " + filtro.Id);
-
-            if (tipo == EnumChamado.Chamado)
-                sb.AppendLine(" AND Cha_TipoMovimento = 1");
-            else
-                sb.AppendLine(" AND Cha_TipoMovimento = 2");
-
-            sb.AppendLine(_uow.RepositorioUsuario.PermissaoUsuario(usuarioId));
-
-            if ((!string.IsNullOrWhiteSpace(filtro.DataInicial)) && (filtro.DataInicial.Trim() != "/  /"))
-                sb.AppendLine(" AND Cha_DataAbertura >=" + Funcoes.Utils.DataIngles(filtro.DataInicial));
-
-            if ((!string.IsNullOrWhiteSpace(filtro.DataFinal)) && (filtro.DataFinal.Trim() != "/  /"))
-                sb.AppendLine(" AND Cha_DataAbertura <=" + Funcoes.Utils.DataIngles(filtro.DataFinal));
-
-            if (!string.IsNullOrWhiteSpace(filtro.IdCliente))
-                sb.AppendLine(" AND Cha_Cliente IN " + filtro.IdCliente);
-
-            if (!string.IsNullOrWhiteSpace(filtro.IdTipo))
-                sb.AppendLine(" AND Cha_Tipo IN " + filtro.IdTipo);
-
-            if (!string.IsNullOrWhiteSpace(filtro.IdStatus))
-                sb.AppendLine(" AND Cha_Status IN " + filtro.IdStatus);
-
-            if (!string.IsNullOrWhiteSpace(filtro.IdModulo))
-                sb.AppendLine(" AND Cha_Modulo IN " + filtro.IdModulo);
-
-            if (!string.IsNullOrWhiteSpace(filtro.IdRevenda))
-                sb.AppendLine(" AND Cha_Revenda IN " + filtro.IdRevenda);
-
-            if (!string.IsNullOrWhiteSpace(filtro.IdUsuarioAbertura))
-                sb.AppendLine(" AND Cha_UsuarioAbertura IN " + filtro.IdUsuarioAbertura);
-
-            if (filtro.ClienteFiltro.UsuarioId > 0)
-                sb.AppendLine(" AND Cli_Usuario IN " + filtro.ClienteFiltro.UsuarioId);
-            sb.AppendLine(" ORDER BY " + campo);
 
             return _repositoryReadOnly.GetAll(sb.ToString());
         }
 
-        public Chamado Novo(int idUsuario, bool quadro, int idClienteAgendamento, int idAgendamento)
+        public Chamado Novo(int idUsuario, bool quadro, int idClienteAgendamento, int idAgendamento, EnProgramas enProgramas, EnumChamado enumChamado)
         {
-            if (!_uow.RepositorioUsuario.PermissaoIncluir(idUsuario, _enProgramas))
+            if (!_uow.RepositorioUsuario.PermissaoIncluir(idUsuario, enProgramas))
                 throw new Exception(Mensagem.UsuarioSemPermissao);
 
             var model = new Chamado();
-            var modelTipo = _uow.RepositorioTipo.RetornarUmRegistro(_enumChamadoAtividade);
+            var modelTipo = _uow.RepositorioTipo.RetornarUmRegistro(enumChamado);
             if (modelTipo != null)
                 model.Tipo = modelTipo;
 
@@ -181,7 +215,7 @@ namespace SIDomper.Dominio.Servicos
                     model.Cliente = usuario.Clientes.FirstOrDefault(x => x.Id == usuario.ClienteId.Value);
             }
 
-            var obsModel = _uow.RepositorioObservacao.ObterPadrao((int)_enumChamadoAtividade);
+            var obsModel = _uow.RepositorioObservacao.ObterPadrao((int)enumChamado);
             if (obsModel != null)
                 model.Descricao = obsModel.Descricao;
 
@@ -208,9 +242,9 @@ namespace SIDomper.Dominio.Servicos
             return _uow.RepositorioChamado.find(id);
         }
 
-        public void Relatorio(int idUsuario)
+        public void Relatorio(int idUsuario, EnProgramas enProgramas)
         {
-            if (!_uow.RepositorioUsuario.PermissaoRelatorio(idUsuario, _enProgramas))
+            if (!_uow.RepositorioUsuario.PermissaoRelatorio(idUsuario, enProgramas))
                 throw new Exception(Mensagem.UsuarioSemPermissao);
         }
 
@@ -237,6 +271,7 @@ namespace SIDomper.Dominio.Servicos
             sb.AppendLine(" INNER JOIN Status ON Cha_Status = Sta_Id");
             sb.AppendLine(" INNER JOIN Cliente ON Cha_Cliente = Cli_Id");
             sb.AppendLine(" WHERE Cli_Dcto = '" + novoCnpj + "'");
+            sb.AppendLine(" AND Cha_TipoMovimento = 1");
             sb.AppendLine(" ORDER BY Cha_Id DESC");
 
             return _repositoryAplicativoReadOnly.GetAll(sb.ToString());
@@ -278,10 +313,10 @@ namespace SIDomper.Dominio.Servicos
                     chamado.UsuarioAberturaId = model.UsuarioAberturaId;
                     chamado.UsuarioAtendeAtualId = model.UsuarioAtendeAtualId;
 
-                    //AlterarOcorrencia(chamado, model);
-                    //ExcluirOcorrencias(model);
+                    AlterarOcorrencia(chamado, model);
+                    ExcluirOcorrencias(chamado, model);
+                    ExcluirOcorrenciaColaborador(chamado, model);
 
-                    //_rep.Salvar(chamado);
                     _uow.RepositorioChamado.Salvar(model);
                 }
 
@@ -293,7 +328,7 @@ namespace SIDomper.Dominio.Servicos
                 {
                     if (ocorrencia == false)
                     {
-                        var usuario = _uow.RepositorioUsuario.find(idUsuario);
+                        //var usuario = _uow.RepositorioUsuario.find(idUsuario);
 
                         // TODO: tirar os comentarios
                         //if (model.TipoMovimento == (int)EnumChamado.Chamado)
@@ -307,6 +342,67 @@ namespace SIDomper.Dominio.Servicos
             {
                 throw new Exception(ex.Message);
             }
+        }
+
+        private void ExcluirOcorrenciaColaborador(Chamado chamadoBanco, Chamado model)
+        {
+            string idDelecao = "";
+            int i = 1;
+
+            var listaColaboradores = new List<ChamadoOcorrenciaColaborador>();
+            foreach (var item in model.ChamadoOcorrencias)
+            {
+                foreach (var item2 in item.ChamadoOcorrenciaColaboradores)
+                {
+                    listaColaboradores.Add(item2);
+                }
+            }
+
+            foreach (var ocorrencia in chamadoBanco.ChamadoOcorrencias)
+            {
+                foreach (var colaborador in ocorrencia.ChamadoOcorrenciaColaboradores)
+                {
+                    var dados = listaColaboradores.FirstOrDefault(x => x.Id == colaborador.Id);
+                    if (dados == null)
+                    {
+                        if (colaborador.Id > 0)
+                        {
+                            if (i == 1)
+                                idDelecao += colaborador.Id;
+                            else
+                                idDelecao += "," + colaborador.Id;
+                            i++;
+                        }
+                    }
+                }
+            }
+
+            if (idDelecao != "")
+                _uow.Executar("DELETE FROM Chamado_Ocorr_Colaborador WHERE ChaOCol_Id in (" + idDelecao + ")");
+        }
+
+        private void ExcluirOcorrencias(Chamado chamadoBanco, Chamado model)
+        {
+            string idDelecao = "";
+            int i = 1;
+            foreach (var itemBanco in chamadoBanco.ChamadoOcorrencias)
+            {
+                var dados = model.ChamadoOcorrencias.FirstOrDefault(x => x.Id == itemBanco.Id);
+                if (dados == null)
+                {
+                    if (itemBanco.Id > 0)
+                    {
+                        if (i == 1)
+                            idDelecao += itemBanco.Id;
+                        else
+                            idDelecao += "," + itemBanco.Id;
+                        i++;
+                    }
+                }
+            }
+
+            if (idDelecao != "")
+                _uow.Executar("DELETE FROM Chamado_Ocorrencia WHERE ChOco_Id in (" + idDelecao + ")");
         }
 
         private void EnviarEmail(Chamado model, int usuarioId, Usuario usuario, EnumChamado enChamado)
@@ -467,14 +563,7 @@ namespace SIDomper.Dominio.Servicos
             if (model.Cliente.Revenda.RevendaEmails == null)
                 return;
 
-            string email = "";
-            foreach (var item in model.Cliente.Revenda.RevendaEmails)
-            {
-                if (email == "")
-                    email = item.Email;
-                else
-                    email = email + ";" + item.Email;
-            }
+            string email = _uow.RepositorioRevenda.RetornarEmails(model.Cliente.Revenda);
 
             AdicionarEmail(email);
         }
@@ -519,15 +608,7 @@ namespace SIDomper.Dominio.Servicos
             if (usuario.Departamento.DepartamentosEmail == null)
                 return;
 
-            string email = "";
-            foreach (var item in usuario.Departamento.DepartamentosEmail)
-            {
-                if (email == "")
-                    email = email + item.Email;
-                else
-                    email = email + ";" + item.Email;
-            }
-
+            string email = _uow.RepositorioDepartamento.RetornarEmails(usuario.Departamento);
 
             AdicionarEmail(email);
         }
@@ -587,21 +668,24 @@ namespace SIDomper.Dominio.Servicos
             }
         }
 
-        private void AlterarOcorrencia(Chamado chamado, Chamado model)
+        private void AlterarOcorrencia(Chamado chamadoBanco, Chamado model)
         {
+            var temp = new ChamadoOcorrencia();
             foreach (var item in model.ChamadoOcorrencias)
             {
                 item.HoraFim = TimeSpan.Parse(DateTime.Now.ToShortTimeString());
                 if (item.UsuarioId == 0)
                     throw new Exception("Informe o Usuário!");
 
-                //if (item.Data < model.DataAbertura)
-                //    throw new Exception("Data de Ocorrência menor que Data de Abertura!");
+                if (item.Data < model.DataAbertura)
+                    throw new Exception("Data de Ocorrência menor que Data de Abertura!");
+
+                //TODO: ver esta consistencia da hora final
                 //if (item.HoraInicio > item.HoraFim)
                 //    throw new Exception("Hora Inicial maior que Hora Final na Ocorrência!");
 
-                //if (string.IsNullOrWhiteSpace(item.DescricaoTecnica) && string.IsNullOrWhiteSpace(item.DescricaoSolucao))
-                //    throw new Exception("Informe uma descrição!");
+                if (string.IsNullOrWhiteSpace(item.DescricaoTecnica) && string.IsNullOrWhiteSpace(item.DescricaoSolucao))
+                    throw new Exception("Informe uma descrição!");
 
                 double HoraInicio = Funcoes.Utils.HoraToDecimal(item.HoraInicio.ToString());
                 double HoraFim = Funcoes.Utils.HoraToDecimal(item.HoraFim.ToString());
@@ -609,55 +693,52 @@ namespace SIDomper.Dominio.Servicos
                 item.TotalHoras = HoraFim - HoraInicio;
 
                 if (item.Id <= 0)
-                    chamado.ChamadoOcorrencias.Add(item);
+                    chamadoBanco.ChamadoOcorrencias.Add(item);
                 else
                 {
-
-                    //ExcluirOcorrenciasColaborador(item);
-
-                    //temp = _repChamadoOcorrencia.ObterPorId(item.Id);
-                    //var temp = chamado.ChamadoOcorrencias.FirstOrDefault(x => x.Id == item.Id);
-                    //temp = model.ChamadoOcorrencias.FirstOrDefault(x => x.Id == item.Id);
-                    var temp = chamado.ChamadoOcorrencias.FirstOrDefault(x => x.Id == item.Id);
+                    temp = chamadoBanco.ChamadoOcorrencias.FirstOrDefault(x => x.Id == item.Id);
                     if (temp != null)
                     {
-                        temp = item;
-                        //temp.Anexo = item.Anexo;
-                        //temp.Data = item.Data;
-                        //temp.DescricaoSolucao = item.DescricaoSolucao;
-                        //temp.DescricaoTecnica = item.DescricaoTecnica;
-                        //temp.Documento = item.Documento;
-                        //temp.HoraFim = item.HoraFim;
-                        //temp.HoraInicio = item.HoraInicio;
-                        //temp.TotalHoras = item.TotalHoras;
-                        //temp.UsuarioColab1 = item.UsuarioColab1;
-                        //temp.UsuarioColab2 = item.UsuarioColab2;
-                        //temp.UsuarioColab3 = item.UsuarioColab3;
-                        //temp.UsuarioId = item.UsuarioId;
-                        //temp.Versao = item.Versao;
+                        temp.Anexo = item.Anexo;
+                        temp.Data = item.Data;
+                        temp.DescricaoSolucao = item.DescricaoSolucao;
+                        temp.DescricaoTecnica = item.DescricaoTecnica;
+                        temp.Documento = item.Documento;
+                        temp.HoraFim = item.HoraFim;
+                        temp.HoraInicio = item.HoraInicio;
+                        temp.TotalHoras = item.TotalHoras;
+                        temp.UsuarioColab1 = item.UsuarioColab1;
+                        temp.UsuarioColab2 = item.UsuarioColab2;
+                        temp.UsuarioColab3 = item.UsuarioColab3;
+                        temp.UsuarioId = item.UsuarioId;
+                        temp.Versao = item.Versao;
 
-                        //_repChamadoOcorrencia.Salvar(temp);
-                        //_repChamadoOcorrencia.Commit();
-                        //AlterarOcorrenciaColaborador(temp);
-                        //ExcluirOcorrenciasColaborador(temp);
-
-                        //foreach (var colab in temp.ChamadoOcorrenciaColaboradores)
-                        //{
-                        //    _repChamadoOcorrenciaColaboradorEF.Salvar(colab);
-                        //}
-
-                        //_repChamadoOcorrenciaColaboradorEF.Commit();
-
-                        //AlterarOcorrenciaColaborador(temp);
+                        AlterarOcorrenciaColaborador(temp, item);
                     }
                 }
             }
-            //_uow.SaveChanges();
-            //_repChamadoOcorrencia.Commit();
-            //_repChamadoOcorrenciaColaboradorEF.Commit();
+        }
 
-            //if (model.ChamadoOcorrencias.Count() > 0)
-            //    _repChamadoOcorrencia.Commit();
+        private void AlterarOcorrenciaColaborador(ChamadoOcorrencia chamadoOcorrenciaBanco, ChamadoOcorrencia model)
+        {
+            foreach (var colaborador in model.ChamadoOcorrenciaColaboradores)
+            {
+                if (colaborador.Id <= 0)
+                {
+                    chamadoOcorrenciaBanco.ChamadoOcorrenciaColaboradores.Add(colaborador);
+                }
+                else
+                {
+                    var temp = chamadoOcorrenciaBanco.ChamadoOcorrenciaColaboradores.FirstOrDefault(x => x.Id == colaborador.Id);
+                    if (temp != null)
+                    {
+                        temp.HoraInicio = colaborador.HoraInicio;
+                        temp.HoraFim = colaborador.HoraFim;
+                        temp.TotalHoras = colaborador.TotalHoras;
+                        temp.UsuarioId = colaborador.UsuarioId;
+                    }
+                }
+            }
         }
 
         private void ValidarSalvar(Chamado model)
@@ -713,11 +794,11 @@ namespace SIDomper.Dominio.Servicos
                 if (cliente != null)
                     chamado.ClienteId = cliente.Id;
 
-                var modelTipo = _uow.RepositorioTipo.RetornarUmRegistro(_enumChamadoAtividade);
+                var modelTipo = _uow.RepositorioTipo.RetornarUmRegistro(EnumChamado.Chamado);
                 if (modelTipo != null)
                     chamado.TipoId = modelTipo.Id;
 
-                var codStatusAbertura = _uow.RepositorioParametro.ObterPorParametro(9, 1).Valor;
+                var codStatusAbertura = _uow.RepositorioChamado.StatusAbertura();
 
                 if (string.IsNullOrWhiteSpace(codStatusAbertura))
                     throw new Exception("Informe o código do Status de Abertura. (Parâmetro 9,1)");
@@ -800,6 +881,261 @@ namespace SIDomper.Dominio.Servicos
             sb.AppendLine(" ORDER BY ChOco_Data");
 
             return _repositoryProbemaSolucaoReadOnly.GetAll(sb.ToString());
+        }
+
+        private List<Status> BuscarTitulosQuadro()
+        {
+            var listaParametros = BuscarTitulosChamados();
+
+            var listaStatus = _uow.RepositorioStatus.Get(x => x.Ativo == true);
+            var lista = new List<Status>();
+
+            foreach (var item in listaParametros)
+            {
+                var model = listaStatus.First(x => x.Codigo == Convert.ToInt32(item.Valor));
+                lista.Add(model);
+            }
+
+            return lista;
+        }
+
+        private IEnumerable<Parametro> BuscarTitulosChamados()
+        {
+            var parametro = _uow.RepositorioParametro.Get(x => x.Codigo == 3 || x.Codigo == 4 || x.Codigo == 5 || x.Codigo == 6 || x.Codigo == 7 || x.Codigo == 8);
+            return parametro.OrderBy(x => x.Codigo);
+        }
+
+        private void PreencherQuadro(string nomeStatusAbertura, string nomeStatusOcorrencia, string tituloQuadro, List<QuadroViewModelChamado> quadro)
+        {
+            /*
+                    se titulo1 = statusAbertura
+                        ler quadro1 calcularTempo
+                    se titulo1 = statusOcorrencia
+                        ler quadro1 calcularPar10
+                    se nao
+                        ler quadro1 = tempoOutro
+                 */
+
+            foreach (var item in quadro)
+            {
+                if (tituloQuadro == nomeStatusAbertura)
+                    item.Tempo = CalcularTempo(DateTime.Parse(item.DataAbertura), TimeSpan.Parse(item.HoraAbertura));
+                else if (tituloQuadro == nomeStatusOcorrencia)
+                    item.Tempo = CalcularTempoParametro10(TimeSpan.Parse(item.HoraAtendeAtual));
+                else
+                    item.Tempo = CalcularTempo(DateTime.Parse(item.UltimaData), TimeSpan.Parse(item.UltimaHora));
+            }
+        }
+
+        public string CalcularTempoParametro10(TimeSpan horaAtendimento)
+        {
+            try
+            {
+                TimeSpan horaAtual = TimeSpan.Parse(DateTime.Now.ToShortTimeString());
+                TimeSpan tempo = Funcoes.Utils.CalcularHoras(horaAtual, horaAtendimento);
+                return Funcoes.Utils.FormatarHora(tempo);
+            }
+            catch
+            {
+                return "00:00";
+            }
+        }
+
+        public string CalcularTempo(DateTime dataChamado, TimeSpan horaChamado)
+        {
+            try
+            {
+                if (DateTime.Now.Date == dataChamado)
+                {
+                    TimeSpan horaAtual = TimeSpan.Parse(DateTime.Now.ToShortTimeString());
+                    TimeSpan hora = Funcoes.Utils.CalcularHoras(horaChamado, horaAtual);
+                    return Funcoes.Utils.FormatarHora(hora);
+                }
+                else
+                {
+                    double dias = Funcoes.Utils.CalcularDatas(dataChamado, DateTime.Now.Date);
+                    return dias.ToString();
+                }
+            }
+            catch
+            {
+                return "00:00";
+            }
+        }
+
+        public void NovoChamadoQuadro(ChamadoViewModel model, EnumChamado enChamadoAtividade, int idEncerramento)
+        {
+            string codStatus = "0";
+            if (enChamadoAtividade == EnumChamado.Chamado)
+                codStatus = _uow.RepositorioChamado.StatusAbertura();
+
+            if (idEncerramento > 0 || enChamadoAtividade == EnumChamado.Atividade)
+                codStatus = _uow.RepositorioChamado.StatusAberturaAtividade();
+
+            int.TryParse(codStatus, out int CodStatus);
+
+            if (CodStatus == 0)
+                throw new Exception("Informe o Status para abertura nos Parâmetros do Sistema!");
+            else
+            {
+                var Status = _uow.RepositorioStatus.First(x => x.Codigo == CodStatus);
+                if (Status != null)
+                {
+                    model.StatusId = Status.Id;
+                    model.CodStatus = Status.Codigo;
+                    model.NomeStatus = Status.Nome;
+                }
+            }
+        }
+
+        private IEnumerable<QuadroViewModelChamado> QuadroChamado(int idUsuario, int idRevenda, EnumChamado tipo)
+        {
+            var sb = new StringBuilder();
+
+            if (tipo == EnumChamado.Chamado)
+                sb.AppendLine(RetornarChamadoQuadro(idUsuario, idRevenda));
+            else
+                sb.AppendLine(RetornarAtividadeQuadro(idUsuario, idRevenda));
+
+            var lista = _repositoryQuadroReadOnly.GetAll(sb.ToString());
+
+            return lista;
+        }
+
+        private string RetornarAtividadeQuadro(int idUsuario, int idRevenda)
+        {
+            var sb = new StringBuilder();
+            sb.Append(RetornarSQLQuadro(idUsuario, idRevenda, 25, "'Q1' AS Quadro,", EnumChamado.Atividade));
+            sb.Append(RetornarSQLQuadro(idUsuario, idRevenda, 26, "'Q2' AS Quadro,", EnumChamado.Atividade));
+            sb.Append(RetornarSQLQuadro(idUsuario, idRevenda, 27, "'Q3' AS Quadro,", EnumChamado.Atividade));
+            sb.Append(RetornarSQLQuadro(idUsuario, idRevenda, 28, "'Q4' AS Quadro,", EnumChamado.Atividade));
+            sb.Append(RetornarSQLQuadro(idUsuario, idRevenda, 29, "'Q5' AS Quadro,", EnumChamado.Atividade));
+            sb.Append(RetornarSQLQuadro(idUsuario, idRevenda, 30, "'Q6' AS Quadro,", EnumChamado.Atividade));
+
+            return sb.ToString();
+        }
+
+        private string RetornarChamadoQuadro(int idUsuario, int idRevenda)
+        {
+            var sb = new StringBuilder();
+            sb.Append(RetornarSQLQuadro(idUsuario, idRevenda, 3, "'Q1' AS Quadro,", EnumChamado.Chamado));
+            sb.Append(RetornarSQLQuadro(idUsuario, idRevenda, 4, "'Q2' AS Quadro,", EnumChamado.Chamado));
+            sb.Append(RetornarSQLQuadro(idUsuario, idRevenda, 5, "'Q3' AS Quadro,", EnumChamado.Chamado));
+            sb.Append(RetornarSQLQuadro(idUsuario, idRevenda, 6, "'Q4' AS Quadro,", EnumChamado.Chamado));
+            sb.Append(RetornarSQLQuadro(idUsuario, idRevenda, 7, "'Q5' AS Quadro,", EnumChamado.Chamado));
+            sb.Append(RetornarSQLQuadro(idUsuario, idRevenda, 8, "'Q6' AS Quadro,", EnumChamado.Chamado));
+
+            return sb.ToString();
+        }
+
+        private string RetornarSQLQuadro(int idUsuario, int idRevenda, int codigoParametro, string campoQuadro, EnumChamado tipo)
+        {
+            string sConsulta = _uow.RepositorioUsuario.PermissaoUsuario(idUsuario);
+
+            var sb = new StringBuilder();
+
+            sb.AppendLine(" SELECT");
+            sb.Append(campoQuadro);
+            sb.AppendLine("	Cha_Id as Id,");
+            sb.AppendLine("	Cha_DataAbertura as DataAbertura,");
+            sb.AppendLine("	Cha_HoraAbertura as HoraAbertura,");
+            sb.AppendLine("	Cli_Nome as NomeCliente,");
+            sb.AppendLine("	Cli_Perfil as Perfil,");
+            sb.AppendLine("	CASE cha_Nivel");
+            sb.AppendLine("		WHEN 1 THEN '1-Baixo'");
+            sb.AppendLine("		WHEN 2 THEN '2-Normal'");
+            sb.AppendLine("		WHEN 3 THEN '3-Alto'");
+            sb.AppendLine("		WHEN 4 THEN '4-Crítico'");
+            sb.AppendLine("	END as NivelDescricao,");
+            sb.AppendLine("  Cha_Nivel as Nivel,");
+            sb.AppendLine("  Cha_UsuarioAtendeAtual as UsuarioAtendeAtualId,");
+            sb.AppendLine("  Sta_Codigo as CodigoStatus,");
+            sb.AppendLine("  Cli_Codigo as CodigoCliente,");
+            sb.AppendLine("	Tip_Nome as NomeTipo,");
+            sb.AppendLine("  UltimaHora = dbo.Func_Chamado_BuscarUltimaHoraOcorrencia (Cha_Id),");
+            sb.AppendLine("	cha_HoraAtendeAtual as HoraAtendeAtual,");
+            sb.AppendLine("  (");
+            sb.AppendLine("	   SELECT MAX(CHAO.ChOco_Data) FROM dbo.Chamado_Ocorrencia AS CHAO");
+            sb.AppendLine("		WHERE CHAO.ChOco_Chamado = dbo.Chamado.Cha_Id");
+            sb.AppendLine(" 	) AS UltimaData,");
+            sb.AppendLine("  Par_Codigo as CodigoParametro,");
+            sb.AppendLine("	Usu_Nome as NomeUsuario");
+            sb.AppendLine("FROM Chamado");
+            sb.AppendLine("	INNER JOIN Cliente ON Cha_Cliente = Cli_Id");
+            sb.AppendLine("	INNER JOIN Tipo ON Cha_Tipo = Tip_Id");
+            sb.AppendLine("	INNER JOIN Status ON Cha_Status = Sta_Id");
+            sb.AppendLine("	LEFT JOIN Parametros ON Sta_Codigo = COALESCE(Par_Valor, 0)");
+            sb.AppendLine("  LEFT JOIN Usuario ON Cha_UsuarioAtendeAtual = Usu_Id");
+            sb.AppendLine("WHERE par_Codigo = " + codigoParametro);
+            sb.AppendLine(sConsulta);
+
+            if (idRevenda > 0)
+                sb.AppendLine("AND (Cli_Revenda = " + idUsuario + ")");
+
+            sb.AppendLine(" --=============================================================================");
+
+            if (tipo == EnumChamado.Chamado)
+            {
+                if (codigoParametro < 8)
+                    sb.AppendLine(" UNION ");
+            }
+            else
+            {
+                if (codigoParametro < 30)
+                    sb.AppendLine(" UNION ");
+            }
+            return sb.ToString();
+        }
+
+        public string StatusAbertura()
+        {
+            return _uow.RepositorioChamado.StatusAbertura();
+        }
+
+        public string StatusAtendimentoChamado()
+        {
+            return _uow.RepositorioParametro.ObterPorParametro(10, 1).Valor;
+        }
+
+        public bool PermissaoAlterarDataHoraChamado(int idUsuario)
+        {
+            return PermissaoChamado(idUsuario, "Lib_Chamado_Ocorr_Alt_Data_Hora");
+        }
+
+        private bool PermissaoChamado(int idUsuario, string permissao)
+        {
+            var usuarioPermissao = _uow.RepositorioUsuario.ObterPermissaoPorSigla(idUsuario, permissao);
+            return (usuarioPermissao != null);
+        }
+
+        public bool PermissaoOcorrenciaChamadoAlterar(int idUsuario)
+        {
+            return PermissaoChamado(idUsuario, "Lib_Chamado_Ocorr_Alt");
+        }
+
+        public bool PermissaoOcorrenciaChamadoExcluir(int idUsuario)
+        {
+            return PermissaoChamado(idUsuario, "Lib_Chamado_Ocorr_Exc");
+        }
+
+        public bool PermissaoAlterarDataHoraAtividade(int idUsuario)
+        {
+            return PermissaoChamado(idUsuario, "Lib_Atividade_Ocorr_Alt_Data_Hora");
+        }
+
+        public bool PermissaoOcorrenciaAlterarAtividade(int idUsuario)
+        {
+            return PermissaoChamado(idUsuario, "Lib_Atividade_Ocorr_Alt");
+        }
+
+        public bool PermissaoOcorrenciaAtividadeExcluir(int idUsuario)
+        {
+            return PermissaoChamado(idUsuario, "Lib_Atividade_Ocorr_Exc");
+        }
+
+        public Usuario ObterUsuarioPorId(int id)
+        {
+            return _uow.RepositorioUsuario.find(id);
         }
     }
 }

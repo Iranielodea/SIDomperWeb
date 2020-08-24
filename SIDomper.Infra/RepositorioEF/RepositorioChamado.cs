@@ -13,7 +13,7 @@ namespace SIDomper.Infra.RepositorioEF
 
         public string CaminhoAnexo()
         {
-            return base.context.Parametros.FirstOrDefault(x => x.Codigo == 49 && x.Programa == 0).Valor;
+            return base.context.Parametros.FirstOrDefault(x => x.Codigo == 49).Valor;
         }
 
         public string StatusAbertura()
@@ -38,7 +38,7 @@ namespace SIDomper.Infra.RepositorioEF
 
         public string UsuarioAplicativo()
         {
-            return base.context.Parametros.FirstOrDefault(x => x.Codigo == 54 && x.Programa == 0).Valor;
+            return base.context.Parametros.FirstOrDefault(x => x.Codigo == 54).Valor;
         }
     }
 }

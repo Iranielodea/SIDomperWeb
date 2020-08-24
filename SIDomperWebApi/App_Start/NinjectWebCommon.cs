@@ -98,6 +98,7 @@ namespace SIDomperWebApi.App_Start
             kernel.Bind<IRepositorioVisita>().To<RepositorioVisita>();
             kernel.Bind<IRepositorioRecado>().To<RepositorioRecado>();
             kernel.Bind<IRepositorioChamado>().To<RepositorioChamado>();
+            kernel.Bind<IRepositorioClienteEspecificacao>().To<RepositorioClienteEspecificacao>();
 
             kernel.Bind<IRepositorioUsuarioWrite>().To<RepositorioUsuarioWriteDapper>();
 
@@ -124,7 +125,7 @@ namespace SIDomperWebApi.App_Start
             kernel.Bind<IServicoVisita>().To<ServicoVisita>();
             kernel.Bind<IServicoRecado>().To<ServicoRecado>();
             kernel.Bind<IServicoChamado>().To<ServicoChamado>();
-            kernel.Bind<IServicoChamadoQuadro>().To<ServicoChamadoQuadro>();
+            kernel.Bind<IServicoClienteEspecificacao>().To<ServicoClienteEspecificacao>();
         }
     }
 }

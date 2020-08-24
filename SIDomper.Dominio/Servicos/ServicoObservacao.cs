@@ -99,6 +99,8 @@ namespace SIDomper.Dominio.Servicos
             var model = _uow.RepositorioObservacao.First(x => x.Codigo == codigo);
             if (model == null)
                 throw new Exception("Observação não Cadastrada!");
+            if (model.Ativo == false)
+                throw new Exception("Observação Inativa!");
             return model;
         }
 

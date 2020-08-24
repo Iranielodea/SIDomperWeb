@@ -1,5 +1,6 @@
 ﻿using Mapster;
 using SIDomper.Dominio.Entidades;
+using SIDomper.Dominio.Interfaces.Servicos;
 using SIDomper.Dominio.ViewModel;
 using SIDomper.Servicos.Regras;
 using System;
@@ -12,7 +13,7 @@ namespace SIDomperWebApi.Controllers
     {
         private readonly ClienteEspecificacaoServico _clienteEspecificacaoServico;
 
-        public ClienteEspecificacaoController()
+        public ClienteEspecificacaoController(IServicoClienteEspecificacao clienteEspecificacao)
         {
             _clienteEspecificacaoServico = new ClienteEspecificacaoServico();
         }

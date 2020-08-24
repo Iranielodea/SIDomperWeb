@@ -18,10 +18,10 @@ namespace SIDomper.Apresentacao.App
             return new Operacao<ChamadoViewModel>().First(string.Format(url, id));
         }
 
-        public ChamadoViewModel Editar(int idUsuario, int id)
+        public ChamadoViewModel Editar(int idUsuario, int id, EnProgramas enProgramas)
         {
-            string url = Constantes.URL + "Chamado/Editar?idUsuario={0}&id={1}";
-            return new Operacao<ChamadoViewModel>().First(string.Format(url, idUsuario, id));
+            string url = Constantes.URL + "Chamado/Editar?idUsuario={0}&id={1}&enProgramas={2}";
+            return new Operacao<ChamadoViewModel>().First(string.Format(url, idUsuario, id, enProgramas));
         }
 
         public ChamadoConsultaViewModel[] Filtrar(ChamadoFiltroViewModel filtro, int idUsuario, string campo, string valor, bool contem, EnumChamado enChamado)
@@ -40,10 +40,10 @@ namespace SIDomper.Apresentacao.App
                 return new Operacao<ChamadoViewModel>().Update(string.Format(URI, idUsuario, ocorrencia), model);
         }
 
-        public ChamadoViewModel Excluir(int id, int idUsuario)
+        public ChamadoViewModel Excluir(int id, int idUsuario, EnProgramas enProgramas)
         {
-            string url = Constantes.URL + "chamado/{0}?idUsuario={1}";
-            return new Operacao<ChamadoViewModel>().Delete(string.Format(url, id, idUsuario));
+            string url = Constantes.URL + "chamado/{0}?idUsuario={1}&enProgramas={2}";
+            return new Operacao<ChamadoViewModel>().Delete(string.Format(url, id, idUsuario, enProgramas));
         }
 
         public ChamadoViewModel BuscarModuloProduto(int idCliente, int idModulo)

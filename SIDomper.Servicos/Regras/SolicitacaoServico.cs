@@ -288,7 +288,6 @@ namespace SIDomper.Servicos.Regras
                 if (model.HoraInicio > model.HoraFim)
                     throw new Exception("Hora Inicial maior que Hora Final.");
             }
-            
         }
 
         public void AdicionarCronograma(Solicitacao solicitacao, SolicitacaoCronograma model)

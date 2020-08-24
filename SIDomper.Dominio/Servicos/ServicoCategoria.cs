@@ -94,7 +94,9 @@ namespace SIDomper.Dominio.Servicos
         {
             var model = _uow.RepositorioCategoria.First(x => x.Codigo == codigo);
             if (model == null)
-                throw new Exception("Categoria não Cadastrado");
+                throw new Exception("Categoria não Cadastrada");
+            if (model.Ativo == false)
+                throw new Exception("Categoria Inativa!");
             return model;
         }
 

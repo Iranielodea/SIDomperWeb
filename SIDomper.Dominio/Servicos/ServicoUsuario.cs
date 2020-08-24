@@ -90,6 +90,8 @@ namespace SIDomper.Dominio.Servicos
             var model = _uow.RepositorioUsuario.First(x => x.Codigo == codigo);
             if (model == null)
                 throw new Exception("Registro não Encontrado!");
+            if (model.Ativo == false)
+                throw new Exception("Usuário Inativo!");
 
             return model;
         }
@@ -106,7 +108,12 @@ namespace SIDomper.Dominio.Servicos
 
         public Usuario ObterPorUsuario(string userName)
         {
-            return _uow.RepositorioUsuario.First(x => x.UserName == userName);
+            var model = _uow.RepositorioUsuario.First(x => x.UserName == userName);
+            if (model == null)
+                throw new Exception("Usuário não Cadastrado!");
+            if (model.Ativo == false)
+                throw new Exception("Usuário Inativo!");
+            return model;
         }
 
         public string PermissaoUsuario(int idUsuario)

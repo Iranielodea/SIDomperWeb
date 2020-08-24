@@ -104,6 +104,8 @@ namespace SIDomper.Dominio.Servicos
             var model = _uow.RepositorioRevenda.First(x => x.Codigo == codigo);
             if (model == null)
                 throw new Exception("Revenda não Cadastrada!");
+            if (model.Ativo == false)
+                throw new Exception("Revenda Inativa!");
             return model;
         }
 

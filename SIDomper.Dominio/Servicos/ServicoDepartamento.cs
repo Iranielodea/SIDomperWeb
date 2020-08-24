@@ -144,7 +144,9 @@ namespace SIDomper.Dominio.Servicos
         {
             var model = _uow.RepositorioDepartamento.First(x => x.Codigo == codigo);
             if (model == null)
-                throw new Exception("Produto não Cadastrado!");
+                throw new Exception("Departamento não Cadastrado!");
+            if (model.Ativo == false)
+                throw new Exception("Departamento Inativa!");
             return model;
         }
 

@@ -107,6 +107,8 @@ namespace SIDomper.Dominio.Servicos
             var model = _uow.RepositorioTipo.First(x => x.Codigo == codigo && x.Programa == (int)enTipos);
             if (model == null)
                 throw new Exception("Registro não Encontrado!");
+            if (model.Ativo == false)
+                throw new Exception("Tipo Inativo!");
 
             return model;
         }

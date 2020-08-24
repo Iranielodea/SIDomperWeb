@@ -13,11 +13,11 @@ namespace SIDomperWebApi.Controllers
     public class CidadeController : ApiController
     {
         private readonly IServicoCidade _servicoCidade;
-        private readonly CidadeServico _cidadeServico;
+        //private readonly CidadeServico _cidadeServico;
 
         public CidadeController(IServicoCidade servicoCidade)
         {
-            _cidadeServico = new CidadeServico();
+            //_cidadeServico = new CidadeServico();
             _servicoCidade = servicoCidade;
         }
 

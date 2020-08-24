@@ -1,5 +1,6 @@
 ﻿using Mapster;
 using SIDomper.Dominio.Entidades;
+using SIDomper.Dominio.Interfaces.Servicos;
 using SIDomper.Dominio.Servicos;
 using SIDomper.Dominio.ViewModel;
 using SIDomper.Servicos.Regras;
@@ -13,9 +14,10 @@ namespace SIDomperWebApi.Controllers
     public class DepartamentoController : ApiController
     {
         //private readonly DepartamentoServico _departamentoServico;
-        private readonly ServicoDepartamento _servicoDepartamento;
+        //private readonly ServicoDepartamento _servicoDepartamento;
+        private readonly IServicoDepartamento _servicoDepartamento;
 
-        public DepartamentoController(ServicoDepartamento servicoDepartamento)
+        public DepartamentoController(IServicoDepartamento servicoDepartamento)
         {
             //_departamentoServico = new DepartamentoServico();
             _servicoDepartamento = servicoDepartamento;

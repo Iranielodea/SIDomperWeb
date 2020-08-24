@@ -28,6 +28,7 @@ namespace SIDomper.Win.View
         bool _ocorrencia;
         int _idClienteAgendamento;
         int _idAgendamento;
+        EnProgramas _programas;
 
         public frmChamado()
         {
@@ -57,16 +58,18 @@ namespace SIDomper.Win.View
 
             Iniciar();
 
-            //if (enChamado == EnumChamado.Chamado)
-            //{
-            //    enStatus = EnStatus.Chamado;
-            //    enTipos = EnTipos.Chamado;
-            //}
-            //else
-            //{
-            //    enStatus = EnStatus.Atividade;
-            //    enTipos = EnTipos.Atividade;
-            //}
+            if (enChamado == EnumChamado.Chamado)
+            {
+                _programas = EnProgramas.Chamado;
+                //enStatus = EnStatus.Chamado;
+                //enTipos = EnTipos.Chamado;
+            }
+            else
+            {
+                _programas = EnProgramas.Atividade;
+                //enStatus = EnStatus.Atividade;
+                //enTipos = EnTipos.Atividade;
+            }
         }
 
         private void Iniciar()
@@ -174,7 +177,7 @@ namespace SIDomper.Win.View
             try
             {
                 _chamadoApp = new ChamadoApp();
-                var model = _chamadoApp.Editar(Funcoes.IdUsuario, Grade.RetornarId(ref dgvDados, "Cha_Id"));
+                var model = _chamadoApp.Editar(Funcoes.IdUsuario, Grade.RetornarId(ref dgvDados, "Cha_Id"), _programas);
                 _chamadoViewModel = model;
 
                 btnSalvar.Enabled = Funcoes.PermitirEditar(model.Mensagem);
@@ -348,7 +351,7 @@ namespace SIDomper.Win.View
                 {
                     _chamadoApp = new ChamadoApp();
                     int id = Grade.RetornarId(ref dgvDados, "Cha_Id");
-                    var model = _chamadoApp.Excluir(id, Funcoes.IdUsuario);
+                    var model = _chamadoApp.Excluir(id, Funcoes.IdUsuario, _programas);
                     Funcoes.VerificarMensagem(model.Mensagem);
 
                     _listaConsulta.Remove(_listaConsulta.First(x => x.Id == id));

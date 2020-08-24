@@ -13,7 +13,7 @@ namespace SIDomper.Apresentacao.App
 
         public ModuloViewModel ObterPorId(int id)
         {
-            string url = Constantes.URL + "modulo/{0}";
+            string url = Constantes.URL + "modulo/ObterPorId?Id={0}";
             return new Operacao<ModuloViewModel>().First(string.Format(url, id));
         }
 

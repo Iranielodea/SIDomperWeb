@@ -103,6 +103,8 @@ namespace SIDomper.Dominio.Servicos
             var model = _uow.RepositorioModulo.First(x => x.Codigo == codigo);
             if (model == null)
                 throw new Exception("Módulo não Cadastrado");
+            if (model.Ativo == false)
+                throw new Exception("Módulo Inativo!");
             return model;
         }
 

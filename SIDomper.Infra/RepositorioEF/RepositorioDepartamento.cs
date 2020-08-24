@@ -14,6 +14,20 @@ namespace SIDomper.Infra.RepositorioEF
             _contexto = contexto;
         }
 
+        public string RetornarEmails(Departamento departamento)
+        {
+            string email = "";
+            foreach (var item in departamento.DepartamentosEmail)
+            {
+                if (email == "")
+                    email = email + item.Email;
+                else
+                    email = email + ";" + item.Email;
+            }
+
+            return email;
+        }
+
         public Departamento Duplicar(Departamento model)
         {
             var modelTemp = _contexto.Departamentos.First(x => x.Id == model.Id);

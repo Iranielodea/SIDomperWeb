@@ -2,7 +2,6 @@
 using SIDomper.Dominio.Entidades;
 using SIDomper.Dominio.Interfaces.Servicos;
 using SIDomper.Dominio.ViewModel;
-using SIDomper.Servicos.Regras;
 using System;
 using System.Collections.Generic;
 using System.Web.Http;
@@ -12,12 +11,10 @@ namespace SIDomperWebApi.Controllers
     [RoutePrefix("api/feriado")]
     public class FeriadoController : ApiController
     {
-        private readonly FeriadoServico _feridadoServico;
         private readonly IServicoFeriado _servicoFeriado;
 
         public FeriadoController(IServicoFeriado servicoFeriado)
         {
-            _feridadoServico = new FeriadoServico();
             _servicoFeriado = servicoFeriado;
         }
 
@@ -29,7 +26,6 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 var item = _servicoFeriado.ObterPorId(id);
-                //var item = _feridadoServico.ObterPorId(id);
                 model = item.Adapt<FeriadoViewModel>();
                 return model;
             }
@@ -49,7 +45,6 @@ namespace SIDomperWebApi.Controllers
             {
                 string mensagem = "";
                 var item = _servicoFeriado.Editar(id, idUsuario, ref mensagem);
-                //var item = _feridadoServico.Editar(idUsuario, id, ref mensagem);
                 model = item.Adapt<FeriadoViewModel>();
                 model.Mensagem = mensagem;
                 return model;
@@ -69,7 +64,6 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 var item = _servicoFeriado.Novo(idUsuario);
-                //var item = _feridadoServico.Novo(idUsuario);
                 model = item.Adapt<FeriadoViewModel>();
                 return model;
             }
@@ -87,7 +81,6 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 var lista = _servicoFeriado.Filtrar(campo, texto);
-                //var lista = _feridadoServico.Filtrar(campo, texto);
                 var model = lista.Adapt<FeriadoViewModel[]>();
                 return model;
             }
@@ -105,7 +98,6 @@ namespace SIDomperWebApi.Controllers
             {
                 var feridado = model.Adapt<Feriado>();
                 _servicoFeriado.Salvar(feridado);
-                //_feridadoServico.Salvar(feridado);
                 feridadoViewModel = feridado.Adapt<FeriadoViewModel>();
                 return feridadoViewModel;
             }
@@ -124,7 +116,6 @@ namespace SIDomperWebApi.Controllers
             {
                 var feridado = model.Adapt<Feriado>();
                 _servicoFeriado.Salvar(feridado);
-                //_feridadoServico.Salvar(feridado);
                 feridadoViewModel = feridado.Adapt<FeriadoViewModel>();
                 return feridadoViewModel;
             }
@@ -141,8 +132,6 @@ namespace SIDomperWebApi.Controllers
             var model = new FeriadoViewModel();
             try
             {
-                //var feriado = _feridadoServico.ObterPorId(id);
-                //_feridadoServico.Excluir(feriado, idUsuario);
                 _servicoFeriado.Excluir(_servicoFeriado.ObterPorId(id), idUsuario);
                 return model;
             }

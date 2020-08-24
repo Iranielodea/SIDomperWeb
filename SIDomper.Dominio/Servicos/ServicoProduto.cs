@@ -98,6 +98,8 @@ namespace SIDomper.Dominio.Servicos
             var model = _uow.RepositorioProduto.First(x => x.Codigo == codigo);
             if (model == null)
                 throw new Exception("Produto não Cadastrado!");
+            if (model.Ativo == false)
+                throw new Exception("Produto Inativo!");
             return model;
         }
 

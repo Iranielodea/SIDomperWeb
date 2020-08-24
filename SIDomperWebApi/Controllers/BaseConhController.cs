@@ -1,7 +1,7 @@
 ﻿using Mapster;
 using SIDomper.Dominio.Entidades;
+using SIDomper.Dominio.Interfaces.Servicos;
 using SIDomper.Dominio.ViewModel;
-using SIDomper.Servicos.Regras;
 using System;
 using System.Linq;
 using System.Web.Http;
@@ -10,11 +10,11 @@ namespace SIDomperWebApi.Controllers
 {
     public class BaseConhController : ApiController
     {
-        private readonly BaseConhecimentoServico _baseConhServico;
+        private readonly IServicoBaseConhecimento _servicoBaseConhecimento;
 
-        public BaseConhController()
+        public BaseConhController(IServicoBaseConhecimento servicoBaseConhecimento)
         {
-            _baseConhServico = new BaseConhecimentoServico();
+            _servicoBaseConhecimento = servicoBaseConhecimento;
         }
 
         [HttpGet]
@@ -23,7 +23,7 @@ namespace SIDomperWebApi.Controllers
             var model = new BaseConhViewModel();
             try
             {
-                var item = _baseConhServico.ObterPorId(id);
+                var item = _servicoBaseConhecimento.ObterPorId(id);
                 model = item.Adapt<BaseConhViewModel>();
 
                 PopularDados(item, model);
@@ -43,7 +43,7 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 string mensagem = "";
-                var item = _baseConhServico.Editar(id, idUsuario, ref mensagem);
+                var item = _servicoBaseConhecimento.Editar(id, idUsuario, ref mensagem);
                 model = item.Adapt<BaseConhViewModel>();
                 PopularDados(item, model);
 
@@ -87,7 +87,7 @@ namespace SIDomperWebApi.Controllers
             var model = new BaseConhViewModel();
             try
             {
-                var item = _baseConhServico.Novo(idUsuario);
+                var item = _servicoBaseConhecimento.Novo(idUsuario);
                 model = item.Adapt<BaseConhViewModel>();
 
                 model.UsuarioId = item.UsuarioId;
@@ -107,14 +107,13 @@ namespace SIDomperWebApi.Controllers
                 return model;
             }
         }
-        
 
         [HttpPost]
         public BaseConhConsultaViewModel[] Filtrar([FromBody] BaseConhecimentoFiltroViewModel filtro, int usuarioId, bool contem = true)
         {
             try
             {
-                return _baseConhServico.Filtrar(filtro, filtro.Campo, filtro.Texto, usuarioId, contem).ToArray();
+                return _servicoBaseConhecimento.Filtrar(filtro, filtro.Campo, filtro.Texto, usuarioId, contem).ToArray();
             }
             catch (Exception ex)
             {
@@ -130,7 +129,7 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 var baseConh = model.Adapt<BaseConhecimento>();
-                _baseConhServico.Salvar(baseConh);
+                _servicoBaseConhecimento.Salvar(baseConh);
 
                 baseConhViewModel = baseConh.Adapt<BaseConhViewModel>();
                 return baseConhViewModel;
@@ -149,7 +148,7 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 var baseConh = model.Adapt<BaseConhecimento>();
-                _baseConhServico.Salvar(baseConh);
+                _servicoBaseConhecimento.Salvar(baseConh);
 
                 baseConhViewModel = baseConh.Adapt<BaseConhViewModel>();
                 return baseConhViewModel;
@@ -168,8 +167,8 @@ namespace SIDomperWebApi.Controllers
             var model = new BaseConhViewModel();
             try
             {
-                var baseConh = _baseConhServico.ObterPorId(id);
-                _baseConhServico.Excluir(idUsuario, id);
+                var baseConh = _servicoBaseConhecimento.ObterPorId(id);
+                _servicoBaseConhecimento.Excluir(baseConh, idUsuario);
                 return model;
             }
             catch (Exception ex)

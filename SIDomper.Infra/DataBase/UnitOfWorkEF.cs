@@ -314,5 +314,26 @@ namespace SIDomper.Infra.DataBase
             }
         }
 
+        private IRepositorioClienteEspecificacao _repositorioClienteEspecificacao;
+        public IRepositorioClienteEspecificacao RepositorioClienteEspecificacao
+        {
+            get
+            {
+                if (_repositorioClienteEspecificacao == null)
+                    _repositorioClienteEspecificacao = new RepositorioClienteEspecificacao(_context);
+                return _repositorioClienteEspecificacao;
+            }
+        }
+
+        private IRepositorioSolicitacao _repositorioSolicitacao;
+        public IRepositorioSolicitacao RepositorioSolicitacao
+        {
+            get
+            {
+                if (_repositorioSolicitacao == null)
+                    _repositorioSolicitacao = new RepositorioSolicitacao(_context);
+                return _repositorioSolicitacao;
+            }
+        }
     }
 }

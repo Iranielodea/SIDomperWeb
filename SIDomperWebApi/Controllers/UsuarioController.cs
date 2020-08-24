@@ -1,5 +1,6 @@
 ﻿using Mapster;
 using SIDomper.Dominio.Entidades;
+using SIDomper.Dominio.Interfaces.Servicos;
 using SIDomper.Dominio.Servicos;
 using SIDomper.Dominio.ViewModel;
 using SIDomper.Servicos.Regras;
@@ -14,14 +15,12 @@ namespace SIDomperWebApi.Controllers
     public class UsuarioController : ApiController
     {
         private readonly UsuarioServico _usuarioServico;
-        //private readonly ClienteServico _clienteServico;
-        private readonly ServicoUsuario _servicoUsuario;
-        private readonly ServicoCliente _servicoCliente;
+        private readonly IServicoCliente _servicoCliente;
+        private readonly IServicoUsuario _servicoUsuario;
 
-        public UsuarioController(ServicoUsuario servicoUsuario, ServicoCliente servicoCliente)
+        public UsuarioController(IServicoUsuario servicoUsuario, IServicoCliente servicoCliente)
         {
             _usuarioServico = new UsuarioServico();
-            //_clienteServico = new ClienteServico();
             _servicoUsuario = servicoUsuario;
             _servicoCliente = servicoCliente;
         }
@@ -34,7 +33,6 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 var item = _servicoUsuario.ObterPorId(id);
-                //var item = _usuarioServico.ObterPorId(id);
                 model = item.Adapt<UsuarioViewModel>();
 
                 return model;
@@ -102,7 +100,6 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 var item = _servicoUsuario.HorarioUsoSistema(userName, senha, idUsuario);
-                //var item = _usuarioServico.HorarioUsoSistema(userName, senha, idUsuario);
                 model = item.Adapt<UsuarioViewModel>();
                 model.HorarioUsoSistema = item;
                 return model;
@@ -121,7 +118,6 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 var lista = _servicoUsuario.ObterPermissaoPorUsuario(userName, senha);
-                //var lista = _usuarioServico.ObterPermissaoPorUsuario(userName, senha);
                 return lista;
             }
             catch (Exception ex)
@@ -138,7 +134,6 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 var item = _servicoUsuario.Novo(idUsuario);
-                //var item = _usuarioServico.Novo(idUsuario);
                 model = item.Adapt<UsuarioViewModel>();
                 return model;
             }
@@ -157,8 +152,6 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 var usuario = _servicoUsuario.ObterPorCodigo(codigo);
-                //var prod = _usuarioServico.ObterPorCodigo(codigo);
-                //model = prod.Adapt<UsuarioViewModel>();
                 model.Id = usuario.Id;
                 model.Codigo = usuario.Codigo;
                 model.Nome = usuario.Nome;
@@ -178,7 +171,6 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 var lista = _servicoUsuario.Filtrar(campo, texto, ativo, contem);
-                //var lista = _usuarioServico.Filtrar(campo, texto, ativo, contem);
                 var model = lista.Adapt<UsuarioConsultaViewModel[]>();
                 return model;
             }
@@ -196,7 +188,6 @@ namespace SIDomperWebApi.Controllers
             {
                 var usuario = model.Adapt<Usuario>();
                 _servicoUsuario.Salvar(usuario);
-                //_usuarioServico.Salvar(usuario);
                 usuarioViewModel = usuario.Adapt<UsuarioViewModel>();
                 return usuarioViewModel;
             }
@@ -215,7 +206,6 @@ namespace SIDomperWebApi.Controllers
             {
                 var FiltroUsuario = filtro.Adapt<UsuarioFiltro>();
                 var Lista = _servicoUsuario.Filtrar(FiltroUsuario);
-                //var Lista = _usuarioServico.Filtrar(FiltroUsuario);
                 var model = Lista.Adapt<UsuarioConsultaViewModel[]>();
                 return model;
             }
@@ -233,7 +223,6 @@ namespace SIDomperWebApi.Controllers
             {
                 var usuario = model.Adapt<Usuario>();
                 _servicoUsuario.Salvar(usuario);
-                //_usuarioServico.Salvar(usuario);
                 usuarioViewModel = usuario.Adapt<UsuarioViewModel>();
                 return usuarioViewModel;
             }
@@ -251,8 +240,6 @@ namespace SIDomperWebApi.Controllers
             var model = new UsuarioViewModel();
             try
             {
-                //var usuario = _usuarioServico.ObterPorId(id);
-                //_usuarioServico.Excluir(idUsuario, usuario);
                 _servicoUsuario.Excluir(_servicoUsuario.ObterPorId(id), idUsuario);
                 return model;
             }

@@ -15,20 +15,13 @@ namespace SIDomperWebApi.Controllers
     [RoutePrefix("api/chamado")]
     public class ChamadoController : ApiController
     {
-        private ChamadoServico _chamadoServico;
-        private UsuarioServico _usuarioServico;
-        private UsuarioPermissaoServico _usuarioPermissaoServico;
         private ChamadoViewModel _ChamadoViewModel;
-        private StatusServico _statusServico;
-        //private readonly IServicoChamado _servicoChamado;
+        private readonly IServicoChamado _servicoChamado;
 
-        public ChamadoController()
+        public ChamadoController(IServicoChamado servicoChamado)
         {
-            _usuarioServico = new UsuarioServico();
-            _usuarioPermissaoServico = new UsuarioPermissaoServico();
-            _statusServico = new StatusServico();
             _ChamadoViewModel = new ChamadoViewModel();
-            //_servicoChamado = servicoChamado;
+            _servicoChamado = servicoChamado;
         }
 
         [Route("Novo")]
@@ -38,9 +31,15 @@ namespace SIDomperWebApi.Controllers
         {
             try
             {
-                _chamadoServico = new ChamadoServico(enChamadoAtividade);
+                //_chamadoServico = new ChamadoServico(enChamadoAtividade);
 
-                var model = _chamadoServico.Novo(idUsuario, quadro, idClienteAgenciamento, idAgendamento);
+                //var model = _chamadoServico.Novo(idUsuario, quadro, idClienteAgenciamento, idAgendamento);
+
+                //var tipoPrograma = new EnProgramas();
+
+                var tipoPrograma = (enChamadoAtividade == EnumChamado.Chamado) ? EnProgramas.Chamado : EnProgramas.Atividade;
+
+                var model = _servicoChamado.Novo(idUsuario, quadro, idClienteAgenciamento, idAgendamento, tipoPrograma, enChamadoAtividade);
                 if (model != null)
                 {
                     //if (model.UsuarioAbertura != null)
@@ -79,7 +78,7 @@ namespace SIDomperWebApi.Controllers
                     //if (usuario != null)
                     //    _ChamadoViewModel.UsuarioAdm = usuario.Adm;
 
-                    NovoChamadoQuadro(_ChamadoViewModel, enChamadoAtividade, idEncerramento, _chamadoServico);
+                    NovoChamadoQuadro(_ChamadoViewModel, enChamadoAtividade, idEncerramento);
                 }
                 return _ChamadoViewModel;
             }
@@ -95,10 +94,10 @@ namespace SIDomperWebApi.Controllers
         public ChamadoAplicativoViewModel[] RetornarDadosAplicativo(string cnpj)
         {
             var lista = new List<ChamadoAplicativoViewModel>();
-            _chamadoServico = new ChamadoServico();
+            //_chamadoServico = new ChamadoServico();
             try
             {
-                var listaRetorno = _chamadoServico.RetornarDadosAplicativo(cnpj).ToArray();
+                var listaRetorno = _servicoChamado.RetornarDadosAplicativo(cnpj).ToArray();
 
                 if (listaRetorno.Count() == 0)
                     throw new Exception("Registro não Encontrado!");
@@ -109,20 +108,20 @@ namespace SIDomperWebApi.Controllers
                         item.Data = Convert.ToDateTime(item.Data).ToShortDateString();
                     //if (!string.IsNullOrWhiteSpace(item.Data))
                     //    item.Hora = item.Hora;
-                    
+
                     if (!string.IsNullOrWhiteSpace(item.DescricaoProblema))
                         item.DescricaoProblema = item.DescricaoProblema.Replace("\r", "").Replace("\n", "");
                     if (!string.IsNullOrWhiteSpace(item.DescricaoSolucao))
-                        item.DescricaoSolucao = item.DescricaoSolucao.Replace("\r", "").Replace("\n","");
+                        item.DescricaoSolucao = item.DescricaoSolucao.Replace("\r", "").Replace("\n", "");
                     if (!string.IsNullOrWhiteSpace(item.Descricao))
                         item.Descricao = item.Descricao.Replace("\r", "").Replace("\n", "");
                 }
 
                 return listaRetorno;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                lista.Add(new ChamadoAplicativoViewModel{Id = 0, Mensagem = ex.Message, Data=DateTime.Now.ToString(), Status="" });
+                lista.Add(new ChamadoAplicativoViewModel { Id = 0, Mensagem = ex.Message, Data = DateTime.Now.ToString(), Status = "" });
                 return lista.ToArray();
             }
         }
@@ -134,12 +133,13 @@ namespace SIDomperWebApi.Controllers
             var resposta = new ChamadoAplicativoResultadoOutPutViewModel();
             try
             {
-                _chamadoServico = new ChamadoServico();
+                //_chamadoServico = new ChamadoServico();
+                //_chamadoServico.SalvarAplicativo(inputModel);
+                _servicoChamado.SalvarAplicativo(inputModel);
 
-                _chamadoServico.SalvarAplicativo(inputModel);
                 return resposta;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 resposta.Resultado = ex.Message;
                 return resposta;
@@ -222,30 +222,9 @@ namespace SIDomperWebApi.Controllers
         //    _ChamadoViewModel.UsuarioPermissaoAlterarDataHora = model.UsuarioAbertura.Adm;
         //}
 
-        private void NovoChamadoQuadro(ChamadoViewModel model, EnumChamado enChamadoAtividade, int idEncerramento, ChamadoServico chamadoServico)
+        private void NovoChamadoQuadro(ChamadoViewModel model, EnumChamado enChamadoAtividade, int idEncerramento)
         {
-            _chamadoServico = new ChamadoServico(enChamadoAtividade);
-            string codStatus = "0";
-            if (enChamadoAtividade == EnumChamado.Chamado)
-                codStatus = _chamadoServico.StatusAbertura();
-
-            if (idEncerramento > 0 || enChamadoAtividade == EnumChamado.Atividade)
-                codStatus = _chamadoServico.StatusAberturaAtividade();
-
-            int.TryParse(codStatus, out int CodStatus);
-
-            if (CodStatus == 0)
-                throw new Exception("Informe o Status para abertura nos Parâmetros do Sistema!");
-            else
-            {
-                var Status = _statusServico.ObterPorCodigo(CodStatus);
-                if (Status != null)
-                {
-                    model.StatusId = Status.Id;
-                    model.CodStatus = Status.Codigo;
-                    model.NomeStatus = Status.Nome;
-                }
-            }
+            _servicoChamado.NovoChamadoQuadro(model, enChamadoAtividade, idEncerramento);
         }
 
         private void PopularDados(ChamadoViewModel chamadoViewModel, Chamado chamado, int idUsuario)
@@ -270,51 +249,50 @@ namespace SIDomperWebApi.Controllers
 
             if (_ChamadoViewModel.TipoMovimento == (int)EnumChamado.Chamado)
             {
-                if (_ChamadoViewModel.UsuarioPermissaoAlterarDataHora == false)
-                    _ChamadoViewModel.UsuarioPermissaoAlterarDataHora = _usuarioPermissaoServico.PermissaoAlterarDataHoraChamado(idUsuario);
-
-                _ChamadoViewModel.PermissaoAlterarOcorrenciaChamado = _usuarioPermissaoServico.PermissaoOcorrenciaChamadoAlterar(idUsuario);
-                _ChamadoViewModel.PermissaoExcluirOcorrenciaChamado = _usuarioPermissaoServico.PermissaoOcorrenciaChamadoExcluir(idUsuario);
+                _ChamadoViewModel.UsuarioPermissaoAlterarDataHora = _servicoChamado.PermissaoAlterarDataHoraChamado(idUsuario);
+                _ChamadoViewModel.PermissaoAlterarOcorrenciaChamado = _servicoChamado.PermissaoOcorrenciaChamadoAlterar(idUsuario);
+                _ChamadoViewModel.PermissaoExcluirOcorrenciaChamado = _servicoChamado.PermissaoOcorrenciaChamadoExcluir(idUsuario);
             }
             else
             {
-                if (_ChamadoViewModel.UsuarioPermissaoAlterarDataHora == false)
-                    _ChamadoViewModel.UsuarioPermissaoAlterarDataHora = _usuarioPermissaoServico.PermissaoAlterarDataHoraAtividade(idUsuario);
-
-                _ChamadoViewModel.PermissaoAlterarOcorrenciaAtividade = _usuarioPermissaoServico.PermissaoOcorrenciaAlterarAtividade(idUsuario);
-                _ChamadoViewModel.PermissaoExcluirOcorrenciaAtividade = _usuarioPermissaoServico.PermissaoOcorrenciaAtividadeExcluir(idUsuario);
+                _ChamadoViewModel.UsuarioPermissaoAlterarDataHora = _servicoChamado.PermissaoAlterarDataHoraAtividade(idUsuario);
+                _ChamadoViewModel.PermissaoAlterarOcorrenciaAtividade = _servicoChamado.PermissaoOcorrenciaAlterarAtividade(idUsuario);
+                _ChamadoViewModel.PermissaoExcluirOcorrenciaAtividade = _servicoChamado.PermissaoOcorrenciaAtividadeExcluir(idUsuario);
             }
 
             _ChamadoViewModel.Descricao = chamado.Descricao;
 
-            var usuario = _usuarioServico.ObterPorId(idUsuario);
+            var usuario = _servicoChamado.ObterUsuarioPorId(idUsuario);
             if (usuario != null)
+            {
                 _ChamadoViewModel.UsuarioAdm = usuario.Adm;
 
-            _ChamadoViewModel.UsuarioPermissaoAlterarDataHora = _ChamadoViewModel.UsuarioPermissaoAlterarDataHora;
+                if (usuario.Adm)
+                    _ChamadoViewModel.UsuarioPermissaoAlterarDataHora = true;
+            }
 
             var usuarioOcorrencia = new Usuario();
             foreach (var chamadoOcorrencia in _ChamadoViewModel.ChamadoOcorrencias)
             {
-                usuarioOcorrencia = _usuarioServico.ObterPorId(chamadoOcorrencia.UsuarioId);
+                usuarioOcorrencia = _servicoChamado.ObterUsuarioPorId(chamadoOcorrencia.UsuarioId);
                 chamadoOcorrencia.CodUsuario = usuarioOcorrencia.Codigo;
                 chamadoOcorrencia.NomeUsuario = usuarioOcorrencia.Nome;
 
                 foreach (var colaborador in chamadoOcorrencia.ChamadoOcorrenciaColaboradores)
                 {
-                    usuario = _usuarioServico.ObterPorId(colaborador.UsuarioId);
+                    usuario = _servicoChamado.ObterUsuarioPorId(colaborador.UsuarioId);
                     colaborador.CodUsuario = usuario.Codigo;
                     colaborador.NomeUsuario = usuario.Nome;
                 }
             }
 
-            foreach(var item in _ChamadoViewModel.ChamadosStatus)
+            foreach (var item in _ChamadoViewModel.ChamadosStatus)
             {
                 item.HoraTela = Utils.FormatarHHMMSS(item.Hora);
             }
 
             _ChamadoViewModel.TotalHoras = _ChamadoViewModel.ChamadoOcorrencias.Sum(x => x.TotalHoras);
-            
+
 
             //var chamadoOcorrenciaServico = new ChamadoOcorrenciaServico();
 
@@ -336,13 +314,14 @@ namespace SIDomperWebApi.Controllers
         [HttpGet]
         public ChamadoViewModel ObterPorId(int id)
         {
-            _chamadoServico = new ChamadoServico();
+            //_chamadoServico = new ChamadoServico();
             try
             {
+                //Temp();
                 string mensagem = "";
-                var item = _chamadoServico.ObterPorId(id);
-                //_ChamadoViewModel = item.Adapt<ChamadoViewModel>();
-                Utils.AutoMappear(item, _ChamadoViewModel);
+                var item = _servicoChamado.ObterPorId(id);
+                _ChamadoViewModel = item.Adapt<ChamadoViewModel>();
+                //Utils.AutoMappear(item, _ChamadoViewModel);
 
                 PopularDados(_ChamadoViewModel, item, 0);
 
@@ -364,15 +343,33 @@ namespace SIDomperWebApi.Controllers
             }
         }
 
+        private void Temp()
+        {
+            var model = _servicoChamado.ObterPorId(65528);
+            foreach (var ocorrencia in model.ChamadoOcorrencias)
+            {
+                var colaborador = new ChamadoOcorrenciaColaborador();
+                colaborador.HoraFim = TimeSpan.Parse(DateTime.Now.ToShortTimeString());
+                colaborador.HoraInicio = TimeSpan.Parse(DateTime.Now.ToShortTimeString());
+                colaborador.ChamadoOcorrenciaId = ocorrencia.Id;
+                colaborador.TotalHoras = 1;
+                colaborador.UsuarioId = 21;
+
+                ocorrencia.ChamadoOcorrenciaColaboradores.Add(colaborador);
+            }
+            _servicoChamado.Salvar(model);
+        }
+
         [Route("Editar")]
         [HttpGet]
-        public ChamadoViewModel Editar(int idUsuario, int id)
+        public ChamadoViewModel Editar(int idUsuario, int id, EnProgramas enProgramas)
         {
-            _chamadoServico = new ChamadoServico();
+            //_chamadoServico = new ChamadoServico();
             try
             {
                 string mensagem = "";
-                var item = _chamadoServico.Editar(idUsuario, id, ref mensagem);
+                //var item = _chamadoServico.Editar(idUsuario, id, ref mensagem);
+                var item = _servicoChamado.Editar(id, idUsuario, enProgramas, ref mensagem);
                 _ChamadoViewModel = item.Adapt<ChamadoViewModel>();
 
                 _ChamadoViewModel.ChamadosStatus.Clear();
@@ -391,19 +388,19 @@ namespace SIDomperWebApi.Controllers
 
                 //Utils.AutoMappear(item, _ChamadoViewModel);
 
-                
+
 
                 PopularDados(_ChamadoViewModel, item, idUsuario);
 
-                if (_ChamadoViewModel.UsuarioPermissaoAlterarDataHora == false)
-                {
-                    if (item.TipoMovimento == (int)EnumChamado.Chamado)
-                        _ChamadoViewModel.UsuarioPermissaoAlterarDataHora = _usuarioPermissaoServico.PermissaoAlterarDataHoraChamado(idUsuario);
-                    else
-                        _ChamadoViewModel.UsuarioPermissaoAlterarDataHora = _usuarioPermissaoServico.PermissaoAlterarDataHoraAtividade(idUsuario);
-                }
+                //if (_ChamadoViewModel.UsuarioPermissaoAlterarDataHora == false)
+                //{
+                //    if (item.TipoMovimento == (int)EnumChamado.Chamado)
+                //        _ChamadoViewModel.UsuarioPermissaoAlterarDataHora = _usuarioPermissaoServico.PermissaoAlterarDataHoraChamado(idUsuario);
+                //    else
+                //        _ChamadoViewModel.UsuarioPermissaoAlterarDataHora = _usuarioPermissaoServico.PermissaoAlterarDataHoraAtividade(idUsuario);
+                //}
 
-                _ChamadoViewModel.UsuarioPermissaoAlterarDataHora = _ChamadoViewModel.UsuarioPermissaoAlterarDataHora;
+                //_ChamadoViewModel.UsuarioPermissaoAlterarDataHora = _ChamadoViewModel.UsuarioPermissaoAlterarDataHora;
 
                 _ChamadoViewModel.Mensagem = mensagem;
                 return _ChamadoViewModel;
@@ -421,8 +418,9 @@ namespace SIDomperWebApi.Controllers
         {
             try
             {
-                _chamadoServico = new ChamadoServico(enChamado);
-                var lista = _chamadoServico.RetornarAnexos(idChamado);
+                var lista = _servicoChamado.RetornarAnexos(idChamado);
+                //_chamadoServico = new ChamadoServico(enChamado);
+                //var lista = _chamadoServico.RetornarAnexos(idChamado);
                 var retorno = lista.Adapt<ChamadoAnexoViewModel[]>();
                 return retorno;
             }
@@ -438,8 +436,9 @@ namespace SIDomperWebApi.Controllers
         {
             try
             {
-                _chamadoServico = new ChamadoServico(enChamado);
-                return _chamadoServico.Filtrar(filtro, campo, valor, idUsuario, contem, enChamado).ToArray();
+                return _servicoChamado.Filtrar(filtro, campo, valor, idUsuario, contem, enChamado).ToArray();
+                //_chamadoServico = new ChamadoServico(enChamado);
+                //return _chamadoServico.Filtrar(filtro, campo, valor, idUsuario, contem, enChamado).ToArray();
 
                 //_chamadoServico = new ChamadoServico(enChamado);
                 //var FiltroChamado = filtro.Adapt<ChamadoFiltro>();
@@ -455,22 +454,22 @@ namespace SIDomperWebApi.Controllers
 
                 //return model.ToArray();
             }
-                catch (Exception ex)
+            catch (Exception ex)
             {
-                        throw new Exception(ex.Message);
+                throw new Exception(ex.Message);
             }
         }
         [Route("BuscarModuloProduto")]
         [HttpGet]
         public ChamadoViewModel BuscarModuloProduto(int idCliente, int idModulo)
         {
-            var clienteModuloServico = new ClienteModuloServico();
+            //var clienteModuloServico = new ClienteModuloServico();
             var chamadoViewModel = new ChamadoViewModel();
-
 
             try
             {
-                var model = clienteModuloServico.ObterPorModulo(idCliente, idModulo);
+                //var model = clienteModuloServico.ObterPorModulo(idCliente, idModulo);
+                var model = _servicoChamado.ObterPorModulo(idCliente, idModulo);
 
                 if (model != null)
                 {
@@ -498,12 +497,12 @@ namespace SIDomperWebApi.Controllers
         public ChamadoViewModel Incluir([FromBody]ChamadoViewModel model, int idUsuario, bool ocorrencia)
         {
             var chamadoViewModel = new ChamadoViewModel();
-            _chamadoServico = new ChamadoServico();
+            //_chamadoServico = new ChamadoServico();
             try
             {
                 var chamado = model.Adapt<Chamado>();
-                //_servicoChamado.Salvar(chamado, idUsuario, ocorrencia);
-                _chamadoServico.Salvar(chamado, idUsuario, ocorrencia);
+                _servicoChamado.Salvar(chamado, idUsuario, ocorrencia);
+                //_chamadoServico.Salvar(chamado, idUsuario, ocorrencia);
                 chamadoViewModel = chamado.Adapt<ChamadoViewModel>();
                 return chamadoViewModel;
             }
@@ -517,13 +516,13 @@ namespace SIDomperWebApi.Controllers
         [HttpPut]
         public ChamadoViewModel Update([FromBody]ChamadoViewModel model, int idUsuario, bool ocorrencia)
         {
-            _chamadoServico = new ChamadoServico();
+            //_chamadoServico = new ChamadoServico();
             var chamadoViewModel = new ChamadoViewModel();
             try
             {
                 var chamado = model.Adapt<Chamado>();
+                _servicoChamado.Salvar(chamado, idUsuario, ocorrencia);
                 //_chamadoServico.Salvar(chamado, idUsuario, ocorrencia);
-                _chamadoServico.Salvar(chamado, idUsuario, ocorrencia);
                 chamadoViewModel = chamado.Adapt<ChamadoViewModel>();
                 return chamadoViewModel;
             }
@@ -535,13 +534,13 @@ namespace SIDomperWebApi.Controllers
         }
 
         [HttpDelete]
-        public ChamadoViewModel Delete(int idUsuario, int id)
+        public ChamadoViewModel Delete(int idUsuario, int id, EnProgramas enProgramas)
         {
-            _chamadoServico = new ChamadoServico();
             var model = new ChamadoViewModel();
             try
             {
-                _chamadoServico.Excluir(idUsuario, id);
+                _servicoChamado.Excluir(_servicoChamado.ObterPorId(id), idUsuario, enProgramas);
+                //_chamadoServico.Excluir(idUsuario, id);
                 return model;
             }
             catch (Exception ex)

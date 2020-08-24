@@ -125,6 +125,8 @@
     <Compile Include="RepositorioDapper\VisitaRepositorioDapper.cs" />
     <Compile Include="RepositorioEF\RepositorioContaEmail.cs" />
     <Compile Include="RepositorioEF\RepositorioChamado.cs" />
+    <Compile Include="RepositorioEF\RepositorioClienteEspecificacao.cs" />
+    <Compile Include="RepositorioEF\RepositorioSolicitacao.cs" />
     <Compile Include="RepositorioEF\RepositorioRecado.cs" />
     <Compile Include="RepositorioEF\RepositorioVisita.cs" />
     <Compile Include="RepositorioEF\RepositorioModulo.cs" />

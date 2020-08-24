@@ -37,5 +37,7 @@ namespace SIDomper.Dominio.Interfaces
         IRepositorioVisita RepositorioVisita { get; }
         IRepositorioRecado RepositorioRecado { get; }
         IRepositorioChamado RepositorioChamado { get; }
+        IRepositorioClienteEspecificacao RepositorioClienteEspecificacao { get; }
+        IRepositorioSolicitacao RepositorioSolicitacao { get; }
     }
 }

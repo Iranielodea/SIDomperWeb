@@ -5,5 +5,6 @@ namespace SIDomper.Dominio.Interfaces.Repositorios
     public interface IRepositorioDepartamento : IRepositorio<Departamento>
     {
         Departamento Duplicar(Departamento model);
+        string RetornarEmails(Departamento departamento);
     }
 }

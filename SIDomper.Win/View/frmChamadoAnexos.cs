@@ -29,9 +29,9 @@ namespace SIDomper.Win.View
 
             _chamadoApp = new ChamadoApp();
             var lista = _chamadoApp.BuscarAnexos(id, Dominio.Enumeracao.EnumChamado.Chamado);
-            if (lista != null)
+            if (lista.Count() > 0)
             {
-                var model = lista[0];
+                var model = lista.FirstOrDefault(); //[0];
                 string hora = model.HoraAbertura.Hours.ToString("D2") + ":" + model.HoraAbertura.Minutes.ToString("D2");
                 txtId.Text = model.Id.ToString(Tela.MaskChamado);
                 txtData.Text = model.DataAbertura.ToShortDateString();

@@ -109,6 +109,8 @@
     <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Interfaces\Repositorios\IRepositorioAgendamento.cs" />
     <Compile Include="Interfaces\Repositorios\IRepositorioChamado.cs" />
+    <Compile Include="Interfaces\Repositorios\IRepositorioClienteEspecificacao.cs" />
+    <Compile Include="Interfaces\Repositorios\IRepositorioSolicitacao.cs" />
     <Compile Include="Interfaces\Repositorios\IRepositorioRecado.cs" />
     <Compile Include="Interfaces\Repositorios\IRepositorioVisita.cs" />
     <Compile Include="Interfaces\Repositorios\IRepositorioModulo.cs" />
@@ -138,6 +140,7 @@
     <Compile Include="Interfaces\Servicos\IServicoDepartamento.cs" />
     <Compile Include="Interfaces\Servicos\IServicoEscala.cs" />
     <Compile Include="Interfaces\Servicos\IServicoFeriado.cs" />
+    <Compile Include="Interfaces\Servicos\IServicoClienteEspecificacao.cs" />
     <Compile Include="Interfaces\Servicos\IServicoModulo.cs" />
     <Compile Include="Interfaces\Servicos\IServicoCategoria.cs" />
     <Compile Include="Interfaces\Servicos\IServicoContaEmail.cs" />
@@ -147,6 +150,7 @@
     <Compile Include="Interfaces\Servicos\IServicoRamal.cs" />
     <Compile Include="Interfaces\Servicos\IServicoRecado.cs" />
     <Compile Include="Interfaces\Servicos\IServicoRevenda.cs" />
+    <Compile Include="Interfaces\Servicos\IServicoSolicitacao.cs" />
     <Compile Include="Interfaces\Servicos\IServicoStatus.cs" />
     <Compile Include="Interfaces\Servicos\IServicoTipo.cs" />
     <Compile Include="Interfaces\Servicos\IServicoProduto.cs" />
@@ -156,10 +160,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Servicos\ServicoAgendamento.cs" />
     <Compile Include="Servicos\ServicoBaseConhecimento.cs" />
+    <Compile Include="Servicos\ServicoSolicitacao.cs" />
     <Compile Include="Servicos\ServicoChamado.cs" />
     <Compile Include="Servicos\ServicoChamadoQuadro.cs" />
     <Compile Include="Servicos\ServicoCidade.cs" />
     <Compile Include="Servicos\ServicoCliente.cs" />
+    <Compile Include="Servicos\ServicoClienteEspecificacao.cs" />
     <Compile Include="Servicos\ServicoContaEmail.cs" />
     <Compile Include="Servicos\ServicoDepartamento.cs" />
     <Compile Include="Servicos\ServicoEscala.cs" />
