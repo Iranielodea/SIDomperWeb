@@ -80,7 +80,7 @@ namespace SIDomper.Dominio.ViewModel
         }
     }
 
-    public class ChamadoConsultaViewModel
+    public class ChamadoConsultaViewModel : BaseViewModel
     {
         public int Id { get; set; }
         public DateTime DataAbertura { get; set; }

@@ -4,7 +4,6 @@ using SIDomper.Dominio.Enumeracao;
 using SIDomper.Dominio.Funcoes;
 using SIDomper.Dominio.Interfaces.Servicos;
 using SIDomper.Dominio.ViewModel;
-using SIDomper.Servicos.Regras;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -541,6 +540,23 @@ namespace SIDomperWebApi.Controllers
             {
                 _servicoChamado.Excluir(_servicoChamado.ObterPorId(id), idUsuario, enProgramas);
                 //_chamadoServico.Excluir(idUsuario, id);
+                return model;
+            }
+            catch (Exception ex)
+            {
+                model.Mensagem = ex.Message;
+                return model;
+            }
+        }
+
+        [Route("VerificarTarefaEmAberto")]
+        [HttpGet]
+        public ChamadoConsultaViewModel VerificarTarefaEmAberto(int idUsuario, EnProgramas enProgramas)
+        {
+            var model = new ChamadoConsultaViewModel();
+            try
+            {
+                model = _servicoChamado.VerificarTarefaEmAberto(idUsuario, enProgramas);
                 return model;
             }
             catch (Exception ex)

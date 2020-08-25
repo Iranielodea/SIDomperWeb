@@ -786,6 +786,7 @@ namespace SIDomper.Dominio.Servicos
                     Nivel = 2,
                     TipoMovimento = 1,
                     Origem = 4,
+                    TipoId = 2,
 
                     UsuarioAberturaId = idUsuario
                 };
@@ -794,9 +795,9 @@ namespace SIDomper.Dominio.Servicos
                 if (cliente != null)
                     chamado.ClienteId = cliente.Id;
 
-                var modelTipo = _uow.RepositorioTipo.RetornarUmRegistro(EnumChamado.Chamado);
-                if (modelTipo != null)
-                    chamado.TipoId = modelTipo.Id;
+                //var modelTipo = _uow.RepositorioTipo.RetornarUmRegistro(EnumChamado.Chamado);
+                //if (modelTipo != null)
+                //    chamado.TipoId = modelTipo.Id;
 
                 var codStatusAbertura = _uow.RepositorioChamado.StatusAbertura();
 
@@ -1136,6 +1137,83 @@ namespace SIDomper.Dominio.Servicos
         public Usuario ObterUsuarioPorId(int id)
         {
             return _uow.RepositorioUsuario.find(id);
+        }
+
+        private bool VerificarChamadoAberto(int idUsuario)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine("SELECT COUNT(Cha_Id) AS Id FROM CHAMADO");
+            sb.AppendLine(" LEFT JOIN Chamado_Ocorrencia ON Cha_Id = ChOco_Chamado");
+            sb.AppendLine(" WHERE Cha_Status = 2");
+            sb.AppendLine(" AND Cha_TipoMovimento = 1");
+            sb.AppendLine($" AND ((cha_UsuarioAbertura = {idUsuario})");
+            sb.AppendLine($" OR (ChOco_Usuario = {idUsuario}))");
+
+            var resultado = _repositoryReadOnly.GetAll(sb.ToString());
+            return (resultado.FirstOrDefault().Id > 0);
+        }
+
+        private bool VerificarAtividadeAberto(int idUsuario)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine("SELECT COUNT(Cha_Id) AS Id FROM CHAMADO");
+            sb.AppendLine(" LEFT JOIN Chamado_Ocorrencia ON Cha_Id = ChOco_Chamado");
+            sb.AppendLine("  WHERE Cha_Status = 28");
+            sb.AppendLine("  AND Cha_TipoMovimento = 2");
+            sb.AppendLine($" AND ((cha_UsuarioAbertura = {idUsuario})");
+            sb.AppendLine($" OR (ChOco_Usuario = {idUsuario}))");
+
+            var resultado = _repositoryReadOnly.GetAll(sb.ToString());
+            return (resultado.FirstOrDefault().Id > 0);
+        }
+
+        private bool VerificarSolicitacaoAberto(int idUsuario)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine("SELECT TOP(1) STemp_Solicitacao AS Id FROM Solicitacao_Tempo");
+            sb.AppendLine(" INNER JOIN Solicitacao_Ocorrencia ON STemp_Solicitacao = SOcor_Solicitacao");
+            sb.AppendLine(" INNER JOIN Solicitacao ON SOcor_Solicitacao = Sol_Id");
+            sb.AppendLine($" WHERE STemp_UsuarioOperacional = {idUsuario}");
+            sb.AppendLine("  AND Sol_Status IN (14,16,18)");
+            sb.AppendLine($" AND ((cha_UsuarioAbertura = {idUsuario})");
+            sb.AppendLine(" AND STemp_HoraFim IS NULL");
+
+            var resultado = _repositoryReadOnly.GetAll(sb.ToString());
+            return (resultado.FirstOrDefault().Id > 0);
+        }
+
+        public ChamadoConsultaViewModel VerificarTarefaEmAberto(int idUsuario, EnProgramas enProgramas)
+        {
+            bool resultado = false;
+            if (enProgramas == EnProgramas.Chamado)
+            {
+                resultado = VerificarAtividadeAberto(idUsuario);
+                if (resultado == false)
+                    resultado = VerificarSolicitacaoAberto(idUsuario);
+            }
+
+            if (enProgramas == EnProgramas.Atividade)
+            {
+                resultado = VerificarChamadoAberto(idUsuario);
+                if (resultado == false)
+                    resultado = VerificarSolicitacaoAberto(idUsuario);
+            }
+
+            if (enProgramas == EnProgramas.Solicitacao)
+            {
+                resultado = VerificarAtividadeAberto(idUsuario);
+                if (resultado == false)
+                    resultado = VerificarChamadoAberto(idUsuario);
+            }
+
+            var consulta = new ChamadoConsultaViewModel();
+
+            if (resultado)
+                consulta.Id = 1;
+            else
+                consulta.Id = 0;
+
+            return consulta;
         }
     }
 }
