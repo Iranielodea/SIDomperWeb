@@ -363,9 +363,9 @@ namespace SIDomper.Dominio.Servicos
 
             if (modelTipo != null)
             {
-                bool resultado = TipoObrigatorio(modelTipo.Codigo);
+                bool obrigatorio = TipoObrigatorio(modelTipo.Codigo);
 
-                if (resultado == true && string.IsNullOrWhiteSpace(visita.Versao))
+                if (obrigatorio == true && string.IsNullOrWhiteSpace(visita.Versao))
                     throw new Exception("Informe a Versão");
             }
 

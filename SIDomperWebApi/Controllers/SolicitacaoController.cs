@@ -1,10 +1,12 @@
 ﻿using Mapster;
 using SIDomper.Dominio.Entidades;
 using SIDomper.Dominio.Funcoes;
+using SIDomper.Dominio.Interfaces.Servicos;
 using SIDomper.Dominio.ViewModel;
 using SIDomper.Servicos.Regras;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http;
 
 namespace SIDomperWebApi.Controllers
@@ -12,13 +14,20 @@ namespace SIDomperWebApi.Controllers
     [RoutePrefix("api/solicitacao")]
     public class SolicitacaoController : ApiController
     {
-        private readonly SolicitacaoServico _solicitacaoServico;
-        private readonly UsuarioServico _usuarioServico;
+        //private readonly SolicitacaoServico _solicitacaoServico;
+        //private readonly UsuarioServico _usuarioServico;
+        private readonly IServicoSolicitacao _servicoSolicitacao;
+        private readonly IServicoCliente _servicoCliente;
+        private readonly IServicoUsuario _servicoUsuario;
 
-        public SolicitacaoController()
+        public SolicitacaoController(IServicoSolicitacao servicoSolicitacao,
+            IServicoCliente servicoCliente, IServicoUsuario servicoUsuario)
         {
-            _solicitacaoServico = new SolicitacaoServico();
-            _usuarioServico = new UsuarioServico();
+            //_solicitacaoServico = new SolicitacaoServico();
+            //_usuarioServico = new UsuarioServico();
+            _servicoSolicitacao = servicoSolicitacao;
+            _servicoCliente = servicoCliente;
+            _servicoUsuario = servicoUsuario;
         }
 
         [Route("ObterPorId")]
@@ -28,7 +37,7 @@ namespace SIDomperWebApi.Controllers
             var viewModel = new SolicitacaoViewModel();
             try
             {
-                var model = _solicitacaoServico.ObterPorId(id);
+                var model = _servicoSolicitacao.ObterPorId(id);
                 viewModel = model.Adapt<SolicitacaoViewModel>();
                 return viewModel;
             }
@@ -47,7 +56,7 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 string mensagem = "";
-                var model = _solicitacaoServico.Editar(idUsuario, id, ref mensagem);
+                var model = _servicoSolicitacao.Editar(id, idUsuario, ref mensagem);
                 viewModel = model.Adapt<SolicitacaoViewModel>();
                 PopularSolicitacao(viewModel, model, idUsuario);
                 viewModel.Mensagem = mensagem;
@@ -67,7 +76,7 @@ namespace SIDomperWebApi.Controllers
             var viewModel = new SolicitacaoViewModel();
             try
             {
-                var model = _solicitacaoServico.Novo(idUsuario);
+                var model = _servicoSolicitacao.Novo(idUsuario);
                 viewModel = model.Adapt<SolicitacaoViewModel>();
                 viewModel.UsuarioAberturaId = model.UsuarioAbertura.Id;
                 viewModel.UsuarioAberturaCodigo = model.UsuarioAbertura.Codigo;
@@ -90,7 +99,7 @@ namespace SIDomperWebApi.Controllers
         {
             try
             {
-                return _solicitacaoServico.Filtrar(filtro, campo, texto, usuarioId, contem);
+                return _servicoSolicitacao.Filtrar(filtro, campo, texto, usuarioId, contem);
             }
             catch (Exception ex)
             {
@@ -105,7 +114,7 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 var model = viewModel.Adapt<Solicitacao>();
-                _solicitacaoServico.Salvar(model, usuarioId);
+                _servicoSolicitacao.Salvar(model, usuarioId);
                 viewModel = model.Adapt<SolicitacaoViewModel>();
                 return viewModel;
             }
@@ -123,7 +132,7 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 var model = viewModel.Adapt<Solicitacao>();
-                _solicitacaoServico.Salvar(model, usuarioId);
+                _servicoSolicitacao.Salvar(model, usuarioId);
                 viewModel = model.Adapt<SolicitacaoViewModel>();
                 return viewModel;
             }
@@ -140,8 +149,8 @@ namespace SIDomperWebApi.Controllers
             var viewModel = new SolicitacaoViewModel();
             try
             {
-                var model = _solicitacaoServico.ObterPorId(id);
-                _solicitacaoServico.Excluir(idUsuario, model);
+                var model = _servicoSolicitacao.ObterPorId(id);
+                _servicoSolicitacao.Excluir(model, idUsuario);
                 return viewModel;
             }
             catch (Exception ex)
@@ -159,7 +168,8 @@ namespace SIDomperWebApi.Controllers
             var solicitacaoViewModel = new SolicitacaoViewModel();
             try
             {
-                var model = clienteModuloServico.ObterPorModulo(idCliente, idModulo);
+                var cliente = _servicoCliente.ObterPorId(idCliente); // clienteModuloServico.ObterPorModulo(idCliente, idModulo);
+                var model = cliente.ClienteModulos.FirstOrDefault(x => x.ModuloId == idModulo);
 
                 if (model != null)
                 {
@@ -238,17 +248,17 @@ namespace SIDomperWebApi.Controllers
                 viewModel.VersaoDescricao = model.VersaoRelacao.VersaoStr;
             }
 
-            var usuario = _usuarioServico.ObterPorId(usuarioId);
-            viewModel.PermissaoAbertura = _solicitacaoServico.PermissaoAbertura(usuario);
-            viewModel.PermissaoAnalise = _solicitacaoServico.PermissaoAnalise(usuario);
-            viewModel.PermissaoOcorrenciaGeral = _solicitacaoServico.PermissaoOcorrenciaGeral(usuario);
-            viewModel.PermissaoOcorrenciaRegra = _solicitacaoServico.PermissaoOcorrenciaRegra(usuario);
-            viewModel.PermissaoOcorrenciaTecnica = _solicitacaoServico.PermissaoOcorrenciaTecnica(usuario);
-            viewModel.PermissaoStatus = _solicitacaoServico.PermissaoStatus(usuario);
-            viewModel.PermissaoTempo = _solicitacaoServico.PermissaoSolicitacaoTempo(usuario);
-            viewModel.PermissaoConfTempoGeral = _solicitacaoServico.PermissaoConferenciaTempoGeral(usuario);
-            viewModel.MostrarAnexos = _solicitacaoServico.MostrarAnexos(usuario);
-            viewModel.CaminhoAnexos = _solicitacaoServico.RetornarCaminhoAnexo();
+            var usuario = _servicoUsuario.ObterPorId(usuarioId);
+            viewModel.PermissaoAbertura = _servicoSolicitacao.PermissaoAbertura(usuario); // _solicitacaoServico.PermissaoAbertura(usuario);
+            viewModel.PermissaoAnalise = _servicoSolicitacao.PermissaoAnalise(usuario); // _solicitacaoServico.PermissaoAnalise(usuario);
+            viewModel.PermissaoOcorrenciaGeral = _servicoSolicitacao.PermissaoOcorrenciaGeral(usuario); // _solicitacaoServico.PermissaoOcorrenciaGeral(usuario);
+            viewModel.PermissaoOcorrenciaRegra = _servicoSolicitacao.PermissaoOcorrenciaRegra(usuario); // _solicitacaoServico.PermissaoOcorrenciaRegra(usuario);
+            viewModel.PermissaoOcorrenciaTecnica = _servicoSolicitacao.PermissaoOcorrenciaTecnica(usuario); // _solicitacaoServico.PermissaoOcorrenciaTecnica(usuario);
+            viewModel.PermissaoStatus = _servicoSolicitacao.PermissaoStatus(usuario); // _solicitacaoServico.PermissaoStatus(usuario);
+            viewModel.PermissaoTempo = _servicoSolicitacao.PermissaoSolicitacaoTempo(usuario, usuarioId); // _solicitacaoServico.PermissaoSolicitacaoTempo(usuario);
+            viewModel.PermissaoConfTempoGeral = _servicoSolicitacao.PermissaoConferenciaTempoGeral(usuario, usuarioId);  //_solicitacaoServico.PermissaoConferenciaTempoGeral(usuario);
+            viewModel.MostrarAnexos = _servicoSolicitacao.MostrarAnexos(usuario); // _solicitacaoServico.MostrarAnexos(usuario);
+            viewModel.CaminhoAnexos = _servicoSolicitacao.RetornarCaminhoAnexo(); // _solicitacaoServico.RetornarCaminhoAnexo();
 
             if (viewModel.SolicitacaoCronogramas != null)
             {

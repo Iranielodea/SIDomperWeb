@@ -29,6 +29,6 @@ namespace SIDomper.Dominio.Interfaces.Servicos
         bool PermissaoAlterarDataHoraAtividade(int idUsuario);
         bool PermissaoOcorrenciaAlterarAtividade(int idUsuario);
         bool PermissaoOcorrenciaAtividadeExcluir(int idUsuario);
-        Usuario ObterUsuarioPorId(int id);
+        Usuario ObterUsuarioPorId(int id);        
     }
 }

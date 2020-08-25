@@ -14,12 +14,12 @@ namespace SIDomper.Dominio.Servicos
     public class ServicoSolicitacao : IServicoSolicitacao
     {
         private readonly IUnitOfWork _uow;
-        private readonly IRepositoryReadOnly<SolicitacaoConsulta> _repositoryReadOnly;
+        private readonly IRepositoryReadOnly<SolicitacaoConsultaViewModel> _repositoryReadOnly;
         private readonly EnProgramas _enProgramas;
         private List<string> _listaEmail;
 
         public ServicoSolicitacao(IUnitOfWork unitOfWork,
-           IRepositoryReadOnly<SolicitacaoConsulta> repositoryReadOnly)
+           IRepositoryReadOnly<SolicitacaoConsultaViewModel> repositoryReadOnly)
         {
             _uow = unitOfWork;
             _repositoryReadOnly = repositoryReadOnly;
@@ -58,7 +58,7 @@ namespace SIDomper.Dominio.Servicos
             _uow.SaveChanges();
         }
 
-        public IEnumerable<SolicitacaoConsulta> Filtrar(SolicitacaoFiltroViewModel filtro, string campo, string texto, int usuarioId, bool contem)
+        public IEnumerable<SolicitacaoConsultaViewModel> Filtrar(SolicitacaoFiltroViewModel filtro, string campo, string texto, int usuarioId, bool contem)
         {
             var sb = new StringBuilder();
 
@@ -281,10 +281,10 @@ namespace SIDomper.Dominio.Servicos
             {
                 item.SolicitacaoId = model.Id;
 
-                if (model.Data < item.Data)
+                if (model.Data > item.Data)
                     throw new Exception("Data de Previsão de Início menor que Data de Abertura!");
 
-                if (!string.IsNullOrWhiteSpace(model.Descricao))
+                if (string.IsNullOrWhiteSpace(item.Descricao))
                     throw new Exception("Informe a Descrição!");
 
                 //if (!string.IsNullOrWhiteSpace(model.Anexo))
@@ -463,6 +463,11 @@ namespace SIDomper.Dominio.Servicos
             return (usuarioPermissao != null);
         }
 
+        public string RetornarCaminhoAnexo()
+        {
+            return _uow.RepositorioParametro.ObterPorParametro(48, 0).Valor;
+        }
+
         private void EnvioEmail(Solicitacao model, int idUsuario)
         {
             var usuario = _uow.RepositorioUsuario.find(idUsuario);
@@ -474,11 +479,73 @@ namespace SIDomper.Dominio.Servicos
 
             if (!string.IsNullOrWhiteSpace(sEmailCliente))
             {
-                //TODO: implementar assunto e texto
-                string assunto = "";
-                string texto = "";
+                string assunto = RetornarAssunto(model);
+                string texto = TextoEmailCabecalho(model);
+                texto += TextoEmailOcorrencia(model);
+                texto += MensagemFinal();
                 //_uow.RepositorioContaEmail.EnviarEmail(idUsuario, sEmailCliente, sEmail, assunto, texto, "");
             }
+        }
+
+        private string TextoEmailOcorrencia(Solicitacao model)
+        {
+            var sb = new StringBuilder();
+            bool primeiraVez = true;
+            model.SolicitacaoOcorrencias.Where(c => c.Classificacao == 1).OrderBy(x => x.Data);
+
+            foreach (var item in model.SolicitacaoOcorrencias)
+            {
+                if (primeiraVez)
+                {
+                    sb.AppendLine("Ocorrência Geral");
+                    primeiraVez = false;
+                }
+                sb.AppendLine($"Operador : {item.Usuario.Nome}");
+                sb.AppendLine($"Data : {item.Data}");
+                sb.AppendLine($"Hora : {item.Hora}");
+                sb.AppendLine($"Descrição : {item.Descricao}");
+            }
+            return sb.ToString();
+        }
+
+        private string MensagemFinal()
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine("Colocamo-nos a disposição para maiores esclarecimentos.");
+            sb.AppendLine("");
+            sb.AppendLine("Equipe Domper");
+            sb.AppendLine("");
+            sb.AppendLine("Esta mensagem é automática e foi gerada pelo Sistema Interno de Solicitações Domper.");
+            sb.AppendLine("Por favor não responda este email.");
+            return sb.ToString();
+        }
+
+        private string TextoEmailCabecalho(Solicitacao model)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine($"Caro(a) : {model.Cliente.Nome} , segue abaixo informações referente a Solicitação realizada na Domper Consultoria e Sistemas:");
+            sb.AppendLine("");
+            sb.AppendLine("");
+            sb.AppendLine($"Dados da Solicitação ({model.Status.Nome})");
+            sb.AppendLine($"Nº da Solicitação : {model.Id.ToString("000000")}");
+            sb.AppendLine($"Aberto por : {model.UsuarioAbertura.Nome}");
+            sb.AppendLine($"Data Abertura : {model.Data} - Hora: {model.Hora}");
+            sb.AppendLine($"Contato : {model.Contato}");
+            sb.AppendLine($"Título : {model.Titulo}");
+            sb.AppendLine($"Versão em Uso : {model.Versao}");
+            sb.AppendLine($"Analista : {model.UsuarioAnalista.Nome}");
+            sb.AppendLine($"Tempo Previsto : {model.TempoPrevisto}");
+            sb.AppendLine($"Previsão de Entrega : {model.PrevisaoEntrega}");
+            sb.AppendLine($"Desenvolvedor : {model.UsuarioDesenvolvedor.Nome}");
+            sb.AppendLine($"Versão : {model.VersaoRelacao.VersaoStr}");
+            sb.AppendLine($"Descrição : {model.Descricao}");
+            sb.AppendLine("");
+            return sb.ToString();
+        }
+
+        private string RetornarAssunto(Solicitacao model)
+        {
+            return "Solicitação" + model.Id.ToString("000000") + " DOMPER Consultoria e Sistemas Ltda.";
         }
 
         private string RetornarEmail(Solicitacao solicitacao, int idUsuario, Usuario usuario)
@@ -522,9 +589,6 @@ namespace SIDomper.Dominio.Servicos
             if (solicitacao.Cliente.Revenda == null)
                 return;
 
-            if (solicitacao.Cliente.Revenda.RevendaEmails == null)
-                return;
-
             string email = _uow.RepositorioRevenda.RetornarEmails(solicitacao.Cliente.Revenda);
             AdicionarEmail(email);
         }
@@ -556,7 +620,7 @@ namespace SIDomper.Dominio.Servicos
             if (usuario.Departamento.DepartamentosEmail == null)
                 return;
 
-            email =  _uow.RepositorioDepartamento.RetornarEmails(usuario.Departamento);
+            email = _uow.RepositorioDepartamento.RetornarEmails(usuario.Departamento);
 
             AdicionarEmail(email);
         }
@@ -577,9 +641,6 @@ namespace SIDomper.Dominio.Servicos
                 return "";
 
             if (model.Status != null || model.Status.NotificarCliente == false)
-                return "";
-
-            if (model.Status.NotificarCliente == false)
                 return "";
 
             string emailCliente = _uow.RepositorioCliente.EmailsDoCliente(model.Cliente);
