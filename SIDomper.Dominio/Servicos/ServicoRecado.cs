@@ -14,13 +14,16 @@ namespace SIDomper.Dominio.Servicos
     {
         private readonly IUnitOfWork _uow;
         private readonly IRepositoryReadOnly<RecadoConsultaViewModel> _repositoryReadOnly;
+        private readonly IRepositoryReadOnly<RecadoQuadroViewModel> _repositoryQuadroReadOnly;
         private readonly EnProgramas _enProgramas;
 
         public ServicoRecado(IUnitOfWork unitOfWork,
-           IRepositoryReadOnly<RecadoConsultaViewModel> repositoryReadOnly)
+           IRepositoryReadOnly<RecadoConsultaViewModel> repositoryReadOnly,
+           IRepositoryReadOnly<RecadoQuadroViewModel> repositoryQuadroReadOnly)
         {
             _uow = unitOfWork;
             _repositoryReadOnly = repositoryReadOnly;
+            _repositoryQuadroReadOnly = repositoryQuadroReadOnly;
             _enProgramas = EnProgramas. Recado;
         }
 
@@ -273,6 +276,65 @@ namespace SIDomper.Dominio.Servicos
                 EnviarEmail(model.UsuarioLctoId, model.UsuarioDestinoId, model.Id);
             else
                 EnviarEmail(model.UsuarioDestinoId, model.UsuarioLctoId, model.Id);
+        }
+
+        public IEnumerable<RecadoQuadroViewModel> RetornarQuadro(int idUsuario, int idRevenda)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine("  SELECT ");
+            sb.AppendLine("'L' AS Tipo,");
+            sb.AppendLine("	Rec_Id AS Id,");
+            sb.AppendLine("	Rec_Data AS Data,");
+            sb.AppendLine("	Rec_Nivel AS Nivel,");
+            sb.AppendLine("	Rec_RazaoSocial AS RazaoSocial,");
+            sb.AppendLine("	Rec_Telefone AS Telefone,");
+            sb.AppendLine(" Rec_Hora AS Hora,");
+            //sb.AppendLine(" Rec_UsuarioLcto,");
+            //sb.AppendLine(" Rec_UsuarioDestino,");
+            sb.AppendLine("	UsuL.Usu_Nome AS NomeUsuarioLcto,");
+            sb.AppendLine("	UsuD.Usu_Nome AS NomeUsuarioDestino ");
+            sb.AppendLine(" FROM Recado");
+            sb.AppendLine("	INNER JOIN Usuario AS UsuL ON Rec_UsuarioLcto = UsuL.Usu_Id");
+            sb.AppendLine("	INNER JOIN Status ON Rec_Status = Sta_Id");
+            sb.AppendLine(" LEFT JOIN Cliente ON Rec_Cliente = Cli_Id");
+            sb.AppendLine("	LEFT JOIN Usuario AS UsuD ON Rec_UsuarioDestino = UsuD.Usu_Id");
+            sb.AppendLine(" WHERE Rec_DataFinal IS NULL");
+
+            if (idUsuario > 0)
+                sb.AppendLine(" AND Rec_UsuarioLcto = " + idUsuario);
+
+            if (idRevenda > 0)
+                sb.AppendLine(" AND Cli_Revenda = " + idRevenda);
+
+            sb.AppendLine(" UNION");
+            sb.AppendLine(" SELECT");
+            sb.AppendLine("	'D' AS Tipo,");
+            sb.AppendLine("	Rec_Id AS Id,");
+            sb.AppendLine("	Rec_Data AS Data,");
+            sb.AppendLine("	Rec_Nivel AS Nivel,");
+            sb.AppendLine("	Rec_RazaoSocial AS RazaoSocial,");
+            sb.AppendLine("	Rec_Telefone AS Telefone,");
+            sb.AppendLine(" Rec_Hora AS Hora,");
+            //sb.AppendLine(" Rec_UsuarioLcto,");
+            //sb.AppendLine(" Rec_UsuarioDestino,");
+            sb.AppendLine("	UsuL.Usu_Nome AS NomeUsuarioLcto,");
+            sb.AppendLine("	UsuD.Usu_Nome AS NomeUsuarioDestino");
+            sb.AppendLine(" FROM Recado");
+            sb.AppendLine("	INNER JOIN Usuario AS UsuL ON Rec_UsuarioLcto = UsuL.Usu_Id");
+            sb.AppendLine("  INNER JOIN Status ON Rec_Status = Sta_Id");
+            sb.AppendLine("  LEFT JOIN Cliente ON Rec_Cliente = Cli_Id");
+            sb.AppendLine("	LEFT JOIN Usuario AS UsuD ON Rec_UsuarioDestino = UsuD.Usu_Id");
+
+            sb.AppendLine("--WHERE Sta_Codigo NOT IN (SELECT COALESCE(Par_Valor,0) FROM Parametros WHERE Par_Codigo = 44)");
+            sb.AppendLine(" WHERE Rec_DataFinal IS NULL");
+
+            if (idUsuario > 0)
+                sb.AppendLine(" AND Rec_UsuarioDestino = " + idUsuario);
+
+            if (idRevenda > 0)
+                sb.AppendLine(" AND Cli_Revenda = " + idRevenda);
+
+            return _repositoryQuadroReadOnly.GetAll(sb.ToString());
         }
     }
 }

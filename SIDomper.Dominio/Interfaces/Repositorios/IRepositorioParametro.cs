@@ -7,5 +7,6 @@ namespace SIDomper.Dominio.Interfaces.Repositorios
     {
         IEnumerable<Parametro> BuscarTitulosChamados();
         Parametro ObterPorParametro(int codigo, int programa);
+        string BuscarTitulosQuadro();
     }
 }

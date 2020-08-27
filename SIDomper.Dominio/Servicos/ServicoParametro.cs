@@ -7,6 +7,7 @@ using SIDomper.Dominio.Entidades;
 using SIDomper.Dominio.Enumeracao;
 using SIDomper.Dominio.Interfaces;
 using SIDomper.Dominio.Interfaces.Servicos;
+using SIDomper.Dominio.ViewModel;
 
 namespace SIDomper.Dominio.Servicos
 {
@@ -14,14 +15,17 @@ namespace SIDomper.Dominio.Servicos
     {
         private readonly IUnitOfWork _uow;
         private readonly IRepositoryReadOnly<ParametroConsulta> _repositoryReadOnly;
+        private readonly IRepositoryReadOnly<ParametroTitulosQuadroViewModel> _repositoryTitulosQuadroReadOnly;
         private readonly EnProgramas _enProgramas;
 
         public ServicoParametro(IUnitOfWork unitOfWork,
-           IRepositoryReadOnly<ParametroConsulta> repositoryReadOnly)
+           IRepositoryReadOnly<ParametroConsulta> repositoryReadOnly,
+           IRepositoryReadOnly<ParametroTitulosQuadroViewModel> repositoryTitulosQuadroReadOnly)
         {
             _uow = unitOfWork;
             _repositoryReadOnly = repositoryReadOnly;
             _enProgramas = EnProgramas.Parametro;
+            _repositoryTitulosQuadroReadOnly = repositoryTitulosQuadroReadOnly;
         }
 
         public Parametro Editar(int id, int idUsuario, ref string mensagem)
@@ -139,6 +143,28 @@ namespace SIDomper.Dominio.Servicos
             {
                 return 1;
             }
+        }
+
+        public IEnumerable<ParametroTitulosQuadroViewModel> BuscarTitulosQuadro()
+        {
+            /*
+             * No ONShow do quadro fazer duas requisições:
+             * =====================================
+             * buscar as permissoes retornar boolean
+             * permissao para: chamadoQuadro, Atividade, Solicitacao, agendamento, recados
+             * Coluna Tempo
+             * Permissao Solicitacao, mostar as opções do PopMenu das solicitações
+             * Grades Altura e lagura
+             * controle titulo tempo nas grids
+             * =====================================
+             * Se tem Recados Então
+             *      Abrir tela dos recados
+             * Se não
+             *      Abrir tela dos Chamados
+             * Abrir o Timer intervalo de 60000 - a cada 1 minuto
+             */
+            var resultado = _uow.RepositorioParametro.BuscarTitulosQuadro();
+            return _repositoryTitulosQuadroReadOnly.GetAll(resultado);
         }
     }
 }

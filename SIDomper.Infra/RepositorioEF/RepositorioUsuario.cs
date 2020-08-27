@@ -1,4 +1,5 @@
-﻿using SIDomper.Dominio.Entidades;
+﻿using SIDomper.Dominio.Constantes;
+using SIDomper.Dominio.Entidades;
 using SIDomper.Dominio.Enumeracao;
 using SIDomper.Dominio.Interfaces.Repositorios;
 using SIDomper.Infra.DataBase;
@@ -303,6 +304,31 @@ namespace SIDomper.Infra.RepositorioEF
         public UsuarioPermissao ObterPermissaoPorSigla(int idUsuario, string sigla)
         {
             return _contexto.UsuarioPermissoes.FirstOrDefault(x => x.UsuarioId == idUsuario && x.Sigla == sigla);
+        }
+
+        public void PermitirIncluir(int idUsuario, EnProgramas enProgramas)
+        {
+            if (!PermissaoIncluir(idUsuario, enProgramas))
+                throw new Exception(Mensagem.UsuarioSemPermissao);
+        }
+
+        public void PermitirEditar(int idUsuario, EnProgramas enProgramas, ref string mensagem)
+        {
+            mensagem = "OK";
+            if (!PermissaoEditar(idUsuario, enProgramas))
+                mensagem = Mensagem.UsuarioSemPermissao;
+        }
+
+        public void PermitirExcluir(int idUsuario, EnProgramas enProgramas)
+        {
+            if (!PermissaoExcluir(idUsuario, enProgramas))
+                throw new Exception(Mensagem.UsuarioSemPermissao);
+        }
+
+        public void PermitirRelatorio(int idUsuario, EnProgramas enProgramas)
+        {
+            if (!PermissaoRelatorio(idUsuario, enProgramas))
+                throw new Exception(Mensagem.UsuarioSemPermissao);
         }
     }
 }

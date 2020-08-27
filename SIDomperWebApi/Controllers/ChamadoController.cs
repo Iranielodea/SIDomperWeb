@@ -347,12 +347,14 @@ namespace SIDomperWebApi.Controllers
             var model = _servicoChamado.ObterPorId(65528);
             foreach (var ocorrencia in model.ChamadoOcorrencias)
             {
-                var colaborador = new ChamadoOcorrenciaColaborador();
-                colaborador.HoraFim = TimeSpan.Parse(DateTime.Now.ToShortTimeString());
-                colaborador.HoraInicio = TimeSpan.Parse(DateTime.Now.ToShortTimeString());
-                colaborador.ChamadoOcorrenciaId = ocorrencia.Id;
-                colaborador.TotalHoras = 1;
-                colaborador.UsuarioId = 21;
+                var colaborador = new ChamadoOcorrenciaColaborador
+                {
+                    HoraFim = TimeSpan.Parse(DateTime.Now.ToShortTimeString()),
+                    HoraInicio = TimeSpan.Parse(DateTime.Now.ToShortTimeString()),
+                    ChamadoOcorrenciaId = ocorrencia.Id,
+                    TotalHoras = 1,
+                    UsuarioId = 21
+                };
 
                 ocorrencia.ChamadoOcorrenciaColaboradores.Add(colaborador);
             }

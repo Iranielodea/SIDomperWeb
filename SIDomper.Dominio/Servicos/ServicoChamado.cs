@@ -1141,30 +1141,27 @@ namespace SIDomper.Dominio.Servicos
 
         private bool VerificarChamadoAberto(int idUsuario)
         {
-            var sb = new StringBuilder();
-            sb.AppendLine("SELECT COUNT(Cha_Id) AS Id FROM CHAMADO");
-            sb.AppendLine(" LEFT JOIN Chamado_Ocorrencia ON Cha_Id = ChOco_Chamado");
-            sb.AppendLine(" WHERE Cha_Status = 2");
-            sb.AppendLine(" AND Cha_TipoMovimento = 1");
-            sb.AppendLine($" AND ((cha_UsuarioAbertura = {idUsuario})");
-            sb.AppendLine($" OR (ChOco_Usuario = {idUsuario}))");
-
-            var resultado = _repositoryReadOnly.GetAll(sb.ToString());
+            var sql = VerificarChamadoAtividadEmAberto(EnumChamado.Chamado, 2, idUsuario);
+            var resultado = _repositoryReadOnly.GetAll(sql);
             return (resultado.FirstOrDefault().Id > 0);
         }
 
         private bool VerificarAtividadeAberto(int idUsuario)
         {
+            var sql = VerificarChamadoAtividadEmAberto(EnumChamado.Atividade, 28, idUsuario);
+
+            var resultado = _repositoryReadOnly.GetAll(sql);
+            return (resultado.FirstOrDefault().Id > 0);
+        }
+
+        private string VerificarChamadoAtividadEmAberto(EnumChamado enumChamado, int idStatus, int idUsuario)
+        {
             var sb = new StringBuilder();
             sb.AppendLine("SELECT COUNT(Cha_Id) AS Id FROM CHAMADO");
-            sb.AppendLine(" LEFT JOIN Chamado_Ocorrencia ON Cha_Id = ChOco_Chamado");
-            sb.AppendLine("  WHERE Cha_Status = 28");
-            sb.AppendLine("  AND Cha_TipoMovimento = 2");
-            sb.AppendLine($" AND ((cha_UsuarioAbertura = {idUsuario})");
-            sb.AppendLine($" OR (ChOco_Usuario = {idUsuario}))");
-
-            var resultado = _repositoryReadOnly.GetAll(sb.ToString());
-            return (resultado.FirstOrDefault().Id > 0);
+            sb.AppendLine($" WHERE Cha_Status = {idStatus}"); // (28=Atividade) (2-Chamado)
+            sb.AppendLine($" AND Cha_TipoMovimento = {enumChamado}"); // (2=Atividade) (1=Chamado)
+            sb.AppendLine($" AND cha_UsuarioAtendeAtual = {idUsuario}");
+            return sb.ToString();
         }
 
         private bool VerificarSolicitacaoAberto(int idUsuario)
@@ -1175,8 +1172,7 @@ namespace SIDomper.Dominio.Servicos
             sb.AppendLine(" INNER JOIN Solicitacao ON SOcor_Solicitacao = Sol_Id");
             sb.AppendLine($" WHERE STemp_UsuarioOperacional = {idUsuario}");
             sb.AppendLine("  AND Sol_Status IN (14,16,18)");
-            sb.AppendLine($" AND ((cha_UsuarioAbertura = {idUsuario})");
-            sb.AppendLine(" AND STemp_HoraFim IS NULL");
+            sb.AppendLine("  AND STemp_HoraFim IS NULL");
 
             var resultado = _repositoryReadOnly.GetAll(sb.ToString());
             return (resultado.FirstOrDefault().Id > 0);

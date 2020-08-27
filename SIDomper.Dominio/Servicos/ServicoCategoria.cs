@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using SIDomper.Dominio.Constantes;
 
 namespace SIDomper.Dominio.Servicos
 {
@@ -26,28 +25,25 @@ namespace SIDomper.Dominio.Servicos
 
         public Categoria Novo(int idUsuario)
         {
-            var produto = new Categoria();
-            if (!_uow.RepositorioUsuario.PermissaoIncluir(idUsuario, _enProgramas))
-                throw new Exception(Mensagem.UsuarioSemPermissao);
-
-            produto.Codigo = ProximoCodigo();
-            produto.Ativo = true;
-            return produto;
+            _uow.RepositorioUsuario.PermitirIncluir(idUsuario, _enProgramas);
+            var categoria = new Categoria
+            {
+                Codigo = ProximoCodigo(),
+                Ativo = true
+            };
+            return categoria;
         }
 
         public Categoria Editar(int id, int idUsuario, ref string mensagem)
         {
-            mensagem = "OK";
-            if (!_uow.RepositorioUsuario.PermissaoEditar(idUsuario, _enProgramas))
-                mensagem = Mensagem.UsuarioSemPermissao;
+            _uow.RepositorioUsuario.PermitirEditar(idUsuario, _enProgramas, ref mensagem);
 
             return ObterPorId(id);
         }
 
         public void Excluir(Categoria model, int idUsuario)
         {
-            if (!_uow.RepositorioUsuario.PermissaoExcluir(idUsuario, _enProgramas))
-                throw new Exception(Mensagem.UsuarioSemPermissao);
+            _uow.RepositorioUsuario.PermitirExcluir(idUsuario, _enProgramas);
 
             _uow.RepositorioCategoria.Deletar(model);
             _uow.SaveChanges();
@@ -131,8 +127,7 @@ namespace SIDomper.Dominio.Servicos
 
         public void Relatorio(int idUsuario)
         {
-            if (!_uow.RepositorioUsuario.PermissaoRelatorio(idUsuario, _enProgramas))
-                throw new Exception(Mensagem.UsuarioSemPermissao);
+            _uow.RepositorioUsuario.PermitirRelatorio(idUsuario, _enProgramas);
         }
     }
 }

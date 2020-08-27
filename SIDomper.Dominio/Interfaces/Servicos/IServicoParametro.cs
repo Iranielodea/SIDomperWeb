@@ -1,4 +1,5 @@
 ﻿using SIDomper.Dominio.Entidades;
+using SIDomper.Dominio.ViewModel;
 using System.Collections.Generic;
 
 namespace SIDomper.Dominio.Interfaces.Servicos
@@ -15,5 +16,6 @@ namespace SIDomper.Dominio.Interfaces.Servicos
         void Salvar(Parametro model);
         IEnumerable<Parametro> ListarTodos();
         Parametro ObterPorParametro(int codigo, int programa);
+        IEnumerable<ParametroTitulosQuadroViewModel> BuscarTitulosQuadro();
     }
 }

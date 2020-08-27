@@ -1,10 +1,6 @@
 ﻿using SIDomper.Dominio.Entidades;
 using SIDomper.Dominio.ViewModel;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SIDomper.Dominio.Interfaces.Servicos
 {
@@ -17,5 +13,6 @@ namespace SIDomper.Dominio.Interfaces.Servicos
         void Relatorio(int idUsuario);
         void Excluir(Recado model, int idUsuario);
         void Salvar(Recado model);
+        IEnumerable<RecadoQuadroViewModel> RetornarQuadro(int idUsuario, int idRevenda);
     }
 }

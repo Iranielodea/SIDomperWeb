@@ -2,7 +2,6 @@
 using SIDomper.Dominio.Entidades;
 using SIDomper.Dominio.Interfaces.Servicos;
 using SIDomper.Dominio.ViewModel;
-using SIDomper.Servicos.Regras;
 using System;
 using System.Collections.Generic;
 using System.Web.Http;

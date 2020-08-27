@@ -20,5 +20,10 @@ namespace SIDomper.Dominio.Interfaces.Repositorios
         bool PermissaoRelatorio(int idUsuario, EnProgramas enProgramas);
         bool HorarioUsoSistema(string userName, string senha, int idUsuario = 0);
         UsuarioPermissao ObterPermissaoPorSigla(int idUsuario, string sigla);
+
+        void PermitirIncluir(int idUsuario, EnProgramas enProgramas);
+        void PermitirEditar(int idUsuario, EnProgramas enProgramas, ref string mensagem);
+        void PermitirExcluir(int idUsuario, EnProgramas enProgramas);
+        void PermitirRelatorio(int idUsuario, EnProgramas enProgramas);
     }
 }

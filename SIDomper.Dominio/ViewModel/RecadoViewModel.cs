@@ -65,4 +65,18 @@ namespace SIDomper.Dominio.ViewModel
         public string IdStatus { get; set; }
         public bool UsuarioADM { get; set; }
     }
+
+    public class RecadoQuadroViewModel
+    {
+        public int Id { get; set; }
+        public string Tipo { get; set; }
+        public DateTime Data { get; set; }
+        public TimeSpan Hora { get; set; }
+        public string NomeUsuarioLcto { get; set; }
+        public string Nivel { get; set; }
+        public string RazaoSocial { get; set; }
+        public string Telefone { get; set; }
+        public string NomeUsuarioDestino { get; set; }
+        public string Tempo { get; set; }
+    }
 }

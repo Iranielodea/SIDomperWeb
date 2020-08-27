@@ -186,6 +186,12 @@
     <Compile Include="View\frmModeloRelatorio.Designer.cs">
       <DependentUpon>frmModeloRelatorio.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\frmQuadro.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\frmQuadro.Designer.cs">
+      <DependentUpon>frmQuadro.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\frmRecado.cs">
       <SubType>Form</SubType>
     </Compile>

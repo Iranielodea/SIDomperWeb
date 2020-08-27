@@ -18,4 +18,11 @@
         public string Valor { get; set; }
         public int? Programa { get; set; }
     }
+
+    public class ParametroTitulosQuadroViewModel : BaseViewModel
+    {
+        public string CodigoParametro { get; set; }
+        public int CodigoStatus { get; set; }
+        public string NomeStatus { get; set; }
+    }
 }
