@@ -59,4 +59,9 @@ namespace SIDomper.Dominio.ViewModel
         public string IdTipo { get; set; }
         public string IdStatus { get; set; }
     }
+
+    public class AgendamentoPermissaoViewModel
+    {
+        public bool Quadro { get; set; }
+    }
 }

@@ -21,8 +21,10 @@
 
     public class ParametroTitulosQuadroViewModel : BaseViewModel
     {
-        public string CodigoParametro { get; set; }
+        public int CodigoParametro { get; set; }
         public int CodigoStatus { get; set; }
         public string NomeStatus { get; set; }
+        public int NumeroQuadro { get; set; }
+        public int Tipo { get; set; } //1-Chamado 2-Atividades 3-Solicitacoes
     }
 }

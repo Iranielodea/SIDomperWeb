@@ -147,24 +147,114 @@ namespace SIDomper.Dominio.Servicos
 
         public IEnumerable<ParametroTitulosQuadroViewModel> BuscarTitulosQuadro()
         {
-            /*
-             * No ONShow do quadro fazer duas requisições:
-             * =====================================
-             * buscar as permissoes retornar boolean
-             * permissao para: chamadoQuadro, Atividade, Solicitacao, agendamento, recados
-             * Coluna Tempo
-             * Permissao Solicitacao, mostar as opções do PopMenu das solicitações
-             * Grades Altura e lagura
-             * controle titulo tempo nas grids
-             * =====================================
-             * Se tem Recados Então
-             *      Abrir tela dos recados
-             * Se não
-             *      Abrir tela dos Chamados
-             * Abrir o Timer intervalo de 60000 - a cada 1 minuto
-             */
+            var listaTitulos = new List<ParametroTitulosQuadroViewModel>();
+
             var resultado = _uow.RepositorioParametro.BuscarTitulosQuadro();
-            return _repositoryTitulosQuadroReadOnly.GetAll(resultado);
+            listaTitulos = _repositoryTitulosQuadroReadOnly.GetAll(resultado).ToList();
+
+            foreach (var item in listaTitulos)
+            {
+                switch(item.CodigoParametro)
+                {
+                    case 3:
+                        item.NumeroQuadro = 1; // chamados
+                        item.Tipo = 1;
+                        break;
+                    case 4:
+                        item.NumeroQuadro = 2;
+                        item.Tipo = 1;
+                        break;
+                    case 5:
+                        item.NumeroQuadro = 3;
+                        item.Tipo = 1;
+                        break;
+                    case 6:
+                        item.NumeroQuadro = 4;
+                        item.Tipo = 1;
+                        break;
+                    case 7:
+                        item.NumeroQuadro = 5;
+                        item.Tipo = 1;
+                        break;
+                    case 8:
+                        item.NumeroQuadro = 6;
+                        item.Tipo = 1;
+                        break;
+                    case 12:
+                        item.NumeroQuadro = 1; // solicitacoes
+                        item.Tipo = 3;
+                        break;
+                    case 13:
+                        item.NumeroQuadro = 2;
+                        item.Tipo = 3;
+                        break;
+                    case 14:
+                        item.NumeroQuadro = 3;
+                        item.Tipo = 3;
+                        break;
+                    case 15:
+                        item.NumeroQuadro = 4;
+                        item.Tipo = 3;
+                        break;
+                    case 16:
+                        item.NumeroQuadro = 5;
+                        item.Tipo = 3;
+                        break;
+                    case 17:
+                        item.NumeroQuadro = 6;
+                        item.Tipo = 3;
+                        break;
+                    case 19:
+                        item.NumeroQuadro = 7;
+                        item.Tipo = 3;
+                        break;
+                    case 20:
+                        item.NumeroQuadro = 8;
+                        item.Tipo = 3;
+                        break;
+                    case 21:
+                        item.NumeroQuadro = 9;
+                        item.Tipo = 3;
+                        break;
+                    case 22:
+                        item.NumeroQuadro = 10;
+                        item.Tipo = 3;
+                        break;
+                    case 23:
+                        item.NumeroQuadro = 11;
+                        item.Tipo = 3;
+                        break;
+                    case 24:
+                        item.NumeroQuadro = 12;
+                        item.Tipo = 3;
+                        break;
+                    case 25:
+                        item.NumeroQuadro = 1; // atividades
+                        item.Tipo = 2;
+                        break;
+                    case 26:
+                        item.NumeroQuadro = 2;
+                        item.Tipo = 2;
+                        break;
+                    case 27:
+                        item.NumeroQuadro = 3;
+                        item.Tipo = 2;
+                        break;
+                    case 28:
+                        item.NumeroQuadro = 4;
+                        item.Tipo = 2;
+                        break;
+                    case 29:
+                        item.NumeroQuadro = 5;
+                        item.Tipo = 2;
+                        break;
+                    case 30:
+                        item.NumeroQuadro = 6;
+                        item.Tipo = 2;
+                        break;
+                }
+            }
+            return listaTitulos;
         }
     }
 }

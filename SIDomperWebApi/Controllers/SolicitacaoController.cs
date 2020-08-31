@@ -248,17 +248,7 @@ namespace SIDomperWebApi.Controllers
                 viewModel.VersaoDescricao = model.VersaoRelacao.VersaoStr;
             }
 
-            var usuario = _servicoUsuario.ObterPorId(usuarioId);
-            viewModel.PermissaoAbertura = _servicoSolicitacao.PermissaoAbertura(usuario); // _solicitacaoServico.PermissaoAbertura(usuario);
-            viewModel.PermissaoAnalise = _servicoSolicitacao.PermissaoAnalise(usuario); // _solicitacaoServico.PermissaoAnalise(usuario);
-            viewModel.PermissaoOcorrenciaGeral = _servicoSolicitacao.PermissaoOcorrenciaGeral(usuario); // _solicitacaoServico.PermissaoOcorrenciaGeral(usuario);
-            viewModel.PermissaoOcorrenciaRegra = _servicoSolicitacao.PermissaoOcorrenciaRegra(usuario); // _solicitacaoServico.PermissaoOcorrenciaRegra(usuario);
-            viewModel.PermissaoOcorrenciaTecnica = _servicoSolicitacao.PermissaoOcorrenciaTecnica(usuario); // _solicitacaoServico.PermissaoOcorrenciaTecnica(usuario);
-            viewModel.PermissaoStatus = _servicoSolicitacao.PermissaoStatus(usuario); // _solicitacaoServico.PermissaoStatus(usuario);
-            viewModel.PermissaoTempo = _servicoSolicitacao.PermissaoSolicitacaoTempo(usuario, usuarioId); // _solicitacaoServico.PermissaoSolicitacaoTempo(usuario);
-            viewModel.PermissaoConfTempoGeral = _servicoSolicitacao.PermissaoConferenciaTempoGeral(usuario, usuarioId);  //_solicitacaoServico.PermissaoConferenciaTempoGeral(usuario);
-            viewModel.MostrarAnexos = _servicoSolicitacao.MostrarAnexos(usuario); // _solicitacaoServico.MostrarAnexos(usuario);
-            viewModel.CaminhoAnexos = _servicoSolicitacao.RetornarCaminhoAnexo(); // _solicitacaoServico.RetornarCaminhoAnexo();
+            viewModel.SolicitacaoPermissaoViewModel = _servicoSolicitacao.BuscarPermissoes(usuarioId);
 
             if (viewModel.SolicitacaoCronogramas != null)
             {
@@ -287,6 +277,26 @@ namespace SIDomperWebApi.Controllers
                     item.HoraStr = Utils.FormatarHHMMSS(item.Hora.Value);
                 }
             }
+        }
+
+        [Route("PermissaoSolicitacaoQuadro")]
+        [HttpGet]
+        public SolicitacaoPermissaoViewModel PermissaoSolicitacaoQuadro(int usuarioId)
+        {
+            var viewModel = new SolicitacaoPermissaoViewModel();
+            var usuario = _servicoUsuario.ObterPorId(usuarioId);
+
+            viewModel.PermissaoAbertura = _servicoSolicitacao.PermissaoAbertura(usuario); // _solicitacaoServico.PermissaoAbertura(usuario);
+            viewModel.PermissaoAnalise = _servicoSolicitacao.PermissaoAnalise(usuario); // _solicitacaoServico.PermissaoAnalise(usuario);
+            viewModel.PermissaoOcorrenciaGeral = _servicoSolicitacao.PermissaoOcorrenciaGeral(usuario); // _solicitacaoServico.PermissaoOcorrenciaGeral(usuario);
+            viewModel.PermissaoOcorrenciaRegra = _servicoSolicitacao.PermissaoOcorrenciaRegra(usuario); // _solicitacaoServico.PermissaoOcorrenciaRegra(usuario);
+            viewModel.PermissaoOcorrenciaTecnica = _servicoSolicitacao.PermissaoOcorrenciaTecnica(usuario); // _solicitacaoServico.PermissaoOcorrenciaTecnica(usuario);
+            viewModel.PermissaoStatus = _servicoSolicitacao.PermissaoStatus(usuario); // _solicitacaoServico.PermissaoStatus(usuario);
+            viewModel.PermissaoTempo = _servicoSolicitacao.PermissaoSolicitacaoTempo(usuario, usuarioId); // _solicitacaoServico.PermissaoSolicitacaoTempo(usuario);
+            viewModel.PermissaoConfTempoGeral = _servicoSolicitacao.PermissaoConferenciaTempoGeral(usuario, usuarioId);  //_solicitacaoServico.PermissaoConferenciaTempoGeral(usuario);
+            viewModel.MostrarAnexos = _servicoSolicitacao.MostrarAnexos(usuario); // _solicitacaoServico.MostrarAnexos(usuario);
+            viewModel.CaminhoAnexos = _servicoSolicitacao.RetornarCaminhoAnexo(); // _solicitacaoServico.RetornarCaminhoAnexo();
+            return viewModel;
         }
     }
 }

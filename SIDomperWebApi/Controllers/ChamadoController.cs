@@ -568,6 +568,23 @@ namespace SIDomperWebApi.Controllers
             }
         }
 
+        [Route("AbrirQuadro")]
+        [HttpGet]
+        public ChamadoQuadroViewModel AbrirQuadro(int idUsuario, int idRevenda, EnumChamado enumChamado)
+        {
+            var model = new ChamadoQuadroViewModel();
+            try
+            {
+                model = _servicoChamado.AbrirQuadro(idUsuario, idRevenda, enumChamado);
+                return model;
+            }
+            catch (Exception ex)
+            {
+                model.Mensagem = ex.Message;
+                return model;
+            }
+        }
+
         /*
 
         SALVAR

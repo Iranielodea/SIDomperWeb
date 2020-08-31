@@ -382,79 +382,52 @@ namespace SIDomper.Dominio.Servicos
 
         public bool PermissaoAbertura(Usuario usuario)
         {
-            if (usuario.Adm)
-                return true;
-
-            return (usuario.Departamento.SolicitaAbertura);
+            return _uow.RepositorioDepartamento.PermissaoAbertura(usuario);
         }
 
         public bool MostrarAnexos(Usuario usuario)
         {
-            if (usuario.Adm)
-                return true;
-            return (usuario.Departamento.MostrarAnexos);
+            return _uow.RepositorioDepartamento.MostrarAnexos(usuario);
         }
 
         public bool PermissaoAnalise(Usuario usuario)
         {
-            if (usuario.Adm)
-                return true;
-
-            return (usuario.Departamento.SolicitaAnalise);
+            return _uow.RepositorioDepartamento.SolicitacaoPermissaoAnalise(usuario);
         }
 
         public bool PermissaoOcorrenciaGeral(Usuario usuario)
         {
-            if (usuario.Adm)
-                return true;
-
-            return (usuario.Departamento.SolicitacaoOcorrenciaGeral);
+            return _uow.RepositorioDepartamento.SolicitacaoPermissaoOcorrenciaGeral(usuario);
         }
 
         public bool PermissaoOcorrenciaTecnica(Usuario usuario)
         {
-            if (usuario.Adm)
-                return true;
-
-            return (usuario.Departamento.SolicitacaoOcorrenciaTecnica);
+            return _uow.RepositorioDepartamento.SolicitacaoPermissaoOcorrenciaTecnica(usuario);
         }
 
         public bool PermissaoOcorrenciaRegra(Usuario usuario)
         {
-            if (usuario.Adm)
-                return true;
-
-            return (usuario.Departamento.SolicitacaoOcorrenciaRegra);
+            return _uow.RepositorioDepartamento.SolicitacaoPermissaoOcorrenciaRegra(usuario);
         }
 
         public bool PermissaoStatus(Usuario usuario)
         {
-            if (usuario.Adm)
-                return true;
-
-            return (usuario.Departamento.SolicitacaoStatus);
+            return _uow.RepositorioDepartamento.SolicitacaoPermissaoStatus(usuario);
         }
 
         public bool PermissaoSolicitacaoTempo(Usuario usuario, int usuarioId)
         {
-            if (usuario.Adm)
-                return true;
-            return PermissaoSolicitacao(usuarioId, "Lib_Solicitacao_Tempo");
+            return _uow.RepositorioUsuario.PermissaoSolicitacaoTempo(usuario, usuarioId);
         }
 
         public bool PermissaoConferenciaTempoGeral(Usuario usuario, int usuarioId)
         {
-            if (usuario.Adm)
-                return true;
-            return PermissaoSolicitacao(usuarioId, "Lib_Conferencia_Tempo_Geral");
+            return _uow.RepositorioUsuario.PermissaoConferenciaTempoGeral(usuario, usuarioId);
         }
 
         public bool PermissaoQuadro(Usuario usuario)
         {
-            if (usuario.Adm)
-                return true;
-
-            return (usuario.Departamento.SolicitacaoQuadro);
+            return _uow.RepositorioDepartamento.SolicitacaoPermissaoQuadro(usuario);
         }
 
         private bool PermissaoSolicitacao(int idUsuario, string permissao)
@@ -649,6 +622,79 @@ namespace SIDomper.Dominio.Servicos
                 emailCliente = emailUsuario;
 
             return emailCliente;
+        }
+
+        public SolicitacaoPermissaoViewModel BuscarPermissoes(int usuarioId)
+        {
+            var viewModel = new SolicitacaoPermissaoViewModel();
+
+            var usuario = _uow.RepositorioUsuario.find(usuarioId);
+            viewModel.PermissaoAbertura = PermissaoAbertura(usuario);
+            viewModel.PermissaoAnalise = PermissaoAnalise(usuario);
+            viewModel.PermissaoOcorrenciaGeral = PermissaoOcorrenciaGeral(usuario);
+            viewModel.PermissaoOcorrenciaRegra = PermissaoOcorrenciaRegra(usuario);
+            viewModel.PermissaoOcorrenciaTecnica = PermissaoOcorrenciaTecnica(usuario);
+            viewModel.PermissaoStatus = PermissaoStatus(usuario);
+            viewModel.PermissaoTempo = PermissaoSolicitacaoTempo(usuario, usuarioId);
+            viewModel.PermissaoConfTempoGeral = PermissaoConferenciaTempoGeral(usuario, usuarioId);
+            viewModel.MostrarAnexos = MostrarAnexos(usuario);
+            viewModel.CaminhoAnexos = RetornarCaminhoAnexo();
+            return viewModel;
+        }
+
+        private string RetornarSQLQuadro(int idUsuario)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine(MontarQuadro(idUsuario, "Q01", 12));
+            sb.AppendLine(MontarQuadro(idUsuario, "Q02", 13));
+            sb.AppendLine(MontarQuadro(idUsuario, "Q03", 14));
+            sb.AppendLine(MontarQuadro(idUsuario, "Q04", 15));
+            sb.AppendLine(MontarQuadro(idUsuario, "Q05", 16));
+            sb.AppendLine(MontarQuadro(idUsuario, "Q06", 17));
+            sb.AppendLine(MontarQuadro(idUsuario, "Q07", 19));
+            sb.AppendLine(MontarQuadro(idUsuario, "Q08", 20));
+            sb.AppendLine(MontarQuadro(idUsuario, "Q09", 21));
+            sb.AppendLine(MontarQuadro(idUsuario, "Q10", 22));
+            sb.AppendLine(MontarQuadro(idUsuario, "Q11", 23));
+            sb.AppendLine(MontarQuadro(idUsuario, "Q12", 24));
+            return sb.ToString();
+        }
+
+        private string MontarQuadro(int idUsuario, string quadro, int parCodigo)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine(" SELECT");
+            sb.AppendLine(" '" + quadro + "' As Quadro,");
+            sb.AppendLine(" (");
+            sb.AppendLine("     SELECT 1 FROM Solicitacao_Tempo");
+            sb.AppendLine("         WHERE Sol_Id = STemp_Solicitacao");
+            sb.AppendLine("         AND STemp_Data IS NOT NULL");
+            sb.AppendLine("         AND STemp_HoraFim IS NULL");
+            sb.AppendLine(" ) AS Aberta,");
+            sb.AppendLine(" Sol_Id as Id,");
+            sb.AppendLine(" Sol_Titulo as Titulo,");
+            sb.AppendLine(" Sol_UsuarioAtendeAtual as IdUsuarioAtendeAtual,");
+            sb.AppendLine(" Sol_Nivel as Nivel,");
+            sb.AppendLine(" Cli_Nome as ClienteNome,");
+            sb.AppendLine(" Usu_Nome as UsuarioNome,");
+            sb.AppendLine(" Sol_Status as IdStatus");
+            sb.AppendLine(" FROM Solicitacao");
+            sb.AppendLine(" INNER JOIN Cliente ON Sol_Cliente = Cli_Id");
+            sb.AppendLine(" INNER JOIN Status ON Sol_Status = Sta_Id");
+            sb.AppendLine(" INNER JOIN Parametros ON Sta_Codigo = COALESCE(Par_Valor, 0)");
+            sb.AppendLine(" LEFT JOIN Usuario ON Sol_UsuarioAtendeAtual = Usu_Id");
+            sb.AppendLine(" WHERE Par_Codigo = " + parCodigo);
+            sb.AppendLine(" AND EXISTS(");
+            sb.AppendLine(" SELECT 1 FROM Usuario WHERE((Cli_Revenda = Usu_Revenda) OR(Usu_Revenda IS NULL))");
+            sb.AppendLine(" AND Usu_Id = " + idUsuario + ")");
+            sb.AppendLine(" AND EXISTS(");
+            sb.AppendLine(" SELECT 1 FROM Usuario WHERE((Cli_Id = Usu_Cliente) OR(Usu_Cliente IS NULL))");
+            sb.AppendLine(" AND Usu_Id = " + idUsuario + ")");
+
+            if (parCodigo < 24)
+                sb.AppendLine(" UNION ");
+
+            return sb.ToString();
         }
     }
 }

@@ -12,10 +12,13 @@ namespace SIDomperWebApi.Controllers
     public class ParametroController : ApiController
     {
         private readonly IServicoParametro _servicoParametro;
+        private readonly IServicoQuadro _servicoQuadro;
 
-        public ParametroController(IServicoParametro servicoParametro)
+        public ParametroController(IServicoParametro servicoParametro,
+            IServicoQuadro servicoQuadro)
         {
             _servicoParametro = servicoParametro;
+            _servicoQuadro = servicoQuadro;
         }
 
         [Route("ObterPorId")]
@@ -157,6 +160,21 @@ namespace SIDomperWebApi.Controllers
             {
                 model.Mensagem = ex.Message;
                 return model;
+            }
+        }
+
+        [Route("ParametrosEntradaQuadro")]
+        [HttpGet]
+        public QuadroViewModel ParametrosEntradaQuadro(int idUsuario)
+        {
+            try
+            {
+                var model = _servicoQuadro.DadosQuadro(idUsuario);
+                return model;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
     }

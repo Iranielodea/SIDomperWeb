@@ -23,5 +23,6 @@ namespace SIDomper.Dominio.Interfaces.Servicos
         bool PermissaoConferenciaTempoGeral(Usuario usuario, int usuarioId);
         bool MostrarAnexos(Usuario usuario);
         string RetornarCaminhoAnexo();
+        SolicitacaoPermissaoViewModel BuscarPermissoes(int usuarioId);
     }
 }

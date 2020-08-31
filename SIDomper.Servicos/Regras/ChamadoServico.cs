@@ -620,11 +620,11 @@ namespace SIDomper.Servicos.Regras
             foreach (var item in quadro)
             {
                 if (tituloQuadro == nomeStatusAbertura)
-                    item.Tempo = CalcularTempo(DateTime.Parse(item.DataAbertura), TimeSpan.Parse(item.HoraAbertura));
+                    item.Tempo = CalcularTempo(DateTime.Parse(item.DataAbertura), TimeSpan.Parse(item.HoraAbertura.ToString()));
                 else if (tituloQuadro == nomeStatusOcorrencia)
-                    item.Tempo = CalcularTempoParametro10(TimeSpan.Parse(item.HoraAtendeAtual));
+                    item.Tempo = CalcularTempoParametro10(TimeSpan.Parse(item.HoraAtendeAtual.ToString()));
                 else
-                    item.Tempo = CalcularTempo(DateTime.Parse(item.UltimaData), TimeSpan.Parse(item.UltimaHora));
+                    item.Tempo = CalcularTempo(DateTime.Parse(item.UltimaData), TimeSpan.Parse(item.UltimaHora.ToString()));
             }
         }
 

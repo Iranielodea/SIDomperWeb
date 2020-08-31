@@ -128,6 +128,7 @@ namespace SIDomperWebApi.App_Start
             kernel.Bind<IServicoChamado>().To<ServicoChamado>();
             kernel.Bind<IServicoClienteEspecificacao>().To<ServicoClienteEspecificacao>();
             kernel.Bind<IServicoSolicitacao>().To<ServicoSolicitacao>();
+            kernel.Bind<IServicoQuadro>().To<ServicoQuadro>();
         }
     }
 }

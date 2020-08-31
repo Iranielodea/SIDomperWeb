@@ -330,5 +330,23 @@ namespace SIDomper.Infra.RepositorioEF
             if (!PermissaoRelatorio(idUsuario, enProgramas))
                 throw new Exception(Mensagem.UsuarioSemPermissao);
         }
+
+        public bool PermissaoSolicitacaoTempo(Usuario usuario, int usuarioId)
+        {
+            if (usuario.Adm)
+                return true;
+
+            var model = ObterPermissaoPorSigla(usuarioId, "Lib_Solicitacao_Tempo");
+            return (model != null);
+        }
+
+        public bool PermissaoConferenciaTempoGeral(Usuario usuario, int usuarioId)
+        {
+            if (usuario.Adm)
+                return true;
+
+            var model = ObterPermissaoPorSigla(usuarioId, "Lib_Conferencia_Tempo_Geral");
+            return (model != null);
+        }
     }
 }

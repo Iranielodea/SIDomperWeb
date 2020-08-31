@@ -25,5 +25,8 @@ namespace SIDomper.Dominio.Interfaces.Repositorios
         void PermitirEditar(int idUsuario, EnProgramas enProgramas, ref string mensagem);
         void PermitirExcluir(int idUsuario, EnProgramas enProgramas);
         void PermitirRelatorio(int idUsuario, EnProgramas enProgramas);
+
+        bool PermissaoSolicitacaoTempo(Usuario usuario, int usuarioId);
+        bool PermissaoConferenciaTempoGeral(Usuario usuario, int usuarioId);
     }
 }

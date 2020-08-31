@@ -60,5 +60,69 @@ namespace SIDomper.Infra.RepositorioEF
 
             return modelTemp;
         }
+
+        public bool SolicitacaoPermissaoAnalise(Usuario usuario)
+        {
+            if (usuario.Adm)
+                return true;
+
+            return (usuario.Departamento.SolicitaAnalise);
+        }
+
+        public bool SolicitacaoPermissaoOcorrenciaGeral(Usuario usuario)
+        {
+            if (usuario.Adm)
+                return true;
+
+            return (usuario.Departamento.SolicitacaoOcorrenciaGeral);
+        }
+
+        public bool SolicitacaoPermissaoOcorrenciaRegra(Usuario usuario)
+        {
+            if (usuario.Adm)
+                return true;
+
+            return (usuario.Departamento.SolicitacaoOcorrenciaRegra);
+        }
+
+        public bool SolicitacaoPermissaoOcorrenciaTecnica(Usuario usuario)
+        {
+            if (usuario.Adm)
+                return true;
+
+            return (usuario.Departamento.SolicitacaoOcorrenciaTecnica);
+        }
+
+        public bool SolicitacaoPermissaoQuadro(Usuario usuario)
+        {
+            if (usuario.Adm)
+                return true;
+
+            return (usuario.Departamento.SolicitacaoQuadro);
+        }
+
+        public bool PermissaoAbertura(Usuario usuario)
+        {
+            if (usuario.Adm)
+                return true;
+
+            return (usuario.Departamento.SolicitaAbertura);
+        }
+
+        public bool MostrarAnexos(Usuario usuario)
+        {
+            if (usuario.Adm)
+                return true;
+
+            return (usuario.Departamento.MostrarAnexos);
+        }
+
+        public bool SolicitacaoPermissaoStatus(Usuario usuario)
+        {
+            if (usuario.Adm)
+                return true;
+
+            return (usuario.Departamento.SolicitacaoStatus);
+        }
     }
 }

@@ -147,6 +147,7 @@
     <Compile Include="Interfaces\Servicos\IServicoObservacao.cs" />
     <Compile Include="Interfaces\Servicos\IServicoParametro.cs" />
     <Compile Include="Interfaces\Servicos\IServicoCliente.cs" />
+    <Compile Include="Interfaces\Servicos\IServicoQuadro.cs" />
     <Compile Include="Interfaces\Servicos\IServicoRamal.cs" />
     <Compile Include="Interfaces\Servicos\IServicoRecado.cs" />
     <Compile Include="Interfaces\Servicos\IServicoRevenda.cs" />
@@ -160,6 +161,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Servicos\ServicoAgendamento.cs" />
     <Compile Include="Servicos\ServicoBaseConhecimento.cs" />
+    <Compile Include="Servicos\ServicoQuadro.cs" />
     <Compile Include="Servicos\ServicoSolicitacao.cs" />
     <Compile Include="Servicos\ServicoChamado.cs" />
     <Compile Include="Servicos\ServicoChamadoQuadro.cs" />
@@ -204,6 +206,7 @@
     <Compile Include="ViewModel\OrcamentoViewModel.cs" />
     <Compile Include="ViewModel\ParametroViewModel.cs" />
     <Compile Include="ViewModel\ProdutoViewModel.cs" />
+    <Compile Include="ViewModel\QuadroViewModel.cs" />
     <Compile Include="ViewModel\RamalViewModel.cs" />
     <Compile Include="ViewModel\RecadoViewModel.cs" />
     <Compile Include="ViewModel\SolicitacaoViewModel.cs" />

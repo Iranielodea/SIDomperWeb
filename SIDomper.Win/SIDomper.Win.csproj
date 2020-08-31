@@ -390,6 +390,9 @@
     <EmbeddedResource Include="View\frmModeloRelatorio.resx">
       <DependentUpon>frmModeloRelatorio.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="View\frmQuadro.resx">
+      <DependentUpon>frmQuadro.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\frmRecado.resx">
       <DependentUpon>frmRecado.cs</DependentUpon>
     </EmbeddedResource>

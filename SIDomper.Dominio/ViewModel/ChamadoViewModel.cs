@@ -206,7 +206,7 @@ namespace SIDomper.Dominio.ViewModel
     {
         public int Id { get; set; }
         public string DataAbertura { get; set; }
-        public string HoraAbertura { get; set; }
+        public TimeSpan HoraAbertura { get; set; }
         public string NomeCliente { get; set; }
         public string Perfil { get; set; }
         public string Nivel { get; set; }
@@ -217,8 +217,8 @@ namespace SIDomper.Dominio.ViewModel
         public int UsuarioAtendeAtualId { get; set; }
         public int CodigoStatus { get; set; }
         public int CodigoCliente { get; set; }
-        public string UltimaHora { get; set; }
-        public string HoraAtendeAtual { get; set; }
+        public TimeSpan UltimaHora { get; set; }
+        public TimeSpan HoraAtendeAtual { get; set; }
         public string UltimaData { get; set; }
         public string CodigoParametro { get; set; }
         public string QuadroTela { get; set; }
@@ -248,4 +248,16 @@ namespace SIDomper.Dominio.ViewModel
         public string Resultado { get; set; } = "OK";
     }
 
+    public class ChamadoPermissaoViewModel
+    {
+        public bool PermissaoAlterarDataHoraChamado { get; set; }
+        public bool PermissaoChamadoQuadro { get; set; }
+        public bool PermissaoOcorrenciaChamadoAlterar { get; set; }
+        public bool PermissaoOcorrenciaChamadoExcluir { get; set; }
+        public bool PermissaoAtividadeQuadro { get; set; }
+        public bool PermissaoAlterarDataHoraAtividade { get; set; }
+        public bool PermissaoOcorrenciaAlterarAtividade { get; set; }
+        public bool PermissaoOcorrenciaAtividadeExcluir { get; set; }
+
+    }
 }

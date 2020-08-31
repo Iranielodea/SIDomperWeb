@@ -39,47 +39,51 @@ namespace SIDomper.Dominio.Servicos
             _listaEmailCliente = new List<string>();
         }
 
-        public ChamadoQuadroViewModel AbrirQuadro(int idUsuario, int idRevenda, EnProgramas enProgramas)
+        public ChamadoQuadroViewModel AbrirQuadro(int idUsuario, int idRevenda, EnumChamado enumChamado)
         {
-            var lista = new List<QuadroViewModelChamado>();
             var quadroViewModel = new ChamadoQuadroViewModel();
 
-            if (enProgramas == EnProgramas.Chamado)
+            var lista = QuadroChamado(idUsuario, idRevenda, enumChamado).ToList();
+
+            quadroViewModel.Quadro1 = lista.Where(x => x.QuadroTela == "Q1").OrderBy(x => x.Id).ToList();
+            quadroViewModel.Quadro2 = lista.Where(x => x.QuadroTela == "Q2").OrderBy(x => x.Id).ToList();
+            quadroViewModel.Quadro3 = lista.Where(x => x.QuadroTela == "Q3").OrderBy(x => x.Id).ToList();
+            quadroViewModel.Quadro4 = lista.Where(x => x.QuadroTela == "Q4").OrderBy(x => x.Id).ToList();
+            quadroViewModel.Quadro5 = lista.Where(x => x.QuadroTela == "Q5").OrderBy(x => x.Id).ToList();
+            quadroViewModel.Quadro6 = lista.Where(x => x.QuadroTela == "Q6").OrderBy(x => x.Id).ToList();
+
+            var listaStatus = BuscarTitulosQuadro(enumChamado);
+
+            quadroViewModel.Titulo1 = listaStatus[0].Nome;
+            quadroViewModel.Titulo2 = listaStatus[1].Nome;
+            quadroViewModel.Titulo3 = listaStatus[2].Nome;
+            quadroViewModel.Titulo4 = listaStatus[3].Nome;
+            quadroViewModel.Titulo5 = listaStatus[4].Nome;
+            quadroViewModel.Titulo6 = listaStatus[5].Nome;
+
+            int codigoStatusAbertura;
+            int codigoStatusOcorrencia;
+
+            if (enumChamado == EnumChamado.Chamado)
             {
-                //lista = _repADO.QuadroChamado(idUsuario, idRevenda, EnumChamado.Chamado).ToList();
-                lista = QuadroChamado(idUsuario, idRevenda, EnumChamado.Chamado).ToList();
-
-                quadroViewModel.Quadro1 = lista.Where(x => x.QuadroTela == "Q1").OrderBy(x => x.Id).ToList();
-                quadroViewModel.Quadro2 = lista.Where(x => x.QuadroTela == "Q2").OrderBy(x => x.Id).ToList();
-                quadroViewModel.Quadro3 = lista.Where(x => x.QuadroTela == "Q3").OrderBy(x => x.Id).ToList();
-                quadroViewModel.Quadro4 = lista.Where(x => x.QuadroTela == "Q4").OrderBy(x => x.Id).ToList();
-                quadroViewModel.Quadro5 = lista.Where(x => x.QuadroTela == "Q5").OrderBy(x => x.Id).ToList();
-                quadroViewModel.Quadro6 = lista.Where(x => x.QuadroTela == "Q6").OrderBy(x => x.Id).ToList();
-
-                var listaStatus = BuscarTitulosQuadro();
-
-                quadroViewModel.Titulo1 = listaStatus[0].Nome;
-                quadroViewModel.Titulo2 = listaStatus[1].Nome;
-                quadroViewModel.Titulo3 = listaStatus[2].Nome;
-                quadroViewModel.Titulo4 = listaStatus[3].Nome;
-                quadroViewModel.Titulo5 = listaStatus[4].Nome;
-                quadroViewModel.Titulo6 = listaStatus[5].Nome;
-
-                int.TryParse(StatusAbertura(), out int codigoStatusAbertura);
-                int.TryParse(StatusAtendimentoChamado(), out int codigoStatusOcorrencia);
-
-                string statusAbertura = _uow.RepositorioStatus.First(x => x.Codigo == codigoStatusAbertura).Nome;
-                string statusOcorrencia = _uow.RepositorioStatus.First(x => x.Codigo == codigoStatusOcorrencia).Nome;
-
-                PreencherQuadro(statusAbertura, statusOcorrencia, quadroViewModel.Titulo1, quadroViewModel.Quadro1);
-                PreencherQuadro(statusAbertura, statusOcorrencia, quadroViewModel.Titulo2, quadroViewModel.Quadro2);
-                PreencherQuadro(statusAbertura, statusOcorrencia, quadroViewModel.Titulo3, quadroViewModel.Quadro3);
-                PreencherQuadro(statusAbertura, statusOcorrencia, quadroViewModel.Titulo4, quadroViewModel.Quadro4);
-                PreencherQuadro(statusAbertura, statusOcorrencia, quadroViewModel.Titulo5, quadroViewModel.Quadro5);
-                PreencherQuadro(statusAbertura, statusOcorrencia, quadroViewModel.Titulo6, quadroViewModel.Quadro6);
+                int.TryParse(StatusAbertura(), out codigoStatusAbertura);
+                int.TryParse(StatusAtendimentoChamado(), out codigoStatusOcorrencia);
             }
             else
-                lista = QuadroChamado(idUsuario, idRevenda, EnumChamado.Atividade).ToList();
+            {
+                int.TryParse(StatusAberturaAtividade(), out codigoStatusAbertura);
+                int.TryParse(StatusAtendimentoAtividade(), out codigoStatusOcorrencia);
+            }
+
+            string statusAbertura = _uow.RepositorioStatus.First(x => x.Codigo == codigoStatusAbertura).Nome;
+            string statusOcorrencia = _uow.RepositorioStatus.First(x => x.Codigo == codigoStatusOcorrencia).Nome;
+
+            PreencherQuadro(statusAbertura, statusOcorrencia, quadroViewModel.Titulo1, quadroViewModel.Quadro1);
+            PreencherQuadro(statusAbertura, statusOcorrencia, quadroViewModel.Titulo2, quadroViewModel.Quadro2);
+            PreencherQuadro(statusAbertura, statusOcorrencia, quadroViewModel.Titulo3, quadroViewModel.Quadro3);
+            PreencherQuadro(statusAbertura, statusOcorrencia, quadroViewModel.Titulo4, quadroViewModel.Quadro4);
+            PreencherQuadro(statusAbertura, statusOcorrencia, quadroViewModel.Titulo5, quadroViewModel.Quadro5);
+            PreencherQuadro(statusAbertura, statusOcorrencia, quadroViewModel.Titulo6, quadroViewModel.Quadro6);
 
             return quadroViewModel;
         }
@@ -884,16 +888,21 @@ namespace SIDomper.Dominio.Servicos
             return _repositoryProbemaSolucaoReadOnly.GetAll(sb.ToString());
         }
 
-        private List<Status> BuscarTitulosQuadro()
+        private List<Status> BuscarTitulosQuadro(EnumChamado enumChamado)
         {
-            var listaParametros = BuscarTitulosChamados();
+            var listaParametros = new List<Parametro>();
+            if (enumChamado == EnumChamado.Chamado)
+                listaParametros = BuscarTitulosChamados().ToList();
+            else
+                listaParametros = BuscarTitulosAtividades().ToList();
 
             var listaStatus = _uow.RepositorioStatus.Get(x => x.Ativo == true);
             var lista = new List<Status>();
 
             foreach (var item in listaParametros)
             {
-                var model = listaStatus.First(x => x.Codigo == Convert.ToInt32(item.Valor));
+                int codigo = Convert.ToInt32(item.Valor);
+                var model = listaStatus.First(x => x.Codigo == codigo);
                 lista.Add(model);
             }
 
@@ -903,6 +912,12 @@ namespace SIDomper.Dominio.Servicos
         private IEnumerable<Parametro> BuscarTitulosChamados()
         {
             var parametro = _uow.RepositorioParametro.Get(x => x.Codigo == 3 || x.Codigo == 4 || x.Codigo == 5 || x.Codigo == 6 || x.Codigo == 7 || x.Codigo == 8);
+            return parametro.OrderBy(x => x.Codigo);
+        }
+
+        private IEnumerable<Parametro> BuscarTitulosAtividades()
+        {
+            var parametro = _uow.RepositorioParametro.Get(x => x.Codigo == 25 || x.Codigo == 26 || x.Codigo == 27 || x.Codigo == 28 || x.Codigo == 29 || x.Codigo == 30);
             return parametro.OrderBy(x => x.Codigo);
         }
 
@@ -919,12 +934,19 @@ namespace SIDomper.Dominio.Servicos
 
             foreach (var item in quadro)
             {
-                if (tituloQuadro == nomeStatusAbertura)
-                    item.Tempo = CalcularTempo(DateTime.Parse(item.DataAbertura), TimeSpan.Parse(item.HoraAbertura));
-                else if (tituloQuadro == nomeStatusOcorrencia)
-                    item.Tempo = CalcularTempoParametro10(TimeSpan.Parse(item.HoraAtendeAtual));
-                else
-                    item.Tempo = CalcularTempo(DateTime.Parse(item.UltimaData), TimeSpan.Parse(item.UltimaHora));
+                try
+                {
+                    if (tituloQuadro == nomeStatusAbertura)
+                        item.Tempo = CalcularTempo(DateTime.Parse(item.DataAbertura), TimeSpan.Parse(item.HoraAbertura.ToString()));
+                    else if (tituloQuadro == nomeStatusOcorrencia)
+                        item.Tempo = CalcularTempoParametro10(TimeSpan.Parse(item.HoraAtendeAtual.ToString()));
+                    else
+                        item.Tempo = CalcularTempo(DateTime.Parse(item.UltimaData), TimeSpan.Parse(item.UltimaHora.ToString()));
+                }
+                catch (Exception)
+                {
+                    item.Tempo = "";
+                }
             }
         }
 
@@ -1006,12 +1028,12 @@ namespace SIDomper.Dominio.Servicos
         private string RetornarAtividadeQuadro(int idUsuario, int idRevenda)
         {
             var sb = new StringBuilder();
-            sb.Append(RetornarSQLQuadro(idUsuario, idRevenda, 25, "'Q1' AS Quadro,", EnumChamado.Atividade));
-            sb.Append(RetornarSQLQuadro(idUsuario, idRevenda, 26, "'Q2' AS Quadro,", EnumChamado.Atividade));
-            sb.Append(RetornarSQLQuadro(idUsuario, idRevenda, 27, "'Q3' AS Quadro,", EnumChamado.Atividade));
-            sb.Append(RetornarSQLQuadro(idUsuario, idRevenda, 28, "'Q4' AS Quadro,", EnumChamado.Atividade));
-            sb.Append(RetornarSQLQuadro(idUsuario, idRevenda, 29, "'Q5' AS Quadro,", EnumChamado.Atividade));
-            sb.Append(RetornarSQLQuadro(idUsuario, idRevenda, 30, "'Q6' AS Quadro,", EnumChamado.Atividade));
+            sb.Append(RetornarSQLQuadro(idUsuario, idRevenda, 25, "'Q1' AS QuadroTela,", EnumChamado.Atividade));
+            sb.Append(RetornarSQLQuadro(idUsuario, idRevenda, 26, "'Q2' AS QuadroTela,", EnumChamado.Atividade));
+            sb.Append(RetornarSQLQuadro(idUsuario, idRevenda, 27, "'Q3' AS QuadroTela,", EnumChamado.Atividade));
+            sb.Append(RetornarSQLQuadro(idUsuario, idRevenda, 28, "'Q4' AS QuadroTela,", EnumChamado.Atividade));
+            sb.Append(RetornarSQLQuadro(idUsuario, idRevenda, 29, "'Q5' AS QuadroTela,", EnumChamado.Atividade));
+            sb.Append(RetornarSQLQuadro(idUsuario, idRevenda, 30, "'Q6' AS QuadroTela,", EnumChamado.Atividade));
 
             return sb.ToString();
         }
@@ -1019,12 +1041,12 @@ namespace SIDomper.Dominio.Servicos
         private string RetornarChamadoQuadro(int idUsuario, int idRevenda)
         {
             var sb = new StringBuilder();
-            sb.Append(RetornarSQLQuadro(idUsuario, idRevenda, 3, "'Q1' AS Quadro,", EnumChamado.Chamado));
-            sb.Append(RetornarSQLQuadro(idUsuario, idRevenda, 4, "'Q2' AS Quadro,", EnumChamado.Chamado));
-            sb.Append(RetornarSQLQuadro(idUsuario, idRevenda, 5, "'Q3' AS Quadro,", EnumChamado.Chamado));
-            sb.Append(RetornarSQLQuadro(idUsuario, idRevenda, 6, "'Q4' AS Quadro,", EnumChamado.Chamado));
-            sb.Append(RetornarSQLQuadro(idUsuario, idRevenda, 7, "'Q5' AS Quadro,", EnumChamado.Chamado));
-            sb.Append(RetornarSQLQuadro(idUsuario, idRevenda, 8, "'Q6' AS Quadro,", EnumChamado.Chamado));
+            sb.Append(RetornarSQLQuadro(idUsuario, idRevenda, 3, "'Q1' AS QuadroTela,", EnumChamado.Chamado));
+            sb.Append(RetornarSQLQuadro(idUsuario, idRevenda, 4, "'Q2' AS QuadroTela,", EnumChamado.Chamado));
+            sb.Append(RetornarSQLQuadro(idUsuario, idRevenda, 5, "'Q3' AS QuadroTela,", EnumChamado.Chamado));
+            sb.Append(RetornarSQLQuadro(idUsuario, idRevenda, 6, "'Q4' AS QuadroTela,", EnumChamado.Chamado));
+            sb.Append(RetornarSQLQuadro(idUsuario, idRevenda, 7, "'Q5' AS QuadroTela,", EnumChamado.Chamado));
+            sb.Append(RetornarSQLQuadro(idUsuario, idRevenda, 8, "'Q6' AS QuadroTela,", EnumChamado.Chamado));
 
             return sb.ToString();
         }
@@ -1071,7 +1093,7 @@ namespace SIDomper.Dominio.Servicos
             sb.AppendLine(sConsulta);
 
             if (idRevenda > 0)
-                sb.AppendLine("AND (Cli_Revenda = " + idUsuario + ")");
+                sb.AppendLine("AND (Cli_Revenda = " + idRevenda + ")");
 
             sb.AppendLine(" --=============================================================================");
 
@@ -1095,7 +1117,17 @@ namespace SIDomper.Dominio.Servicos
 
         public string StatusAtendimentoChamado()
         {
-            return _uow.RepositorioParametro.ObterPorParametro(10, 1).Valor;
+            return _uow.RepositorioChamado.StatusAtendimentoChamado();
+        }
+
+        public string StatusAberturaAtividade()
+        {
+            return _uow.RepositorioChamado.StatusAberturaAtividade();
+        }
+
+        public string StatusAtendimentoAtividade()
+        {
+            return _uow.RepositorioChamado.StatusAtendimentoAtividade();
         }
 
         public bool PermissaoAlterarDataHoraChamado(int idUsuario)
@@ -1210,6 +1242,20 @@ namespace SIDomper.Dominio.Servicos
                 consulta.Id = 0;
 
             return consulta;
+        }
+
+        public bool PermissaoChamadoQuadro(Usuario usuario)
+        {
+            if (usuario.Adm)
+                return true;
+            return usuario.Departamento.ChamadoQuadro;
+        }
+
+        public bool PermissaoAtividadeQuadro(Usuario usuario)
+        {
+            if (usuario.Adm)
+                return true;
+            return usuario.Departamento.AtividadeQuadro;
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SIDomper.Dominio.ViewModel
 {
-    public class ChamadoQuadroViewModel
+    public class ChamadoQuadroViewModel : BaseViewModel
     {
         public List<QuadroViewModelChamado> Quadro1 { get; set; }
         public List<QuadroViewModelChamado> Quadro2 { get; set; }

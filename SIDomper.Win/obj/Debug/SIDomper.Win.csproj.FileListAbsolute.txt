@@ -109,3 +109,4 @@ C:\Projetos\Domper\SIDomperWeb\SIDomper.Win\obj\Debug\SIDomper.Win.View.frmSolic
 C:\Projetos\Domper\SIDomperWeb\SIDomper.Win\obj\Debug\SIDomper.Win.View.frmModeloRelatorio.resources
 C:\Projetos\Domper\SIDomperWeb\SIDomper.Win\obj\Debug\SIDomper.Win.Componentes.usrBotoesEdicao.resources
 C:\Projetos\Domper\SIDomperWeb\SIDomper.Win\obj\Debug\SIDomper.Win.View.frmLogin.resources
+C:\Projetos\Domper\SIDomperWeb\SIDomper.Win\obj\Debug\SIDomper.Win.View.frmQuadro.resources

@@ -17,7 +17,7 @@ namespace SIDomper.Dominio.Interfaces.Servicos
         void Salvar(Chamado model);
         void SalvarAplicativo(ChamadoAplicativoInputViewModel chamadoInputModel);
         IEnumerable<ChamadoAplicativoViewModel> RetornarDadosAplicativo(string cnpj);
-        ChamadoQuadroViewModel AbrirQuadro(int idUsuario, int idRevenda, EnProgramas enProgramas);
+        ChamadoQuadroViewModel AbrirQuadro(int idUsuario, int idRevenda, EnumChamado enumChamado);
         IEnumerable<ChamadoAnexo> RetornarAnexos(int chamadoId);
         ClienteModulo ObterPorModulo(int idCliente, int idModulo);
         void UpdateHoraUsuarioAtual(int idChamado, EnumChamado enumChamado, int idUsuario, int idStatus);
@@ -29,6 +29,8 @@ namespace SIDomper.Dominio.Interfaces.Servicos
         bool PermissaoAlterarDataHoraAtividade(int idUsuario);
         bool PermissaoOcorrenciaAlterarAtividade(int idUsuario);
         bool PermissaoOcorrenciaAtividadeExcluir(int idUsuario);
+        bool PermissaoChamadoQuadro(Usuario usuario);
+        bool PermissaoAtividadeQuadro(Usuario usuario);
         Usuario ObterUsuarioPorId(int id);
         ChamadoConsultaViewModel VerificarTarefaEmAberto(int idUsuario, EnProgramas enProgramas);
     }

@@ -11,6 +11,7 @@ namespace SIDomper.Dominio.ViewModel
             SolicitacaoCronogramas = new List<SolicitacaoCronogramaViewModel>();
             SolicitacaoOcorrencias = new List<SolicitacaoOcorrenciaViewModel>();
             SolicitacaoStatus = new List<SolicitacaoStatusViewModel>();
+            SolicitacaoPermissaoViewModel = new SolicitacaoPermissaoViewModel();
         }
         public int Id { get; set; }
         public DateTime Data { get; set; }
@@ -56,17 +57,7 @@ namespace SIDomper.Dominio.ViewModel
         public int? CategoriaCodigo { get; set; }
         public string CategoriaNome { get; set; }
 
-        public bool PermissaoAbertura { get; set; }
-        public bool PermissaoAnalise { get; set; }
-        public bool PermissaoOcorrenciaGeral { get; set; }
-        public bool PermissaoOcorrenciaTecnica { get; set; }
-        public bool PermissaoOcorrenciaRegra { get; set; }
-        public bool PermissaoStatus { get; set; }
-        public bool PermissaoTempo { get; set; }
-        public bool PermissaoConfTempoGeral { get; set; }
-        public bool MostrarAnexos { get; set; }
-        public string CaminhoAnexos { get; set; }
-
+        public virtual SolicitacaoPermissaoViewModel SolicitacaoPermissaoViewModel { get; set; }
         public virtual ICollection<SolicitacaoCronogramaViewModel> SolicitacaoCronogramas { get; set; }
         public virtual ICollection<SolicitacaoOcorrenciaViewModel> SolicitacaoOcorrencias { get; set; }
         public virtual ICollection<SolicitacaoStatusViewModel> SolicitacaoStatus { get; set; }
@@ -194,5 +185,20 @@ namespace SIDomper.Dominio.ViewModel
 
         public virtual UsuarioViewModel Usuario { get; set; }
         public virtual StatusViewModel Status { get; set; }
+    }
+
+    public class SolicitacaoPermissaoViewModel
+    {
+        public bool PermissaoAbertura { get; set; }
+        public bool PermissaoAnalise { get; set; }
+        public bool PermissaoOcorrenciaGeral { get; set; }
+        public bool PermissaoOcorrenciaTecnica { get; set; }
+        public bool PermissaoOcorrenciaRegra { get; set; }
+        public bool PermissaoStatus { get; set; }
+        public bool PermissaoTempo { get; set; }
+        public bool PermissaoQuadro { get; set; }
+        public bool PermissaoConfTempoGeral { get; set; }
+        public bool MostrarAnexos { get; set; }
+        public string CaminhoAnexos { get; set; }
     }
 }

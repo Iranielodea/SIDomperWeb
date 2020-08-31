@@ -79,4 +79,9 @@ namespace SIDomper.Dominio.ViewModel
         public string NomeUsuarioDestino { get; set; }
         public string Tempo { get; set; }
     }
+
+    public class RecadoPermissaoViewModel
+    {
+        public bool Quadro { get; set; }
+    }
 }
