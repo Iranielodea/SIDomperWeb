@@ -1,7 +1,6 @@
 ﻿using Mapster;
 using SIDomper.Dominio.Entidades;
 using SIDomper.Dominio.Interfaces.Servicos;
-using SIDomper.Dominio.Servicos;
 using SIDomper.Dominio.ViewModel;
 using SIDomper.Servicos.Regras;
 using System;

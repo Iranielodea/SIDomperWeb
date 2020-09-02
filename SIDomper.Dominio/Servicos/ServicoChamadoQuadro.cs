@@ -126,7 +126,7 @@ namespace SIDomper.Dominio.Servicos
             foreach (var item in quadro)
             {
                 if (tituloQuadro == nomeStatusAbertura)
-                    item.Tempo = CalcularTempo(DateTime.Parse(item.DataAbertura), TimeSpan.Parse(item.HoraAbertura.ToString()));
+                    item.Tempo = CalcularTempo(DateTime.Parse(item.DataAbertura.ToString()), TimeSpan.Parse(item.HoraAbertura.ToString()));
                 else if (tituloQuadro == nomeStatusOcorrencia)
                     item.Tempo = CalcularTempoParametro10(TimeSpan.Parse(item.HoraAtendeAtual.ToString()));
                 else

@@ -15,14 +15,17 @@ namespace SIDomper.Dominio.Servicos
     {
         private readonly IUnitOfWork _uow;
         private readonly IRepositoryReadOnly<SolicitacaoConsultaViewModel> _repositoryReadOnly;
+        private readonly IRepositoryReadOnly<QuadroSolicitacaoViewModel> _repositoryQuadroReadOnly;
         private readonly EnProgramas _enProgramas;
         private List<string> _listaEmail;
 
         public ServicoSolicitacao(IUnitOfWork unitOfWork,
-           IRepositoryReadOnly<SolicitacaoConsultaViewModel> repositoryReadOnly)
+           IRepositoryReadOnly<SolicitacaoConsultaViewModel> repositoryReadOnly,
+           IRepositoryReadOnly<QuadroSolicitacaoViewModel> repositoryQuadroReadOnly)
         {
             _uow = unitOfWork;
             _repositoryReadOnly = repositoryReadOnly;
+            _repositoryQuadroReadOnly = repositoryQuadroReadOnly;
             _enProgramas = EnProgramas.Solicitacao;
             _listaEmail = new List<string>();
         }
@@ -642,6 +645,29 @@ namespace SIDomper.Dominio.Servicos
             return viewModel;
         }
 
+        public SolicitacaoQuadroViewModel AbrirQuadro(int idUsuario)
+        {
+            var lista = _repositoryQuadroReadOnly.GetAll(RetornarSQLQuadro(idUsuario));
+            var viewModel = new SolicitacaoQuadroViewModel();
+
+            BuscarTitulosSolicitacao(viewModel);
+
+            viewModel.Quadro1 = lista.Where(x => x.Quadro == "Q01").OrderBy(x => x.Id).ToList();
+            viewModel.Quadro2 = lista.Where(x => x.Quadro == "Q02").OrderBy(x => x.Id).ToList();
+            viewModel.Quadro3 = lista.Where(x => x.Quadro == "Q03").OrderBy(x => x.Id).ToList();
+            viewModel.Quadro4 = lista.Where(x => x.Quadro == "Q04").OrderBy(x => x.Id).ToList();
+            viewModel.Quadro5 = lista.Where(x => x.Quadro == "Q05").OrderBy(x => x.Id).ToList();
+            viewModel.Quadro6 = lista.Where(x => x.Quadro == "Q06").OrderBy(x => x.Id).ToList();
+            viewModel.Quadro7 = lista.Where(x => x.Quadro == "Q07").OrderBy(x => x.Id).ToList();
+            viewModel.Quadro8 = lista.Where(x => x.Quadro == "Q08").OrderBy(x => x.Id).ToList();
+            viewModel.Quadro9 = lista.Where(x => x.Quadro == "Q09").OrderBy(x => x.Id).ToList();
+            viewModel.Quadro10 = lista.Where(x => x.Quadro == "Q10").OrderBy(x => x.Id).ToList();
+            viewModel.Quadro11 = lista.Where(x => x.Quadro == "Q11").OrderBy(x => x.Id).ToList();
+            viewModel.Quadro12 = lista.Where(x => x.Quadro == "Q12").OrderBy(x => x.Id).ToList();
+
+            return viewModel;
+        }
+
         private string RetornarSQLQuadro(int idUsuario)
         {
             var sb = new StringBuilder();
@@ -672,6 +698,7 @@ namespace SIDomper.Dominio.Servicos
             sb.AppendLine("         AND STemp_HoraFim IS NULL");
             sb.AppendLine(" ) AS Aberta,");
             sb.AppendLine(" Sol_Id as Id,");
+            sb.AppendLine(" Cli_Perfil as Perfil,");
             sb.AppendLine(" Sol_Titulo as Titulo,");
             sb.AppendLine(" Sol_UsuarioAtendeAtual as IdUsuarioAtendeAtual,");
             sb.AppendLine(" Sol_Nivel as Nivel,");
@@ -695,6 +722,38 @@ namespace SIDomper.Dominio.Servicos
                 sb.AppendLine(" UNION ");
 
             return sb.ToString();
+        }
+
+        private void BuscarTitulosSolicitacao(SolicitacaoQuadroViewModel viewModel)
+        {
+            var parametros = _uow.RepositorioParametro.Get(x => x.Codigo == 12 || x.Codigo == 13 || x.Codigo == 14 || x.Codigo == 15 || x.Codigo == 16 || x.Codigo == 17
+                || x.Codigo == 19 || x.Codigo == 20 || x.Codigo == 21 || x.Codigo == 22 || x.Codigo == 23 || x.Codigo == 24);
+            parametros.OrderBy(x => x.Codigo).ToArray();
+
+            var listaParametros = parametros.ToArray();
+
+            var titulos = new List<TitulosQuadroViewModel>();
+            var lista = new List<Status>();
+
+            foreach (var item in listaParametros)
+            {
+                var codStatus = Convert.ToInt32(item.Valor);
+                var model = _uow.RepositorioStatus.First(x => x.Codigo == codStatus);
+                lista.Add(model);
+            }
+
+            viewModel.Titulos.Titulo1 = lista[0].Nome;
+            viewModel.Titulos.Titulo2 = lista[1].Nome;
+            viewModel.Titulos.Titulo3 = lista[2].Nome;
+            viewModel.Titulos.Titulo4 = lista[3].Nome;
+            viewModel.Titulos.Titulo5 = lista[4].Nome;
+            viewModel.Titulos.Titulo6 = lista[5].Nome;
+            viewModel.Titulos.Titulo7 = lista[6].Nome;
+            viewModel.Titulos.Titulo8 = lista[7].Nome;
+            viewModel.Titulos.Titulo9 = lista[8].Nome;
+            viewModel.Titulos.Titulo10 = lista[9].Nome;
+            viewModel.Titulos.Titulo11 = lista[10].Nome;
+            viewModel.Titulos.Titulo12 = lista[11].Nome;
         }
     }
 }

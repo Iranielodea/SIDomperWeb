@@ -24,5 +24,6 @@ namespace SIDomper.Dominio.Interfaces.Servicos
         bool MostrarAnexos(Usuario usuario);
         string RetornarCaminhoAnexo();
         SolicitacaoPermissaoViewModel BuscarPermissoes(int usuarioId);
+        SolicitacaoQuadroViewModel AbrirQuadro(int idUsuario);
     }
 }

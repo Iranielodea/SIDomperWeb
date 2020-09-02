@@ -55,6 +55,7 @@ namespace SIDomper.Dominio.Entidades
         public int? ClienteId { get; set; }
         public bool OnLine { get; set; }
         public bool Notificar { get; set; }
+        public string Telefone { get; set; }
 
         public virtual ContaEmail ContaEmail { get; set; }
         public virtual Departamento Departamento  { get; set; }

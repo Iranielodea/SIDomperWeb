@@ -115,6 +115,7 @@ namespace SIDomperWebApi.App_Start
             kernel.Bind<IServicoTipo>().To<ServicoTipo>();
             kernel.Bind<IServicoStatus>().To<ServicoStatus>();
             kernel.Bind<IServicoCliente>().To<ServicoCliente>();
+            kernel.Bind<IServicoEscala>().To<ServicoEscala>();
 
             kernel.Bind<IServicoParametro>().To<ServicoParametro>();
             kernel.Bind<IServicoRevenda>().To<ServicoRevenda>();

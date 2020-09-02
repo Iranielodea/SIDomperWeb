@@ -12,7 +12,6 @@ namespace SIDomper.Win
 {
     public partial class frmMenuPrincipal : Form
     {
-
         public frmMenuPrincipal(string userName, string password)
         {
             InitializeComponent();
@@ -26,6 +25,8 @@ namespace SIDomper.Win
 
             var usuarioApp = new UsuarioApp();
             var usuario = usuarioApp.ObterPorId(Funcoes.IdUsuario);
+
+            PermissaoDepartamento.DadosUsuario = usuario;
 
             Funcoes.CodigoUsuarioLogado = usuario.Codigo;
             Funcoes.NomeUsuarioLogado = usuario.Nome;
@@ -645,6 +646,12 @@ namespace SIDomper.Win
         private void frmMenuPrincipal_FormClosed(object sender, FormClosedEventArgs e)
         {
             Application.Exit();
+        }
+
+        private void btnQuadro_Click(object sender, EventArgs e)
+        {
+            frmQuadro quadro = new frmQuadro();
+            quadro.Show();
         }
     }
 }

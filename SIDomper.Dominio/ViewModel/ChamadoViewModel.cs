@@ -205,7 +205,7 @@ namespace SIDomper.Dominio.ViewModel
     public class QuadroViewModelChamado
     {
         public int Id { get; set; }
-        public string DataAbertura { get; set; }
+        public DateTime DataAbertura { get; set; }
         public TimeSpan HoraAbertura { get; set; }
         public string NomeCliente { get; set; }
         public string Perfil { get; set; }

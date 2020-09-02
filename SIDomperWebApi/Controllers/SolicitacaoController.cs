@@ -298,5 +298,22 @@ namespace SIDomperWebApi.Controllers
             viewModel.CaminhoAnexos = _servicoSolicitacao.RetornarCaminhoAnexo(); // _solicitacaoServico.RetornarCaminhoAnexo();
             return viewModel;
         }
+
+        [Route("AbrirQuadro")]
+        [HttpGet]
+        public SolicitacaoQuadroViewModel AbrirQuadro(int idUsuario)
+        {
+            var viewModel = new SolicitacaoQuadroViewModel();
+            try
+            {
+                viewModel = _servicoSolicitacao.AbrirQuadro(idUsuario);
+                return viewModel;
+            }
+            catch (Exception ex)
+            {
+                viewModel.Mensagem = ex.Message;
+                return viewModel;
+            }
+        }
     }
 }

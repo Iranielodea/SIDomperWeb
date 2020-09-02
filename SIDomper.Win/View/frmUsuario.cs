@@ -163,6 +163,7 @@ namespace SIDomper.Win.View
 
                 chkAdmin.Checked = _usuario.Adm;
                 chkAtivo.Checked = _usuario.Ativo;
+                txtTelefone.Text = _usuario.Telefone;
 
                 ListarPermissaoPadrao();
                 CarregarPermissoesSelecionadas();
@@ -228,6 +229,7 @@ namespace SIDomper.Win.View
                 _usuario.RevendaId = Funcoes.StrToIntNull(UsrRevenda.txtId.Text);
                 _usuario.UserName = txtUsuario.Text;
                 _usuario.ClienteId = Funcoes.StrToIntNull(UsrCliente.txtId.Text);
+                _usuario.Telefone = txtTelefone.Text;
 
                 SalvarPermissao();
                 var model = _usuarioApp.Salvar(_usuario);

@@ -15,7 +15,7 @@ namespace SIDomper.Dominio.Interfaces.Servicos
         void Excluir(Chamado model, int idUsuario, EnProgramas enProgramas);
         void Salvar(Chamado model, int idUsuario, bool ocorrencia);
         void Salvar(Chamado model);
-        void SalvarAplicativo(ChamadoAplicativoInputViewModel chamadoInputModel);
+        int SalvarAplicativo(ChamadoAplicativoInputViewModel chamadoInputModel);
         IEnumerable<ChamadoAplicativoViewModel> RetornarDadosAplicativo(string cnpj);
         ChamadoQuadroViewModel AbrirQuadro(int idUsuario, int idRevenda, EnumChamado enumChamado);
         IEnumerable<ChamadoAnexo> RetornarAnexos(int chamadoId);
@@ -33,5 +33,6 @@ namespace SIDomper.Dominio.Interfaces.Servicos
         bool PermissaoAtividadeQuadro(Usuario usuario);
         Usuario ObterUsuarioPorId(int id);
         ChamadoConsultaViewModel VerificarTarefaEmAberto(int idUsuario, EnProgramas enProgramas);
+        IEnumerable<SMSOutPutViewModel> EnviarSMS(int idChamado);
     }
 }

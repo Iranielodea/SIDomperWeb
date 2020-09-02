@@ -1,4 +1,5 @@
 ﻿using Mapster;
+using SIDomper.Apresentacao.App;
 using SIDomper.Dominio.Entidades;
 using SIDomper.Dominio.Enumeracao;
 using SIDomper.Dominio.Funcoes;
@@ -16,11 +17,13 @@ namespace SIDomperWebApi.Controllers
     {
         private ChamadoViewModel _ChamadoViewModel;
         private readonly IServicoChamado _servicoChamado;
+        private ChamadoApp _chamadoApp;
 
         public ChamadoController(IServicoChamado servicoChamado)
         {
             _ChamadoViewModel = new ChamadoViewModel();
             _servicoChamado = servicoChamado;
+            _chamadoApp = new ChamadoApp();
         }
 
         [Route("Novo")]
@@ -129,20 +132,38 @@ namespace SIDomperWebApi.Controllers
         [HttpPost]
         public ChamadoAplicativoResultadoOutPutViewModel IncluirAplicativo([FromBody] ChamadoAplicativoInputViewModel inputModel)
         {
+            bool chamadoSalvo;
+            int idChamado = 0;
             var resposta = new ChamadoAplicativoResultadoOutPutViewModel();
             try
             {
-                //_chamadoServico = new ChamadoServico();
-                //_chamadoServico.SalvarAplicativo(inputModel);
-                _servicoChamado.SalvarAplicativo(inputModel);
+                idChamado = _servicoChamado.SalvarAplicativo(inputModel);
+                chamadoSalvo = true;
+            }
+            catch (Exception ex)
+            {
+                chamadoSalvo = false;
+                resposta.Resultado = ex.Message;
+            }
 
-                return resposta;
+            try
+            {
+                if (chamadoSalvo)
+                    EnviarSMS(idChamado);
             }
             catch (Exception ex)
             {
                 resposta.Resultado = ex.Message;
-                return resposta;
             }
+            return resposta;
+        }
+
+        private void EnviarSMS(int idChamado)
+        {
+            var smsViewModel = _servicoChamado.EnviarSMS(idChamado).ToArray();
+
+            if (smsViewModel.Count() > 0)
+                _chamadoApp.EnviarSMS(smsViewModel);
         }
 
         private void DadosModulo(ChamadoViewModel _ChamadoViewModel, Chamado model)
@@ -505,6 +526,9 @@ namespace SIDomperWebApi.Controllers
                 _servicoChamado.Salvar(chamado, idUsuario, ocorrencia);
                 //_chamadoServico.Salvar(chamado, idUsuario, ocorrencia);
                 chamadoViewModel = chamado.Adapt<ChamadoViewModel>();
+
+                
+
                 return chamadoViewModel;
             }
             catch (Exception ex)
@@ -517,14 +541,13 @@ namespace SIDomperWebApi.Controllers
         [HttpPut]
         public ChamadoViewModel Update([FromBody]ChamadoViewModel model, int idUsuario, bool ocorrencia)
         {
-            //_chamadoServico = new ChamadoServico();
             var chamadoViewModel = new ChamadoViewModel();
             try
             {
                 var chamado = model.Adapt<Chamado>();
                 _servicoChamado.Salvar(chamado, idUsuario, ocorrencia);
-                //_chamadoServico.Salvar(chamado, idUsuario, ocorrencia);
                 chamadoViewModel = chamado.Adapt<ChamadoViewModel>();
+
                 return chamadoViewModel;
             }
             catch (Exception ex)
@@ -541,7 +564,6 @@ namespace SIDomperWebApi.Controllers
             try
             {
                 _servicoChamado.Excluir(_servicoChamado.ObterPorId(id), idUsuario, enProgramas);
-                //_chamadoServico.Excluir(idUsuario, id);
                 return model;
             }
             catch (Exception ex)
@@ -584,31 +606,5 @@ namespace SIDomperWebApi.Controllers
                 return model;
             }
         }
-
-        /*
-
-        SALVAR
-            Se for Quadro
-                fechar a tela
-            Se encerrarAgendamento
-                Funcoes.IdSelecionado = id
-
-        =================================================
-        TELA OCORRENCIAS
-        NOVO
-            Buscar dados do usuario logado
-            Buscar dados do cliente do chamado
-
-        EDITAR
-            Ver autoriazacao para editar
-
-        SALVAR
-            Se Inclusao entao abrir tela de status
-            Se deu certo
-                Se quadro e ocorrencia
-                    Salvar tudo
-                    se inclusao
-                        enviar email
-         */
     }
 }

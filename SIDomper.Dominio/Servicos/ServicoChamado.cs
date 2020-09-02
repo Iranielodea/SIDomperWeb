@@ -19,6 +19,7 @@ namespace SIDomper.Dominio.Servicos
         private readonly IRepositoryReadOnly<ChamadoAnexo> _repositoryAnexoReadOnly;
         private readonly IRepositoryReadOnly<ChamadoOcorrencia> _repositoryProbemaSolucaoReadOnly;
         private readonly IRepositoryReadOnly<QuadroViewModelChamado> _repositoryQuadroReadOnly;
+        private readonly IServicoEscala _servicoEscala;
         List<string> _listaEmail;
         List<string> _listaEmailCliente;
 
@@ -27,7 +28,9 @@ namespace SIDomper.Dominio.Servicos
            IRepositoryReadOnly<ChamadoAplicativoViewModel> repositoryAplicativoReadOnly,
            IRepositoryReadOnly<ChamadoAnexo> repositoryAnexoReadOnly,
            IRepositoryReadOnly<ChamadoOcorrencia> repositoryProbemaSolucaoReadOnly,
-           IRepositoryReadOnly<QuadroViewModelChamado> repositoryQuadroReadOnly)
+           IRepositoryReadOnly<QuadroViewModelChamado> repositoryQuadroReadOnly,
+           IServicoEscala servicoEscala
+           )
         {
             _uow = unitOfWork;
             _repositoryReadOnly = repositoryReadOnly;
@@ -35,6 +38,7 @@ namespace SIDomper.Dominio.Servicos
             _repositoryAnexoReadOnly = repositoryAnexoReadOnly;
             _repositoryProbemaSolucaoReadOnly = repositoryProbemaSolucaoReadOnly;
             _repositoryQuadroReadOnly = repositoryQuadroReadOnly;
+            _servicoEscala = servicoEscala;
             _listaEmail = new List<string>();
             _listaEmailCliente = new List<string>();
         }
@@ -61,6 +65,13 @@ namespace SIDomper.Dominio.Servicos
             quadroViewModel.Titulo5 = listaStatus[4].Nome;
             quadroViewModel.Titulo6 = listaStatus[5].Nome;
 
+            quadroViewModel.CodigoStatusQuadro1 = listaStatus[0].Codigo;
+            quadroViewModel.CodigoStatusQuadro2 = listaStatus[1].Codigo;
+            quadroViewModel.CodigoStatusQuadro3 = listaStatus[2].Codigo;
+            quadroViewModel.CodigoStatusQuadro4 = listaStatus[3].Codigo;
+            quadroViewModel.CodigoStatusQuadro5 = listaStatus[4].Codigo;
+            quadroViewModel.CodigoStatusQuadro6 = listaStatus[5].Codigo;
+
             int codigoStatusAbertura;
             int codigoStatusOcorrencia;
 
@@ -75,8 +86,12 @@ namespace SIDomper.Dominio.Servicos
                 int.TryParse(StatusAtendimentoAtividade(), out codigoStatusOcorrencia);
             }
 
+            var status = _uow.RepositorioStatus.First(x => x.Codigo == codigoStatusOcorrencia);
+
             string statusAbertura = _uow.RepositorioStatus.First(x => x.Codigo == codigoStatusAbertura).Nome;
-            string statusOcorrencia = _uow.RepositorioStatus.First(x => x.Codigo == codigoStatusOcorrencia).Nome;
+
+            string statusOcorrencia = status.Nome; // _uow.RepositorioStatus.First(x => x.Codigo == codigoStatusOcorrencia).Nome;
+            quadroViewModel.StatusChamadoAtendimentoCodigo = status.Codigo;
 
             PreencherQuadro(statusAbertura, statusOcorrencia, quadroViewModel.Titulo1, quadroViewModel.Quadro1);
             PreencherQuadro(statusAbertura, statusOcorrencia, quadroViewModel.Titulo2, quadroViewModel.Quadro2);
@@ -426,6 +441,22 @@ namespace SIDomper.Dominio.Servicos
             }
         }
 
+        public IEnumerable<SMSOutPutViewModel> EnviarSMS(int idChamado)
+        {
+            var lista = new List<SMSOutPutViewModel>();
+
+            var numeroTelefone = _servicoEscala.EnviarSMS();
+            if (numeroTelefone != "")
+            {
+                var sms = new SMSOutPutViewModel();
+                sms.msg = "Novo Chamado ID: " + idChamado.ToString("000000");
+                sms.number = numeroTelefone;
+
+                lista.Add(sms);
+            }
+            return lista.ToArray();
+        }
+
         public void UpdateHoraUsuarioAtual(int idChamado, EnumChamado enumChamado, int idUsuario, int idStatus)
         {
             string codigoStatus = "";
@@ -766,7 +797,7 @@ namespace SIDomper.Dominio.Servicos
                 throw new Exception(_uow.RetornoNotificacao());
         }
 
-        public void SalvarAplicativo(ChamadoAplicativoInputViewModel chamadoInputModel)
+        public int SalvarAplicativo(ChamadoAplicativoInputViewModel chamadoInputModel)
         {
             try
             {
@@ -815,6 +846,8 @@ namespace SIDomper.Dominio.Servicos
                     chamado.StatusId = status.Id;
 
                 Salvar(chamado);
+
+                return chamado.Id;
             }
             catch (Exception ex)
             {
@@ -937,7 +970,7 @@ namespace SIDomper.Dominio.Servicos
                 try
                 {
                     if (tituloQuadro == nomeStatusAbertura)
-                        item.Tempo = CalcularTempo(DateTime.Parse(item.DataAbertura), TimeSpan.Parse(item.HoraAbertura.ToString()));
+                        item.Tempo = CalcularTempo(DateTime.Parse(item.DataAbertura.ToString()), TimeSpan.Parse(item.HoraAbertura.ToString()));
                     else if (tituloQuadro == nomeStatusOcorrencia)
                         item.Tempo = CalcularTempoParametro10(TimeSpan.Parse(item.HoraAtendeAtual.ToString()));
                     else

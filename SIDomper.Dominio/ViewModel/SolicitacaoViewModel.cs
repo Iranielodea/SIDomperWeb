@@ -128,6 +128,43 @@ namespace SIDomper.Dominio.ViewModel
         public string TipoNome { get; set; }
     }
 
+    public class SolicitacaoQuadroViewModel : BaseViewModel
+    {
+        public SolicitacaoQuadroViewModel()
+        {
+            Titulos = new TitulosQuadroViewModel();
+        }
+        public TitulosQuadroViewModel Titulos { get; set; }
+        public List<QuadroSolicitacaoViewModel> Quadro1 { get; set; }
+        public List<QuadroSolicitacaoViewModel> Quadro2 { get; set; }
+        public List<QuadroSolicitacaoViewModel> Quadro3 { get; set; }
+        public List<QuadroSolicitacaoViewModel> Quadro4 { get; set; }
+        public List<QuadroSolicitacaoViewModel> Quadro5 { get; set; }
+        public List<QuadroSolicitacaoViewModel> Quadro6 { get; set; }
+        public List<QuadroSolicitacaoViewModel> Quadro7 { get; set; }
+        public List<QuadroSolicitacaoViewModel> Quadro8 { get; set; }
+        public List<QuadroSolicitacaoViewModel> Quadro9 { get; set; }
+        public List<QuadroSolicitacaoViewModel> Quadro10 { get; set; }
+        public List<QuadroSolicitacaoViewModel> Quadro11 { get; set; }
+        public List<QuadroSolicitacaoViewModel> Quadro12 { get; set; }
+    }
+
+    public class TitulosQuadroViewModel
+    {
+        public string Titulo1 { get; set; }
+        public string Titulo2 { get; set; }
+        public string Titulo3 { get; set; }
+        public string Titulo4 { get; set; }
+        public string Titulo5 { get; set; }
+        public string Titulo6 { get; set; }
+        public string Titulo7 { get; set; }
+        public string Titulo8 { get; set; }
+        public string Titulo9 { get; set; }
+        public string Titulo10 { get; set; }
+        public string Titulo11 { get; set; }
+        public string Titulo12 { get; set; }
+    }
+
     public class QuadroSolicitacaoViewModel
     {
         public int Id { get; set; }
@@ -138,6 +175,8 @@ namespace SIDomper.Dominio.ViewModel
         public int IdStatus { get; set; }
         public int Nivel { get; set; }
         public String Quadro { get; set; }
+        public int Aberta { get; set; }
+        public string Perfil { get; set; }
     }
 
     public class SolicitacaoCronogramaViewModel

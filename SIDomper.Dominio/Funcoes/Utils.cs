@@ -101,7 +101,8 @@ namespace SIDomper.Dominio.Funcoes
 
         public static double Frac(double valor)
         {
-            return (int)Math.Round((valor - (int)valor) * 100);
+            return (valor - (int)valor);
+            //return (int)Math.Round((valor - (int)valor) * 100);
         }
 
         public static string FormatarHora(TimeSpan hora)

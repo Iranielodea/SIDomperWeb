@@ -53,6 +53,8 @@
             this.btnPassaTodos = new System.Windows.Forms.Button();
             this.btnPassa1 = new System.Windows.Forms.Button();
             this.dgvPermissao = new System.Windows.Forms.DataGridView();
+            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Sigla = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label12 = new System.Windows.Forms.Label();
             this.lstPermissao = new System.Windows.Forms.ListBox();
             this.tpFiltroRevenda = new System.Windows.Forms.TabPage();
@@ -65,8 +67,8 @@
             this.UsrContaEmail = new SIDomper.Win.Componentes.usrPesquisa();
             this.UsrRevenda = new SIDomper.Win.Componentes.usrPesquisa();
             this.UsrCliente = new SIDomper.Win.Componentes.usrPesquisa();
-            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Sigla = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label8 = new System.Windows.Forms.Label();
+            this.txtTelefone = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tpPesquisa.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -136,6 +138,8 @@
             // 
             // tbPrincipal
             // 
+            this.tbPrincipal.Controls.Add(this.txtTelefone);
+            this.tbPrincipal.Controls.Add(this.label8);
             this.tbPrincipal.Controls.Add(this.UsrCliente);
             this.tbPrincipal.Controls.Add(this.UsrRevenda);
             this.tbPrincipal.Controls.Add(this.UsrContaEmail);
@@ -271,13 +275,13 @@
             this.txtUsuario.Location = new System.Drawing.Point(19, 126);
             this.txtUsuario.MaxLength = 50;
             this.txtUsuario.Name = "txtUsuario";
-            this.txtUsuario.Size = new System.Drawing.Size(312, 23);
+            this.txtUsuario.Size = new System.Drawing.Size(182, 23);
             this.txtUsuario.TabIndex = 2;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(334, 107);
+            this.label6.Location = new System.Drawing.Point(204, 107);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(53, 17);
             this.label6.TabIndex = 16;
@@ -285,11 +289,11 @@
             // 
             // txtSenha
             // 
-            this.txtSenha.Location = new System.Drawing.Point(337, 126);
+            this.txtSenha.Location = new System.Drawing.Point(207, 126);
             this.txtSenha.MaxLength = 50;
             this.txtSenha.Name = "txtSenha";
             this.txtSenha.PasswordChar = '*';
-            this.txtSenha.Size = new System.Drawing.Size(231, 23);
+            this.txtSenha.Size = new System.Drawing.Size(162, 23);
             this.txtSenha.TabIndex = 3;
             // 
             // label7
@@ -307,7 +311,7 @@
             this.txtEmail.MaxLength = 100;
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(549, 23);
-            this.txtEmail.TabIndex = 4;
+            this.txtEmail.TabIndex = 5;
             // 
             // chkAdmin
             // 
@@ -315,7 +319,7 @@
             this.chkAdmin.Location = new System.Drawing.Point(17, 416);
             this.chkAdmin.Name = "chkAdmin";
             this.chkAdmin.Size = new System.Drawing.Size(117, 21);
-            this.chkAdmin.TabIndex = 13;
+            this.chkAdmin.TabIndex = 10;
             this.chkAdmin.Text = "Administrador";
             this.chkAdmin.UseVisualStyleBackColor = true;
             // 
@@ -327,7 +331,7 @@
             this.chkAtivo.Location = new System.Drawing.Point(140, 416);
             this.chkAtivo.Name = "chkAtivo";
             this.chkAtivo.Size = new System.Drawing.Size(61, 21);
-            this.chkAtivo.TabIndex = 14;
+            this.chkAtivo.TabIndex = 11;
             this.chkAtivo.Text = "Ativo";
             this.chkAtivo.UseVisualStyleBackColor = true;
             // 
@@ -410,6 +414,20 @@
             this.dgvPermissao.Name = "dgvPermissao";
             this.dgvPermissao.Size = new System.Drawing.Size(372, 327);
             this.dgvPermissao.TabIndex = 2;
+            // 
+            // Id
+            // 
+            this.Id.DataPropertyName = "Id";
+            this.Id.HeaderText = "Id";
+            this.Id.Name = "Id";
+            this.Id.Visible = false;
+            // 
+            // Sigla
+            // 
+            this.Sigla.DataPropertyName = "Sigla";
+            this.Sigla.HeaderText = "Opções";
+            this.Sigla.Name = "Sigla";
+            this.Sigla.Width = 300;
             // 
             // label12
             // 
@@ -498,7 +516,7 @@
             this.UsrDepartamento.Modificou = false;
             this.UsrDepartamento.Name = "UsrDepartamento";
             this.UsrDepartamento.Size = new System.Drawing.Size(554, 49);
-            this.UsrDepartamento.TabIndex = 5;
+            this.UsrDepartamento.TabIndex = 6;
             // 
             // UsrContaEmail
             // 
@@ -507,7 +525,7 @@
             this.UsrContaEmail.Modificou = false;
             this.UsrContaEmail.Name = "UsrContaEmail";
             this.UsrContaEmail.Size = new System.Drawing.Size(554, 49);
-            this.UsrContaEmail.TabIndex = 6;
+            this.UsrContaEmail.TabIndex = 7;
             // 
             // UsrRevenda
             // 
@@ -516,7 +534,7 @@
             this.UsrRevenda.Modificou = false;
             this.UsrRevenda.Name = "UsrRevenda";
             this.UsrRevenda.Size = new System.Drawing.Size(554, 49);
-            this.UsrRevenda.TabIndex = 7;
+            this.UsrRevenda.TabIndex = 8;
             // 
             // UsrCliente
             // 
@@ -525,21 +543,24 @@
             this.UsrCliente.Modificou = false;
             this.UsrCliente.Name = "UsrCliente";
             this.UsrCliente.Size = new System.Drawing.Size(554, 49);
-            this.UsrCliente.TabIndex = 8;
+            this.UsrCliente.TabIndex = 9;
             // 
-            // Id
+            // label8
             // 
-            this.Id.DataPropertyName = "Id";
-            this.Id.HeaderText = "Id";
-            this.Id.Name = "Id";
-            this.Id.Visible = false;
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(375, 107);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(61, 17);
+            this.label8.TabIndex = 19;
+            this.label8.Text = "Telefone";
             // 
-            // Sigla
+            // txtTelefone
             // 
-            this.Sigla.DataPropertyName = "Sigla";
-            this.Sigla.HeaderText = "Opções";
-            this.Sigla.Name = "Sigla";
-            this.Sigla.Width = 300;
+            this.txtTelefone.Location = new System.Drawing.Point(378, 127);
+            this.txtTelefone.MaxLength = 20;
+            this.txtTelefone.Name = "txtTelefone";
+            this.txtTelefone.Size = new System.Drawing.Size(190, 23);
+            this.txtTelefone.TabIndex = 4;
             // 
             // frmUsuario
             // 
@@ -616,5 +637,7 @@
         private Componentes.usrPesquisa UsrCliente;
         private System.Windows.Forms.DataGridViewTextBoxColumn Id;
         private System.Windows.Forms.DataGridViewTextBoxColumn Sigla;
+        private System.Windows.Forms.TextBox txtTelefone;
+        private System.Windows.Forms.Label label8;
     }
 }

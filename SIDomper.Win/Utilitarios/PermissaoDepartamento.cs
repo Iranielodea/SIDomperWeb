@@ -14,5 +14,7 @@ namespace SIDomper.Win.Utilitarios
             var appUsuario = new UsuarioApp();
             return appUsuario.ObterPermissaoPorDepartamento(userName, senha).ToList();
         }
+
+        public static UsuarioViewModel DadosUsuario { get; set; }
     }
 }

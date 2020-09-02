@@ -5,6 +5,7 @@ using SIDomper.Dominio.Interfaces;
 using SIDomper.Dominio.Interfaces.Servicos;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SIDomper.Dominio.Servicos
 {
@@ -43,6 +44,36 @@ namespace SIDomper.Dominio.Servicos
         public IEnumerable<Escala> ListarPorData(DateTime data)
         {
             return _uow.RepositorioEscala.Get(x => x.Data == data);
+        }
+
+        public string EnviarSMS()
+        {
+            //var dataAtual = Convert.ToDateTime("25/02/2020"); // DateTime.Now.Date;
+            //var horaAtual = TimeSpan.Parse("01:00");  //TimeSpan.Parse(DateTime.Now.ToShortTimeString());
+
+            var dataAtual = DateTime.Now.Date;
+            var horaAtual = TimeSpan.Parse(DateTime.Now.ToShortTimeString());
+
+            var escala = _uow.RepositorioEscala.First(x => x.Data == dataAtual 
+                && x.HoraInicio <= horaAtual 
+                && x.HoraFim >= horaAtual);
+            try
+            {
+                //54999999999 (ddd)numero
+                if (escala != null)
+                {
+                    if (escala.Usuario != null && !string.IsNullOrEmpty(escala.Usuario.Telefone))
+                        return Funcoes.Utils.SomenteNumero(escala.Usuario.Telefone);
+                    else
+                        return "";
+                }
+                else
+                    return "";
+            }
+            catch
+            {
+                return "";
+            }
         }
 
         public Escala Novo(int idUsuario)

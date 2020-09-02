@@ -21,7 +21,8 @@ namespace SIDomper.Infra.RepositorioDapper
                 ,Usu_OnLine
                 ,Usu_Password
                 ,Usu_Revenda
-                ,Usu_UserName)
+                ,Usu_UserName
+                ,Usu_Telefone)
             VALUES (
                 @Adm
                 ,@Ativo
@@ -35,7 +36,8 @@ namespace SIDomper.Infra.RepositorioDapper
                 ,@OnLine
                 ,@Password
                 ,@RevendaId
-                ,@UserName); SELECT CAST(SCOPE_IDENTITY() as int)";
+                ,@UserName
+                ,@Telefone); SELECT CAST(SCOPE_IDENTITY() as int)";
 
 
             int idUsuario = base.Insert(instrucaoSql, usuario);
@@ -78,6 +80,7 @@ namespace SIDomper.Infra.RepositorioDapper
                     ,Usu_Password = @Password
                     ,Usu_Revenda = @RevendaId
                     ,Usu_UserName = @UserName
+                    ,Usu_Telefone = @Telefone
                 WHERE Usu_Id = @Id";
 
             base.Update(instrucaoSql, usuario);

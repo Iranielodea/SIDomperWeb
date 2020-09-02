@@ -57,5 +57,17 @@ namespace SIDomper.Apresentacao.App
             string url = Constantes.URL + "chamado/RetornarAnexos?idChamado={0}&enChamado={1}";
             return new Operacao<ChamadoAnexoViewModel>().GetAll(string.Format(url, idChamado, enumChamado));
         }
+
+        public SMSOutPutViewModel[] EnviarSMS(SMSOutPutViewModel[] model)
+        {
+            string url = "https://api.smsdev.com.br/v1/send";
+            return new Operacao<SMSOutPutViewModel>().ObjetoToJSon(string.Format(url), model);
+        }
+
+        public ChamadoQuadroViewModel[] AbrirQuadro(int idUsuario, int idRevenda, EnumChamado enumChamado)
+        {
+            string url = Constantes.URL + "chamado/AbrirQuadro?idUsuario={0}&idRevenda={1}&enumChamado={2}";
+            return new Operacao<ChamadoQuadroViewModel>().GetAll(string.Format(url, idUsuario, idRevenda, enumChamado));
+        }
     }
 }

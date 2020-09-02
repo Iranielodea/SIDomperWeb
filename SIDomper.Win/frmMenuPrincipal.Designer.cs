@@ -548,6 +548,7 @@
             this.btnQuadro.TabIndex = 10;
             this.btnQuadro.Text = "Quadros";
             this.btnQuadro.UseVisualStyleBackColor = false;
+            this.btnQuadro.Click += new System.EventHandler(this.btnQuadro_Click);
             // 
             // flowLayoutPanel2
             // 

@@ -29,6 +29,7 @@ namespace SIDomper.Infra.EF.Map
             Property(x => x.Password).HasColumnName("Usu_Password");
             Property(x => x.RevendaId).HasColumnName("Usu_Revenda");
             Property(x => x.UserName).HasColumnName("Usu_UserName");
+            Property(x => x.Telefone).HasColumnName("Usu_Telefone");
 
             this.HasRequired(t => t.Departamento)
                 .WithMany(x => x.Usuarios )

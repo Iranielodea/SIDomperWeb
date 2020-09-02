@@ -14,5 +14,6 @@ namespace SIDomper.Dominio.Interfaces.Servicos
         void Excluir(Escala model, int idUsuario);
         void Salvar(Escala model);
         Escala ObterPorData(DateTime data);
+        string EnviarSMS();
     }
 }

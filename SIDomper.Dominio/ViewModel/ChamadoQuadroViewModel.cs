@@ -1,9 +1,4 @@
-﻿using SIDomper.Dominio.Entidades;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace SIDomper.Dominio.ViewModel
 {
@@ -21,5 +16,12 @@ namespace SIDomper.Dominio.ViewModel
         public string Titulo4 { get; set; }
         public string Titulo5 { get; set; }
         public string Titulo6 { get; set; }
+        public int CodigoStatusQuadro1 { get; set; }
+        public int CodigoStatusQuadro2 { get; set; }
+        public int CodigoStatusQuadro3 { get; set; }
+        public int CodigoStatusQuadro4 { get; set; }
+        public int CodigoStatusQuadro5 { get; set; }
+        public int CodigoStatusQuadro6 { get; set; }
+        public int StatusChamadoAtendimentoCodigo { get; set; }
     }
 }
