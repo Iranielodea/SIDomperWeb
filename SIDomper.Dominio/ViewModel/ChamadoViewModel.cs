@@ -216,6 +216,7 @@ namespace SIDomper.Dominio.ViewModel
         public string NivelDescricao { get; set; }
         public int UsuarioAtendeAtualId { get; set; }
         public int CodigoStatus { get; set; }
+        public int IdStatus { get; set; }
         public int CodigoCliente { get; set; }
         public TimeSpan UltimaHora { get; set; }
         public TimeSpan HoraAtendeAtual { get; set; }
@@ -259,5 +260,12 @@ namespace SIDomper.Dominio.ViewModel
         public bool PermissaoOcorrenciaAlterarAtividade { get; set; }
         public bool PermissaoOcorrenciaAtividadeExcluir { get; set; }
 
+    }
+
+    public class ChamadoGravaHoraAtualViewModel
+    {
+        public int IdChamado { get; set; }
+        public int? IdUsuario { get; set; }
+        public int IdStatus { get; set; }
     }
 }

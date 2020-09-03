@@ -34,5 +34,6 @@ namespace SIDomper.Dominio.Interfaces.Servicos
         Usuario ObterUsuarioPorId(int id);
         ChamadoConsultaViewModel VerificarTarefaEmAberto(int idUsuario, EnProgramas enProgramas);
         IEnumerable<SMSOutPutViewModel> EnviarSMS(int idChamado);
+        void GravarHoraAtual(ChamadoGravaHoraAtualViewModel chamadoViewModel);
     }
 }

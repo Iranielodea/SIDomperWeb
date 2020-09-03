@@ -126,6 +126,7 @@
     <Compile Include="Componentes\usrValor.Designer.cs">
       <DependentUpon>usrValor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Consumo\ChamadoConsumo.cs" />
     <Compile Include="Filtros\ursFiltroPadrao.cs">
       <SubType>UserControl</SubType>
     </Compile>

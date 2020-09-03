@@ -1,16 +1,11 @@
-﻿using Refit;
-using SIDomper.Apresentacao.App;
+﻿using SIDomper.Apresentacao.App;
 using SIDomper.Dominio.Enumeracao;
 using SIDomper.Dominio.Funcoes;
 using SIDomper.Dominio.ViewModel;
+using SIDomper.Win.Consumo;
 using SIDomper.Win.Utilitarios;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -95,12 +90,14 @@ namespace SIDomper.Win.View
                 return;
             }
 
+            int id = Grade.RetornarId(ref grid, "Cha1_Id");
+
             ExecutaTimer(false);
 
             // pode entrar
             if (grid.Name == "dgvChamado1")
             {
-                if (_chamadoQuadroViewModel.CodigoStatusQuadro1 != 1) // codigo status do chamado
+                if (_chamadoQuadroViewModel.CodigoStatusQuadro1 != _chamadoQuadroViewModel.Quadro1.FirstOrDefault(x => x.Id == id).CodigoStatus) // codigo status do chamado
                 {
                     MessageBox.Show("Chamado em Atendimento por outra Pessoa!");
                     return;
@@ -108,9 +105,9 @@ namespace SIDomper.Win.View
 
                 if (_chamadoQuadroViewModel.StatusChamadoAtendimentoCodigo == _chamadoQuadroViewModel.CodigoStatusQuadro1) // status do quadro
                 {
-                    if (Funcoes.IdUsuario != 1) // chamadoUsuarioAtendeAtualId
+                    if (Funcoes.IdUsuario != _chamadoQuadroViewModel.Quadro1.FirstOrDefault(x => x.Id == id).UsuarioAtendeAtualId) // chamadoUsuarioAtendeAtualId
                     {
-                        // Chamado em Atendimento por outra Pessoa!
+                        MessageBox.Show("Chamado em Atendimento por outra Pessoa!");
                         return;
                     }
                 }
@@ -119,25 +116,23 @@ namespace SIDomper.Win.View
             // Gravar hora atual
             if (_chamadoQuadroViewModel.StatusChamadoAtendimentoCodigo != _chamadoQuadroViewModel.CodigoStatusQuadro1)
             {
-            //sHora:= FormatDateTime('hh:mm', Time);
-            //    sb.AppendLine(' UPDATE Chamado SET ');
-            //    //      sb.AppendLine('   Cha_HoraAtendeAtual = CAST(GETDATE() AS time)');
-            //    sb.AppendLine('   Cha_HoraAtendeAtual = CAST(''' + sHora + ''' AS time)');
-            //    sb.AppendLine('   ,Cha_Status = ' + IdStatus);
-            //    sb.AppendLine('   ,Cha_UsuarioAtendeAtual = ' + IntToStr(dm.IdUsuario));
-            //    sb.AppendLine(' WHERE Cha_Id = ' + IntToStr(AIdChamado));
-
+                var appChamado = new ChamadoApp();
+                var model = new ChamadoGravaHoraAtualViewModel();
+                model.IdChamado = id;
+                model.IdStatus = _chamadoQuadroViewModel.Quadro1.FirstOrDefault(x => x.Id == id).IdStatus;
+                model.IdUsuario = Funcoes.IdUsuario;
+                appChamado.GravarHoraAtual(model);
             }
             // entrar no chamado
+            // TODO: implementar
 
         }
 
         private async Task BuscarQuadroChamado()
         {
             int idRevenda = 0;
-            int tipo = 1;
-            var quadro = RestService.For<IApiChamadoService>("http://localhost:64735");
-            _chamadoQuadroViewModel = await quadro.GetQuadroAsync(Funcoes.IdUsuario, idRevenda, tipo);
+            var chamadoConsumo = new ChamadoConsumo();
+            _chamadoQuadroViewModel = await chamadoConsumo.GetQuadroAsync(Funcoes.IdUsuario, idRevenda, EnumChamado.Chamado);
 
             var QtdeRegistros1 = _chamadoQuadroViewModel.Quadro1.Count();
             var QtdeRegistros2 = _chamadoQuadroViewModel.Quadro2.Count();
@@ -268,7 +263,7 @@ namespace SIDomper.Win.View
 
         private void btnAbrirChamado_Click(object sender, EventArgs e)
         {
-            EntrarChamadoOcorrencia(ref dgvAgenda1);
+            EntrarChamadoOcorrencia(ref dgvChamado1);
             //BuscarQuadroChamado();
         }
 
@@ -430,11 +425,10 @@ namespace SIDomper.Win.View
         {
             BuscarQuadroChamado();
         }
-    }
 
-    public interface IApiChamadoService
-    {
-        [Get("/api/chamado/AbrirQuadro?idUsuario={idUsuario}&idRevenda={idRevenda}&enumChamado={enumChamado}")]
-        Task<ChamadoQuadroViewModel> GetQuadroAsync(int idUsuario, int idRevenda, int enumChamado);
+        private void dgvChamado1_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            EntrarChamadoOcorrencia(ref dgvChamado1);
+        }
     }
 }

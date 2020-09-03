@@ -43,6 +43,18 @@ namespace SIDomper.Dominio.Servicos
             _listaEmailCliente = new List<string>();
         }
 
+        public void GravarHoraAtual(ChamadoGravaHoraAtualViewModel chamadoViewModel)
+        {
+            var chamado = _uow.RepositorioChamado.find(chamadoViewModel.IdChamado);
+            if (chamado != null)
+            {
+                chamado.HoraAtendeAtual = TimeSpan.Parse(DateTime.Now.ToShortTimeString());
+                chamado.StatusId = chamadoViewModel.IdStatus;
+                chamado.UsuarioAtendeAtualId = chamadoViewModel.IdUsuario;
+                _uow.SaveChanges();
+            }
+        }
+
         public ChamadoQuadroViewModel AbrirQuadro(int idUsuario, int idRevenda, EnumChamado enumChamado)
         {
             var quadroViewModel = new ChamadoQuadroViewModel();
@@ -1107,6 +1119,7 @@ namespace SIDomper.Dominio.Servicos
             sb.AppendLine("  Cha_UsuarioAtendeAtual as UsuarioAtendeAtualId,");
             sb.AppendLine("  Sta_Codigo as CodigoStatus,");
             sb.AppendLine("  Cli_Codigo as CodigoCliente,");
+            sb.AppendLine("  Cha_Status as IdStatus,");
             sb.AppendLine("	Tip_Nome as NomeTipo,");
             sb.AppendLine("  UltimaHora = dbo.Func_Chamado_BuscarUltimaHoraOcorrencia (Cha_Id),");
             sb.AppendLine("	cha_HoraAtendeAtual as HoraAtendeAtual,");

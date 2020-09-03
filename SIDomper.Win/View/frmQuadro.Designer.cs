@@ -911,6 +911,7 @@
             this.dgvChamado1.RowTemplate.Height = 24;
             this.dgvChamado1.Size = new System.Drawing.Size(374, 126);
             this.dgvChamado1.TabIndex = 8;
+            this.dgvChamado1.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvChamado1_CellMouseDoubleClick);
             // 
             // Cha1_Id
             // 

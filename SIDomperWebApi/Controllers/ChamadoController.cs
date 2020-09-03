@@ -606,5 +606,20 @@ namespace SIDomperWebApi.Controllers
                 return model;
             }
         }
+
+        [Route("GravarHoraAtual")]
+        [HttpPut]
+        public IHttpActionResult GravarHoraAtual([FromBody]ChamadoGravaHoraAtualViewModel chamadoViewModel)
+        {
+            try
+            {
+                _servicoChamado.GravarHoraAtual(chamadoViewModel);
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

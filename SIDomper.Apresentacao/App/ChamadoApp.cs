@@ -69,5 +69,11 @@ namespace SIDomper.Apresentacao.App
             string url = Constantes.URL + "chamado/AbrirQuadro?idUsuario={0}&idRevenda={1}&enumChamado={2}";
             return new Operacao<ChamadoQuadroViewModel>().GetAll(string.Format(url, idUsuario, idRevenda, enumChamado));
         }
+
+        public void GravarHoraAtual(ChamadoGravaHoraAtualViewModel model)
+        {
+            string url = Constantes.URL + "chamado/GravarHoraAtual";
+            new Operacao<ChamadoViewModel>().Update(string.Format(url), model);
+        }
     }
 }
