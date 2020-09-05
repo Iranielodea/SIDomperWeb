@@ -123,6 +123,9 @@ namespace SIDomper.Win.View
                 model.IdUsuario = Funcoes.IdUsuario;
                 appChamado.GravarHoraAtual(model);
             }
+
+            frmChamado frmChamado = new frmChamado(id, true, true, EnumChamado.Chamado);
+            frmChamado.ShowDialog();
             // entrar no chamado
             // TODO: implementar
 
@@ -429,6 +432,12 @@ namespace SIDomper.Win.View
         private void dgvChamado1_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             EntrarChamadoOcorrencia(ref dgvChamado1);
+        }
+
+        private void frmQuadro_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+                Close();
         }
     }
 }

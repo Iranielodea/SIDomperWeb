@@ -28,6 +28,7 @@ namespace SIDomper.Win.View
         bool _ocorrencia;
         int _idClienteAgendamento;
         int _idAgendamento;
+        int _idChamadoQuadro = 0;
         EnProgramas _programas;
 
         public frmChamado()
@@ -70,6 +71,16 @@ namespace SIDomper.Win.View
                 //enStatus = EnStatus.Atividade;
                 //enTipos = EnTipos.Atividade;
             }
+        }
+
+        public frmChamado(int idChamado, bool quadro = false, bool ocorrencia = false, 
+            EnumChamado enumChamado = EnumChamado.Chamado, bool editar = false)
+        {
+            _enChamado = enumChamado;
+            _quadro = quadro;
+            _ocorrencia = ocorrencia;
+            _idChamadoQuadro = idChamado;
+            Iniciar();
         }
 
         private void Iniciar()
@@ -176,8 +187,12 @@ namespace SIDomper.Win.View
         {
             try
             {
+                int id = _idChamadoQuadro;
+                if (id == 0)
+                    id = Grade.RetornarId(ref dgvDados, "Cha_Id");
+
                 _chamadoApp = new ChamadoApp();
-                var model = _chamadoApp.Editar(Funcoes.IdUsuario, Grade.RetornarId(ref dgvDados, "Cha_Id"), _programas);
+                var model = _chamadoApp.Editar(Funcoes.IdUsuario, id, _programas);
                 _chamadoViewModel = model;
 
                 btnSalvar.Enabled = Funcoes.PermitirEditar(model.Mensagem);
@@ -640,6 +655,12 @@ namespace SIDomper.Win.View
                 if (UsrTipo.txtCodigo.txtValor.Focused)
                     UsrTipo.PressionarF9(EnProgramas.Tipo);
             }
+
+            if (_quadro)
+            {
+                if (e.KeyCode == Keys.Escape)
+                    Close();
+            }
         }
 
         private void DecrementarIdOcorrencia()
@@ -666,6 +687,10 @@ namespace SIDomper.Win.View
 
             HabilitarDataHora(false);
             txtDocumento.Focus();
+
+            btnNovoOco.Enabled = false;
+            btnSalvarOco.Enabled = true;
+            btnExcluirOco.Enabled = false;
         }
 
         private bool EntrarTelaStatus()
@@ -765,6 +790,10 @@ namespace SIDomper.Win.View
                     }
                     txtDocumento.Focus();
                 }
+
+                btnNovoOco.Enabled = true;
+                btnSalvarOco.Enabled = false;
+                btnExcluirOco.Enabled = true;
             }
             catch (Exception ex)
             {
@@ -804,6 +833,10 @@ namespace SIDomper.Win.View
                     MessageBox.Show(ex.Message);
                 }
             }
+
+            btnNovoOco.Enabled = true;
+            btnSalvarOco.Enabled = true;
+            btnExcluirOco.Enabled = true;
         }
 
         private void txtDescricaoProblema_Enter(object sender, EventArgs e)
@@ -1024,6 +1057,30 @@ namespace SIDomper.Win.View
                 frmChamadoColaborador formulario = new frmChamadoColaborador(ocorrencia);
                 formulario.ShowDialog();
             }
+        }
+
+        private void frmChamado_Shown(object sender, EventArgs e)
+        {
+            if (_enChamado == EnumChamado.Chamado)
+            {
+                if (_quadro)
+                {
+                    btnVoltar.Visible = false;
+                    btnVoltar2.Visible = false;
+
+                    _programas = EnProgramas.Chamado;
+                    Editar();
+                    tabControl2.TabPages.Remove(tbPrincipal);
+                    //tabControl2.SelectedIndex = 1;
+                    NovoOcorrencia();
+                }
+            }
+            /*
+             * ver se é chamado ou atividade
+             * se permissao abertura mostra principal
+             * se permissao ocorrencia
+             * 
+             */
         }
     }
 }

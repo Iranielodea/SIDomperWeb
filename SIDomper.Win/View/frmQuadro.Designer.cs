@@ -3500,11 +3500,13 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1028, 609);
             this.Controls.Add(this.tabQuadro);
+            this.KeyPreview = true;
             this.Name = "frmQuadro";
             this.Text = "frmQuadro";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.frmQuadro_Load);
             this.Shown += new System.EventHandler(this.frmQuadro_Shown);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmQuadro_KeyDown);
             this.tabQuadro.ResumeLayout(false);
             this.tabChamado.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvChamado6)).EndInit();

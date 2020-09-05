@@ -206,29 +206,24 @@
             // 
             // btnFiltro
             // 
-            this.btnFiltro.Location = new System.Drawing.Point(324, 18);
             this.btnFiltro.Margin = new System.Windows.Forms.Padding(5);
             // 
             // btnSair
             // 
             this.btnSair.Font = new System.Drawing.Font("Microsoft PhagsPa", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSair.Location = new System.Drawing.Point(526, 18);
             this.btnSair.Margin = new System.Windows.Forms.Padding(5);
             this.btnSair.TabIndex = 5;
             // 
             // btnExcluir
             // 
-            this.btnExcluir.Location = new System.Drawing.Point(221, 18);
             this.btnExcluir.Margin = new System.Windows.Forms.Padding(5);
             // 
             // btnEditar
             // 
-            this.btnEditar.Location = new System.Drawing.Point(118, 18);
             this.btnEditar.Margin = new System.Windows.Forms.Padding(5);
             // 
             // btnNovo
             // 
-            this.btnNovo.Location = new System.Drawing.Point(15, 18);
             this.btnNovo.Margin = new System.Windows.Forms.Padding(5);
             // 
             // groupBox1
@@ -268,12 +263,10 @@
             // 
             // btnVoltar2
             // 
-            this.btnVoltar2.Location = new System.Drawing.Point(118, 18);
             this.btnVoltar2.Margin = new System.Windows.Forms.Padding(5);
             // 
             // btnSalvar
             // 
-            this.btnSalvar.Location = new System.Drawing.Point(15, 18);
             this.btnSalvar.Margin = new System.Windows.Forms.Padding(5);
             // 
             // tabControl2
@@ -1274,10 +1267,11 @@
             // 
             // btnEspecificacao
             // 
+            this.btnEspecificacao.Dock = System.Windows.Forms.DockStyle.Left;
             this.btnEspecificacao.Font = new System.Drawing.Font("Microsoft PhagsPa", 9.75F, System.Drawing.FontStyle.Bold);
-            this.btnEspecificacao.Location = new System.Drawing.Point(425, 18);
+            this.btnEspecificacao.Location = new System.Drawing.Point(469, 20);
             this.btnEspecificacao.Name = "btnEspecificacao";
-            this.btnEspecificacao.Size = new System.Drawing.Size(93, 40);
+            this.btnEspecificacao.Size = new System.Drawing.Size(93, 39);
             this.btnEspecificacao.TabIndex = 4;
             this.btnEspecificacao.Text = "Especif.";
             this.btnEspecificacao.UseVisualStyleBackColor = true;
@@ -1285,10 +1279,11 @@
             // 
             // btnEspecificacoes2
             // 
+            this.btnEspecificacoes2.Dock = System.Windows.Forms.DockStyle.Left;
             this.btnEspecificacoes2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.btnEspecificacoes2.Location = new System.Drawing.Point(219, 18);
+            this.btnEspecificacoes2.Location = new System.Drawing.Point(190, 20);
             this.btnEspecificacoes2.Name = "btnEspecificacoes2";
-            this.btnEspecificacoes2.Size = new System.Drawing.Size(93, 40);
+            this.btnEspecificacoes2.Size = new System.Drawing.Size(93, 39);
             this.btnEspecificacoes2.TabIndex = 5;
             this.btnEspecificacoes2.Text = "Especific.";
             this.btnEspecificacoes2.UseVisualStyleBackColor = true;

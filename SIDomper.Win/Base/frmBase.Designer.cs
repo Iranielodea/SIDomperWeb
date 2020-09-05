@@ -38,6 +38,8 @@
             this.btnEditar = new System.Windows.Forms.Button();
             this.btnNovo = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lblPesquisa = new System.Windows.Forms.Label();
+            this.cbPesquisa = new System.Windows.Forms.ComboBox();
             this.txtTexto = new System.Windows.Forms.TextBox();
             this.cbCampos = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -58,8 +60,6 @@
             this.cboAtivo = new System.Windows.Forms.ComboBox();
             this.lblAtivo = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.cbPesquisa = new System.Windows.Forms.ComboBox();
-            this.lblPesquisa = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tpPesquisa.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -119,13 +119,14 @@
             // btnFiltro
             // 
             this.btnFiltro.BackColor = System.Drawing.Color.Transparent;
+            this.btnFiltro.Dock = System.Windows.Forms.DockStyle.Left;
             this.btnFiltro.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnFiltro.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnFiltro.ImageIndex = 3;
-            this.btnFiltro.Location = new System.Drawing.Point(314, 14);
+            this.btnFiltro.Location = new System.Drawing.Point(376, 20);
             this.btnFiltro.Margin = new System.Windows.Forms.Padding(4);
             this.btnFiltro.Name = "btnFiltro";
-            this.btnFiltro.Size = new System.Drawing.Size(93, 40);
+            this.btnFiltro.Size = new System.Drawing.Size(93, 39);
             this.btnFiltro.TabIndex = 3;
             this.btnFiltro.Text = "&Filtrar";
             this.toolTip1.SetToolTip(this.btnFiltro, "F3");
@@ -133,13 +134,14 @@
             // 
             // btnSair
             // 
+            this.btnSair.Dock = System.Windows.Forms.DockStyle.Left;
             this.btnSair.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSair.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSair.ImageIndex = 4;
-            this.btnSair.Location = new System.Drawing.Point(415, 14);
+            this.btnSair.Location = new System.Drawing.Point(283, 20);
             this.btnSair.Margin = new System.Windows.Forms.Padding(4);
             this.btnSair.Name = "btnSair";
-            this.btnSair.Size = new System.Drawing.Size(93, 40);
+            this.btnSair.Size = new System.Drawing.Size(93, 39);
             this.btnSair.TabIndex = 4;
             this.btnSair.Text = "&Sair";
             this.toolTip1.SetToolTip(this.btnSair, "Esc");
@@ -147,13 +149,14 @@
             // 
             // btnExcluir
             // 
+            this.btnExcluir.Dock = System.Windows.Forms.DockStyle.Left;
             this.btnExcluir.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnExcluir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnExcluir.ImageIndex = 2;
-            this.btnExcluir.Location = new System.Drawing.Point(213, 15);
+            this.btnExcluir.Location = new System.Drawing.Point(190, 20);
             this.btnExcluir.Margin = new System.Windows.Forms.Padding(4);
             this.btnExcluir.Name = "btnExcluir";
-            this.btnExcluir.Size = new System.Drawing.Size(93, 40);
+            this.btnExcluir.Size = new System.Drawing.Size(93, 39);
             this.btnExcluir.TabIndex = 2;
             this.btnExcluir.Text = "E&xcluir";
             this.toolTip1.SetToolTip(this.btnExcluir, "Ctrl + del");
@@ -161,13 +164,14 @@
             // 
             // btnEditar
             // 
+            this.btnEditar.Dock = System.Windows.Forms.DockStyle.Left;
             this.btnEditar.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEditar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnEditar.ImageIndex = 1;
-            this.btnEditar.Location = new System.Drawing.Point(112, 14);
+            this.btnEditar.Location = new System.Drawing.Point(97, 20);
             this.btnEditar.Margin = new System.Windows.Forms.Padding(4);
             this.btnEditar.Name = "btnEditar";
-            this.btnEditar.Size = new System.Drawing.Size(93, 40);
+            this.btnEditar.Size = new System.Drawing.Size(93, 39);
             this.btnEditar.TabIndex = 1;
             this.btnEditar.Text = "&Editar";
             this.toolTip1.SetToolTip(this.btnEditar, "F2");
@@ -175,13 +179,14 @@
             // 
             // btnNovo
             // 
+            this.btnNovo.Dock = System.Windows.Forms.DockStyle.Left;
             this.btnNovo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnNovo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnNovo.ImageIndex = 0;
-            this.btnNovo.Location = new System.Drawing.Point(11, 14);
+            this.btnNovo.Location = new System.Drawing.Point(4, 20);
             this.btnNovo.Margin = new System.Windows.Forms.Padding(4);
             this.btnNovo.Name = "btnNovo";
-            this.btnNovo.Size = new System.Drawing.Size(93, 40);
+            this.btnNovo.Size = new System.Drawing.Size(93, 39);
             this.btnNovo.TabIndex = 0;
             this.btnNovo.Text = "&Novo";
             this.toolTip1.SetToolTip(this.btnNovo, "Insert");
@@ -204,6 +209,28 @@
             this.groupBox1.Size = new System.Drawing.Size(688, 60);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
+            // 
+            // lblPesquisa
+            // 
+            this.lblPesquisa.AutoSize = true;
+            this.lblPesquisa.Location = new System.Drawing.Point(233, 10);
+            this.lblPesquisa.Name = "lblPesquisa";
+            this.lblPesquisa.Size = new System.Drawing.Size(63, 17);
+            this.lblPesquisa.TabIndex = 5;
+            this.lblPesquisa.Text = "Pesquisa";
+            // 
+            // cbPesquisa
+            // 
+            this.cbPesquisa.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbPesquisa.FormattingEnabled = true;
+            this.cbPesquisa.Items.AddRange(new object[] {
+            "Contêm",
+            "Iniciais"});
+            this.cbPesquisa.Location = new System.Drawing.Point(236, 30);
+            this.cbPesquisa.Name = "cbPesquisa";
+            this.cbPesquisa.Size = new System.Drawing.Size(133, 25);
+            this.cbPesquisa.TabIndex = 3;
+            this.cbPesquisa.TabStop = false;
             // 
             // txtTexto
             // 
@@ -273,13 +300,14 @@
             // 
             // btnVoltar2
             // 
+            this.btnVoltar2.Dock = System.Windows.Forms.DockStyle.Left;
             this.btnVoltar2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnVoltar2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnVoltar2.ImageIndex = 6;
-            this.btnVoltar2.Location = new System.Drawing.Point(112, 14);
+            this.btnVoltar2.Location = new System.Drawing.Point(97, 20);
             this.btnVoltar2.Margin = new System.Windows.Forms.Padding(4);
             this.btnVoltar2.Name = "btnVoltar2";
-            this.btnVoltar2.Size = new System.Drawing.Size(93, 40);
+            this.btnVoltar2.Size = new System.Drawing.Size(93, 39);
             this.btnVoltar2.TabIndex = 4;
             this.btnVoltar2.Text = "&Voltar";
             this.toolTip1.SetToolTip(this.btnVoltar2, "Esc");
@@ -287,13 +315,14 @@
             // 
             // btnSalvar
             // 
+            this.btnSalvar.Dock = System.Windows.Forms.DockStyle.Left;
             this.btnSalvar.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSalvar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSalvar.ImageIndex = 5;
-            this.btnSalvar.Location = new System.Drawing.Point(11, 14);
+            this.btnSalvar.Location = new System.Drawing.Point(4, 20);
             this.btnSalvar.Margin = new System.Windows.Forms.Padding(4);
             this.btnSalvar.Name = "btnSalvar";
-            this.btnSalvar.Size = new System.Drawing.Size(93, 40);
+            this.btnSalvar.Size = new System.Drawing.Size(93, 39);
             this.btnSalvar.TabIndex = 1;
             this.btnSalvar.Text = "&Salvar";
             this.toolTip1.SetToolTip(this.btnSalvar, "F8");
@@ -443,28 +472,6 @@
             // toolTip1
             // 
             this.toolTip1.IsBalloon = true;
-            // 
-            // cbPesquisa
-            // 
-            this.cbPesquisa.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbPesquisa.FormattingEnabled = true;
-            this.cbPesquisa.Items.AddRange(new object[] {
-            "Contêm",
-            "Iniciais"});
-            this.cbPesquisa.Location = new System.Drawing.Point(236, 30);
-            this.cbPesquisa.Name = "cbPesquisa";
-            this.cbPesquisa.Size = new System.Drawing.Size(133, 25);
-            this.cbPesquisa.TabIndex = 3;
-            this.cbPesquisa.TabStop = false;
-            // 
-            // lblPesquisa
-            // 
-            this.lblPesquisa.AutoSize = true;
-            this.lblPesquisa.Location = new System.Drawing.Point(233, 10);
-            this.lblPesquisa.Name = "lblPesquisa";
-            this.lblPesquisa.Size = new System.Drawing.Size(63, 17);
-            this.lblPesquisa.TabIndex = 5;
-            this.lblPesquisa.Text = "Pesquisa";
             // 
             // frmBase
             // 

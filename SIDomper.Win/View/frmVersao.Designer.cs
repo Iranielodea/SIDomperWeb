@@ -108,27 +108,22 @@
             // 
             // btnFiltro
             // 
-            this.btnFiltro.Location = new System.Drawing.Point(324, 18);
             this.btnFiltro.Margin = new System.Windows.Forms.Padding(5);
             // 
             // btnSair
             // 
-            this.btnSair.Location = new System.Drawing.Point(427, 18);
             this.btnSair.Margin = new System.Windows.Forms.Padding(5);
             // 
             // btnExcluir
             // 
-            this.btnExcluir.Location = new System.Drawing.Point(221, 18);
             this.btnExcluir.Margin = new System.Windows.Forms.Padding(5);
             // 
             // btnEditar
             // 
-            this.btnEditar.Location = new System.Drawing.Point(118, 18);
             this.btnEditar.Margin = new System.Windows.Forms.Padding(5);
             // 
             // btnNovo
             // 
-            this.btnNovo.Location = new System.Drawing.Point(15, 18);
             this.btnNovo.Margin = new System.Windows.Forms.Padding(5);
             // 
             // groupBox1
@@ -160,12 +155,10 @@
             // 
             // btnVoltar2
             // 
-            this.btnVoltar2.Location = new System.Drawing.Point(118, 19);
             this.btnVoltar2.Margin = new System.Windows.Forms.Padding(5);
             // 
             // btnSalvar
             // 
-            this.btnSalvar.Location = new System.Drawing.Point(15, 18);
             this.btnSalvar.Margin = new System.Windows.Forms.Padding(5);
             // 
             // tabControl2

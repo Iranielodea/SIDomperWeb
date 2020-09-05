@@ -184,27 +184,22 @@
             // 
             // btnFiltro
             // 
-            this.btnFiltro.Location = new System.Drawing.Point(324, 18);
             this.btnFiltro.Margin = new System.Windows.Forms.Padding(5);
             // 
             // btnSair
             // 
-            this.btnSair.Location = new System.Drawing.Point(427, 18);
             this.btnSair.Margin = new System.Windows.Forms.Padding(5);
             // 
             // btnExcluir
             // 
-            this.btnExcluir.Location = new System.Drawing.Point(221, 18);
             this.btnExcluir.Margin = new System.Windows.Forms.Padding(5);
             // 
             // btnEditar
             // 
-            this.btnEditar.Location = new System.Drawing.Point(118, 18);
             this.btnEditar.Margin = new System.Windows.Forms.Padding(5);
             // 
             // btnNovo
             // 
-            this.btnNovo.Location = new System.Drawing.Point(15, 18);
             this.btnNovo.Margin = new System.Windows.Forms.Padding(5);
             // 
             // groupBox1
@@ -254,12 +249,10 @@
             // 
             // btnVoltar2
             // 
-            this.btnVoltar2.Location = new System.Drawing.Point(118, 19);
             this.btnVoltar2.Margin = new System.Windows.Forms.Padding(5);
             // 
             // btnSalvar
             // 
-            this.btnSalvar.Location = new System.Drawing.Point(15, 19);
             this.btnSalvar.Margin = new System.Windows.Forms.Padding(5);
             // 
             // tabControl2
@@ -689,10 +682,11 @@
             // 
             // btnDetalhes
             // 
+            this.btnDetalhes.Dock = System.Windows.Forms.DockStyle.Left;
             this.btnDetalhes.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.btnDetalhes.Location = new System.Drawing.Point(219, 19);
+            this.btnDetalhes.Location = new System.Drawing.Point(190, 20);
             this.btnDetalhes.Name = "btnDetalhes";
-            this.btnDetalhes.Size = new System.Drawing.Size(93, 40);
+            this.btnDetalhes.Size = new System.Drawing.Size(93, 39);
             this.btnDetalhes.TabIndex = 8;
             this.btnDetalhes.Text = "Detalhes";
             this.btnDetalhes.UseVisualStyleBackColor = true;
@@ -700,10 +694,11 @@
             // 
             // btnDetalhes2
             // 
+            this.btnDetalhes2.Dock = System.Windows.Forms.DockStyle.Left;
             this.btnDetalhes2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.btnDetalhes2.Location = new System.Drawing.Point(528, 18);
+            this.btnDetalhes2.Location = new System.Drawing.Point(469, 20);
             this.btnDetalhes2.Name = "btnDetalhes2";
-            this.btnDetalhes2.Size = new System.Drawing.Size(93, 40);
+            this.btnDetalhes2.Size = new System.Drawing.Size(93, 39);
             this.btnDetalhes2.TabIndex = 5;
             this.btnDetalhes2.Text = "Detalhes";
             this.btnDetalhes2.UseVisualStyleBackColor = true;
@@ -819,7 +814,7 @@
             this.tpOcorrencia.Location = new System.Drawing.Point(4, 26);
             this.tpOcorrencia.Name = "tpOcorrencia";
             this.tpOcorrencia.Padding = new System.Windows.Forms.Padding(3);
-            this.tpOcorrencia.Size = new System.Drawing.Size(678, 481);
+            this.tpOcorrencia.Size = new System.Drawing.Size(1015, 526);
             this.tpOcorrencia.TabIndex = 1;
             this.tpOcorrencia.Text = "Ocorrência";
             // 
@@ -1217,10 +1212,11 @@
             // 
             // btnEspecificao
             // 
+            this.btnEspecificao.Dock = System.Windows.Forms.DockStyle.Left;
             this.btnEspecificao.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.btnEspecificao.Location = new System.Drawing.Point(318, 19);
+            this.btnEspecificao.Location = new System.Drawing.Point(283, 20);
             this.btnEspecificao.Name = "btnEspecificao";
-            this.btnEspecificao.Size = new System.Drawing.Size(93, 40);
+            this.btnEspecificao.Size = new System.Drawing.Size(93, 39);
             this.btnEspecificao.TabIndex = 9;
             this.btnEspecificao.Text = "Especif.";
             this.btnEspecificao.UseVisualStyleBackColor = true;
@@ -1228,10 +1224,11 @@
             // 
             // btnModulo
             // 
+            this.btnModulo.Dock = System.Windows.Forms.DockStyle.Left;
             this.btnModulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.btnModulo.Location = new System.Drawing.Point(417, 19);
+            this.btnModulo.Location = new System.Drawing.Point(376, 20);
             this.btnModulo.Name = "btnModulo";
-            this.btnModulo.Size = new System.Drawing.Size(93, 40);
+            this.btnModulo.Size = new System.Drawing.Size(93, 39);
             this.btnModulo.TabIndex = 10;
             this.btnModulo.Text = "Módulos";
             this.btnModulo.UseVisualStyleBackColor = true;
@@ -1239,10 +1236,11 @@
             // 
             // btnSolucao
             // 
+            this.btnSolucao.Dock = System.Windows.Forms.DockStyle.Left;
             this.btnSolucao.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.btnSolucao.Location = new System.Drawing.Point(516, 19);
+            this.btnSolucao.Location = new System.Drawing.Point(469, 20);
             this.btnSolucao.Name = "btnSolucao";
-            this.btnSolucao.Size = new System.Drawing.Size(93, 40);
+            this.btnSolucao.Size = new System.Drawing.Size(93, 39);
             this.btnSolucao.TabIndex = 11;
             this.btnSolucao.Text = "Soluções";
             this.btnSolucao.UseVisualStyleBackColor = true;
@@ -1250,10 +1248,11 @@
             // 
             // btnCliente
             // 
+            this.btnCliente.Dock = System.Windows.Forms.DockStyle.Left;
             this.btnCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.btnCliente.Location = new System.Drawing.Point(615, 19);
+            this.btnCliente.Location = new System.Drawing.Point(562, 20);
             this.btnCliente.Name = "btnCliente";
-            this.btnCliente.Size = new System.Drawing.Size(93, 40);
+            this.btnCliente.Size = new System.Drawing.Size(93, 39);
             this.btnCliente.TabIndex = 12;
             this.btnCliente.Text = "Clientes";
             this.btnCliente.UseVisualStyleBackColor = true;
@@ -1261,10 +1260,11 @@
             // 
             // btnAnexo2
             // 
+            this.btnAnexo2.Dock = System.Windows.Forms.DockStyle.Left;
             this.btnAnexo2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.btnAnexo2.Location = new System.Drawing.Point(714, 19);
+            this.btnAnexo2.Location = new System.Drawing.Point(655, 20);
             this.btnAnexo2.Name = "btnAnexo2";
-            this.btnAnexo2.Size = new System.Drawing.Size(93, 40);
+            this.btnAnexo2.Size = new System.Drawing.Size(93, 39);
             this.btnAnexo2.TabIndex = 13;
             this.btnAnexo2.Text = "Anexos";
             this.btnAnexo2.UseVisualStyleBackColor = true;
@@ -1332,6 +1332,7 @@
             this.Name = "frmChamado";
             this.Tag = "6";
             this.Text = "Chamados";
+            this.Shown += new System.EventHandler(this.frmChamado_Shown);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmChamado_KeyDown);
             this.Controls.SetChildIndex(this.tabControl1, 0);
             this.tabControl1.ResumeLayout(false);
